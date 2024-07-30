@@ -70,7 +70,10 @@ interface Props<TData, TValue> {
   data: TData[];
 }
 
-export default function WaitTimeTable<TData, TValue>({ columns, data }: Props) {
+export default function WaitTimeTable<TData, TValue>({
+  columns,
+  data,
+}: Props<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     data,
@@ -125,21 +128,5 @@ export default function WaitTimeTable<TData, TValue>({ columns, data }: Props) {
         )}
       </TableBody>
     </Table>
-    // <Table className="my-4">
-    //   <TableHeader>
-    //     <TableRow>
-    //       <TableHead>Hospital</TableHead>
-    //       <TableHead className="">Reference Wait Time</TableHead>
-    //     </TableRow>
-    //   </TableHeader>
-    //   <TableBody>
-    //     {data.map(({ hospName, topWait }) => (
-    //       <TableRow key={hospName}>
-    //         <TableCell className="font-medium">{hospName}</TableCell>
-    //         <TableCell>{topWait}</TableCell>
-    //       </TableRow>
-    //     ))}
-    //   </TableBody>
-    // </Table>
   );
 }

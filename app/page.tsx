@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import WaitTimeTable, { columns } from "@/components/wait-time-table";
+import NavBar from "@/components/nav-bar";
 
 interface WaitTime {
   hospName: string;
@@ -64,14 +65,14 @@ export default function Home() {
   console.log(data);
   return (
     <>
-      <main className="flex flex-col md:flex-row gap-4 justify-between items-center">
-        <header className="">
-          <h1 className="text-3xl text-center mb-4">A&E Wait Times</h1>
-          <h2 className="text-xl text-center">
-            Reference waiting times in Hong Kong’s A&E Departments
-          </h2>
-        </header>
-
+      {/* <nav className="flex justify-between items-center"> */}
+      {/* <h1 className="text-xl">A&E Wait Times</h1> */}
+      <NavBar />
+      {/* </nav> */}
+      <main className="flex flex-col md:flex-row gap-4 justify-between items-center my-4">
+        <h2 className="text-xl text-center">
+          Reference waiting times in Hong Kong’s A&E Departments
+        </h2>
         <section>
           <p className="text-xs text-center italic">
             *Priority will be accorded to patients triaged as critical,
