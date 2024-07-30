@@ -2,39 +2,7 @@
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-
-import { Input } from "@/components/ui/input";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import WaitTimeTable, { columns } from "@/components/wait-time-table";
 
 interface WaitTime {
   hospName: string;
@@ -103,60 +71,15 @@ export default function Home() {
             Reference waiting times in Hong Kong’s A&E Departments
           </h2>
         </header>
+
         <section>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant={"outline"}
-                className={cn(
-                  "w-[280px] justify-start text-left font-normal",
-                  !date && "text-muted-foreground"
-                )}
-              >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {date ? format(date, "PPP") : <span>Pick a date</span>}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar
-                mode="single"
-                selected={date}
-                onSelect={setDate}
-                initialFocus
-                disabled={{ after: new Date() }}
-              />
-            </PopoverContent>
-          </Popover>
-          <Input
-            type="time"
-            step={60 * 15}
-            value={time}
-            onChange={(event) => setTime(event.target.value)}
-          />
-          {data && (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Hospital</TableHead>
-                  <TableHead className="">Reference Wait Time</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data.waitTime.map((wt) => (
-                  <TableRow key={wt.hospName}>
-                    <TableCell className="font-medium">{wt.hospName}</TableCell>
-                    <TableCell>{wt.topWait}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
+          <p className="text-xs text-center italic">
+            *Priority will be accorded to patients triaged as critical,
+            emergency and urgent.
+          </p>
+          {data && <WaitTimeTable columns={columns} data={data.waitTime} />}
         </section>
       </main>
-      <p className="text-xs text-center italic">
-        *Priority will be accorded to patients triaged as critical, emergency
-        and urgent.
-      </p>
       <footer></footer>
     </>
   );
