@@ -1,6 +1,7 @@
 import "./globals.css";
 import { DM_Sans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import Providers from "./providers";
 
 const dm_sans = DM_Sans({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
@@ -16,9 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
       <body className={dm_sans.className + " p-4"}>
-        <ThemeProvider attribute="class">{children}</ThemeProvider>
+        <Providers>
+          <ThemeProvider attribute="class">{children}</ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

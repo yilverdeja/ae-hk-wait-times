@@ -1,9 +1,13 @@
 "use client";
-import axios, { AxiosError } from "axios";
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import axios from "axios";
 import WaitTimeTable, { columns } from "@/components/wait-time-table";
 import NavBar from "@/components/nav-bar";
+import Footer from "@/components/footer";
+import Information from "@/components/information";
+import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+
+import { Separator } from "@/components/ui/separator";
 
 interface WaitTime {
   hospName: string;
@@ -15,73 +19,58 @@ interface Data {
   updateTime: string;
 }
 
-export default function Home() {
-  const today = new Date();
-  const { theme, setTheme } = useTheme();
-  const [data, setData] = useState<null | Data>(null);
-  const [error, setError] = useState<null | AxiosError>(null);
-  const [date, setDate] = useState<Date>();
-  const [time, setTime] = useState(
-    today.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-  );
-
-  // minutes / 15 -> floor
-
-  const getData = async () => {
-    const url = "https://www.ha.org.hk/opendata/aed/aedwtdata-en.json";
-
-    const formatted_dt =
-      date
-        ?.toLocaleDateString("zh-Hans-CN", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        })
-        .split("/")
-        .join("") +
-      "-" +
-      time.split(":").join("");
-
-    const endpoint = `https://api.data.gov.hk/v1/historical-archive/get-file?url=${url}&time=${formatted_dt}`;
-    await axios
-      .get(endpoint)
-      .then((res) => {
-        setData(res.data);
+const getData = async (): Promise<Data> => {
+  const url = "https://www.ha.org.hk/opendata/aed/aedwtdata-en.json";
+  const formatted_dt =
+    new Date("2024-07-24")
+      .toLocaleDateString("zh-Hans-CN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
       })
-      .catch((err) => setError(err));
-  };
+      .split("/")
+      .join("") +
+    "-" +
+    "00:30".split(":").join("");
+  const endpoint = `https://api.data.gov.hk/v1/historical-archive/get-file?url=${url}&time=${formatted_dt}`;
+  const response = await axios.get(endpoint);
+  return response.data; // Make sure to return just the data object
+};
 
-  useEffect(() => {
-    // setDate("2024-07-24");
-    setTheme("light");
-    setDate(new Date("2024-07-24"));
-    setTime("00:30");
-  }, []);
+export default function Home() {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["data"],
+    queryFn: () => getData(),
+  });
 
-  useEffect(() => {
-    getData();
-  }, [date, time]);
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
-  console.log(data);
   return (
     <>
-      {/* <nav className="flex justify-between items-center"> */}
-      {/* <h1 className="text-xl">A&E Wait Times</h1> */}
       <NavBar />
-      {/* </nav> */}
-      <main className="flex flex-col md:flex-row gap-4 justify-between items-center my-4">
-        <h2 className="text-xl text-center">
-          Reference waiting times in Hong Kong’s A&E Departments
-        </h2>
-        <section>
-          <p className="text-xs text-center italic">
-            *Priority will be accorded to patients triaged as critical,
-            emergency and urgent.
+      <main className="flex flex-col gap-4 justify-between items-start my-4 md:grid md:grid-cols-2 md:items-start md:gap-8">
+        <header className="md:col-span-1">
+          <h2 className="text-lg text-left font-bold mb-2 md:text-xl md:text-left">
+            Current A&E Waiting Times
+          </h2>
+          <p className="text-md text-left">
+            The data shows an <span className="italic">estimated</span>{" "}
+            reference of the latest waiting times at different emergency
+            departments in Hong Kong
           </p>
+          <div className="w-full hidden md:block md:mt-4">
+            <Information />
+          </div>
+        </header>
+        <section className="w-full md:col-span-1">
           {data && <WaitTimeTable columns={columns} data={data.waitTime} />}
         </section>
+        <div className="w-full block mt-2 md:hidden">
+          <Information />
+        </div>
       </main>
-      <footer></footer>
+      <Footer />
     </>
   );
 }

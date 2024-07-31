@@ -32,6 +32,7 @@ export const columns: ColumnDef<HospitalWaitTime>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="pl-0"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -50,6 +51,7 @@ export const columns: ColumnDef<HospitalWaitTime>[] = [
     header: ({ column }) => {
       return (
         <Button
+          className="pl-0"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
