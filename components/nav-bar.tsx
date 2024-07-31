@@ -9,7 +9,6 @@ export default function NavBar() {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
-    console.log("toggle", theme);
     if (theme === "light") setTheme("dark");
     else setTheme("light");
   };
