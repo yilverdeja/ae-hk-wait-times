@@ -113,7 +113,6 @@ export const columns: ColumnDef<HospitalWaitTime>[] = [
     header: ({ column }) => {
       return (
         <Button
-          className="pl-0"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -143,7 +142,6 @@ export const columns: ColumnDef<HospitalWaitTime>[] = [
     header: ({ column }) => {
       return (
         <Button
-          className="pl-0"
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -203,7 +201,7 @@ export default function WaitTimeTable<TData, TValue>({
               data-state={row.getIsSelected() && "selected"}
             >
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
+                <TableCell className="pl-8" key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
