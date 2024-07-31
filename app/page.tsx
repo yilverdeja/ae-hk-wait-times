@@ -1,6 +1,9 @@
 "use client";
 import axios from "axios";
-import WaitTimeTable, { columns } from "@/components/wait-time-table";
+import WaitTimeTable, {
+  columns,
+  hospitals,
+} from "@/components/wait-time-table";
 import NavBar from "@/components/nav-bar";
 import Footer from "@/components/footer";
 import Information from "@/components/information";
@@ -64,7 +67,14 @@ export default function Home() {
           </div>
         </header>
         <section className="w-full md:col-span-1">
-          {data && <WaitTimeTable columns={columns} data={data.waitTime} />}
+          {data && (
+            <WaitTimeTable
+              columns={columns}
+              data={data.waitTime.map((d) => {
+                return { ...d, ...hospitals[d.hospName.toUpperCase()] };
+              })}
+            />
+          )}
         </section>
         <div className="w-full block mt-2 md:hidden">
           <Information />

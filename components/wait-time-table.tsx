@@ -27,7 +27,7 @@ interface HospitalInformation {
   link: string;
 }
 
-const hospitals: Record<string, HospitalInformation> = {
+export const hospitals: Record<string, HospitalInformation> = {
   "ALICE HO MIU LING NETHERSOLE HOSPITAL": {
     region: "NEW TERRITORIES",
     link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100171&Lang=ENG&Dimension=100&Parent_ID=10180",
@@ -105,6 +105,8 @@ const hospitals: Record<string, HospitalInformation> = {
 export interface HospitalWaitTime {
   hospName: string;
   topWait: string;
+  region?: string;
+  link?: string;
 }
 
 export const columns: ColumnDef<HospitalWaitTime>[] = [
@@ -123,9 +125,7 @@ export const columns: ColumnDef<HospitalWaitTime>[] = [
     },
     cell: ({ row }) => {
       const name = row.getValue("hospName") as string;
-      let link = "";
-      if (name.toUpperCase() in hospitals)
-        link = hospitals[name.toUpperCase()].link;
+      const link = row.getValue("link") as string;
       return (
         <Link
           className="underline underline-offset-4"
@@ -134,6 +134,20 @@ export const columns: ColumnDef<HospitalWaitTime>[] = [
         >
           {name}
         </Link>
+      );
+    },
+  },
+  {
+    accessorKey: "region",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Region
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
       );
     },
   },
@@ -151,6 +165,10 @@ export const columns: ColumnDef<HospitalWaitTime>[] = [
       );
     },
   },
+  {
+    accessorKey: "link",
+    header: "Link",
+  },
 ];
 
 interface Props<TData, TValue> {
@@ -162,10 +180,16 @@ export default function WaitTimeTable<TData, TValue>({
   columns,
   data,
 }: Props<TData, TValue>) {
+  console.log(data);
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     data,
     columns,
+    initialState: {
+      columnVisibility: {
+        link: false,
+      },
+    },
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
