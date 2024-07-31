@@ -180,7 +180,6 @@ export default function WaitTimeTable<TData, TValue>({
   columns,
   data,
 }: Props<TData, TValue>) {
-  console.log(data);
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     data,

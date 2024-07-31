@@ -7,10 +7,7 @@ import WaitTimeTable, {
 import NavBar from "@/components/nav-bar";
 import Footer from "@/components/footer";
 import Information from "@/components/information";
-import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-
-import { Separator } from "@/components/ui/separator";
 
 interface WaitTime {
   hospName: string;
@@ -23,6 +20,7 @@ interface Data {
 }
 
 const getData = async (): Promise<Data> => {
+  console.log("getdata");
   const url = "https://www.ha.org.hk/opendata/aed/aedwtdata-en.json";
   const formatted_dt =
     new Date("2024-07-24")
