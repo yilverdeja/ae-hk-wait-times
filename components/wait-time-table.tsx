@@ -3,6 +3,7 @@
 import {
   ColumnDef,
   SortingState,
+  VisibilityState,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
@@ -17,10 +18,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
+import useBreakpoint from "use-breakpoint";
+const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
 
 interface HospitalInformation {
   region: "HONG KONG ISLAND" | "KOWLOON" | "NEW TERRITORIES";
@@ -136,6 +139,7 @@ export const columns: ColumnDef<HospitalWaitTime>[] = [
         </Link>
       );
     },
+    enableHiding: false,
   },
   {
     accessorKey: "region",
@@ -164,6 +168,7 @@ export const columns: ColumnDef<HospitalWaitTime>[] = [
         </Button>
       );
     },
+    enableHiding: false,
   },
   {
     accessorKey: "link",
@@ -180,22 +185,35 @@ export default function WaitTimeTable<TData, TValue>({
   columns,
   data,
 }: Props<TData, TValue>) {
+  const { breakpoint } = useBreakpoint(BREAKPOINTS);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    hospName: true,
+    topWait: true,
+    region: true,
+    link: false,
+  });
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     data,
     columns,
-    initialState: {
-      columnVisibility: {
-        link: false,
-      },
-    },
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
+      columnVisibility,
     },
+    onColumnVisibilityChange: setColumnVisibility,
   });
+
+  // removes the "region" column on mobile versions
+  useEffect(() => {
+    setColumnVisibility((prev) => ({
+      ...prev,
+      region: breakpoint !== "mobile",
+    }));
+  }, [breakpoint]);
+
   return (
     <Table>
       <TableHeader>
