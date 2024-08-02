@@ -40,8 +40,8 @@ export default function InformationDialog() {
     <Dialog>
       <DialogTrigger className="hover:cursor-pointer" asChild>
         <div className="flex gap-2 justify-center items-center">
-          <InfoIcon size={20} />
-          <span className="text-sm underline underline-offset-2">
+          <InfoIcon className="order-1 sm:order-2" size={20} />
+          <span className="order-2 text-sm underline underline-offset-2 sm:order-1">
             Understanding the Wait
           </span>
         </div>
