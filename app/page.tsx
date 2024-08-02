@@ -8,6 +8,7 @@ import NavBar from "@/components/nav-bar";
 import Footer from "@/components/footer";
 import Information from "@/components/information";
 import { useQuery } from "@tanstack/react-query";
+import moment from "moment";
 
 interface WaitTime {
   hospName: string;
@@ -22,26 +23,45 @@ interface Data {
 const getData = async (): Promise<Data> => {
   console.log("getdata");
   const url = "https://www.ha.org.hk/opendata/aed/aedwtdata-en.json";
-  const formatted_dt =
-    new Date("2024-07-24")
-      .toLocaleDateString("zh-Hans-CN", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      })
-      .split("/")
-      .join("") +
-    "-" +
-    "00:30".split(":").join("");
-  const endpoint = `https://api.data.gov.hk/v1/historical-archive/get-file?url=${url}&time=${formatted_dt}`;
-  const response = await axios.get(endpoint);
+  // const formatted_dt =
+  //   new Date("2024-07-24")
+  //     .toLocaleDateString("zh-Hans-CN", {
+  //       day: "2-digit",
+  //       month: "2-digit",
+  //       year: "numeric",
+  //     })
+  //     .split("/")
+  //     .join("") +
+  //   "-" +
+  //   "00:30".split(":").join("");
+  // const endpoint = `https://api.data.gov.hk/v1/historical-archive/get-file?url=${url}&time=${formatted_dt}`;
+  // const response = await axios.get(endpoint);
+  const response = await axios.get(url);
   return response.data; // Make sure to return just the data object
 };
 
 export default function Home() {
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading } = useQuery<Data>({
     queryKey: ["data"],
     queryFn: () => getData(),
+    refetchInterval: (query) => {
+      // refetch at 15 minute intervals
+      const updateTime = query.state.data?.updateTime;
+      if (!updateTime) return 1000;
+
+      // retrieve the most recent data's update time and calculate fetch time 15 mins later
+      const refetchTime = moment(updateTime, "D/M/YYYY h:mma")
+        .add(15, "minutes")
+        .toDate();
+      const currentTime = new Date();
+
+      // get the difference between refetch time and current time
+      const diffTime = refetchTime.getTime() - currentTime.getTime();
+      console.log(diffTime / (1000 * 60));
+      if (diffTime <= 0) return 1000 * 60; // if current time > refetch time then wait 1 minute
+
+      return diffTime;
+    },
   });
 
   if (isLoading) return <p>Loading...</p>;
@@ -65,6 +85,7 @@ export default function Home() {
           </div>
         </header>
         <section className="w-full md:col-span-1">
+          <p className="text-sm">Updated at {data?.updateTime}</p>
           {data && (
             <WaitTimeTable
               columns={columns}
