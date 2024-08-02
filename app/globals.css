@@ -13,3 +13,28 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+/** BRUTE FORCE FIX **/
+[data-theme="light"] .badge {
+  color: #020617;
+}
+
+[data-theme="dark"] .badge {
+  color: #f8fafc;
+}
+
+[data-theme="light"] .badge-border {
+  border-color: #e2e8f0;
+}
+
+[data-theme="light"] .badge-border:focus {
+  border-color: #020617;
+}
+
+[data-theme="dark"] .badge-border {
+  border-color: #1e293b;
+}
+
+[data-theme="dark"] .badge-border:focus {
+  border-color: #cbd5e1;
+}
