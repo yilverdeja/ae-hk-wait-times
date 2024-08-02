@@ -15,6 +15,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Link from "next/link";
+import { InfoIcon } from "lucide-react";
 
 const information = [
   {
@@ -37,8 +38,13 @@ const information = [
 export default function InformationDialog() {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Why?</Button>
+      <DialogTrigger className="hover:cursor-pointer" asChild>
+        <div className="flex gap-2 justify-center items-center">
+          <InfoIcon size={20} />
+          <span className="text-sm underline underline-offset-2">
+            Understanding the Wait
+          </span>
+        </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
