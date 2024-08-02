@@ -9,6 +9,7 @@ import Footer from "@/components/footer";
 import Information from "@/components/information";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
+import { Badge } from "@/components/ui/badge";
 
 interface WaitTime {
   hospName: string;
@@ -85,7 +86,14 @@ export default function Home() {
           </div>
         </header>
         <section className="w-full md:col-span-1">
-          <p className="text-sm">Updated at {data?.updateTime}</p>
+          <div className="flex justify-end md:justify-end">
+            <Badge variant="outline">
+              Updated on{" "}
+              {moment(data?.updateTime, "D/M/YYYY h:mma").format(
+                "MMM Do YYYY, h:mma"
+              )}
+            </Badge>
+          </div>
           {data && (
             <WaitTimeTable
               columns={columns}
