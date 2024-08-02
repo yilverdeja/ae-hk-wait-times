@@ -1,7 +1,8 @@
 import "./globals.css";
 import { DM_Sans } from "next/font/google";
-import { ThemeProvider } from "next-themes";
-import Providers from "./providers";
+import dynamic from "next/dynamic";
+import { cn } from "@/lib/utils";
+const Providers = dynamic(() => import("./providers"), { ssr: false });
 
 const dm_sans = DM_Sans({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
@@ -16,11 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className="no-scrollbar">
-      <body className={dm_sans.className}>
-        <Providers>
-          <ThemeProvider attribute="class">{children}</ThemeProvider>
-        </Providers>
+    <html lang="en" className={cn(dm_sans.className, "dark no-scrollbar")}>
+      <body>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

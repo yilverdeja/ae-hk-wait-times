@@ -20,6 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect } from "react";
 
 const hospitalNames = [
   "Alice Ho Miu Ling Nethersole Hospital",
