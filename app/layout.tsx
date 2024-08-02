@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className="no-scrollbar">
-      <body className={dm_sans.className + " p-4"}>
+      <body className={dm_sans.className}>
         <Providers>
           <ThemeProvider attribute="class">{children}</ThemeProvider>
         </Providers>

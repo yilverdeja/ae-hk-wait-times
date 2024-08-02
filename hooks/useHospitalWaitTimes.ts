@@ -34,7 +34,6 @@ export const useHospitalWaitTimes = () => useQuery<HospitalWaitTimesData>({
 
     // get the difference between refetch time and current time
     const diffTime = refetchTime.getTime() - currentTime.getTime();
-    console.log(diffTime / (1000 * 60));
     if (diffTime <= 0) return 1000 * 30; // if current time > refetch time then wait 30 seconds
 
     return diffTime;

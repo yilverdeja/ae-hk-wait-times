@@ -9,6 +9,7 @@ import Information from "@/components/information";
 import moment from "moment";
 import { Badge } from "@/components/ui/badge";
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes";
+import InformationDialog from "@/components/information-dialog";
 
 export default function Home() {
   const { data, isLoading, error } = useHospitalWaitTimes();
@@ -17,7 +18,7 @@ export default function Home() {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <>
+    <div className="p-4">
       <NavBar />
       <main className="flex flex-col gap-4 justify-between items-start my-4 md:grid md:grid-cols-2 md:items-start md:gap-8">
         <header className="md:col-span-1">
@@ -29,8 +30,8 @@ export default function Home() {
             reference of the latest waiting times at different emergency
             departments in Hong Kong
           </p>
-          <div className="w-full hidden md:block md:mt-4">
-            <Information />
+          <div className="w-full block md:mt-4">
+            <InformationDialog />
           </div>
         </header>
         <section className="w-full md:col-span-1">
@@ -51,11 +52,8 @@ export default function Home() {
             />
           )}
         </section>
-        <div className="w-full block mt-2 md:hidden">
-          <Information />
-        </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
