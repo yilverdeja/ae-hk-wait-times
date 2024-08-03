@@ -133,7 +133,10 @@ export default function WaitTimeTable({ data, isLoading }: Props) {
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => {
               return (
-                <TableHead key={header.id}>
+                <TableHead
+                  className={header.id === "region" ? "hidden md:block" : ""}
+                  key={header.id}
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(
