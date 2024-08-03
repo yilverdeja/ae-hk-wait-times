@@ -162,7 +162,8 @@ export default function WaitTimeTable({ data, isLoading }: Props) {
               </TableCell>
             </TableRow>
           ))}
-        {data && table.getRowModel().rows?.length ? (
+        {data &&
+          table.getRowModel().rows?.length &&
           table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
@@ -174,8 +175,8 @@ export default function WaitTimeTable({ data, isLoading }: Props) {
                 </TableCell>
               ))}
             </TableRow>
-          ))
-        ) : (
+          ))}
+        {!isLoading && !data && (
           <TableRow>
             <TableCell colSpan={columns.length} className="h-24 text-center">
               No results.
