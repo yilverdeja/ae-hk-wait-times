@@ -1,47 +1,12 @@
 "use client";
-import WaitTimeTable, {
-  columns,
-  hospitals,
-} from "@/components/wait-time-table";
+import WaitTimeTable from "@/components/wait-time-table";
 import NavBar from "@/components/nav-bar";
 import Footer from "@/components/footer";
 import moment from "moment";
 import { Badge } from "@/components/ui/badge";
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes";
 import InformationDialog from "@/components/information-dialog";
-import { ArrowUpDown } from "lucide-react";
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useEffect } from "react";
-
-const hospitalNames = [
-  "Alice Ho Miu Ling Nethersole Hospital",
-  "Caritas Medical Centre",
-  "Kwong Wah Hospital",
-  "North District Hospital",
-  "North Lantau Hospital",
-  "Princess Margaret Hospital",
-  "Pok Oi Hospital",
-  "Prince of Wales Hospital",
-  "Pamela Youde Nethersole Eastern Hospital",
-  "Queen Elizabeth Hospital",
-  "Queen Mary Hospital",
-  "Ruttonjee Hospital",
-  "St John Hospital",
-  "Tseung Kwan O Hospital",
-  "Tuen Mun Hospital",
-  "Tin Shui Wai Hospital",
-  "United Christian Hospital",
-  "Yan Chai Hospital",
-];
+import { hospitals } from "@/data/hospitals";
 
 export default function Home() {
   const { data, isLoading, error } = useHospitalWaitTimes();
@@ -70,53 +35,16 @@ export default function Home() {
               </Badge>
             )}
           </div>
-          {isLoading && (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>
-                    <div className="flex items-center">
-                      Hospital
-                      <ArrowUpDown className="ml-2 h-4 w-4" />
-                    </div>
-                  </TableHead>
-                  <TableHead className="hidden md:block">
-                    <div className="flex items-center">
-                      Region
-                      <ArrowUpDown className="ml-2 h-4 w-4" />
-                    </div>
-                  </TableHead>
-                  <TableHead>
-                    <div className="flex items-center">
-                      Wait Time
-                      <ArrowUpDown className="ml-2 h-4 w-4" />
-                    </div>
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {hospitalNames.map((hospitalName) => (
-                  <TableRow key={hospitalName}>
-                    <TableCell>{hospitalName}</TableCell>
-                    <TableCell className="hidden md:block">
-                      <Skeleton className="w-full h-[20px] rounded-full" />
-                    </TableCell>
-                    <TableCell>
-                      <Skeleton className="w-full h-[20px] rounded-full" />
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          )}
-          {data && (
-            <WaitTimeTable
-              columns={columns}
-              data={data.waitTime.map((d) => {
-                return { ...d, ...hospitals[d.hospName.toUpperCase()] };
-              })}
-            />
-          )}
+          <WaitTimeTable
+            data={
+              data
+                ? data.waitTime.map((d) => {
+                    return { ...d, ...hospitals[d.hospName.toUpperCase()] };
+                  })
+                : null
+            }
+            isLoading={isLoading}
+          />
         </section>
       </main>
       <Footer />

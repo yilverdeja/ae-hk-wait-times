@@ -5,6 +5,8 @@ import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { Github, Moon, Sun } from "lucide-react";
 import Link from "next/link";
 
+const iconClassName = "w-5 h-5 md:w-6 md:h-6";
+
 export default function NavBar() {
   const { theme, setTheme } = useTheme();
 
@@ -19,7 +21,7 @@ export default function NavBar() {
         <MenubarMenu>
           <MenubarTrigger className="px-2">
             <Link href="https://github.com" target="_blank">
-              <Github className="w-5 h-5 md:w-6 md:h-6" />
+              <Github className={iconClassName} />
             </Link>
           </MenubarTrigger>
         </MenubarMenu>
@@ -29,9 +31,9 @@ export default function NavBar() {
             onClick={() => toggleTheme()}
           >
             {theme === "light" ? (
-              <Moon className="w-5 h-5 md:w-6 md:h-6" />
+              <Moon className={iconClassName} />
             ) : (
-              <Sun className="w-5 h-5 md:w-6 md:h-6" />
+              <Sun className={iconClassName} />
             )}
           </MenubarTrigger>
         </MenubarMenu>

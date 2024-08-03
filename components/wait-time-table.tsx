@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Column,
   ColumnDef,
   SortingState,
   VisibilityState,
@@ -23,109 +24,38 @@ import { Button } from "./ui/button";
 import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import useBreakpoint from "use-breakpoint";
+import { hospitalNames } from "@/data/hospitals";
+import { Skeleton } from "./ui/skeleton";
 const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
 
-interface HospitalInformation {
-  region: "HONG KONG ISLAND" | "KOWLOON" | "NEW TERRITORIES";
-  link: string;
-}
-
-export const hospitals: Record<string, HospitalInformation> = {
-  "ALICE HO MIU LING NETHERSOLE HOSPITAL": {
-    region: "NEW TERRITORIES",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100171&Lang=ENG&Dimension=100&Parent_ID=10180",
-  },
-  "CARITAS MEDICAL CENTRE": {
-    region: "KOWLOON",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100163&Lang=ENG&Dimension=100&Parent_ID=10179",
-  },
-  "KWONG WAH HOSPITAL": {
-    region: "KOWLOON",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100153&Lang=ENG&Dimension=100&Parent_ID=10179",
-  },
-  "NORTH DISTRICT HOSPITAL": {
-    region: "NEW TERRITORIES",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100178&Lang=ENG&Dimension=100&Parent_ID=10180",
-  },
-  "NORTH LANTAU HOSPITAL": {
-    region: "NEW TERRITORIES",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=216546&Lang=ENG&Dimension=100&Parent_ID=10179",
-  },
-  "PRINCESS MARGARET HOSPITAL": {
-    region: "NEW TERRITORIES",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100160&Lang=ENG&Dimension=100&Parent_ID=10179",
-  },
-  "POK OI HOSPITAL": {
-    region: "NEW TERRITORIES",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100174&Lang=ENG&Dimension=100&Parent_ID=10181",
-  },
-  "PRINCE OF WALES HOSPITAL": {
-    region: "NEW TERRITORIES",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100166&Lang=ENG&Dimension=100&Parent_ID=10180",
-  },
-  "PAMELA YOUDE NETHERSOLE EASTERN HOSPITAL": {
-    region: "HONG KONG ISLAND",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100141&Lang=ENG&Dimension=100&Parent_ID=10175",
-  },
-  "QUEEN ELIZABETH HOSPITAL": {
-    region: "KOWLOON",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100149&Lang=ENG&Dimension=100&Parent_ID=10177",
-  },
-  "QUEEN MARY HOSPITAL": {
-    region: "HONG KONG ISLAND",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100131&Lang=ENG&Dimension=100&Parent_ID=10176",
-  },
-  "RUTTONJEE HOSPITAL": {
-    region: "HONG KONG ISLAND",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100144&Lang=ENG&Dimension=100&Parent_ID=10175",
-  },
-  "ST JOHN HOSPITAL": {
-    region: "NEW TERRITORIES",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100146&Lang=ENG&Dimension=100&Parent_ID=10175",
-  },
-  "TSEUNG KWAN O HOSPITAL": {
-    region: "NEW TERRITORIES",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=101326&Lang=ENG&Dimension=100&Parent_ID=10178",
-  },
-  "TUEN MUN HOSPITAL": {
-    region: "NEW TERRITORIES",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100173&Lang=ENG&Dimension=100&Parent_ID=10181",
-  },
-  "TIN SHUI WAI HOSPITAL": {
-    region: "NEW TERRITORIES",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=235909&Lang=ENG&Dimension=100&Parent_ID=10181",
-  },
-  "UNITED CHRISTIAN HOSPITAL": {
-    region: "KOWLOON",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100156&Lang=ENG&Dimension=100&Parent_ID=10178",
-  },
-  "YAN CHAI HOSPITAL": {
-    region: "NEW TERRITORIES",
-    link: "http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100165&Lang=ENG&Dimension=100&Parent_ID=10179",
-  },
-};
-
-export interface HospitalWaitTime {
+interface HospitalWaitTime {
   hospName: string;
   topWait: string;
   region?: string;
   link?: string;
 }
 
-export const columns: ColumnDef<HospitalWaitTime>[] = [
+interface SortingButtonProps {
+  column: Column<HospitalWaitTime, unknown>;
+  children: React.ReactNode;
+}
+
+const SortingButton = ({ column, children }: SortingButtonProps) => (
+  <Button
+    variant="ghost"
+    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  >
+    {children}
+    <ArrowUpDown className="ml-2 h-4 w-4" />
+  </Button>
+);
+
+const columns: ColumnDef<HospitalWaitTime>[] = [
   {
     accessorKey: "hospName",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Hospital
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: ({ column }) => (
+      <SortingButton column={column}>Hospital</SortingButton>
+    ),
     cell: ({ row }) => {
       const name = row.getValue("hospName") as string;
       const link = row.getValue("link") as string;
@@ -144,29 +74,13 @@ export const columns: ColumnDef<HospitalWaitTime>[] = [
   {
     accessorKey: "region",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Region
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+      return <SortingButton column={column}>Region</SortingButton>;
     },
   },
   {
     accessorKey: "topWait",
     header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Wait Time
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+      return <SortingButton column={column}>Wait Time</SortingButton>;
     },
     enableHiding: false,
   },
@@ -176,15 +90,12 @@ export const columns: ColumnDef<HospitalWaitTime>[] = [
   },
 ];
 
-interface Props<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface Props {
+  data: HospitalWaitTime[] | null;
+  isLoading: boolean;
 }
 
-export default function WaitTimeTable<TData, TValue>({
-  columns,
-  data,
-}: Props<TData, TValue>) {
+export default function WaitTimeTable({ data, isLoading }: Props) {
   const { breakpoint } = useBreakpoint(BREAKPOINTS);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     hospName: true,
@@ -194,15 +105,15 @@ export default function WaitTimeTable<TData, TValue>({
   });
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
-    data,
+    data: data ?? [],
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
       columnVisibility,
     },
+    getCoreRowModel: getCoreRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
   });
 
@@ -235,7 +146,19 @@ export default function WaitTimeTable<TData, TValue>({
         ))}
       </TableHeader>
       <TableBody>
-        {table.getRowModel().rows?.length ? (
+        {isLoading &&
+          hospitalNames.map((hospitalName) => (
+            <TableRow key={hospitalName}>
+              <TableCell>{hospitalName}</TableCell>
+              <TableCell className="hidden md:block">
+                <Skeleton className="w-full h-[20px] rounded-full" />
+              </TableCell>
+              <TableCell>
+                <Skeleton className="w-full h-[20px] rounded-full" />
+              </TableCell>
+            </TableRow>
+          ))}
+        {data && table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}

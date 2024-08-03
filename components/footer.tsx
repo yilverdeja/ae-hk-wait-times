@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/configs/site";
+import { getCurrentYear } from "@/lib/utils";
 
 export default function Footer() {
   return (
@@ -9,7 +10,7 @@ export default function Footer() {
       <Separator className="my-2" />
       <div className="flex flex-col gap-2 justify-center items-center md:flex-row md:justify-between md:mx-8">
         <span className="text-sm">
-          © {new Date().getFullYear()}{" "}
+          © {getCurrentYear()}{" "}
           <a href={siteConfig.url} className="hover:underline">
             A&E Wait Times
           </a>
