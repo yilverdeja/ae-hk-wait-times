@@ -15,6 +15,7 @@
 }
 
 /** BRUTE FORCE FIX **/
+/* BADGE */
 [data-theme="light"] .badge {
   color: #020617;
 }
@@ -37,4 +38,23 @@
 
 [data-theme="dark"] .badge-border:focus {
   border-color: #cbd5e1;
+}
+
+/* Dialog */
+[data-theme="light"] .dialog-content {
+  background-color: white;
+  border-color: #e2e8f0;
+}
+
+[data-theme="dark"] .dialog-content {
+  background-color: #020617;
+  border-color: #1e293b;
+}
+
+[data-theme="light"] .dialog-desc {
+  color: #64748b;
+}
+
+[data-theme="dark"] .dialog-desc {
+  color: #94a3b8;
 }
