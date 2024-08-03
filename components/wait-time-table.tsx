@@ -19,13 +19,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
+import { hospitals } from "@/data/hospitals";
 import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import useBreakpoint from "use-breakpoint";
-import { hospitalNames } from "@/data/hospitals";
+import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
+
 const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
 
 interface HospitalWaitTime {
@@ -147,7 +148,7 @@ export default function WaitTimeTable({ data, isLoading }: Props) {
       </TableHeader>
       <TableBody>
         {isLoading &&
-          hospitalNames.map((hospitalName) => (
+          Array.from(hospitals.keys()).map((hospitalName) => (
             <TableRow key={hospitalName}>
               <TableCell>{hospitalName}</TableCell>
               <TableCell className="hidden md:block">

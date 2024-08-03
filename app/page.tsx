@@ -1,12 +1,12 @@
 "use client";
-import WaitTimeTable from "@/components/wait-time-table";
-import NavBar from "@/components/nav-bar";
 import Footer from "@/components/footer";
-import moment from "moment";
-import { Badge } from "@/components/ui/badge";
-import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes";
 import InformationDialog from "@/components/information-dialog";
-import { hospitals } from "@/data/hospitals";
+import NavBar from "@/components/nav-bar";
+import { Badge } from "@/components/ui/badge";
+import WaitTimeTable from "@/components/wait-time-table";
+import { getHospitalInformation } from "@/data/hospitals";
+import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes";
+import moment from "moment";
 
 export default function Home() {
   const { data, isLoading, error } = useHospitalWaitTimes();
@@ -39,7 +39,15 @@ export default function Home() {
             data={
               data
                 ? data.waitTime.map((d) => {
-                    return { ...d, ...hospitals[d.hospName.toUpperCase()] };
+                    const hospitalData = getHospitalInformation(d.hospName);
+                    return {
+                      hospName: d.hospName,
+                      topWait: d.topWait,
+                      region: hospitalData
+                        ? hospitalData.region.long
+                        : undefined,
+                      link: hospitalData ? hospitalData.link : undefined,
+                    };
                   })
                 : null
             }

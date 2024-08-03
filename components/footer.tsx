@@ -1,8 +1,8 @@
 "use client";
-import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/configs/site";
 import { getCurrentYear } from "@/lib/utils";
+import Link from "next/link";
 
 export default function Footer() {
   return (

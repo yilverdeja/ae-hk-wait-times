@@ -1,6 +1,6 @@
-import "./globals.css";
-import { DM_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { DM_Sans } from "next/font/google";
+import "./globals.css";
 import Providers from "./providers";
 
 const dm_sans = DM_Sans({ weight: ["400", "500", "700"], subsets: ["latin"] });

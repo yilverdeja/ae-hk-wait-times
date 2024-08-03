@@ -1,6 +1,5 @@
 "use client";
 import { useTheme } from "next-themes";
-
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { Github, Moon, Sun } from "lucide-react";
 import Link from "next/link";

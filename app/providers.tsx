@@ -6,8 +6,8 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
+import React from "react";
 
 function makeQueryClient() {
   return new QueryClient({
