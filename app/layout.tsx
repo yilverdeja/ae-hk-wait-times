@@ -1,9 +1,7 @@
 import "./globals.css";
 import { DM_Sans } from "next/font/google";
-// import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
 import Providers from "./providers";
-// const Providers = dynamic(() => import("./providers"), { ssr: false });
 
 const dm_sans = DM_Sans({ weight: ["400", "500", "700"], subsets: ["latin"] });
 

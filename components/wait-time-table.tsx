@@ -215,7 +215,7 @@ export default function WaitTimeTable<TData, TValue>({
   }, [breakpoint]);
 
   return (
-    <Table>
+    <Table className="my-4">
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>

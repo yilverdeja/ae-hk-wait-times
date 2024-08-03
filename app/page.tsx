@@ -51,7 +51,7 @@ export default function Home() {
   return (
     <div className="p-4">
       <NavBar />
-      <main className="flex flex-col gap-4 justify-between items-start my-4">
+      <main className="flex flex-col gap-4 justify-between items-start my-4 sm:gap-2">
         <header className="w-full flex flex-col justify-center items-center sm:flex-row sm:justify-between sm:items-center">
           <h2 className="text-lg text-center font-bold mb-2 md:text-xl sm:text-left">
             Current A&E Waiting Times
