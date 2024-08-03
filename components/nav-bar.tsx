@@ -24,7 +24,10 @@ export default function NavBar() {
           </MenubarTrigger>
         </MenubarMenu>
         <MenubarMenu>
-          <MenubarTrigger className="px-2" onClick={() => toggleTheme()}>
+          <MenubarTrigger
+            className="px-2 hover:cursor-pointer"
+            onClick={() => toggleTheme()}
+          >
             {theme === "light" ? (
               <Moon className="w-5 h-5 md:w-6 md:h-6" />
             ) : (
