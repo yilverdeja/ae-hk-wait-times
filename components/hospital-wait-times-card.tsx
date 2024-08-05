@@ -11,10 +11,7 @@ import {
   ChartTooltip,
 } from "@/components/ui/chart";
 import moment from "moment";
-
-interface DayData {
-  [key: string]: number;
-}
+import { DayNames, HospitalData, WeekDayNames } from "@/data/hospitalAverages";
 
 interface HourData {
   Day: string;
@@ -23,7 +20,7 @@ interface HourData {
 }
 
 interface Props {
-  data: Record<string, DayData>;
+  data: HospitalData;
   currentWaitTime: number;
   currentUpdateTime: Date;
 }
@@ -39,7 +36,7 @@ const chartConfig: ChartConfig = {
   },
 };
 
-const dayNames = [
+const dayNames: WeekDayNames[] = [
   "Sunday",
   "Monday",
   "Tuesday",
@@ -78,9 +75,9 @@ export default function HospitalWaitTimesCard({
             Now:
               new Date().getHours() === parseInt(hour) &&
               dayNames[currentUpdateTime.getDay()] === dayName
-                ? currentWaitTime - dayData[hour]
+                ? currentWaitTime - dayData[hour as DayNames]
                 : undefined,
-            WaitTime: dayData[hour],
+            WaitTime: dayData[hour as DayNames],
           })
         );
       });
