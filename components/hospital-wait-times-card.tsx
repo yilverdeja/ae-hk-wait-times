@@ -11,7 +11,17 @@ import {
   ChartTooltip,
 } from "@/components/ui/chart";
 import moment from "moment";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { DayNames, HospitalData, WeekDayNames } from "@/data/hospitalAverages";
+
+import useBreakpoint from "use-breakpoint";
+const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
 
 interface HourData {
   Day: string;
@@ -47,13 +57,13 @@ const dayNames: WeekDayNames[] = [
 ];
 
 const d = [
-  { value: "1", text: "Mon" },
-  { value: "2", text: "Tue" },
-  { value: "3", text: "Wed" },
-  { value: "4", text: "Thu" },
-  { value: "5", text: "Fri" },
-  { value: "6", text: "Sat" },
-  { value: "0", text: "Sun" },
+  { value: "1", short: "Mon", long: "Monday" },
+  { value: "2", short: "Tue", long: "Tuesday" },
+  { value: "3", short: "Wed", long: "Wednesday" },
+  { value: "4", short: "Thu", long: "Thursday" },
+  { value: "5", short: "Fri", long: "Friday" },
+  { value: "6", short: "Sat", long: "Saturday" },
+  { value: "0", short: "Sun", long: "Sunday" },
 ];
 
 export default function HospitalWaitTimesCard({
@@ -61,6 +71,7 @@ export default function HospitalWaitTimesCard({
   currentWaitTime,
   currentUpdateTime,
 }: Props) {
+  const { breakpoint } = useBreakpoint(BREAKPOINTS);
   const [day, setDay] = useState<string>(new Date().getDay().toString());
   const [chartData, setChartData] = useState<HourData[]>([]);
   const [allFormattedData, setAllFormattedData] = useState<HourData[][]>([]);
@@ -98,20 +109,40 @@ export default function HospitalWaitTimesCard({
   }, [day, allFormattedData]);
 
   return (
-    <div>
+    <>
       <header className="flex flex-row justify-start items-center gap-2">
         <h2>Wait Times</h2>
         <CircleHelp size={18} />
       </header>
-      <Tabs defaultValue={day} className="w-[400px]" onValueChange={setDay}>
-        <TabsList>
-          {d.map(({ value, text }) => (
-            <TabsTrigger key={value} value={value}>
-              {text}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
+      {breakpoint === "mobile" ? (
+        <Select defaultValue={day} onValueChange={setDay}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue defaultValue={day} placeholder="Day" />
+          </SelectTrigger>
+          <SelectContent>
+            {d.map(({ value, long }) => (
+              <SelectItem key={value} value={value}>
+                {long}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      ) : (
+        <Tabs defaultValue={day} className="w-[400px]" onValueChange={setDay}>
+          <TabsList>
+            {d.map(({ value, short }) => (
+              <TabsTrigger
+                key={value}
+                value={value}
+                className="text-xs px-[5px] sm:text-sm sm:px-3"
+              >
+                {short}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+      )}
+
       <div className="flex flex-row my-2">
         <p>
           Updated at <span>{moment(currentUpdateTime).format("h:mma")}</span> -
@@ -143,8 +174,18 @@ export default function HospitalWaitTimesCard({
               ];
             }}
           />
-          <Bar dataKey="WaitTime" fill="#2563eb" stackId="a" />
-          <Bar dataKey="Now" fill="#2033a9" stackId="a" />
+          <Bar
+            dataKey="WaitTime"
+            fill="#2563eb"
+            stackId="a"
+            isAnimationActive={false}
+          />
+          <Bar
+            dataKey="Now"
+            fill="#2033a9"
+            stackId="a"
+            isAnimationActive={false}
+          />
           <ChartTooltip content={<ChartTooltipContent />} />
         </BarChart>
       </ChartContainer>
@@ -152,6 +193,6 @@ export default function HospitalWaitTimesCard({
         <InfoIcon size={20} />
         <p>Note:</p>
       </div>
-    </div>
+    </>
   );
 }

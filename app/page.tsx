@@ -1,14 +1,15 @@
 "use client";
+import { useEffect, useState } from "react";
+import moment from "moment";
 import Footer from "@/components/footer";
 import InformationDialog from "@/components/information-dialog";
 import NavBar from "@/components/nav-bar";
 import { Badge } from "@/components/ui/badge";
 import WaitTimeTable from "@/components/wait-time-table";
+import hospitalData, { HospitalNames } from "@/data/hospitalAverages";
 import { getHospitalInformation } from "@/data/hospitals";
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes";
-import moment from "moment";
-import hospitalData, { HospitalNames } from "@/data/hospitalAverages";
-
+import HospitalWaitTimesCard from "@/components/hospital-wait-times-card";
 import {
   Sheet,
   SheetContent,
@@ -16,8 +17,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { useEffect, useState } from "react";
-import HospitalWaitTimesCard from "@/components/hospital-wait-times-card";
 
 interface WaitMapping {
   [key: string]: number;
@@ -34,8 +33,6 @@ const waitMapping: WaitMapping = {
   "Over 7 hours": 8,
   "Over 8 hours": 9,
 };
-
-// TODO: Note you're trying to integrate the /hospital page into the main page
 
 export default function Home() {
   const [open, setOpen] = useState(false);
@@ -117,18 +114,21 @@ export default function Home() {
           <SheetHeader>
             <SheetTitle>{selectedHospital}</SheetTitle>
             <SheetDescription>
-              {selectedHospital && data && (
-                <HospitalWaitTimesCard
-                  data={hospitalData[selectedHospital as HospitalNames]}
-                  currentWaitTime={selectedHospitalWaitTime || 0} // Fallback to 0 if no data
-                  currentUpdateTime={moment(
-                    data.updateTime,
-                    "D/M/YYYY h:mma"
-                  ).toDate()}
-                />
-              )}
+              Hours: {selectedHospitalWaitTime}
             </SheetDescription>
           </SheetHeader>
+          <div>
+            {selectedHospital && data && (
+              <HospitalWaitTimesCard
+                data={hospitalData[selectedHospital as HospitalNames]}
+                currentWaitTime={selectedHospitalWaitTime || 0} // Fallback to 0 if no data
+                currentUpdateTime={moment(
+                  data.updateTime,
+                  "D/M/YYYY h:mma"
+                ).toDate()}
+              />
+            )}
+          </div>
         </SheetContent>
       </Sheet>
       <Footer />
