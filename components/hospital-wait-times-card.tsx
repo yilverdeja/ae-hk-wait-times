@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { CircleHelp, InfoIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
@@ -19,6 +19,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DayNames, HospitalData, WeekDayNames } from "@/data/hospitalAverages";
+
+import { TooltipProps } from "recharts";
+import {
+  ValueType,
+  NameType,
+} from "recharts/types/component/DefaultTooltipContent";
 
 import useBreakpoint from "use-breakpoint";
 const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
@@ -66,6 +72,28 @@ const d = [
   { value: "0", short: "Sun", long: "Sunday" },
 ];
 
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipProps<ValueType, NameType>) => {
+  if (active && payload && payload.length) {
+    const val = Math.round(payload[0].value);
+    return (
+      <div className="custom-tooltip bg-white px-2 py-1.5 dark:bg-slate-950">
+        <p className="label">
+          {val === 1
+            ? "Around 1 Hour"
+            : val === 2
+            ? "Over 1 Hour"
+            : `Over ${val - 1} Hours`}
+        </p>
+      </div>
+    );
+  }
+  return null;
+};
+
 export default function HospitalWaitTimesCard({
   data,
   currentWaitTime,
@@ -75,6 +103,20 @@ export default function HospitalWaitTimesCard({
   const [day, setDay] = useState<string>(new Date().getDay().toString());
   const [chartData, setChartData] = useState<HourData[]>([]);
   const [allFormattedData, setAllFormattedData] = useState<HourData[][]>([]);
+
+  const getAvgDayHourWaitTime = useCallback(() => {
+    const now = new Date();
+    const dayNow = dayNames[now.getDay()];
+    const hourNow = now.getHours().toString() as DayNames;
+    return data[dayNow][hourNow];
+  }, [data]);
+
+  const getBusyness = () => {
+    const trendWaitTime = Math.round(getAvgDayHourWaitTime());
+    if (currentWaitTime > trendWaitTime) return "More busy than usual";
+    if (currentWaitTime < trendWaitTime) return "Less busy than usual";
+    return "Usual wait time";
+  };
 
   useEffect(() => {
     if (Object.keys(data).length > 0) {
@@ -111,43 +153,37 @@ export default function HospitalWaitTimesCard({
   return (
     <>
       <header className="flex flex-row justify-start items-center gap-2">
-        <h2>Wait Times</h2>
-        <CircleHelp size={18} />
+        <h2>Popular Wait Times</h2>
       </header>
-      {breakpoint === "mobile" ? (
-        <Select defaultValue={day} onValueChange={setDay}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue defaultValue={day} placeholder="Day" />
-          </SelectTrigger>
-          <SelectContent>
-            {d.map(({ value, long }) => (
-              <SelectItem key={value} value={value}>
-                {long}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      ) : (
-        <Tabs defaultValue={day} className="w-[400px]" onValueChange={setDay}>
-          <TabsList>
-            {d.map(({ value, short }) => (
-              <TabsTrigger
-                key={value}
-                value={value}
-                className="text-xs px-[5px] sm:text-sm sm:px-3"
-              >
-                {short}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
-      )}
-
-      <div className="flex flex-row my-2">
-        <p>
-          Updated at <span>{moment(currentUpdateTime).format("h:mma")}</span> -
-          Busier than usual
-        </p>
+      <div className="my-4">
+        {breakpoint === "mobile" ? (
+          <Select defaultValue={day} onValueChange={setDay}>
+            <SelectTrigger>
+              <SelectValue defaultValue={day} placeholder="Day" />
+            </SelectTrigger>
+            <SelectContent>
+              {d.map(({ value, long }) => (
+                <SelectItem key={value} value={value}>
+                  {long}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        ) : (
+          <Tabs defaultValue={day} className="w-[400px]" onValueChange={setDay}>
+            <TabsList>
+              {d.map(({ value, short }) => (
+                <TabsTrigger
+                  key={value}
+                  value={value}
+                  className="text-xs px-[5px] sm:text-sm sm:px-3"
+                >
+                  {short}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        )}
       </div>
       <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
         <BarChart width={730} height={250} data={chartData}>
@@ -186,13 +222,18 @@ export default function HospitalWaitTimesCard({
             stackId="a"
             isAnimationActive={false}
           />
-          <ChartTooltip content={<ChartTooltipContent />} />
+          <ChartTooltip
+            content={<CustomTooltip />}
+            cursor={{ strokeWidth: 2, fill: "#0000ff22" }}
+          />
         </BarChart>
       </ChartContainer>
-      <div className="flex flex-row items-center gap-2">
-        <InfoIcon size={20} />
-        <p>Note:</p>
-      </div>
+      {new Date().getDay().toString() === day && (
+        <div className="flex flex-row my-2 gap-2 items-center">
+          <InfoIcon size={20} />
+          <p className="text-sm">{getBusyness()}</p>
+        </div>
+      )}
     </>
   );
 }

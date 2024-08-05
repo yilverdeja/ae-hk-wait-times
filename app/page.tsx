@@ -6,40 +6,17 @@ import InformationDialog from "@/components/information-dialog";
 import NavBar from "@/components/nav-bar";
 import { Badge } from "@/components/ui/badge";
 import WaitTimeTable from "@/components/wait-time-table";
-import hospitalData, { HospitalNames } from "@/data/hospitalAverages";
+import { HospitalNames } from "@/data/hospitalAverages";
 import { getHospitalInformation } from "@/data/hospitals";
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes";
-import HospitalWaitTimesCard from "@/components/hospital-wait-times-card";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-
-interface WaitMapping {
-  [key: string]: number;
-}
-
-const waitMapping: WaitMapping = {
-  "Around 1 hour": 1,
-  "Over 1 hour": 2,
-  "Over 2 hours": 3,
-  "Over 3 hours": 4,
-  "Over 4 hours": 5,
-  "Over 5 hours": 6,
-  "Over 6 hours": 7,
-  "Over 7 hours": 8,
-  "Over 8 hours": 9,
-};
+import WaitTimeSheet from "@/components/wait-time-sheet";
 
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [selectedHospital, setSelectedHospital] =
     useState<HospitalNames | null>(null);
   const [selectedHospitalWaitTime, setSelectedHospitalWaitTime] = useState<
-    number | null
+    string | null
   >(null);
   const { data, isLoading, error } = useHospitalWaitTimes();
 
@@ -49,7 +26,7 @@ export default function Home() {
         (w) => w.hospName === selectedHospital
       );
       if (hospitalDataX && hospitalDataX.topWait) {
-        setSelectedHospitalWaitTime(waitMapping[hospitalDataX.topWait] || null);
+        setSelectedHospitalWaitTime(hospitalDataX.topWait || null);
       }
       setOpen(true);
     }
@@ -100,37 +77,24 @@ export default function Home() {
           />
         </section>
       </main>
-      <Sheet
-        open={open}
-        onOpenChange={(isOpen) => {
-          setOpen(isOpen);
-          if (!isOpen) {
-            setSelectedHospital(null);
-            setSelectedHospitalWaitTime(null);
-          }
-        }}
-      >
-        <SheetContent className="w-[90%] sm:w-[540px]">
-          <SheetHeader>
-            <SheetTitle>{selectedHospital}</SheetTitle>
-            <SheetDescription>
-              Hours: {selectedHospitalWaitTime}
-            </SheetDescription>
-          </SheetHeader>
-          <div>
-            {selectedHospital && data && (
-              <HospitalWaitTimesCard
-                data={hospitalData[selectedHospital as HospitalNames]}
-                currentWaitTime={selectedHospitalWaitTime || 0} // Fallback to 0 if no data
-                currentUpdateTime={moment(
-                  data.updateTime,
-                  "D/M/YYYY h:mma"
-                ).toDate()}
-              />
-            )}
-          </div>
-        </SheetContent>
-      </Sheet>
+      {data && selectedHospital && (
+        <WaitTimeSheet
+          open={open}
+          onOpenChange={(isOpen) => {
+            setOpen(isOpen);
+            if (!isOpen) {
+              setSelectedHospital(null);
+              setSelectedHospitalWaitTime(null);
+            }
+          }}
+          selectedHospital={selectedHospital!}
+          selectedHospitalWaitTime={selectedHospitalWaitTime!}
+          selectedHospitalUpdateTime={moment(
+            data.updateTime,
+            "D/M/YYYY h:mma"
+          ).toDate()}
+        />
+      )}
       <Footer />
     </div>
   );
