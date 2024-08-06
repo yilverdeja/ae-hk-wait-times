@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/table";
 import { hospitals } from "@/data/hospitals";
 import { ArrowUpDown } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import useBreakpoint from "use-breakpoint";
 import { Button } from "./ui/button";
@@ -73,14 +72,12 @@ export default function WaitTimeTable({
         const name = row.getValue("hospName") as HospitalNames;
         const link = row.getValue("link") as string;
         return (
-          // <Link
-          //   className="underline underline-offset-4"
-          //   href={link}
-          //   target="_blank"
-          // >
-          //   {name}
-          // </Link>
-          <span onClick={() => onSelectHospital(name)}>{name}</span>
+          <span
+            className="underline underline-offset-4"
+            onClick={() => onSelectHospital(name)}
+          >
+            {name}
+          </span>
         );
       },
       enableHiding: false,

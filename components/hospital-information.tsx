@@ -1,5 +1,4 @@
 "use client";
-import { getHospitalInformation, HospitalNames } from "@/data/hospitals";
 import {
   ExternalLink,
   Hospital,

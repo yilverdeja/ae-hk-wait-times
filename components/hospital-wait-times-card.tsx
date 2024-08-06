@@ -1,16 +1,14 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
-import { CircleHelp, InfoIcon } from "lucide-react";
+import { InfoIcon } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
-  ChartTooltipContent,
   ChartTooltip,
 } from "@/components/ui/chart";
-import moment from "moment";
 import {
   Select,
   SelectContent,
