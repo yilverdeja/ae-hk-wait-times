@@ -32,8 +32,8 @@ const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
 interface HospitalWaitTime {
   hospName: string;
   topWait: string;
-  region?: string;
-  link?: string;
+  region: string;
+  slug: string;
 }
 
 interface SortingButtonProps {
@@ -70,10 +70,9 @@ export default function WaitTimeTable({
       ),
       cell: ({ row }) => {
         const name = row.getValue("hospName") as HospitalNames;
-        const link = row.getValue("link") as string;
         return (
           <span
-            className="underline underline-offset-4"
+            className="underline underline-offset-4 hover:cursor-pointer"
             onClick={() => onSelectHospital(name)}
           >
             {name}

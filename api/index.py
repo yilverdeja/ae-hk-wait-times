@@ -13,16 +13,13 @@ app = Flask(__name__)
 
 @app.route("/api/hospitals")
 def get_hospitals():
-    hospitals_information = {}
-    for key, information in hospitals_information_data.items():
+    hospitals_information = {} 
+    for slug, information in hospitals_information_data.items():
         hospital_information = {}
-        if "name" in information:
-            hospital_information["name"] = information["name"]
-        if "region" in information:
-            hospital_information["region"] = information["region"]
-        
-        if "name" in hospital_information and "region" in hospital_information:
-            hospitals_information[key] = hospital_information
+        hospital_name = information["name"]
+        hospital_information["slug"] = slug
+        hospital_information["region"] = information["region"]
+        hospitals_information[hospital_name] = hospital_information
     
     return hospitals_information
 

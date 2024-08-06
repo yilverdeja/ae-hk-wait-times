@@ -9,6 +9,7 @@ import WaitTimeTable from "@/components/wait-time-table";
 import { HospitalNames } from "@/data/hospitalAverages";
 import { getHospitalInformation } from "@/data/hospitals";
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes";
+import { useHospitals } from "@/hooks/useHospitals";
 import WaitTimeSheet from "@/components/wait-time-sheet";
 
 export default function Home() {
@@ -19,6 +20,11 @@ export default function Home() {
     string | null
   >(null);
   const { data, isLoading, error } = useHospitalWaitTimes();
+  const {
+    data: hospitals,
+    isLoading: isLoadingHospitals,
+    error: errorHospitals,
+  } = useHospitals();
 
   useEffect(() => {
     if (data && selectedHospital) {
@@ -56,25 +62,30 @@ export default function Home() {
               </Badge>
             )}
           </div>
-          <WaitTimeTable
-            data={
-              data
-                ? data.waitTime.map((d) => {
-                    const hospitalData = getHospitalInformation(d.hospName);
-                    return {
-                      hospName: d.hospName,
-                      topWait: d.topWait,
-                      region: hospitalData
-                        ? hospitalData.region.long
-                        : undefined,
-                      link: hospitalData ? hospitalData.link : undefined,
-                    };
-                  })
-                : null
-            }
-            isLoading={isLoading}
-            onSelectHospital={setSelectedHospital}
-          />
+          {data && hospitals && (
+            <WaitTimeTable
+              data={
+                data
+                  ? data.waitTime.map((d) => {
+                      // const hospitalData = getHospitalInformation(d.hospName);
+                      const hospitalData = hospitals[d.hospName];
+                      return {
+                        hospName: d.hospName,
+                        topWait: d.topWait,
+                        region: hospitalData.region.long,
+                        slug: hospitalData.slug,
+                        // region: hospitalData
+                        //   ? hospitalData.region.long
+                        //   : undefined,
+                        // link: "",
+                      };
+                    })
+                  : null
+              }
+              isLoading={isLoading}
+              onSelectHospital={setSelectedHospital}
+            />
+          )}
         </section>
       </main>
       {data && selectedHospital && (
