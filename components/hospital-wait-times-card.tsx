@@ -78,7 +78,7 @@ const CustomTooltip = ({
   label,
 }: TooltipProps<ValueType, NameType>) => {
   if (active && payload && payload.length) {
-    const val = Math.round(payload[0].value);
+    const val = Math.round(payload[0].value as number);
     return (
       <div className="custom-tooltip bg-white px-2 py-1.5 dark:bg-slate-950">
         <p className="label">
