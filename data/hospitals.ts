@@ -16,7 +16,7 @@ export enum ClusterType {
 
 export type RegionType = typeof Region[keyof typeof Region]
 
-interface HospitalInformation {
+export interface HospitalInformationInterface {
   region: RegionType;
   cluster: ClusterType;
   address: string;
@@ -33,7 +33,7 @@ const LANGUAGE = "ENG"
 const buildHospitalLink = (contentId: string): string => `http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=${contentId}&Lang=${LANGUAGE}`;
 
   // Hospital names and their detailed information
-const hospitalDetails: Record<string, HospitalInformation> = {
+const hospitalDetails: Record<string, HospitalInformationInterface> = {
   "Alice Ho Miu Ling Nethersole Hospital": {region: Region.NewTerritories,link: buildHospitalLink("100171"), cluster: ClusterType.NewTerritoriesEast, address: "11 Chuen On Road, Tai Po, NT", telephone: "2689 2000", fax: "2662 1690", email: "ahnh_enquiry@ha.org.hk", website: "https://www3.ha.org.hk/AHNH/index_e.asp", googleMapsLink: "https://maps.app.goo.gl/xWmgrNkN5PKd1GNB8"},
   "Caritas Medical Centre": {region: Region.Kowloon,link: buildHospitalLink("100163"), cluster: ClusterType.KowloonWest, address: "111 Wing Hong Street, Sham Shui Po, KLN", telephone: "3408 5678", fax: "2785 5755", email: "cmc.enq@ha.org.hk", googleMapsLink: "https://maps.app.goo.gl/RHspT8VfgdGJVffY7"},
   "Kwong Wah Hospital": {region: Region.Kowloon, link: buildHospitalLink("100153"), cluster: ClusterType.KowloonCentral, address: "25 Waterloo Road, KLN", telephone: "2332 2311", fax: "3517 5481", email: "kwh.enquiry@ha.org.hk", website: "https://www3.ha.org.hk/kwh/main/en/index.asp", googleMapsLink: "https://maps.app.goo.gl/v5nGqGXHwhSheXeY7"},
@@ -57,12 +57,12 @@ const hospitalDetails: Record<string, HospitalInformation> = {
 export type HospitalNames = keyof typeof hospitalDetails;
 
 // Hospital information using a Map for case-insensitive access
-export const hospitals = new Map<string, HospitalInformation>(
+export const hospitals = new Map<string, HospitalInformationInterface>(
   Object.entries(hospitalDetails)
 );
 
 // Utility function to get hospital information by name, case-insensitively
-export function getHospitalInformation(hospitalName: string): HospitalInformation | undefined {
+export function getHospitalInformation(hospitalName: string): HospitalInformationInterface | undefined {
   const normalizedKey = Array.from(hospitals.keys()).find(key => key.toUpperCase() === hospitalName.toUpperCase());
   return normalizedKey ? hospitals.get(normalizedKey) : undefined;
 }
