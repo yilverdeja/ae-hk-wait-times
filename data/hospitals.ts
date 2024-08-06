@@ -37,6 +37,8 @@ const hospitalDetails: Record<string, HospitalInformation> = {
   "Yan Chai Hospital": {region: Region.NewTerritories, link: buildHospitalLink("100165")},
 };
 
+export type HospitalNames = keyof typeof hospitalDetails;
+
 // Hospital information using a Map for case-insensitive access
 export const hospitals = new Map<string, HospitalInformation>(
   Object.entries(hospitalDetails)

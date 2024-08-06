@@ -1,15 +1,36 @@
 "use client";
+import { useEffect, useState } from "react";
+import moment from "moment";
 import Footer from "@/components/footer";
 import InformationDialog from "@/components/information-dialog";
 import NavBar from "@/components/nav-bar";
 import { Badge } from "@/components/ui/badge";
 import WaitTimeTable from "@/components/wait-time-table";
+import { HospitalNames } from "@/data/hospitalAverages";
 import { getHospitalInformation } from "@/data/hospitals";
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes";
-import moment from "moment";
+import WaitTimeSheet from "@/components/wait-time-sheet";
 
 export default function Home() {
+  const [open, setOpen] = useState(false);
+  const [selectedHospital, setSelectedHospital] =
+    useState<HospitalNames | null>(null);
+  const [selectedHospitalWaitTime, setSelectedHospitalWaitTime] = useState<
+    string | null
+  >(null);
   const { data, isLoading, error } = useHospitalWaitTimes();
+
+  useEffect(() => {
+    if (data && selectedHospital) {
+      const hospitalDataX = data.waitTime.find(
+        (w) => w.hospName === selectedHospital
+      );
+      if (hospitalDataX && hospitalDataX.topWait) {
+        setSelectedHospitalWaitTime(hospitalDataX.topWait || null);
+      }
+      setOpen(true);
+    }
+  }, [selectedHospital]);
 
   if (error) return <p>Error: {error.message}</p>;
 
@@ -52,9 +73,28 @@ export default function Home() {
                 : null
             }
             isLoading={isLoading}
+            onSelectHospital={setSelectedHospital}
           />
         </section>
       </main>
+      {data && selectedHospital && (
+        <WaitTimeSheet
+          open={open}
+          onOpenChange={(isOpen) => {
+            setOpen(isOpen);
+            if (!isOpen) {
+              setSelectedHospital(null);
+              setSelectedHospitalWaitTime(null);
+            }
+          }}
+          selectedHospital={selectedHospital!}
+          selectedHospitalWaitTime={selectedHospitalWaitTime!}
+          selectedHospitalUpdateTime={moment(
+            data.updateTime,
+            "D/M/YYYY h:mma"
+          ).toDate()}
+        />
+      )}
       <Footer />
     </div>
   );

@@ -59,7 +59,7 @@ def get_daily_hourly_averages(df, hospital, data):
 def gather_all_hospitals_data(df):
     """Gather daily hourly averages for all hospitals and return as a dictionary"""
     hospital_data = {}
-    for hospital in df.columns[1:-2]:  # adjust as per your actual columns
+    for hospital in df.columns[0:-2]:  # adjust as per your actual columns
         hospital_data[hospital] = {}
         get_daily_averages(df, hospital, hospital_data[hospital])
         get_hourly_averages(df, hospital, hospital_data[hospital])

@@ -26,6 +26,7 @@ import { useEffect, useState } from "react";
 import useBreakpoint from "use-breakpoint";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
+import { HospitalNames } from "@/data/hospitalAverages";
 
 const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
 
@@ -51,52 +52,57 @@ const SortingButton = ({ column, children }: SortingButtonProps) => (
   </Button>
 );
 
-const columns: ColumnDef<HospitalWaitTime>[] = [
-  {
-    accessorKey: "hospName",
-    header: ({ column }) => (
-      <SortingButton column={column}>Hospital</SortingButton>
-    ),
-    cell: ({ row }) => {
-      const name = row.getValue("hospName") as string;
-      const link = row.getValue("link") as string;
-      return (
-        <Link
-          className="underline underline-offset-4"
-          href={link}
-          target="_blank"
-        >
-          {name}
-        </Link>
-      );
-    },
-    enableHiding: false,
-  },
-  {
-    accessorKey: "region",
-    header: ({ column }) => {
-      return <SortingButton column={column}>Region</SortingButton>;
-    },
-  },
-  {
-    accessorKey: "topWait",
-    header: ({ column }) => {
-      return <SortingButton column={column}>Wait Time</SortingButton>;
-    },
-    enableHiding: false,
-  },
-  {
-    accessorKey: "link",
-    header: "Link",
-  },
-];
-
 interface Props {
   data: HospitalWaitTime[] | null;
   isLoading: boolean;
+  onSelectHospital: (hospital: HospitalNames) => void;
 }
 
-export default function WaitTimeTable({ data, isLoading }: Props) {
+export default function WaitTimeTable({
+  data,
+  isLoading,
+  onSelectHospital,
+}: Props) {
+  const columns: ColumnDef<HospitalWaitTime>[] = [
+    {
+      accessorKey: "hospName",
+      header: ({ column }) => (
+        <SortingButton column={column}>Hospital</SortingButton>
+      ),
+      cell: ({ row }) => {
+        const name = row.getValue("hospName") as HospitalNames;
+        const link = row.getValue("link") as string;
+        return (
+          // <Link
+          //   className="underline underline-offset-4"
+          //   href={link}
+          //   target="_blank"
+          // >
+          //   {name}
+          // </Link>
+          <span onClick={() => onSelectHospital(name)}>{name}</span>
+        );
+      },
+      enableHiding: false,
+    },
+    {
+      accessorKey: "region",
+      header: ({ column }) => {
+        return <SortingButton column={column}>Region</SortingButton>;
+      },
+    },
+    {
+      accessorKey: "topWait",
+      header: ({ column }) => {
+        return <SortingButton column={column}>Wait Time</SortingButton>;
+      },
+      enableHiding: false,
+    },
+    {
+      accessorKey: "link",
+      header: "Link",
+    },
+  ];
   const { breakpoint } = useBreakpoint(BREAKPOINTS);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
     hospName: true,
