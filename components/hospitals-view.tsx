@@ -11,6 +11,7 @@ import { Column, createColumnHelper } from "@tanstack/react-table";
 import { Button } from "./ui/button";
 import { ArrowUpDown } from "lucide-react";
 import moment from "moment";
+import { Badge } from "./ui/badge";
 
 interface WaitMapping {
   [key: string]: string;
@@ -89,6 +90,7 @@ export default function HospitalsViews({}: Props) {
     useHospitalWaitTimes();
   const { data: hospitals, isLoading: isLoadingHospitals } = useHospitals();
 
+  // combine retrieved data
   useEffect(() => {
     if (
       !isLoadingHospitals &&
@@ -114,6 +116,19 @@ export default function HospitalsViews({}: Props) {
 
   return (
     <>
+      <div className="flex justify-center sm:justify-start">
+        {(!combinedData || combinedData.length === 0) &&
+          isLoadingWaitTimes &&
+          isLoadingHospitals && (
+            <Badge variant="outline">Retrieving data...</Badge>
+          )}
+        {combinedData && updateTime && (
+          <Badge variant="outline">
+            Updated on{" "}
+            {moment(updateTime, "D/M/YYYY h:mma").format("MMM Do YYYY, h:mma")}
+          </Badge>
+        )}
+      </div>
       <HospitalTable
         data={combinedData}
         columns={columns}

@@ -59,7 +59,7 @@ export default function HospitalTable({
       </TableHeader>
       <TableBody>
         {data &&
-          table.getRowModel().rows?.length &&
+          table.getRowModel().rows?.length > 0 &&
           table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
