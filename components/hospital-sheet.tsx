@@ -1,4 +1,3 @@
-"use client";
 import {
   Sheet,
   SheetContent,
@@ -6,11 +5,10 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-
-import HospitalWaitTimesCard from "@/components/hospital-wait-times-card";
 import { HospitalInfo } from "@/hooks/useHospitals";
 import HospitalInformation from "./hospital-information";
 import { buildHospitalLink } from "@/data/hospitals";
+import HospitalChart from "./hospital-chart";
 
 interface Props {
   hospital: HospitalInfo | null;
@@ -34,19 +32,19 @@ export default function HospitalSheet({
       <SheetContent className="w-[90%] sm:w-[540px]">
         <SheetHeader>
           <SheetTitle className="text-left">{hospital.name}</SheetTitle>
-          {/* <h3 className="text-left">{information.cluster} Cluster</h3> */}
           <SheetDescription className="text-left">
             Estimated Wait Time: {hospital.wait}
           </SheetDescription>
         </SheetHeader>
 
-        {/* <div className="my-4">
-          <HospitalWaitTimesCard
-            data={hospitalData[selectedHospital as HospitalNames]}
-            currentWaitTime={waitMapping[selectedHospitalWaitTime!] || 0} // Fallback to 0 if no data
-            currentUpdateTime={selectedHospitalUpdateTime}
+        <div className="my-4">
+          <HospitalChart
+            data={{}}
+            wait={hospital.wait!}
+            updateTime={updateTime}
           />
-        </div> */}
+        </div>
+
         <HospitalInformation
           googleMapsLink={hospital.googleMapsLink}
           link={buildHospitalLink(hospital.linkId)}

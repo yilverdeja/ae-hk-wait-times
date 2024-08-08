@@ -28,12 +28,6 @@ const waitMapping: WaitMapping = {
   "9": "Over 8 hours",
 };
 
-interface HospitalWaitTime {
-  name: string;
-  region: string;
-  wait: number;
-}
-
 interface SortingButtonProps {
   column: Column<HospitalInfo, unknown>;
   children: React.ReactNode;
