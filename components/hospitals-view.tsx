@@ -102,6 +102,7 @@ export default function HospitalsViews({}: Props) {
         return {
           ...hospital,
           wait: waitTime,
+          slug: slug as HospitalAcronyms,
         };
       });
       setCombinedData(data);

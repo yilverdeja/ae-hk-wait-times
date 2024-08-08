@@ -39,7 +39,7 @@ export default function HospitalSheet({
 
         <div className="my-4">
           <HospitalChart
-            data={{}}
+            slug={hospital.slug!}
             wait={hospital.wait!}
             updateTime={updateTime}
           />
