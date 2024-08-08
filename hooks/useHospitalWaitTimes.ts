@@ -1,21 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import moment from "moment";
+import moment from "moment"
 
-interface HospitalWaitTime {
-    hospName: string;
-    topWait: string;
-  }
-  
-  interface HospitalWaitTimesData {
-    waitTime: HospitalWaitTime[];
-    updateTime: string;
-  }
+export type HospitalAcronyms = "AHMLNH"|"CMC"|"KWH"|"NDH"|"NLH"|"PMH"|"POH"|"POWH"|"PYNEH"|"QEH"|"QMH"|"RH"|"SJH"|"TKOH"|"TMH"|"TSWH"|"UCH"|"YCH"
+
+interface HospitalWaitTimesData {
+  hospitals: Record<HospitalAcronyms, number>;
+  updateTime: string;
+}
 
 const getHospitalWaitTimes = async (): Promise<HospitalWaitTimesData> => {
-    const url = "https://www.ha.org.hk/opendata/aed/aedwtdata-en.json";
+    const url = "/api/hospitalsWaitTime";
     const response = await axios.get(url);
-    return response.data; // Make sure to return just the data object
+    return response.data;
 };
 
 export const useHospitalWaitTimes = () => useQuery<HospitalWaitTimesData>({

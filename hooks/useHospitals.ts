@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { HospitalAcronyms } from "./useHospitalWaitTimes";
 
 interface HospitalRegion {
     long: string;
     short: string;
 }
 
-interface HospitalInfo {
+export interface HospitalInfo {
     name: string;
     region: HospitalRegion;
     linkId: string;
@@ -17,16 +18,12 @@ interface HospitalInfo {
     email: string;
     website?: string; // Optional because it might not be present for every hospital
     googleMapsLink: string;
+    wait?: number;
 }
 
-interface HospitalInfo2 {
-    slug: string;
-    region: HospitalRegion;
-}
-
-interface Hospitals {
-    [key: string]: HospitalInfo2; // Using an index signature to allow any string as a key
-}
+type Hospitals = {
+    [key in HospitalAcronyms]: HospitalInfo;
+};
 
 const getHospitals = async (): Promise<Hospitals> => {
     const url = "/api/hospitals";
