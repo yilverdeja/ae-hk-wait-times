@@ -10,18 +10,17 @@ const BusynessLevels = {
   MUCH_QUIETER: "Much quieter",
 };
 
-const getBusynessDescription = (current: number, previous: number) => {
-  const diff = Math.abs(current - previous);
-  console.log(diff, current, previous);
+const getBusynessDescription = (current: number, average: number) => {
+  const diff = Math.abs(current - average);
 
   if (diff <= 0.5) {
     return BusynessLevels.NORMAL;
   } else if (diff <= 1) {
-    return current > previous
+    return current > average
       ? BusynessLevels.SLIGHTLY_BUSIER
       : BusynessLevels.SLIGHTLY_QUIETER;
   } else {
-    return current > previous
+    return current > average
       ? BusynessLevels.MUCH_BUSIER
       : BusynessLevels.MUCH_QUIETER;
   }

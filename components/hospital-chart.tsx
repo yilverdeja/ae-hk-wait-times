@@ -56,6 +56,11 @@ export default function HospitalChart({ slug, wait, updateTime }: Props) {
         ([hour, waitTime]) => ({
           day: hour,
           wait: waitTime,
+          now:
+            updateTime.getDay().toString() === day &&
+            updateTime.getHours().toString() === hour
+              ? wait
+              : undefined,
         })
       );
       setChartData(formattedData);
@@ -80,23 +85,38 @@ export default function HospitalChart({ slug, wait, updateTime }: Props) {
             type="number"
             ticks={[0, 3, 6, 9, 12, 15, 18, 21]}
             domain={[-1, 24]}
+            xAxisId={0}
+          />
+          <XAxis
+            dataKey="day"
+            type="number"
+            domain={[-1, 24]}
+            xAxisId={1}
+            hide
           />
           <YAxis
             dataKey="wait"
             type="number"
-            hide
-            domain={([dataMin, dataMax]) => {
-              return [
-                Math.max(Math.floor(dataMin) - 0.5, 0),
-                Math.min(Math.ceil(dataMax), 9),
-              ];
-            }}
+            domain={[0, 9]}
+            ticks={[1, 3, 6, 8]}
+            tickFormatter={(value) => `>${parseInt(value, 10)}hr`}
+            width={30}
           />
           <Bar
             dataKey="wait"
             fill="#2563eb"
-            stackId="a"
             isAnimationActive={false}
+            xAxisId={0}
+            barSize={30}
+            radius={[4, 4, 0, 0]}
+          />
+          <Bar
+            dataKey="now"
+            fill="#ff63eb"
+            isAnimationActive={false}
+            xAxisId={1}
+            barSize={8}
+            radius={[4, 4, 0, 0]}
           />
         </BarChart>
       </ChartContainer>
