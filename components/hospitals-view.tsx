@@ -69,6 +69,7 @@ export default function HospitalsViews({}: Props) {
             </span>
           );
       },
+      enableHiding: false,
     }),
     columnHelper.accessor(
       breakpoint === "mobile" ? "region.short" : "region.long",
@@ -78,6 +79,7 @@ export default function HospitalsViews({}: Props) {
         ),
         cell: (info) => info.renderValue(),
         filterFn: "arrIncludesSome",
+        enableHiding: true,
       }
     ),
     columnHelper.accessor("wait", {
@@ -88,6 +90,7 @@ export default function HospitalsViews({}: Props) {
         const value = info.renderValue();
         if (value) return waitMapping[value.toString()];
       },
+      enableHiding: false,
     }),
   ];
 
@@ -95,7 +98,7 @@ export default function HospitalsViews({}: Props) {
     <>
       <UpdateTimeBadge updateTime={updateTime} isLoading={isLoading} />
       <HospitalRegionFilter
-        id={breakpoint === "mobile" ? "region_short" : "region_long"}
+        isMobile={breakpoint === "mobile"}
         filters={filters}
         onUpdateFilters={setFilters}
       />

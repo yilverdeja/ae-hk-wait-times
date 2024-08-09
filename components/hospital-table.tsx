@@ -5,6 +5,7 @@ import {
   getSortedRowModel,
   useReactTable,
   getFilteredRowModel,
+  VisibilityState,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -39,6 +40,7 @@ export default function HospitalTable({
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnFilters: filters,
+      columnVisibility: { region_short: false },
     },
   });
   const handleHospitalClick = (hospital: HospitalInfo) => {
