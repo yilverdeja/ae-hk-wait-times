@@ -6,8 +6,6 @@ import HospitalSheet from "./hospital-sheet";
 import { Column, createColumnHelper } from "@tanstack/react-table";
 import { Button } from "./ui/button";
 import { ArrowUpDown } from "lucide-react";
-import { useBreakpoint } from "use-breakpoint";
-import { BREAKPOINTS } from "@/lib/utils";
 import UpdateTimeBadge from "./update-time-badge";
 import HospitalRegionFilter, { RegionFilter } from "./hospital-region-filter";
 import useHospitalData from "@/hooks/useHospitalData";
@@ -52,7 +50,6 @@ export default function HospitalsViews({}: Props) {
     null
   );
   const [filters, setFilters] = useState<RegionFilter[]>([]);
-  const { breakpoint } = useBreakpoint(BREAKPOINTS);
   const { combinedData, updateTime, isLoading } = useHospitalData();
 
   const columns = [
@@ -71,17 +68,14 @@ export default function HospitalsViews({}: Props) {
       },
       enableHiding: false,
     }),
-    columnHelper.accessor(
-      breakpoint === "mobile" ? "region.short" : "region.long",
-      {
-        header: ({ column }) => (
-          <SortingButton column={column}>Region</SortingButton>
-        ),
-        cell: (info) => info.renderValue(),
-        filterFn: "arrIncludesSome",
-        enableHiding: true,
-      }
-    ),
+    columnHelper.accessor("region", {
+      header: ({ column }) => (
+        <SortingButton column={column}>Region</SortingButton>
+      ),
+      cell: (info) => info.renderValue(),
+      filterFn: "arrIncludesSome",
+      enableHiding: true,
+    }),
     columnHelper.accessor("wait", {
       header: ({ column }) => (
         <SortingButton column={column}>Wait Time</SortingButton>
@@ -97,11 +91,7 @@ export default function HospitalsViews({}: Props) {
   return (
     <>
       <UpdateTimeBadge updateTime={updateTime} isLoading={isLoading} />
-      <HospitalRegionFilter
-        isMobile={breakpoint === "mobile"}
-        filters={filters}
-        onUpdateFilters={setFilters}
-      />
+      <HospitalRegionFilter filters={filters} onUpdateFilters={setFilters} />
       <HospitalTable
         data={combinedData}
         columns={columns}

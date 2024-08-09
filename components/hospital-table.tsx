@@ -5,7 +5,6 @@ import {
   getSortedRowModel,
   useReactTable,
   getFilteredRowModel,
-  VisibilityState,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -16,6 +15,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { HospitalInfo } from "@/hooks/useHospitals";
+import { Skeleton } from "./ui/skeleton";
+import { useBreakpoint } from "use-breakpoint";
+import { BREAKPOINTS } from "@/lib/utils";
 
 interface Props {
   data: HospitalInfo[];
@@ -32,17 +34,19 @@ export default function HospitalTable({
   isLoading,
   onSelectHospital,
 }: Props) {
+  const { breakpoint } = useBreakpoint(BREAKPOINTS);
   const table = useReactTable({
-    data: data,
+    data: !data && isLoading ? Array(18).fill({}) : data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnFilters: filters,
-      columnVisibility: { region_short: false },
+      columnVisibility: { region: breakpoint !== "mobile" },
     },
   });
+
   const handleHospitalClick = (hospital: HospitalInfo) => {
     onSelectHospital(hospital);
   };
@@ -53,7 +57,10 @@ export default function HospitalTable({
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => {
               return (
-                <TableHead key={header.id}>
+                <TableHead
+                  className={header.id === "region" ? "hidden md:block" : ""}
+                  key={header.id}
+                >
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -67,28 +74,40 @@ export default function HospitalTable({
         ))}
       </TableHeader>
       <TableBody>
-        {data &&
-          table.getRowModel().rows?.length > 0 &&
-          table.getRowModel().rows.map((row) => (
-            <TableRow
-              key={row.id}
-              data-state={row.getIsSelected() && "selected"}
-            >
-              {row.getVisibleCells().map((cell) => (
-                <TableCell
-                  className="pl-8"
-                  key={cell.id}
-                  onClick={
-                    cell.column.id === "name"
-                      ? () => handleHospitalClick(row.original)
-                      : undefined
-                  }
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
+        {isLoading
+          ? Array.from({ length: 18 }, (_, index) => (
+              <TableRow key={`skeleton-${index}`}>
+                {table
+                  .getAllColumns()
+                  .filter(
+                    (column) =>
+                      table.getState().columnVisibility[column.id] !== false
+                  )
+                  .map((column) => (
+                    <TableCell
+                      className={
+                        column.id === "region" ? "hidden md:block" : ""
+                      }
+                      key={column.id}
+                    >
+                      <Skeleton className="w-full h-4" />
+                    </TableCell>
+                  ))}
+              </TableRow>
+            ))
+          : table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() ? "selected" : undefined}
+                onClick={() => handleHospitalClick(row.original)}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell className="pl-8" key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
         {!isLoading && !data && (
           <TableRow>
             <TableCell colSpan={columns.length} className="h-24 text-center">

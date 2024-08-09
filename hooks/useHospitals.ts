@@ -2,14 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { HospitalAcronyms } from "./useHospitalWaitTimes";
 
-interface HospitalRegion {
-  long: string;
-  short: string;
-}
-
 export interface HospitalInfo {
   name: string;
-  region: HospitalRegion;
+  region: string;
   linkId: string;
   cluster: string;
   address: string;

@@ -19,7 +19,6 @@ interface RegionItem {
 }
 
 interface Props {
-  isMobile: boolean;
   filters: RegionFilter[];
   onUpdateFilters: (newFilters: RegionFilter[]) => void;
 }
@@ -31,11 +30,10 @@ const filterValues: RegionItem[] = [
 ];
 
 export default function HospitalRegionFilter({
-  isMobile,
   filters,
   onUpdateFilters,
 }: Props) {
-  const id = isMobile ? "region_short" : "region_long";
+  const id = "region";
   const activeFilter = filters.find((f) => f.id === id) || {
     id,
     value: [],
@@ -68,14 +66,9 @@ export default function HospitalRegionFilter({
         {filterValues.map((filterValue) => (
           <DropdownMenuCheckboxItem
             key={filterValue.short}
-            checked={isRegionChecked(
-              isMobile ? filterValue.short : filterValue.long
-            )}
+            checked={isRegionChecked(filterValue.long)}
             onCheckedChange={(checked) =>
-              handleCheckboxChange(
-                isMobile ? filterValue.short : filterValue.long,
-                checked
-              )
+              handleCheckboxChange(filterValue.long, checked)
             }
           >
             {filterValue.long}
