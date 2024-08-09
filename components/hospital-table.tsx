@@ -4,6 +4,7 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   useReactTable,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 import {
   Table,
@@ -18,6 +19,7 @@ import { HospitalInfo } from "@/hooks/useHospitals";
 interface Props {
   data: HospitalInfo[];
   columns: any;
+  filters: any[];
   isLoading: boolean;
   onSelectHospital: (hospital: HospitalInfo) => void;
 }
@@ -25,6 +27,7 @@ interface Props {
 export default function HospitalTable({
   data,
   columns,
+  filters,
   isLoading,
   onSelectHospital,
 }: Props) {
@@ -33,6 +36,10 @@ export default function HospitalTable({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      columnFilters: filters,
+    },
   });
   const handleHospitalClick = (hospital: HospitalInfo) => {
     onSelectHospital(hospital);

@@ -1,20 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
-import { HospitalInfo, useHospitals } from "@/hooks/useHospitals";
-import {
-  HospitalAcronyms,
-  useHospitalWaitTimes,
-} from "@/hooks/useHospitalWaitTimes";
+import { useState } from "react";
+import { HospitalInfo } from "@/hooks/useHospitals";
 import HospitalTable from "./hospital-table";
 import HospitalSheet from "./hospital-sheet";
 import { Column, createColumnHelper } from "@tanstack/react-table";
 import { Button } from "./ui/button";
 import { ArrowUpDown } from "lucide-react";
-import moment from "moment";
-import { Badge } from "./ui/badge";
 import { useBreakpoint } from "use-breakpoint";
 import { BREAKPOINTS } from "@/lib/utils";
 import UpdateTimeBadge from "./update-time-badge";
+import HospitalRegionFilter, { RegionFilter } from "./hospital-region-filter";
+import useHospitalData from "@/hooks/useHospitalData";
 
 interface WaitMapping {
   [key: string]: string;
@@ -55,12 +51,9 @@ export default function HospitalsViews({}: Props) {
   const [selectedHospital, setSelectedHospital] = useState<HospitalInfo | null>(
     null
   );
-  const [combinedData, setCombinedData] = useState<HospitalInfo[]>([]);
-  const [updateTime, setUpdateTime] = useState<Date | null>(null);
+  const [filters, setFilters] = useState<RegionFilter[]>([]);
   const { breakpoint } = useBreakpoint(BREAKPOINTS);
-  const { data: hospitalWaitTimes, isLoading: isLoadingWaitTimes } =
-    useHospitalWaitTimes();
-  const { data: hospitals, isLoading: isLoadingHospitals } = useHospitals();
+  const { combinedData, updateTime, isLoading } = useHospitalData();
 
   const columns = [
     columnHelper.accessor("name", {
@@ -84,6 +77,7 @@ export default function HospitalsViews({}: Props) {
           <SortingButton column={column}>Region</SortingButton>
         ),
         cell: (info) => info.renderValue(),
+        filterFn: "arrIncludesSome",
       }
     ),
     columnHelper.accessor("wait", {
@@ -97,40 +91,19 @@ export default function HospitalsViews({}: Props) {
     }),
   ];
 
-  // combine retrieved data
-  useEffect(() => {
-    if (
-      !isLoadingHospitals &&
-      !isLoadingWaitTimes &&
-      hospitals &&
-      hospitalWaitTimes
-    ) {
-      const data = Object.keys(hospitals).map((slug) => {
-        const hospital = hospitals[slug as HospitalAcronyms];
-        const waitTime = hospitalWaitTimes.hospitals[slug as HospitalAcronyms];
-        return {
-          ...hospital,
-          wait: waitTime,
-          slug: slug as HospitalAcronyms,
-        };
-      });
-      setUpdateTime(
-        moment(hospitalWaitTimes.updateTime, "D/M/YYYY h:mma").toDate()
-      );
-      setCombinedData(data);
-    }
-  }, [hospitals, hospitalWaitTimes, isLoadingHospitals, isLoadingWaitTimes]);
-
   return (
     <>
-      <UpdateTimeBadge
-        updateTime={updateTime}
-        isLoading={isLoadingWaitTimes || isLoadingHospitals}
+      <UpdateTimeBadge updateTime={updateTime} isLoading={isLoading} />
+      <HospitalRegionFilter
+        id={breakpoint === "mobile" ? "region_short" : "region_long"}
+        filters={filters}
+        onUpdateFilters={setFilters}
       />
       <HospitalTable
         data={combinedData}
         columns={columns}
-        isLoading={isLoadingWaitTimes && isLoadingHospitals}
+        filters={filters}
+        isLoading={isLoading}
         onSelectHospital={setSelectedHospital}
       />
       <HospitalSheet
