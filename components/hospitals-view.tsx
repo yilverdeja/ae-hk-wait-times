@@ -14,7 +14,7 @@ interface WaitMapping {
   [key: string]: string;
 }
 
-const waitMapping: WaitMapping = {
+export const waitMapping: WaitMapping = {
   "1": "Around 1 hour",
   "2": "Over 1 hour",
   "3": "Over 2 hours",
@@ -99,11 +99,13 @@ export default function HospitalsViews({}: Props) {
         isLoading={isLoading}
         onSelectHospital={setSelectedHospital}
       />
-      <HospitalSheet
-        hospital={selectedHospital}
-        onClose={() => setSelectedHospital(null)}
-        updateTime={updateTime || new Date()}
-      />
+      {selectedHospital && (
+        <HospitalSheet
+          hospital={selectedHospital}
+          onClose={() => setSelectedHospital(null)}
+          updateTime={updateTime || new Date()}
+        />
+      )}
     </>
   );
 }

@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, abort
 import requests # type: ignore
 from datetime import datetime, timedelta
 import json
@@ -38,6 +38,8 @@ wait_mapping = {
     'Over 8 hours': 9
 }
 
+day_names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
 # load the hospital information & trend data
 f = open("data/hospital_averages.json")
 hospital_trend_data = json.load(f)
@@ -54,18 +56,34 @@ def get_hospitals():
 
 @app.route("/api/hospitals/<string:slug>")
 def get_hospital(slug):
-    if slug not in hospitals_information_data: raise LookupError(f"Hospital with slug {slug} does not exist")
+    if slug not in hospitals_information_data: abort(400, description=f"Hospital with slug {slug} does not exist")
     return hospitals_information_data[slug]
 
 @app.route("/api/hospitals/<string:slug>/trend")
 def get_hospital_trend(slug):
     try:
         hospital = get_hospital(slug)["name"]
-    except LookupError:
-        raise LookupError(f"Hospital with slug {slug} does not exist")
+    except:
+        abort(400, description=f"Hospital with slug {slug} does not exist")
     
-    if hospital not in hospital_trend_data: raise AssertionError(f"Hospital name of {hospital} does not exist")
+    if hospital not in hospital_trend_data: abort(404, description=f"Hospital name of {hospital} does not exist")
     return hospital_trend_data[hospital]
+
+@app.route("/api/hospitals/<string:slug>/hourly-trend/<int:day>/<string:hour>")
+def get_hourly_hospital_trend(slug, day, hour):
+    # Validate day and hour
+    if not (0 <= day <= 6) or not (0 <= int(hour) <= 23):
+        abort(400, description="Invalid day or hour. Day must be 0-6 and hour must be 0-23.")
+    
+    try:
+        trend_data = get_hospital_trend(slug)
+        # app.logger.info(trend_data[day_names[day]])
+        app.logger.info(trend_data[day_names[day]][hour])
+        trend_value = trend_data[day_names[day]][hour]
+    except:
+        abort(404, description=f"No trend data available for {slug} on day {day} hour {hour}")
+    
+    return str(trend_value)
 
 @app.route("/api/hospitalsWaitTime")
 def get_hospitals_wait_time():

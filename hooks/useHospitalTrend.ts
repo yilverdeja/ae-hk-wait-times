@@ -45,8 +45,28 @@ const getHospitalTrend = async (slug: string): Promise<HospitalTrend> => {
   return response.data; // Make sure to return just the data object
 };
 
+const getHospitalHourlyTrend = async (
+  slug: string,
+  day: number,
+  hour: number
+): Promise<number> => {
+  const url = `/api/hospitals/${slug}/hourly-trend/${day}/${hour}`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
 export const useHospitalTrend = (slug: string) =>
   useQuery<HospitalTrend>({
     queryKey: ["hospital", slug, "trend"],
     queryFn: () => getHospitalTrend(slug),
+  });
+
+export const useHospitalHourlyTrend = (
+  slug: string,
+  day: number,
+  hour: number
+) =>
+  useQuery<number>({
+    queryKey: ["hospital", slug, "hourly-trend", day, hour],
+    queryFn: () => getHospitalHourlyTrend(slug, day, hour),
   });

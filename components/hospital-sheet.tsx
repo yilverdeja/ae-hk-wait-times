@@ -1,3 +1,4 @@
+"use client";
 import {
   Sheet,
   SheetContent,
@@ -9,9 +10,11 @@ import { HospitalInfo } from "@/hooks/useHospitals";
 import HospitalInformation from "./hospital-information";
 import { buildHospitalLink } from "@/data/hospitals";
 import HospitalChart from "./hospital-chart";
+import { useHospitalHourlyTrend } from "@/hooks/useHospitalTrend";
+import HospitalBusynessText from "./hospital-busyness-text";
 
 interface Props {
-  hospital: HospitalInfo | null;
+  hospital: HospitalInfo;
   updateTime: Date;
   onClose: () => void;
 }
@@ -21,7 +24,14 @@ export default function HospitalSheet({
   updateTime,
   onClose,
 }: Props) {
-  if (hospital === null) return null;
+  const today = new Date();
+
+  const { data: averageWait } = useHospitalHourlyTrend(
+    hospital.slug!,
+    today.getDay(),
+    today.getHours()
+  );
+
   return (
     <Sheet
       open={hospital !== null}
@@ -35,8 +45,11 @@ export default function HospitalSheet({
       >
         <SheetHeader>
           <SheetTitle className="text-left">{hospital.name}</SheetTitle>
-          <SheetDescription className="text-left">
-            Estimated Wait Time: {hospital.wait}
+          <SheetDescription>
+            <HospitalBusynessText
+              currentWait={hospital.wait!}
+              averageWait={averageWait || 0}
+            />
           </SheetDescription>
         </SheetHeader>
 
