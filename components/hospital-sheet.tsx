@@ -29,7 +29,10 @@ export default function HospitalSheet({
         if (!open) onClose();
       }}
     >
-      <SheetContent className="w-[90%] sm:w-[540px]">
+      <SheetContent
+        className="w-[90%] sm:w-[540px]"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <SheetHeader>
           <SheetTitle className="text-left">{hospital.name}</SheetTitle>
           <SheetDescription className="text-left">
