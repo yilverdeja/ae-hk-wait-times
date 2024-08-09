@@ -12,6 +12,9 @@ import { Button } from "./ui/button";
 import { ArrowUpDown } from "lucide-react";
 import moment from "moment";
 import { Badge } from "./ui/badge";
+import { useBreakpoint } from "use-breakpoint";
+import { BREAKPOINTS } from "@/lib/utils";
+import UpdateTimeBadge from "./update-time-badge";
 
 interface WaitMapping {
   [key: string]: string;
@@ -46,38 +49,6 @@ const SortingButton = ({ column, children }: SortingButtonProps) => (
 
 const columnHelper = createColumnHelper<HospitalInfo>();
 
-const columns = [
-  columnHelper.accessor("name", {
-    header: ({ column }) => (
-      <SortingButton column={column}>Hospital</SortingButton>
-    ),
-    cell: (info) => {
-      const name = info.renderValue();
-      if (name)
-        return (
-          <span className="underline underline-offset-4 hover:cursor-pointer">
-            {name}
-          </span>
-        );
-    },
-  }),
-  columnHelper.accessor("region.long", {
-    header: ({ column }) => (
-      <SortingButton column={column}>Region</SortingButton>
-    ),
-    cell: (info) => info.renderValue(),
-  }),
-  columnHelper.accessor("wait", {
-    header: ({ column }) => (
-      <SortingButton column={column}>Wait Time</SortingButton>
-    ),
-    cell: (info) => {
-      const value = info.renderValue();
-      if (value) return waitMapping[value.toString()];
-    },
-  }),
-];
-
 interface Props {}
 
 export default function HospitalsViews({}: Props) {
@@ -86,9 +57,45 @@ export default function HospitalsViews({}: Props) {
   );
   const [combinedData, setCombinedData] = useState<HospitalInfo[]>([]);
   const [updateTime, setUpdateTime] = useState<Date | null>(null);
+  const { breakpoint } = useBreakpoint(BREAKPOINTS);
   const { data: hospitalWaitTimes, isLoading: isLoadingWaitTimes } =
     useHospitalWaitTimes();
   const { data: hospitals, isLoading: isLoadingHospitals } = useHospitals();
+
+  const columns = [
+    columnHelper.accessor("name", {
+      header: ({ column }) => (
+        <SortingButton column={column}>Hospital</SortingButton>
+      ),
+      cell: (info) => {
+        const name = info.renderValue();
+        if (name)
+          return (
+            <span className="underline underline-offset-4 hover:cursor-pointer">
+              {name}
+            </span>
+          );
+      },
+    }),
+    columnHelper.accessor(
+      breakpoint === "mobile" ? "region.short" : "region.long",
+      {
+        header: ({ column }) => (
+          <SortingButton column={column}>Region</SortingButton>
+        ),
+        cell: (info) => info.renderValue(),
+      }
+    ),
+    columnHelper.accessor("wait", {
+      header: ({ column }) => (
+        <SortingButton column={column}>Wait Time</SortingButton>
+      ),
+      cell: (info) => {
+        const value = info.renderValue();
+        if (value) return waitMapping[value.toString()];
+      },
+    }),
+  ];
 
   // combine retrieved data
   useEffect(() => {
@@ -107,28 +114,19 @@ export default function HospitalsViews({}: Props) {
           slug: slug as HospitalAcronyms,
         };
       });
-      setCombinedData(data);
       setUpdateTime(
         moment(hospitalWaitTimes.updateTime, "D/M/YYYY h:mma").toDate()
       );
+      setCombinedData(data);
     }
   }, [hospitals, hospitalWaitTimes, isLoadingHospitals, isLoadingWaitTimes]);
 
   return (
     <>
-      <div className="flex justify-center sm:justify-start">
-        {(!combinedData || combinedData.length === 0) &&
-          isLoadingWaitTimes &&
-          isLoadingHospitals && (
-            <Badge variant="outline">Retrieving data...</Badge>
-          )}
-        {combinedData && updateTime && (
-          <Badge variant="outline">
-            Updated on{" "}
-            {moment(updateTime, "D/M/YYYY h:mma").format("MMM Do YYYY, h:mma")}
-          </Badge>
-        )}
-      </div>
+      <UpdateTimeBadge
+        updateTime={updateTime}
+        isLoading={isLoadingWaitTimes || isLoadingHospitals}
+      />
       <HospitalTable
         data={combinedData}
         columns={columns}
