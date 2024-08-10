@@ -3,27 +3,8 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { useEffect, useState } from "react";
 import { useHospitalTrend } from "../hooks/useHospitalTrend";
-import { HospitalAcronyms } from "@/hooks/useHospitalWaitTimes";
 import HospitalTrendSelector from "./hospital-trend-selector";
-
-type WeekDayNames =
-  | "Monday"
-  | "Tuesday"
-  | "Wednesday"
-  | "Thursday"
-  | "Friday"
-  | "Saturday"
-  | "Sunday";
-
-const dayNames: WeekDayNames[] = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+import { dayNames, HospitalAcronyms } from "@/lib/types";
 
 interface ChartInterface {
   day: string;

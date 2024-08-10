@@ -1,26 +1,7 @@
+import { HospitalAcronyms } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import moment from "moment";
-
-export type HospitalAcronyms =
-  | "AHMLNH"
-  | "CMC"
-  | "KWH"
-  | "NDH"
-  | "NLH"
-  | "PMH"
-  | "POH"
-  | "POWH"
-  | "PYNEH"
-  | "QEH"
-  | "QMH"
-  | "RH"
-  | "SJH"
-  | "TKOH"
-  | "TMH"
-  | "TSWH"
-  | "UCH"
-  | "YCH";
 
 interface HospitalWaitTimesData {
   hospitals: Record<HospitalAcronyms, number>;

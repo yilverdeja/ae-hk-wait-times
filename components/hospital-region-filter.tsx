@@ -8,26 +8,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { Filter } from "lucide-react";
-
-export interface RegionFilter {
-  id: string;
-  value: string[];
-}
-
-interface RegionItem {
-  long: string;
-  short: string;
-}
+import { RegionFilter } from "@/lib/types";
 
 interface Props {
   filters: RegionFilter[];
   onUpdateFilters: (newFilters: RegionFilter[]) => void;
 }
 
-const filterValues: RegionItem[] = [
-  { long: "Hong Kong Island", short: "HKI" },
-  { long: "New Territories", short: "NT" },
-  { long: "Kowloon", short: "KL" },
+const filterValues: string[] = [
+  "Hong Kong Island",
+  "New Territories",
+  "Kowloon",
 ];
 
 export default function HospitalRegionFilter({
@@ -35,7 +26,7 @@ export default function HospitalRegionFilter({
   onUpdateFilters,
 }: Props) {
   const id = "region";
-  const activeFilter = filters.find((f) => f.id === id) || {
+  const activeFilter = filters.find((filter) => filter.id === id) || {
     id,
     value: [],
   };
@@ -70,15 +61,13 @@ export default function HospitalRegionFilter({
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Region</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {filterValues.map((filterValue) => (
+        {filterValues.map((val) => (
           <DropdownMenuCheckboxItem
-            key={filterValue.short}
-            checked={isRegionChecked(filterValue.long)}
-            onCheckedChange={(checked) =>
-              handleCheckboxChange(filterValue.long, checked)
-            }
+            key={val}
+            checked={isRegionChecked(val)}
+            onCheckedChange={(checked) => handleCheckboxChange(val, checked)}
           >
-            {filterValue.long}
+            {val}
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>

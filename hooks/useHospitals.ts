@@ -1,6 +1,6 @@
+import { HospitalAcronyms } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { HospitalAcronyms } from "./useHospitalWaitTimes";
 
 export interface HospitalInfo {
   name: string;
@@ -11,7 +11,7 @@ export interface HospitalInfo {
   telephone: string;
   fax: string;
   email: string;
-  website?: string; // Optional because it might not be present for every hospital
+  website?: string;
   googleMapsLink: string;
   wait?: number;
   slug?: HospitalAcronyms;
@@ -24,7 +24,7 @@ type Hospitals = {
 const getHospitals = async (): Promise<Hospitals> => {
   const url = "/api/hospitals";
   const response = await axios.get(url);
-  return response.data; // Make sure to return just the data object
+  return response.data;
 };
 
 export const useHospitals = () =>

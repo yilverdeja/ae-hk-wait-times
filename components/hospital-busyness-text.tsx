@@ -1,5 +1,5 @@
+import { waitMapping } from "@/lib/types";
 import { InfoIcon } from "lucide-react";
-import { waitMapping } from "./hospitals-view";
 import { useEffect, useState } from "react";
 
 const BusynessLevels = {

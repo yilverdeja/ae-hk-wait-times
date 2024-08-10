@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export type DayNames =
+type DayNames =
   | "0"
   | "1"
   | "2"
@@ -42,7 +42,7 @@ interface HospitalTrend {
 const getHospitalTrend = async (slug: string): Promise<HospitalTrend> => {
   const url = `/api/hospitals/${slug}/trend`;
   const response = await axios.get(url);
-  return response.data; // Make sure to return just the data object
+  return response.data;
 };
 
 const getHospitalHourlyTrend = async (
@@ -69,4 +69,17 @@ export const useHospitalHourlyTrend = (
   useQuery<number>({
     queryKey: ["hospital", slug, "hourly-trend", day, hour],
     queryFn: () => getHospitalHourlyTrend(slug, day, hour),
+    refetchInterval: () => {
+      // refetch on the next hour
+      const currentTime = new Date();
+      const nextHourTime = new Date(currentTime);
+      nextHourTime.setHours(currentTime.getHours() + 1);
+      nextHourTime.setMinutes(0);
+      nextHourTime.setSeconds(0);
+      nextHourTime.setMilliseconds(0);
+
+      // get the difference between next hour time and current time
+      const diffTime = nextHourTime.getTime() - currentTime.getTime();
+      return diffTime;
+    },
   });

@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { HospitalInfo, useHospitals } from "@/hooks/useHospitals";
-import {
-  HospitalAcronyms,
-  useHospitalWaitTimes,
-} from "@/hooks/useHospitalWaitTimes";
+import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes";
 import moment from "moment";
+import { HospitalAcronyms } from "@/lib/types";
 
 const useHospitalData = () => {
   const [combinedData, setCombinedData] = useState<HospitalInfo[]>([]);

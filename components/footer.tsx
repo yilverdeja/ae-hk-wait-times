@@ -1,4 +1,3 @@
-"use client";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/configs/site";
 import { getCurrentYear } from "@/lib/utils";

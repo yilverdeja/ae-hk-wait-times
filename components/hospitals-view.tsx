@@ -7,24 +7,9 @@ import { Column, createColumnHelper } from "@tanstack/react-table";
 import { Button } from "./ui/button";
 import { ArrowUpDown } from "lucide-react";
 import UpdateTimeBadge from "./update-time-badge";
-import HospitalRegionFilter, { RegionFilter } from "./hospital-region-filter";
+import HospitalRegionFilter from "./hospital-region-filter";
 import useHospitalData from "@/hooks/useHospitalData";
-
-interface WaitMapping {
-  [key: string]: string;
-}
-
-export const waitMapping: WaitMapping = {
-  "1": "Around 1 hour",
-  "2": "Over 1 hour",
-  "3": "Over 2 hours",
-  "4": "Over 3 hours",
-  "5": "Over 4 hours",
-  "6": "Over 5 hours",
-  "7": "Over 6 hours",
-  "8": "Over 7 hours",
-  "9": "Over 8 hours",
-};
+import { RegionFilter, waitMapping } from "@/lib/types";
 
 interface SortingButtonProps {
   column: Column<HospitalInfo, unknown>;
@@ -43,9 +28,7 @@ const SortingButton = ({ column, children }: SortingButtonProps) => (
 
 const columnHelper = createColumnHelper<HospitalInfo>();
 
-interface Props {}
-
-export default function HospitalsViews({}: Props) {
+export default function HospitalsViews() {
   const [selectedHospital, setSelectedHospital] = useState<HospitalInfo | null>(
     null
   );
