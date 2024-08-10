@@ -48,9 +48,9 @@ export default function HospitalBusynessText({
   }, [currentWait, averageWait]);
 
   return (
-    <div className="text-md text-left flex flex-row gap-2 my-2 items-center">
+    <span className="text-md text-left flex flex-row gap-2 my-2 items-center">
       <InfoIcon size={20} />
       <span>{busynessMessage}</span>
-    </div>
+    </span>
   );
 }

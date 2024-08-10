@@ -11,7 +11,7 @@ import HospitalInformation from "./hospital-information";
 import HospitalChart from "./hospital-chart";
 import { useHospitalHourlyTrend } from "@/hooks/useHospitalTrend";
 import HospitalBusynessText from "./hospital-busyness-text";
-import { buildHospitalLink } from "@/lib/types";
+import { buildHospitalLink } from "@/lib/utils";
 
 interface Props {
   hospital: HospitalInfo;
