@@ -17,7 +17,7 @@ wait_mapping = {
 def create_df():
     """Sets up and creates dataframe based on the data provided"""
     # Load the data
-    df = pd.read_csv('data/raw_data.csv', parse_dates=['Timestamp'], index_col=['Timestamp'])
+    df = pd.read_csv('python/data/raw_data.csv', parse_dates=['Timestamp'], index_col=['Timestamp'])
 
     # Convert wait times using the mapping
     for column in df.columns:  # Skip the first column (Timestamp)
