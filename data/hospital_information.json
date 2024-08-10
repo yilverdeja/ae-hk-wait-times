@@ -1,7 +1,7 @@
 {
   "AHMLNH": {
     "name": "Alice Ho Miu Ling Nethersole Hospital",
-    "region": { "long": "New Territories", "short": "NT" },
+    "region": "New Territories",
     "linkId": "100171",
     "cluster": "New Territories East",
     "address": "11 Chuen On Road, Tai Po, NT",
@@ -13,7 +13,7 @@
   },
   "CMC": {
     "name": "Caritas Medical Centre",
-    "region": { "long": "Kowloon", "short": "KL" },
+    "region": "Kowloon",
     "linkId": "100163",
     "cluster": "Kowloon West",
     "address": "111 Wing Hong Street, Sham Shui Po, KLN",
@@ -24,7 +24,7 @@
   },
   "KWH": {
     "name": "Kwong Wah Hospital",
-    "region": { "long": "Kowloon", "short": "KL" },
+    "region": "Kowloon",
     "linkId": "100153",
     "cluster": "Kowloon Central",
     "address": "25 Waterloo Road, KLN",
@@ -36,7 +36,7 @@
   },
   "NDH": {
     "name": "North District Hospital",
-    "region": { "long": "New Territories", "short": "NT" },
+    "region": "New Territories",
     "linkId": "100178",
     "cluster": "New Territories East",
     "address": "9 Po Kin Road, Sheung Shui, NT",
@@ -48,7 +48,7 @@
   },
   "NLH": {
     "name": "North Lantau Hospital",
-    "region": { "long": "New Territories", "short": "NT" },
+    "region": "New Territories",
     "linkId": "216546",
     "cluster": "Kowloon West",
     "address": "8 Chung Yan Road, Tung Chung, Lantau Island",
@@ -59,7 +59,7 @@
   },
   "PMH": {
     "name": "Princess Margaret Hospital",
-    "region": { "long": "New Territories", "short": "NT" },
+    "region": "New Territories",
     "linkId": "100160",
     "cluster": "Kowloon West",
     "address": "2-10 Princess Margaret Hospital Road, Lai Chi Kok, Kowloon",
@@ -70,7 +70,7 @@
   },
   "POH": {
     "name": "Pok Oi Hospital",
-    "region": { "long": "New Territories", "short": "NT" },
+    "region": "New Territories",
     "linkId": "100174",
     "cluster": "New Territories West",
     "address": "Au Tau, Yuen Long, NT",
@@ -82,7 +82,7 @@
   },
   "POWH": {
     "name": "Prince of Wales Hospital",
-    "region": { "long": "New Territories", "short": "NT" },
+    "region": "New Territories",
     "linkId": "100166",
     "cluster": "New Territories East",
     "address": "30-32 Ngan Shing Street, Shatin, NT",
@@ -94,7 +94,7 @@
   },
   "PYNEH": {
     "name": "Pamela Youde Nethersole Eastern Hospital",
-    "region": { "long": "Hong Kong Island", "short": "HKI" },
+    "region": "Hong Kong Island",
     "linkId": "100141",
     "cluster": "Hong Kong East",
     "address": "3 Lok Man Road, Chai Wan, HK",
@@ -106,7 +106,7 @@
   },
   "QEH": {
     "name": "Queen Elizabeth Hospital",
-    "region": { "long": "Kowloon", "short": "KL" },
+    "region": "Kowloon",
     "linkId": "100149",
     "cluster": "Kowloon Central",
     "address": "30 Gascoigne Road, KLN",
@@ -118,7 +118,7 @@
   },
   "QMH": {
     "name": "Queen Mary Hospital",
-    "region": { "long": "Hong Kong Island", "short": "HKI" },
+    "region": "Hong Kong Island",
     "linkId": "100131",
     "cluster": "Hong Kong West",
     "address": "102 Pokfulam Road, HK",
@@ -130,7 +130,7 @@
   },
   "RH": {
     "name": "Ruttonjee Hospital",
-    "region": { "long": "Hong Kong Island", "short": "HKI" },
+    "region": "Hong Kong Island",
     "linkId": "100144",
     "cluster": "Hong Kong East",
     "address": "266 Queen's Road East, Wan Chai, HK",
@@ -142,7 +142,7 @@
   },
   "SJH": {
     "name": "St John Hospital",
-    "region": { "long": "New Territories", "short": "NT" },
+    "region": "New Territories",
     "linkId": "100146",
     "cluster": "Hong Kong East",
     "address": "Cheung Chau Hospital Road, Tung Wan, Cheung Chau",
@@ -153,7 +153,7 @@
   },
   "TKOH": {
     "name": "Tseung Kwan O Hospital",
-    "region": { "long": "New Territories", "short": "NT" },
+    "region": "New Territories",
     "linkId": "101326",
     "cluster": "Kowloon East",
     "address": "No. 2 Po Ning Lane, Hang Hau, Tseung Kwan O",
@@ -164,7 +164,7 @@
   },
   "TMH": {
     "name": "Tuen Mun Hospital",
-    "region": { "long": "New Territories", "short": "NT" },
+    "region": "New Territories",
     "linkId": "100173",
     "cluster": "New Territories West",
     "address": "23 Tsing Chung Koon Road, Tuen Mun, NT",
@@ -176,7 +176,7 @@
   },
   "TSWH": {
     "name": "Tin Shui Wai Hospital",
-    "region": { "long": "New Territories", "short": "NT" },
+    "region": "New Territories",
     "linkId": "235909",
     "cluster": "New Territories West",
     "address": "11 Tin Tan Street, Tin Shui Wai, NT",
@@ -188,7 +188,7 @@
   },
   "UCH": {
     "name": "United Christian Hospital",
-    "region": { "long": "Kowloon", "short": "KL" },
+    "region": "Kowloon",
     "linkId": "100156",
     "cluster": "Kowloon East",
     "address": "130 Hip Wo Street, Kwun Tong, KLN",
@@ -200,7 +200,7 @@
   },
   "YCH": {
     "name": "Yan Chai Hospital",
-    "region": { "long": "New Territories", "short": "NT" },
+    "region": "New Territories",
     "linkId": "100165",
     "cluster": "Kowloon West",
     "address": "7-11 Yan Chai Street, Tsuen Wan, NT",

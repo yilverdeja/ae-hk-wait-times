@@ -30,7 +30,7 @@ export interface HospitalInformationInterface {
 
 const LANGUAGE = "ENG"
 
-const buildHospitalLink = (contentId: string): string => `http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=${contentId}&Lang=${LANGUAGE}`;
+export const buildHospitalLink = (contentId: string): string => `http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=${contentId}&Lang=${LANGUAGE}`;
 
   // Hospital names and their detailed information
 const hospitalDetails: Record<string, HospitalInformationInterface> = {
