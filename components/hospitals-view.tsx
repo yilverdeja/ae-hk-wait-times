@@ -90,8 +90,10 @@ export default function HospitalsViews({}: Props) {
 
   return (
     <>
-      <UpdateTimeBadge updateTime={updateTime} isLoading={isLoading} />
-      <HospitalRegionFilter filters={filters} onUpdateFilters={setFilters} />
+      <div className="flex flex-row items-center justify-between">
+        <UpdateTimeBadge updateTime={updateTime} isLoading={isLoading} />
+        <HospitalRegionFilter filters={filters} onUpdateFilters={setFilters} />
+      </div>
       <HospitalTable
         data={combinedData}
         columns={columns}

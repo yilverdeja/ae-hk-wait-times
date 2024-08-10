@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "./ui/button";
+import { Filter } from "lucide-react";
 
 export interface RegionFilter {
   id: string;
@@ -58,7 +59,13 @@ export default function HospitalRegionFilter({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost">Filter</Button>
+        <Button
+          className="flex flex-row items-center justify-center gap-1"
+          variant="ghost"
+        >
+          <span className="hidden md:block">Filter</span>
+          <Filter className="block" size={20} />
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Region</DropdownMenuLabel>

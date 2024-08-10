@@ -4,15 +4,14 @@ import InformationDialog from "@/components/information-dialog";
 export default function Home() {
   return (
     <>
-      <div className="flex flex-row justify-between items-start">
+      <header className="w-full flex flex-col justify-center items-center sm:flex-row sm:justify-between sm:items-center">
         <div className="my-2">
-          <h1 className="text-2xl font-bold my-2">Current A&E Waiting Times</h1>
-          <p className="text-md">
-            Select a hospital to view detailed information
-          </p>
+          <h1 className="text-lg text-center font-bold mb-2 md:text-xl sm:text-left">
+            Current A&E Waiting Times
+          </h1>
+          <InformationDialog />
         </div>
-        <InformationDialog />
-      </div>
+      </header>
       <HospitalsViews />
     </>
   );
