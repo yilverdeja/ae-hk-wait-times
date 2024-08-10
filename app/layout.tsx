@@ -2,6 +2,8 @@ import { cn } from "@/lib/utils";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
+import NavBar from "@/components/nav-bar";
+import Footer from "@/components/footer";
 
 const dm_sans = DM_Sans({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
@@ -44,7 +46,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn(dm_sans.className, "no-scrollbar dark")}>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="p-4">
+            <NavBar />
+            {children}
+            <Footer />
+          </div>
+        </Providers>
       </body>
     </html>
   );
