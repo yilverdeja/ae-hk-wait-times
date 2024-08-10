@@ -1,3 +1,39 @@
+export enum RegionType {
+  HKI = "Hong Kong Island",
+  NT = "New Territories",
+  KL = "Kowloon",
+}
+
+export enum ClusterType {
+  HongKongEast = "Hong Kong East",
+  HongKongWest = "Hong Kong West",
+  KowloonCentral = "Kowloon Central",
+  KowloonEast = "Kowloon East",
+  KowloonWest = "Kowloon West",
+  NewTerritoriesEast = "New Territories East",
+  NewTerritoriesWest = "New Territories West",
+}
+
+export type HospitalNames =
+  | "Alice Ho Miu Ling Nethersole Hospital"
+  | "Caritas Medical Centre"
+  | "Kwong Wah Hospital"
+  | "North District Hospital"
+  | "North Lantau Hospital"
+  | "Princess Margaret Hospital"
+  | "Pok Oi Hospital"
+  | "Prince of Wales Hospital"
+  | "Pamela Youde Nethersole Eastern Hospital"
+  | "Queen Elizabeth Hospital"
+  | "Queen Mary Hospital"
+  | "Ruttonjee Hospital"
+  | "St John Hospital"
+  | "Tseung Kwan O Hospital"
+  | "Tuen Mun Hospital"
+  | "Tin Shui Wai Hospital"
+  | "United Christian Hospital"
+  | "Yan Chai Hospital";
+
 export type HospitalAcronyms =
   | "AHMLNH"
   | "CMC"
@@ -67,3 +103,8 @@ export interface RegionFilter {
   id: string;
   value: string[];
 }
+
+const LANGUAGE = "ENG";
+
+export const buildHospitalLink = (contentId: string): string =>
+  `http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=${contentId}&Lang=${LANGUAGE}`;

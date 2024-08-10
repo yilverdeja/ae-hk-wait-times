@@ -8,10 +8,10 @@ import {
 } from "@/components/ui/sheet";
 import { HospitalInfo } from "@/hooks/useHospitals";
 import HospitalInformation from "./hospital-information";
-import { buildHospitalLink } from "@/data/hospitals";
 import HospitalChart from "./hospital-chart";
 import { useHospitalHourlyTrend } from "@/hooks/useHospitalTrend";
 import HospitalBusynessText from "./hospital-busyness-text";
+import { buildHospitalLink } from "@/lib/types";
 
 interface Props {
   hospital: HospitalInfo;
