@@ -33,6 +33,7 @@ export default function HospitalChart({ slug, wait, updateTime }: Props) {
     const currentDayName = dayNames[parseInt(day)];
 
     if (trend && trend[currentDayName]) {
+      const buffer = 0.2; // buffer to add to the current wait
       const formattedData = Object.entries(trend[currentDayName]).map(
         ([hour, waitTime]) => ({
           day: hour,
@@ -40,7 +41,7 @@ export default function HospitalChart({ slug, wait, updateTime }: Props) {
           now:
             updateTime.getDay().toString() === day &&
             updateTime.getHours().toString() === hour
-              ? wait
+              ? wait + buffer
               : undefined,
         })
       );
@@ -78,7 +79,7 @@ export default function HospitalChart({ slug, wait, updateTime }: Props) {
           <YAxis
             dataKey="wait"
             type="number"
-            domain={[1, 9]}
+            domain={[0, 9]}
             ticks={[2, 4, 7, 9]}
             tickFormatter={(value) => `>${parseInt(value, 10) - 1}hr`}
             width={30}
