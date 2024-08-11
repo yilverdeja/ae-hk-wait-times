@@ -78,9 +78,9 @@ export default function HospitalChart({ slug, wait, updateTime }: Props) {
           <YAxis
             dataKey="wait"
             type="number"
-            domain={[0, 9]}
-            ticks={[1, 3, 6, 8]}
-            tickFormatter={(value) => `>${parseInt(value, 10)}hr`}
+            domain={[1, 9]}
+            ticks={[2, 4, 7, 9]}
+            tickFormatter={(value) => `>${parseInt(value, 10) - 1}hr`}
             width={30}
           />
           <Bar
