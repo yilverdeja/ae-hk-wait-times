@@ -108,6 +108,9 @@ def get_hospital_trend(slug): pass
 
 Commonly used types can be found in `/lib/types.ts` but it's not structured, and hard to understand.
 
+### Add Chinese
+For Chinese speakers, add the option to switch between English, Traditional or Simplified Chinese.
+
 ### Display previous hourly averages on current day
 
 On the hospital chart for the current day, rather than only displaying a bar with the wait time at the current hour, also show the previous hour wait times so users can see if the it's following a trend or not.
