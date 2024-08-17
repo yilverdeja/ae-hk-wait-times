@@ -1,4 +1,5 @@
 "use client";
+import { sendGAEvent } from "@next/third-parties/google";
 import { useTheme } from "next-themes";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { Github, Moon, Sun } from "lucide-react";
@@ -11,7 +12,9 @@ export default function NavBar() {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    const newTheme = theme === "light" ? "dark" : "light";
+    sendGAEvent("event", "toggle_theme", { value: newTheme });
+    setTheme(newTheme);
   };
 
   return (
@@ -19,7 +22,10 @@ export default function NavBar() {
       <h1 className="text-xl sm:text-2xl md:text-3xl">A&E Wait Times</h1>
       <Menubar>
         <MenubarMenu>
-          <MenubarTrigger className="px-2">
+          <MenubarTrigger
+            className="px-2"
+            onClick={() => sendGAEvent("event", "click_nav_github")}
+          >
             <Link href={siteConfig.links.github} target="_blank">
               <Github className={iconClassName} />
             </Link>

@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { sendGAEvent } from "@next/third-parties/google";
 import { HospitalInfo } from "@/hooks/useHospitals";
 import HospitalTable from "./hospital-table";
 import HospitalSheet from "./hospital-sheet";
@@ -19,7 +20,13 @@ interface SortingButtonProps {
 const SortingButton = ({ column, children }: SortingButtonProps) => (
   <Button
     variant="ghost"
-    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+    onClick={() => {
+      sendGAEvent("event", "sort_column", {
+        column: children as string,
+        direction: column.getIsSorted() === "asc" ? "desc" : "asc",
+      });
+      column.toggleSorting(column.getIsSorted() === "asc");
+    }}
   >
     {children}
     <ArrowUpDown className="ml-2 h-4 w-4" />

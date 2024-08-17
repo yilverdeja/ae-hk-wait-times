@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { sendGAEvent } from "@next/third-parties/google";
 import { HospitalInfo, useHospitals } from "@/hooks/useHospitals";
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes";
 import moment from "moment";
@@ -27,9 +28,15 @@ const useHospitalData = () => {
           slug: slug as HospitalAcronyms,
         };
       });
-      setUpdateTime(
-        moment(hospitalWaitTimes.updateTime, "D/M/YYYY h:mma").toDate()
-      );
+      const newUpdateTime = moment(
+        hospitalWaitTimes.updateTime,
+        "D/M/YYYY h:mma"
+      ).toDate();
+      if (updateTime && newUpdateTime !== updateTime) {
+        sendGAEvent("event", "updated_update_time", { value: newUpdateTime });
+      }
+
+      setUpdateTime(newUpdateTime);
       setCombinedData(data);
     }
   }, [hospitals, hospitalWaitTimes, isLoadingHospitals, isLoadingWaitTimes]);

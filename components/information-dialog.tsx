@@ -1,3 +1,5 @@
+"use client";
+import { sendGAEvent } from "@next/third-parties/google";
 import {
   Accordion,
   AccordionContent,
@@ -37,7 +39,11 @@ const information = [
 export default function InformationDialog() {
   return (
     <Dialog>
-      <DialogTrigger className="hover:cursor-pointer" asChild>
+      <DialogTrigger
+        className="hover:cursor-pointer"
+        asChild
+        onClick={() => sendGAEvent("event", "open_information")}
+      >
         <div className="flex gap-2 justify-center items-center sm:justify-start">
           <InfoIcon className="order-1 " size={20} />
           <span className="order-2 text-sm underline underline-offset-2 ">

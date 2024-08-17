@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useHospitalTrend } from "../hooks/useHospitalTrend";
 import HospitalTrendSelector from "./hospital-trend-selector";
 import { dayNames, HospitalAcronyms } from "@/lib/types";
+import { sendGAEvent } from "@next/third-parties/google";
 
 interface ChartInterface {
   day: string;
@@ -52,7 +53,17 @@ export default function HospitalChart({ slug, wait, updateTime }: Props) {
   return (
     <div>
       <div className="my-4">
-        <HospitalTrendSelector day={day} onChange={setDay} />
+        <HospitalTrendSelector
+          day={day}
+          onChange={(newDay) => {
+            sendGAEvent("event", "select_chart_day", {
+              setDay: dayNames[parseInt(newDay)],
+              prevDay: dayNames[parseInt(day)],
+              hospital_slug: slug,
+            });
+            setDay(newDay);
+          }}
+        />
       </div>
       <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
         <BarChart width={730} height={250} data={chartData}>
