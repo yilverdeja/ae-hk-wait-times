@@ -6,6 +6,7 @@ import {
   useReactTable,
   getFilteredRowModel,
 } from "@tanstack/react-table";
+import { sendGAEvent } from "@next/third-parties/google";
 import {
   Table,
   TableBody,
@@ -18,6 +19,7 @@ import { HospitalInfo } from "@/hooks/useHospitals";
 import { Skeleton } from "./ui/skeleton";
 import { useBreakpoint } from "use-breakpoint";
 import { BREAKPOINTS } from "@/lib/utils";
+import { waitMapping } from "@/lib/types";
 
 interface Props {
   data: HospitalInfo[];
@@ -48,6 +50,12 @@ export default function HospitalTable({
   });
 
   const handleHospitalClick = (hospital: HospitalInfo) => {
+    sendGAEvent("event", "select_hospital", {
+      hospital: hospital.name,
+      wait: waitMapping[hospital.wait!.toString()],
+      region: hospital.region,
+      cluster: hospital.cluster,
+    });
     onSelectHospital(hospital);
   };
   return (

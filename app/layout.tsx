@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { DM_Sans } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Providers from "./providers";
 import NavBar from "@/components/nav-bar";
@@ -54,6 +55,7 @@ export default function RootLayout({
           </div>
         </Providers>
       </body>
+      <GoogleAnalytics gaId="G-1BVWY7HH96" />
     </html>
   );
 }
