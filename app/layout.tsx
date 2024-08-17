@@ -45,7 +45,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cn(dm_sans.className, "no-scrollbar dark")}>
+    <html
+      lang="en"
+      className={cn(dm_sans.className, "no-scrollbar dark")}
+      suppressHydrationWarning
+    >
       <body>
         <Providers>
           <div className="p-4">
