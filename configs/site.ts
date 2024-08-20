@@ -1,6 +1,6 @@
 export const siteConfig = {
     name: "A&E Hong Kong Wait Times",
-    url: "https://ae-hk-wait-times.vercel.app",
+    url: "https://ae.wait.hk",
     description: "Estimated reference of Hong Kong's Hospital Authority Accident and Emergency waiting times capped at 8 hours",
     links: {
         github: "https://github.com/yilverdeja/ae-hk-wait-times",
