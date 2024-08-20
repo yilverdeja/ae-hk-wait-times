@@ -15,18 +15,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { HospitalInfo } from "@/hooks/useHospitals";
+import { HospitalWithWait } from "@/hooks/useHospitals";
 import { Skeleton } from "./ui/skeleton";
 import { useBreakpoint } from "use-breakpoint";
 import { BREAKPOINTS } from "@/lib/utils";
 import { waitMapping } from "@/lib/types";
 
 interface Props {
-  data: HospitalInfo[];
+  data: HospitalWithWait[];
   columns: any;
   filters: any[];
   isLoading: boolean;
-  onSelectHospital: (hospital: HospitalInfo) => void;
+  onSelectHospital: (hospital: HospitalWithWait) => void;
 }
 
 export default function HospitalTable({
@@ -49,7 +49,7 @@ export default function HospitalTable({
     },
   });
 
-  const handleHospitalClick = (hospital: HospitalInfo) => {
+  const handleHospitalClick = (hospital: HospitalWithWait) => {
     sendGAEvent("event", "select_hospital", {
       hospital: hospital.name,
       wait: waitMapping[hospital.wait!.toString()],

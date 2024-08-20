@@ -1,34 +1,37 @@
 import { HospitalAcronyms } from "@/lib/types";
+import axiosInstance from "@/services/api-client";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
-export interface HospitalInfo {
+export interface Hospital {
+  id: number;
   name: string;
-  region: string;
-  linkId: string;
-  cluster: string;
-  address: string;
-  telephone: string;
-  fax: string;
+  slug: HospitalAcronyms;
   email: string;
+  cluster: string;
+  region: string;
+  address: string;
+  phone: string;
+  fax: string;
+  ha_id: string;
   website?: string;
-  googleMapsLink: string;
-  wait?: number;
-  slug?: HospitalAcronyms;
+  google_maps_link: string;
 }
 
-type Hospitals = {
-  [key in HospitalAcronyms]: HospitalInfo;
-};
+export interface HospitalWithWait extends Hospital {
+  wait: number;
+}
 
-const getHospitals = async (): Promise<Hospitals> => {
-  const url = "/api/hospitals";
-  const response = await axios.get(url);
-  return response.data;
+interface GetHospitalsResponse {
+  hospitals: Hospital[];
+}
+
+const getHospitals = async (): Promise<Hospital[]> => {
+  const response = await axiosInstance.get<GetHospitalsResponse>("/hospitals");
+  return response.data.hospitals;
 };
 
 export const useHospitals = () =>
-  useQuery<Hospitals>({
+  useQuery<Hospital[]>({
     queryKey: ["hospitals"],
     queryFn: () => getHospitals(),
   });
