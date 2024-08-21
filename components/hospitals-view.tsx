@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { sendGAEvent } from "@next/third-parties/google";
-import { HospitalInfo } from "@/hooks/useHospitals";
+import { HospitalWithWait } from "@/hooks/useHospitals";
 import HospitalTable from "./hospital-table";
 import HospitalSheet from "./hospital-sheet";
 import { Column, createColumnHelper } from "@tanstack/react-table";
@@ -13,7 +13,7 @@ import useHospitalData from "@/hooks/useHospitalData";
 import { RegionFilter, waitMapping } from "@/lib/types";
 
 interface SortingButtonProps {
-  column: Column<HospitalInfo, unknown>;
+  column: Column<HospitalWithWait, unknown>;
   children: React.ReactNode;
 }
 
@@ -33,12 +33,11 @@ const SortingButton = ({ column, children }: SortingButtonProps) => (
   </Button>
 );
 
-const columnHelper = createColumnHelper<HospitalInfo>();
+const columnHelper = createColumnHelper<HospitalWithWait>();
 
 export default function HospitalsViews() {
-  const [selectedHospital, setSelectedHospital] = useState<HospitalInfo | null>(
-    null
-  );
+  const [selectedHospital, setSelectedHospital] =
+    useState<HospitalWithWait | null>(null);
   const [filters, setFilters] = useState<RegionFilter[]>([]);
   const { combinedData, updateTime, isLoading } = useHospitalData();
 

@@ -1,85 +1,93 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { dayNames, WeekDayNames } from "@/lib/types";
+import axiosInstance from "@/services/api-client";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 
-type DayNames =
-  | "0"
-  | "1"
-  | "2"
-  | "3"
-  | "4"
-  | "5"
-  | "6"
-  | "7"
-  | "8"
-  | "9"
-  | "10"
-  | "11"
-  | "12"
-  | "13"
-  | "14"
-  | "15"
-  | "16"
-  | "17"
-  | "18"
-  | "19"
-  | "20"
-  | "21"
-  | "22"
-  | "23";
+export type TrendMapping = {
+  week: { [key in WeekDayNames]: number[] };
+  day: number[];
+  hour: number;
+};
 
-type DaySchedule = Record<DayNames, number>;
+export type HospitalTrendType =
+  | TrendMapping["week"]
+  | TrendMapping["day"]
+  | TrendMapping["hour"];
 
-interface HospitalTrend {
-  Monday: DaySchedule;
-  Tuesday: DaySchedule;
-  Wednesday: DaySchedule;
-  Thursday: DaySchedule;
-  Friday: DaySchedule;
-  Saturday: DaySchedule;
-  Sunday: DaySchedule;
+interface GetHospitalTrendResponse {
+  type: keyof TrendMapping;
+  trend: HospitalTrendType;
 }
 
-const getHospitalTrend = async (slug: string): Promise<HospitalTrend> => {
-  const url = `/api/hospitals/${slug}/trend`;
-  const response = await axios.get(url);
+const getHospitalTrend = async (
+  id: number,
+  day?: WeekDayNames,
+  hour?: number
+): Promise<GetHospitalTrendResponse> => {
+  const endpoint = `/hospitals/${id}/trend`;
+  const params = new URLSearchParams();
+  if (day) params.append("day", day);
+  if (day && hour !== undefined) params.append("hour", hour.toString());
+  const response = await axiosInstance.get<GetHospitalTrendResponse>(endpoint, {
+    params,
+  });
   return response.data;
 };
 
-const getHospitalHourlyTrend = async (
-  slug: string,
-  day: number,
-  hour: number
-): Promise<number> => {
-  const url = `/api/hospitals/${slug}/hourly-trend/${day}/${hour}`;
-  const response = await axios.get(url);
-  return response.data;
+const calculateRefetchInterval = (
+  day?: WeekDayNames,
+  hour?: number
+): number | false => {
+  const currentTime = new Date();
+
+  if (day && hour !== undefined) {
+    // Refetch every hour
+    const nextHour = new Date(currentTime);
+    nextHour.setHours(currentTime.getHours() + 1);
+    nextHour.setMinutes(0, 0, 0); // Set seconds and milliseconds to 0
+    return nextHour.getTime() - currentTime.getTime();
+  } else if (day) {
+    // Refetch every day
+    const nextDay = new Date(currentTime);
+    nextDay.setDate(currentTime.getDate() + 1);
+    nextDay.setHours(0, 0, 0, 0); // Start of the next day
+    return nextDay.getTime() - currentTime.getTime();
+  } else {
+    // Refetch every week
+    const nextWeek = new Date(currentTime);
+    nextWeek.setDate(currentTime.getDate() + (7 - currentTime.getDay()));
+    nextWeek.setHours(0, 0, 0, 0); // Start of the next week
+    return nextWeek.getTime() - currentTime.getTime();
+  }
 };
 
-export const useHospitalTrend = (slug: string) =>
-  useQuery<HospitalTrend>({
-    queryKey: ["hospital", slug, "trend"],
-    queryFn: () => getHospitalTrend(slug),
+export const usePrefetchHospitalTrend = (
+  queryClient: QueryClient,
+  id: number
+) => {
+  const now = new Date();
+  const day = dayNames[now.getDay()];
+  const hour = now.getHours();
+
+  // prefetch all trend data from hospital
+  queryClient.prefetchQuery({
+    queryKey: ["hospital", id, "trend", undefined, undefined],
+    queryFn: () => getHospitalTrend(id),
   });
 
-export const useHospitalHourlyTrend = (
-  slug: string,
-  day: number,
-  hour: number
-) =>
-  useQuery<number>({
-    queryKey: ["hospital", slug, "hourly-trend", day, hour],
-    queryFn: () => getHospitalHourlyTrend(slug, day, hour),
-    refetchInterval: () => {
-      // refetch on the next hour
-      const currentTime = new Date();
-      const nextHourTime = new Date(currentTime);
-      nextHourTime.setHours(currentTime.getHours() + 1);
-      nextHourTime.setMinutes(0);
-      nextHourTime.setSeconds(0);
-      nextHourTime.setMilliseconds(0);
+  // prefetch current day hour value
+  queryClient.prefetchQuery({
+    queryKey: ["hospital", id, "trend", day, hour],
+    queryFn: () => getHospitalTrend(id, day, hour),
+  });
+};
 
-      // get the difference between next hour time and current time
-      const diffTime = nextHourTime.getTime() - currentTime.getTime();
-      return diffTime;
-    },
+export const useHospitalTrend = (
+  id: number,
+  day?: WeekDayNames,
+  hour?: number
+) =>
+  useQuery<GetHospitalTrendResponse>({
+    queryKey: ["hospital", id, "trend", day, hour],
+    queryFn: () => getHospitalTrend(id, day, hour),
+    refetchInterval: calculateRefetchInterval(day, hour),
   });

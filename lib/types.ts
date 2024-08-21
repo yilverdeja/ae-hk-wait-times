@@ -70,7 +70,7 @@ export const waitMapping: WaitMapping = {
   "9": "Over 8 hours",
 };
 
-type WeekDayNames =
+export type WeekDayNames =
   | "Monday"
   | "Tuesday"
   | "Wednesday"

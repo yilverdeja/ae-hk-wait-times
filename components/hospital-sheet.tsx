@@ -6,15 +6,16 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { HospitalInfo } from "@/hooks/useHospitals";
+import { HospitalWithWait } from "@/hooks/useHospitals";
 import HospitalInformation from "./hospital-information";
 import HospitalChart from "./hospital-chart";
-import { useHospitalHourlyTrend } from "@/hooks/useHospitalTrend";
+import { TrendMapping, useHospitalTrend } from "@/hooks/useHospitalTrend";
 import HospitalBusynessText from "./hospital-busyness-text";
 import { buildHospitalLink } from "@/lib/utils";
+import { dayNames } from "@/lib/types";
 
 interface Props {
-  hospital: HospitalInfo;
+  hospital: HospitalWithWait;
   updateTime: Date;
   onClose: () => void;
 }
@@ -26,9 +27,9 @@ export default function HospitalSheet({
 }: Props) {
   const today = new Date();
 
-  const { data: averageWait } = useHospitalHourlyTrend(
-    hospital.slug!,
-    today.getDay(),
+  const { data: averageWait } = useHospitalTrend(
+    hospital.id,
+    dayNames[today.getDay()],
     today.getHours()
   );
 
@@ -48,24 +49,25 @@ export default function HospitalSheet({
           <SheetDescription>
             <HospitalBusynessText
               currentWait={hospital.wait!}
-              averageWait={averageWait || 0}
+              averageWait={(averageWait?.trend as TrendMapping["hour"]) || 0}
             />
           </SheetDescription>
         </SheetHeader>
 
         <div className="my-4">
           <HospitalChart
-            slug={hospital.slug!}
+            hospitalId={hospital.id}
+            slug={hospital.slug}
             wait={hospital.wait!}
             updateTime={updateTime}
           />
         </div>
 
         <HospitalInformation
-          googleMapsLink={hospital.googleMapsLink}
-          link={buildHospitalLink(hospital.linkId)}
+          googleMapsLink={hospital.google_maps_link}
+          link={buildHospitalLink(hospital.ha_id)}
           address={hospital.address}
-          telephone={hospital.telephone}
+          telephone={hospital.phone}
           fax={hospital.fax}
           email={hospital.email}
           website={hospital.website}
