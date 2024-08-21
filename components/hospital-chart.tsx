@@ -2,9 +2,9 @@
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { useEffect, useState } from "react";
-import { useHospitalTrend } from "../hooks/useHospitalTrend";
+import { TrendMapping, useHospitalTrend } from "../hooks/useHospitalTrend";
 import HospitalTrendSelector from "./hospital-trend-selector";
-import { dayNames, HospitalAcronyms } from "@/lib/types";
+import { dayNames } from "@/lib/types";
 import { sendGAEvent } from "@next/third-parties/google";
 
 interface ChartInterface {
@@ -20,35 +20,42 @@ const chartConfig: ChartConfig = {
 };
 
 interface Props {
-  slug: HospitalAcronyms;
+  hospitalId: number;
+  slug: string;
   wait: number;
   updateTime: Date;
 }
 
-export default function HospitalChart({ slug, wait, updateTime }: Props) {
+export default function HospitalChart({
+  hospitalId,
+  slug,
+  wait,
+  updateTime,
+}: Props) {
   const [day, setDay] = useState<string>(new Date().getDay().toString());
   const [chartData, setChartData] = useState<ChartInterface[]>([]);
-  const { data: trend, isLoading, error } = useHospitalTrend(slug);
+  const { data, isLoading, error } = useHospitalTrend(hospitalId);
 
   useEffect(() => {
     const currentDayName = dayNames[parseInt(day)];
 
-    if (trend && trend[currentDayName]) {
-      const buffer = 0.2; // buffer to add to the current wait
-      const formattedData = Object.entries(trend[currentDayName]).map(
-        ([hour, waitTime]) => ({
-          day: hour,
+    if (data && data.type === "week") {
+      const trend = data.trend as TrendMapping["week"];
+      if (trend[currentDayName]) {
+        const buffer = 0.2;
+        const formattedData = trend[currentDayName].map((waitTime, hour) => ({
+          day: hour.toString(),
           wait: waitTime,
           now:
             updateTime.getDay().toString() === day &&
-            updateTime.getHours().toString() === hour
+            updateTime.getHours() === hour
               ? wait + buffer
               : undefined,
-        })
-      );
-      setChartData(formattedData);
+        }));
+        setChartData(formattedData);
+      }
     }
-  }, [trend, day]);
+  }, [data, day]);
 
   return (
     <div>
