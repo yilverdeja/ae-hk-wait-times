@@ -9,10 +9,10 @@ export default function Home() {
           <h1 className="text-lg text-center font-bold mb-2 md:text-xl sm:text-left">
             Current A&E Waiting Times
           </h1>
-          {/* <InformationDialog /> */}
+          <InformationDialog />
         </div>
       </header>
-      {/* <HospitalsViews /> */}
+      <HospitalsViews />
     </>
   );
 }

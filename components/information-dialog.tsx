@@ -40,6 +40,7 @@ export default function InformationDialog() {
   return (
     <Dialog>
       <DialogTrigger
+        role="button"
         className="hover:cursor-pointer"
         asChild
         onClick={() => sendGAEvent("event", "open_information")}
