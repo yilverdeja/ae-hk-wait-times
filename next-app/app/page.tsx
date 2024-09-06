@@ -1,4 +1,4 @@
-// import HospitalsViews from "@/components/hospitals-view";
+import HospitalView from "@/app/components/hospital-view";
 import InformationDialog from "@/app/components/information-dialog";
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
           <InformationDialog />
         </div>
       </header>
-      {/* <HospitalsViews /> */}
+      <HospitalView />
     </>
   );
 }
