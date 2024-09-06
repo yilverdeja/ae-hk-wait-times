@@ -1,5 +1,5 @@
 // import HospitalsViews from "@/components/hospitals-view";
-// import InformationDialog from "@/components/information-dialog";
+import InformationDialog from "@/app/components/information-dialog";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
           <h1 className="text-lg text-center font-bold mb-2 md:text-xl sm:text-left">
             Current A&E Waiting Times
           </h1>
-          {/* <InformationDialog /> */}
+          <InformationDialog />
         </div>
       </header>
       {/* <HospitalsViews /> */}
