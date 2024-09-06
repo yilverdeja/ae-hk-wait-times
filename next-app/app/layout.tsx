@@ -1,12 +1,12 @@
-import { cn } from "@/app/lib/shadcn/utils";
-import { DM_Sans } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import type { Metadata } from "next";
+import { DM_Sans } from "next/font/google";
+import Footer from "@/app/components/footer";
+import NavBar from "@/app/components/navbar";
+import { cn } from "@/app/lib/shadcn/utils";
 import "./globals.css";
 import Providers from "./providers";
-// import NavBar from "@/components/nav-bar";
-import Footer from "@/app/components/footer";
 
-import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Hong Kong A&E Wait Times",
   description:
@@ -53,7 +53,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <div className="p-4">
-            {/* <NavBar /> */}
+            <NavBar />
             {children}
             <Footer />
           </div>
