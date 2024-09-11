@@ -23,7 +23,7 @@ export interface HospitalWithWait extends Hospital {
 }
 
 const getHospitals = async (): Promise<Hospital[]> => {
-	const response = await axios.get<Hospital[]>("/api/hospital");
+	const response = await axios.get<Hospital[]>("/api/hospitals");
 	return response.data;
 };
 
