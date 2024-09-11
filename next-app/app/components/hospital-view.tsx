@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { sendGAEvent } from "@next/third-parties/google";
 import HospitalTable from "@/app/components/hospital-table";
 import HospitalSheet from "@/app/components/hospital-sheet";
