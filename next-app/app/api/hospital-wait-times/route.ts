@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ValueOf } from "next/dist/shared/lib/constants";
 import { NextResponse } from "next/server";
 
 const WaitTimeToIndexMap = {
@@ -13,10 +14,33 @@ const WaitTimeToIndexMap = {
 	"Over 8 hours": 9,
 };
 
+const HospitalAcronymsMap = {
+	"Alice Ho Miu Ling Nethersole Hospital": "AHMLNH",
+	"Caritas Medical Centre": "CMC",
+	"Kwong Wah Hospital": "KWH",
+	"North District Hospital": "NDH",
+	"North Lantau Hospital": "NLH",
+	"Princess Margaret Hospital": "PMH",
+	"Pok Oi Hospital": "POH",
+	"Prince of Wales Hospital": "POWH",
+	"Pamela Youde Nethersole Eastern Hospital": "PYNEH",
+	"Queen Elizabeth Hospital": "QEH",
+	"Queen Mary Hospital": "QMH",
+	"Ruttonjee Hospital": "RH",
+	"St John Hospital": "SJH",
+	"Tseung Kwan O Hospital": "TKOH",
+	"Tuen Mun Hospital": "TMH",
+	"Tin Shui Wai Hospital": "TSWH",
+	"United Christian Hospital": "UCH",
+	"Yan Chai Hospital": "YCH",
+};
+
 type TopWaitStrings = keyof typeof WaitTimeToIndexMap;
+type HospitalNames = keyof typeof HospitalAcronymsMap;
+type HospitalAcronyms = ValueOf<typeof HospitalAcronymsMap>;
 
 interface HospitalWaitTime {
-	hospName: string;
+	hospName: HospitalNames;
 	topWait: TopWaitStrings;
 }
 
@@ -26,7 +50,7 @@ interface HospitalWaitTimeRecord {
 }
 
 interface HospitalWaitTimeResponse {
-	[key: string]: number;
+	[key: HospitalAcronyms]: number;
 }
 
 interface HospitalWaitTimeRecordResponse {
@@ -44,7 +68,10 @@ const getHospitalWaitTimes = async () => {
 	const hospitalWaitTimes = data.waitTime;
 	const hospitals: HospitalWaitTimeResponse = {};
 	hospitalWaitTimes.forEach(({ hospName, topWait }) => {
-		hospitals[hospName] = WaitTimeToIndexMap[topWait];
+		if (hospName in HospitalAcronymsMap) {
+			const acronym: HospitalAcronyms = HospitalAcronymsMap[hospName];
+			hospitals[acronym] = WaitTimeToIndexMap[topWait];
+		}
 	});
 
 	const hospitalWaitTimesResponse: HospitalWaitTimeRecordResponse = {
