@@ -2,21 +2,21 @@
 
 # Hong Kong Accident & Emergency Wait Times
 
-Revamping the [original A&E Wait Time page](https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=235504&Lang=ENG) using NextJS and Flask by using a responsive design, real-time filtering, and hourly wait trends to optimize visit planning.
+Revamping the [original A&E Wait Time page](https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=235504&Lang=ENG) using NextJS and AWS by using a responsive design, real-time filtering, and hourly wait trends to optimize visit planning.
 
 ## Features
 
 Using the [A&E Wait Times Open Data API](https://data.gov.hk/en-data/dataset/hospital-hadata-ae-waiting-time), we can retrieve the current snapshot, in addition to historical snapshots at 15 minute intervals of every A&E hospital. Currently, this application can:
 
-- Display the estimated wait times of each hospital with a dynamic table that can be sorted by their name or wait times, and filtered by their region
-  - Data is automatically retrieved and updated every 15-17 minutes
-- Clicking on a hospital opens a side modal with more in depth information:
-  - Hospital information like google maps address, contact information, and relevant links
-  - A text displaying the current wait time relative to the average wait time on that specific day and hour
-  - A bar chart to show the hourly trend of each day from Monday to Sunday. The trend is shown in blue, whilst the current wait time is overlayed with a single pink bar
-- Responsive for desktop and mobile applications
-- "Understanding the Wait" modal to let users understand better how wait times are generated and what they mean
-- A dark and light mode theme toggle
+-   Display the estimated wait times of each hospital with a dynamic table that can be sorted by their name or wait times, and filtered by their region
+    -   Data is automatically retrieved and updated every 15-17 minutes
+-   Clicking on a hospital opens a side modal with more in depth information:
+    -   Hospital information like google maps address, contact information, and relevant links
+    -   A text displaying the current wait time relative to the average wait time on that specific day and hour
+    -   A bar chart to show the hourly trend of each day from Monday to Sunday. The trend is shown in blue, whilst the current wait time is overlayed with a single pink bar
+-   Responsive for desktop and mobile applications
+-   "Understanding the Wait" modal to let users understand better how wait times are generated and what they mean
+-   A dark and light mode theme toggle
 
 ## Demo
 
@@ -24,13 +24,9 @@ https://ae-hk-wait-times.vercel.app/
 
 ## Tech Stack
 
-This app was developed with Typescript, NextJS, and [shadcn/ui](https://ui.shadcn.com/) with TailwindCSS for easier development. Using Flask as the API backend. The starter template was generated from the [NextJS Flask Starter Boilerplate](https://vercel.com/templates/next.js/nextjs-flask-starter)
+This app was developed with Typescript, NextJS, and [shadcn/ui](https://ui.shadcn.com/) with TailwindCSS for easier development.
 
-### Why Flask?
-
-Honestly, for the current implementation, there was no need. However, this project started with a simple idea: **Can I create machine learning models to predict future wait times?**
-
-I would still love to have this as a possible feature in the future. Within the `/python` directory you can find the historical `/data`, the basic trained `/models` for each hospital, and jupyter `/notebooks` testing out the process.
+The backend is managed in AWS.
 
 ## What Inspired Me?
 
@@ -82,33 +78,12 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-The Flask server will be running on [http://127.0.0.1:5328](http://127.0.0.1:5328) – feel free to change the port in `package.json` (you'll also need to update it in `next.config.js`).
+The Flask server will be running on [http://127.0.0.1:5328](http://127.0.0.1:5328) – feel free to change the port in `package.json` (you'll also need to update it in `next.config.js`).
 
 ## Improvements
 
-### API
-
-The API doesn't follow RESTUL practices. In certain cases, it doesn't return a JSON, and for the hourly hospital trend endpoint it returns a value and the endpoint is confusing.
-
-Perhaps it would be better to combine
-
-```python
-# get the following endpoints
-@app.route("/api/hospitals/<string:slug>/trend")
-def get_hospital_trend(slug): pass
-@app.route("/api/hospitals/<string:slug>/hourly-trend/<int:day>/<string:hour>")
-def get_hourly_hospital_trend(slug, day, hour): pass
-
-# and combine them into one and use query parameters for day and hour
-@app.route("/api/hospitals/<string:slug>/trend")
-def get_hospital_trend(slug): pass
-```
-
-### Cleanup Types
-
-Commonly used types can be found in `/lib/types.ts` but it's not structured, and hard to understand.
-
 ### Add Chinese
+
 For Chinese speakers, add the option to switch between English, Traditional or Simplified Chinese.
 
 ### Display previous hourly averages on current day
