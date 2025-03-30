@@ -34,7 +34,6 @@ export default function HospitalChart({
 }: Props) {
 	const [day, setDay] = useState<string>(new Date().getDay().toString());
 	const [chartData, setChartData] = useState<ChartInterface[]>([]);
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const { data, isLoading, error } = useHospitalTrend(hospitalId);
 
 	useEffect(() => {
@@ -60,6 +59,19 @@ export default function HospitalChart({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, day]);
+
+	if (isLoading)
+		return (
+			<div className="text-sm border-slate-200 dark:border-slate-600 border-2 p-2">
+				Chart is loading...
+			</div>
+		);
+	if (error)
+		return (
+			<div className="text-sm border-slate-200 dark:border-slate-600 border-2 p-2">
+				The trend chart is currently unavailable
+			</div>
+		);
 
 	return (
 		<div>

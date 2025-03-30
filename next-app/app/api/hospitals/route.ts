@@ -43,5 +43,3 @@ export async function GET() {
 		);
 	}
 }
-
-// if node env is dev, then use dummy data

@@ -1,6 +1,7 @@
 import { HospitalAcronyms } from "@/app/lib/types";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import hospitals from "../data/hospitals";
 
 export interface Hospital {
 	id: number;
@@ -30,4 +31,5 @@ export const useHospitals = () =>
 	useQuery<Hospital[]>({
 		queryKey: ["hospitals"],
 		queryFn: () => getHospitals(),
+		initialData: hospitals,
 	});
