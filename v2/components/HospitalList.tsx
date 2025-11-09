@@ -1,5 +1,5 @@
 import { useHospitalWaitTimes } from '@/hooks/useHospitalWaitTimes';
-import { ManagementStatus } from '@/types';
+import { LanguageCode, ManagementStatus } from '@/types';
 
 const HospitalList = () => {
   const { data, isLoading, isError, error } = useHospitalWaitTimes();
@@ -40,8 +40,8 @@ const HospitalList = () => {
       <p>Last Updated: {data?.lastUpdated}</p>
       <hr />
       {data?.waitTimes.map((hospital) => (
-        <div key={hospital.hospitalSlug || hospital.hospitalName} style={{ borderBottom: '1px solid #ccc', padding: '10px 0' }}>
-          <h2>{hospital.hospitalName}</h2>
+        <div key={hospital.slug || hospital.name[LanguageCode.EN]} style={{ borderBottom: '1px solid #ccc', padding: '10px 0' }}>
+          <h2>{hospital.name[LanguageCode.EN]}</h2>
           <p>
             <strong>Critical: </strong> 
             {renderWaitTime(hospital.waitTimes.criticalMinutes)}
