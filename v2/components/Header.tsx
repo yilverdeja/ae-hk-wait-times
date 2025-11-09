@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { siteConfig } from "@/configs/site";
+import { useLanguage } from "@/hooks/useLanguage";
 
 // Dynamically import the LanguageSwitcher and disable SSR
 // The 'loading' option provides a fallback UI while the component is loading
@@ -13,12 +15,13 @@ const DynamicLanguageSwitcher = dynamic(
   }
 );
 
-export function Header() {
-  return (
+export default function Header() {
+  const { lang } = useLanguage();
+    return (
     <header className="flex h-16 items-center border-b bg-background px-4 md:px-6">
       {/* Left side of the header */}
       <div>
-        <h1 className="text-lg font-semibold">Hospital Wait Times</h1>
+        <h1 className="text-xl sm:text-2xl md:text-3xl">{siteConfig.title[lang]}</h1>
       </div>
 
       {/* Right side of the header */}

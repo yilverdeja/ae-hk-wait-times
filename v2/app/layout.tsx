@@ -3,7 +3,8 @@ import { DM_Sans } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Providers from "@/providers/Providers";
-import { Header } from "@/components/Header";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 const dm_sans = DM_Sans({ weight: ["400", "500", "700"], subsets: ["latin"] });
 
 export const metadata = {
@@ -53,6 +54,7 @@ export default function RootLayout({
           <div className="p-4">
             <Header />
             {children}
+            <Footer />
           </div>
         </Providers>
       </body>
