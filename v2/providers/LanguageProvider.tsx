@@ -1,4 +1,3 @@
-// providers/LanguageProvider.tsx
 "use client";
 
 import { useState, useCallback, useMemo, ReactNode } from 'react';
