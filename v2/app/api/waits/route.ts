@@ -3,6 +3,7 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 import { ManagementStatus, ApiResponse, TransformedHospitalData } from '@/types';
+import dayjs from '@/lib/dayjs';
 
 // ============================================================================
 // 1. DATA MODELING (TYPES & INTERFACES)
@@ -141,8 +142,10 @@ export async function GET(request: Request) {
       };
     });
 
+    // Transform the updateTime from "D/MM/YYYY HH:mmA" to "DD/MM/YYYY HH:mm A" (make sure the day is 2 digits)
+    const updateTime = dayjs(rawData.updateTime, "D/MM/YYYY hh:mmA").format("DD/MM/YYYY hh:mm A");
     const apiResponse: ApiResponse = {
-      lastUpdated: rawData.updateTime,
+      lastUpdated: updateTime,
       waitTimes: transformedData,
     };
 
