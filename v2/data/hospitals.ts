@@ -211,6 +211,6 @@ export const hospitals: HospitalData = {
       "fax": "2414 8562",
       "email": "ych.enquiry@ha.org.hk",
       "googleMapsLink": "https://maps.app.goo.gl/VHyiYm5DR1hxj77t8"
-    }
+    },
 }
   

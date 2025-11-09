@@ -121,7 +121,7 @@ export async function GET(request: Request) {
     }
 
     const transformedData: TransformedHospitalData[] = rawData.waitTime.map((hospital) => {
-      const slug = hospitalAcronyms[hospital.hospName] || null;
+      const slug = hospitalAcronyms[hospital.hospName] || "UNKNOWN";
 
       return {
         hospitalName: hospital.hospName,

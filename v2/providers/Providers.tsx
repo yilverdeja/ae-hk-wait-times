@@ -1,14 +1,17 @@
 "use client"
 
 import { ThemeProvider } from "@/providers/ThemeProvider"
+import { LanguageProvider } from "@/providers/LanguageProvider"
 import TanstackProvider from "@/providers/TanstackProvider"
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
-      <TanstackProvider>
-        {children}
-      </TanstackProvider>
+      <LanguageProvider>
+        <TanstackProvider>
+            {children}
+        </TanstackProvider>
+      </LanguageProvider>
     </ThemeProvider>
   )
 }
