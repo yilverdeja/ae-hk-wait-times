@@ -56,10 +56,10 @@ const HospitalList = () => {
             <strong>Urgent (Median):</strong> {renderWaitTime(hospital.waitTimes.urgentP50Minutes)}
           </p>
           <p>
-            <strong>Semi-Urgent/Non-Urgent (Median):</strong> {renderWaitTime(hospital.waitTimes.urgentP50Minutes)}
+            <strong>Semi-Urgent/Non-Urgent (Median):</strong> {renderWaitTime(hospital.waitTimes.semiUrgentNonUrgentP50Minutes)}
           </p>
           <p>
-            <strong>Semi-Urgent/Non-Urgent (95th Percentile):</strong> {renderWaitTime(hospital.waitTimes.urgentP95Minutes)}
+            <strong>Semi-Urgent/Non-Urgent (95th Percentile):</strong> {renderWaitTime(hospital.waitTimes.semiUrgentNonUrgentP95Minutes)}
           </p>
         </div>
       ))}

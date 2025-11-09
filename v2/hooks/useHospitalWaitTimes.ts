@@ -1,15 +1,7 @@
-// hooks/useHospitalWaitTimes.ts
-
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import type { ApiResponse } from '@/types'; // Assuming types are in 'types/index.ts'
-
-// Import dayjs and the necessary plugin for parsing custom date formats.
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-
-// Extend dayjs with the customParseFormat plugin. This only needs to be done once.
-dayjs.extend(customParseFormat);
+import type { ApiResponse } from '@/types';
+import dayjs from '@/lib/dayjs';
 
 /**
  * @description Fetches the hospital wait time data from our Next.js API route.
@@ -60,9 +52,9 @@ export const useHospitalWaitTimes = () => {
       const lastUpdated = query.state.data?.lastUpdated;
 
       // Case 1: No data yet (e.g., initial fetch failed).
-      // We'll retry every 30 seconds until we get data.
+      // We'll retry every 15 seconds until we get data.
       if (!lastUpdated) {
-        return 30 * 1000;
+        return 15 * 1000;
       }
 
       // Parse the `lastUpdated` string from the API into a dayjs object.
