@@ -19,7 +19,7 @@ function HospitalWaitTimeView() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto py-10 space-y-4">
+      <div className="container mx-auto space-y-4">
         <Skeleton className="h-8 w-1/4" />
         <div className="space-y-2">
           <Skeleton className="h-12 w-full" />
@@ -32,7 +32,7 @@ function HospitalWaitTimeView() {
 
   if (isError) {
     return (
-      <div className="container mx-auto py-10">
+      <div className="container mx-auto">
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Error</AlertTitle>
@@ -43,7 +43,8 @@ function HospitalWaitTimeView() {
   }
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto">
+      
       <div className="mb-4">
         <p className="text-sm text-muted-foreground">
           Last Updated: {data ? dayjs(data.lastUpdated).format("MMM Do YYYY, h:mm A") : ""}
