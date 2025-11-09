@@ -1,4 +1,4 @@
-{
+export const hospitalAverages = {
     "Alice Ho Miu Ling Nethersole Hospital": {
         "Days": {
             "Monday": 4.231488138030194,
