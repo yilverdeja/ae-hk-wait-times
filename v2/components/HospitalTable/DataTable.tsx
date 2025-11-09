@@ -25,6 +25,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   // Column filters will be managed by the parent view component
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,

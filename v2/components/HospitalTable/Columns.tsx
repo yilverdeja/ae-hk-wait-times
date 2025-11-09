@@ -1,4 +1,4 @@
-// components/hospital-table/columns.tsx
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -55,16 +55,15 @@ const managementStatusCopy: Record<ManagementStatus, Record<LanguageCode, string
 };
 
 // This hook encapsulates the language logic to be reused in column definitions
-const useColumnLanguage = () => {
-  const { lang } = useLanguage();
-  return { lang };
-};
+// const useColumnLanguage = () => {
+//   const { lang } = useLanguage();
+//   return { lang };
+// };
 
-export const getColumns = (): ColumnDef<EnrichedHospitalData>[] => [
+export const getColumns = (lang: LanguageCode): ColumnDef<EnrichedHospitalData>[] => [
   {
     accessorKey: "name",
     header: ({ column }) => {
-      const { lang } = useColumnLanguage();
       const headerText = { en: "Hospital", zh: "醫院", cn: "医院" }[lang];
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -74,7 +73,6 @@ export const getColumns = (): ColumnDef<EnrichedHospitalData>[] => [
       );
     },
     cell: ({ row }) => {
-      const { lang } = useColumnLanguage();
       const hospital = row.original;
       const hospitalName = hospital.name[lang];
       const { criticalManagementStatus, emergencyManagementStatus } = hospital;
@@ -144,7 +142,6 @@ export const getColumns = (): ColumnDef<EnrichedHospitalData>[] => [
   {
     accessorKey: "region",
     header: ({ column }) => {
-      const { lang } = useColumnLanguage();
       const headerText = { en: "Region", zh: "地區", cn: "地区" }[lang];
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -154,7 +151,6 @@ export const getColumns = (): ColumnDef<EnrichedHospitalData>[] => [
       );
     },
     cell: ({ row }) => {
-    const { lang } = useColumnLanguage();
       // Assuming Region enum values are in English and need no translation map
       const region = regionNames[row.original.region];
       return <div>{region[lang]}</div>;
@@ -173,7 +169,6 @@ export const getColumns = (): ColumnDef<EnrichedHospitalData>[] => [
   {
     accessorKey: "waitTimes",
     header: ({ column }) => {
-      const { lang } = useColumnLanguage();
       const headerText = { en: "Wait Time (Semi-Urgent)", zh: "等候時間 (半緊急)", cn: "等候时间 (半紧急)" }[lang];
       return (
         <div className="text-right">
@@ -185,7 +180,6 @@ export const getColumns = (): ColumnDef<EnrichedHospitalData>[] => [
       );
     },
     cell: ({ row }) => {
-      const { lang } = useColumnLanguage();
       const waitTime = row.original.waitTimes.semiUrgentNonUrgentP50Minutes;
       return <div className="text-right font-semibold">{formatMinutes(waitTime, lang)}</div>;
     },
