@@ -132,6 +132,14 @@ export const getColumns = (): ColumnDef<EnrichedHospitalData>[] => [
       const nameB = rowB.original.name[lang];
       return nameA.localeCompare(nameB);
     },
+    filterFn: (row, id, value: boolean) => {
+        const { criticalManagementStatus, emergencyManagementStatus } = row.original;
+        // Show all hospitals
+        if (!value) return true;
+
+        // If the hospital is not managing any critical cases, return true
+      return criticalManagementStatus === ManagementStatus.NotManaging && emergencyManagementStatus === ManagementStatus.NotManaging;
+    },
   },
   {
     accessorKey: "region",

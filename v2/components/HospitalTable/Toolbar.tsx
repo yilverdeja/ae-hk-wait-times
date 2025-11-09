@@ -1,4 +1,3 @@
-// components/hospital-table/toolbar.tsx
 "use client";
 
 import { Table } from "@tanstack/react-table";
