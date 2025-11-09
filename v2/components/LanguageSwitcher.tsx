@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { Languages } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { LanguageCode } from "@/types";

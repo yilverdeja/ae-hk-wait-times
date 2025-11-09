@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn(dm_sans.className, "no-scrollbar dark")}
+      className={cn(dm_sans.className, "no-scrollbar")}
       suppressHydrationWarning
     >
       <body>
