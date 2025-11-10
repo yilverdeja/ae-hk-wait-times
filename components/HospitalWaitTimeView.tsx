@@ -12,40 +12,40 @@ import { useLanguage } from "@/hooks/useLanguage"
 import { BREAKPOINTS } from "@/lib/constants"
 import { useBreakpoint } from "use-breakpoint"
 import { EnrichedHospitalData } from "@/types"
-import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-} from "@/components/ui/sheet"
+import { HospitalSheet } from "@/components/HospitalSheet/HospitalSheet" // 1. Import the new component
 
 function HospitalWaitTimeView() {
     const { data, isLoading, isError, error } = useHospitalWaitTimes()
     const { lang } = useLanguage()
     const { breakpoint } = useBreakpoint(BREAKPOINTS)
 
-    // 1. State for the selected hospital
+    // 2. We now have two pieces of state to manage the sheet
     const [selectedHospital, setSelectedHospital] =
         useState<EnrichedHospitalData | null>(null)
+    const [isSheetOpen, setIsSheetOpen] = useState(false)
 
     const columns = useMemo(
         () => getColumns(lang, breakpoint || "desktop"),
         [lang, breakpoint]
     )
 
-    // 2. Handler to set the selected hospital when a row is clicked
+    // 3. Update the row select handler
     const handleRowSelect = (hospital: EnrichedHospitalData) => {
-        console.log("Row selected, opening sheet for:", hospital.slug)
-        setSelectedHospital(hospital)
+        console.log(
+            "Row selected, setting data and opening sheet for:",
+            hospital.slug
+        )
+        setSelectedHospital(hospital) // Set the data for the sheet
+        setIsSheetOpen(true) // Open the sheet
     }
 
-    // 3. Handler for when the sheet is closed (by 'x' button or overlay click)
-    const handleSheetOpenChange = (isOpen: boolean) => {
-        if (!isOpen) {
-            console.log("Sheet closed, deselecting hospital.")
-            setSelectedHospital(null)
-        }
+    // 4. Create a handler specifically for closing the sheet
+    const handleSheetClose = () => {
+        console.log(
+            "Sheet close requested. Hiding sheet, but keeping data for animation."
+        )
+        setIsSheetOpen(false)
+        // CRUCIALLY, we DO NOT set selectedHospital to null here.
     }
 
     if (isLoading) {
@@ -86,40 +86,19 @@ function HospitalWaitTimeView() {
                         : ""}
                 </p>
             </div>
-            {/* 4. Pass the handler down to the DataTable */}
             <DataTable
                 columns={columns}
                 data={data?.waitTimes || []}
                 onRowSelect={handleRowSelect}
             />
 
-            {/* 5. Render the Sheet component, controlled by our state */}
-            <Sheet
-                open={!!selectedHospital}
-                onOpenChange={handleSheetOpenChange}
-            >
-                <SheetContent>
-                    <SheetHeader>
-                        <SheetTitle>
-                            {selectedHospital
-                                ? selectedHospital.name[lang]
-                                : "Hospital Details"}
-                        </SheetTitle>
-                        <SheetDescription>
-                            Detailed information for the selected hospital will
-                            be shown here.
-                        </SheetDescription>
-                    </SheetHeader>
-                    <div className="py-4">
-                        {/* You can build a detailed view component here */}
-                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                            <code className="text-white">
-                                {JSON.stringify(selectedHospital, null, 2)}
-                            </code>
-                        </pre>
-                    </div>
-                </SheetContent>
-            </Sheet>
+            {/* 5. Render the new controlled HospitalSheet component */}
+            <HospitalSheet
+                hospital={selectedHospital}
+                isOpen={isSheetOpen}
+                onClose={handleSheetClose}
+                lang={lang}
+            />
         </div>
     )
 }
