@@ -7,10 +7,10 @@ import {
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area" // Import the ScrollArea component
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { EnrichedHospitalData, LanguageCode } from "@/types"
 import { HospitalSheetInformation } from "@/components/HospitalSheet/HospitalSheetInformation"
-import { HospitalTrendDisplay } from "@/components/HospitalTrendDisplay"
+import { HospitalTrendChart } from "@/components/HospitalTrendChart"
 
 interface HospitalSheetProps {
     hospital: EnrichedHospitalData | null
@@ -37,12 +37,8 @@ export function HospitalSheet({
 
     return (
         <Sheet open={isOpen} onOpenChange={handleOpenChange}>
-            {/* 
-                We make the SheetContent a flex container that lays out its children in a column.
-                This allows the header to be a fixed size and the ScrollArea to fill the rest of the space.
-            */}
-            <SheetContent className="w-[90%] sm:w-[540px] flex flex-col">
-                <SheetHeader>
+            <SheetContent className="w-[90%] sm:max-w-2xl flex flex-col p-0">
+                <SheetHeader className="px-6 pt-6">
                     <SheetTitle className="text-2xl font-bold">
                         {hospital.name[lang]}
                     </SheetTitle>
@@ -51,16 +47,10 @@ export function HospitalSheet({
                     </SheetDescription>
                 </SheetHeader>
 
-                {/* 
-                    The ScrollArea will take up the remaining vertical space (`flex-1`).
-                    Any content that overflows inside this area will now be scrollable.
-                */}
                 <ScrollArea className="h-[calc(100vh-160px)]">
-                    {/* We add padding and spacing to this inner div for better layout */}
-                    <div className="px-6 py-4 space-y-4">
-                        <HospitalTrendDisplay
+                    <div className="px-6 py-4 space-y-8">
+                        <HospitalTrendChart
                             hospitalSlug={hospital.slug}
-                            // Pass the wait time directly in minutes, as the component now expects.
                             liveWaitTimeInMinutes={
                                 hospital.waitTimes
                                     .semiUrgentNonUrgentP50Minutes ?? 0
