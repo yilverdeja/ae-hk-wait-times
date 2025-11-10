@@ -7,7 +7,7 @@ import {
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet"
-import { ScrollArea } from "@/components/ui/scroll-area" // Import the ScrollArea component
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area" // Import the ScrollArea component
 import { EnrichedHospitalData, LanguageCode } from "@/types"
 import { HospitalSheetInformation } from "@/components/HospitalSheet/HospitalSheetInformation"
 import { HospitalTrendDisplay } from "@/components/HospitalTrendDisplay"
@@ -55,7 +55,7 @@ export function HospitalSheet({
                     The ScrollArea will take up the remaining vertical space (`flex-1`).
                     Any content that overflows inside this area will now be scrollable.
                 */}
-                <ScrollArea className="flex-1">
+                <ScrollArea className="h-[calc(100vh-160px)]">
                     {/* We add padding and spacing to this inner div for better layout */}
                     <div className="px-6 py-4 space-y-4">
                         <HospitalTrendDisplay
@@ -71,6 +71,7 @@ export function HospitalSheet({
                             lang={lang}
                         />
                     </div>
+                    <ScrollBar orientation="vertical" />
                 </ScrollArea>
             </SheetContent>
         </Sheet>
