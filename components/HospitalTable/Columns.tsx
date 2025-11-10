@@ -2,7 +2,14 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { AlertTriangle, ArrowUpDown, Siren } from "lucide-react"
+import {
+    AlertTriangle,
+    ArrowUpDown,
+    Siren,
+    TrendingUp,
+    TrendingDown,
+    Minus,
+} from "lucide-react"
 import { EnrichedHospitalData, LanguageCode, ManagementStatus } from "@/types"
 import { Button } from "@/components/ui/button"
 import {
@@ -60,8 +67,6 @@ const managementStatusCopy: Record<
         [LanguageCode.CN]: "没有处理危殆个案",
     },
 }
-
-// REMOVED: The handleSelectHospital function is no longer needed here.
 
 export const getColumns = (
     lang: LanguageCode,
@@ -137,7 +142,6 @@ export const getColumns = (
 
             return (
                 <TooltipProvider delayDuration={100}>
-                    {/* REMOVED: onClick handler from the div */}
                     <div className="flex items-center gap-3">
                         {icon}
                         <span className="font-medium">{hospitalName}</span>
@@ -227,10 +231,8 @@ export const getColumns = (
             )
         },
         cell: ({ row }) => {
-            // REMOVED: 'table' prop
             const waitTime =
                 row.original.waitTimes.semiUrgentNonUrgentP50Minutes
-            // REMOVED: onClick handler from the div
             return (
                 <div className="text-right font-semibold">
                     {formatMinutes(waitTime, lang)}

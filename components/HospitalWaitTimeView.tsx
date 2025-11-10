@@ -50,21 +50,21 @@ function HospitalWaitTimeView() {
 
     if (isLoading) {
         return (
-            <div className="container mx-auto space-y-4">
+            <>
                 <Skeleton className="h-8 w-1/4" />
                 <div className="space-y-2">
                     <Skeleton className="h-12 w-full" />
                     <Skeleton className="h-12 w-full" />
                     <Skeleton className="h-12 w-full" />
                 </div>
-            </div>
+            </>
         )
     }
 
     if (isError) {
         return (
-            <div className="container mx-auto">
-                <Alert variant="destructive">
+            <>
+                <Alert variant="destructive" className="mx-auto">
                     <AlertCircle className="h-4 w-4" />
                     <AlertTitle>Error</AlertTitle>
                     <AlertDescription>
@@ -72,12 +72,12 @@ function HospitalWaitTimeView() {
                             "Failed to load hospital wait times."}
                     </AlertDescription>
                 </Alert>
-            </div>
+            </>
         )
     }
 
     return (
-        <div className="container mx-auto">
+        <>
             <div className="mb-4">
                 <p className="text-sm text-muted-foreground">
                     Last Updated:{" "}
@@ -99,7 +99,7 @@ function HospitalWaitTimeView() {
                 onClose={handleSheetClose}
                 lang={lang}
             />
-        </div>
+        </>
     )
 }
 
