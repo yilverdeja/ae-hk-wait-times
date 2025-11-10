@@ -9,13 +9,19 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
 import dayjs from "@/lib/dayjs"
 import { useLanguage } from "@/hooks/useLanguage"
+import { BREAKPOINTS } from "@/lib/constants"
+import { useBreakpoint } from "use-breakpoint"
 
 function HospitalWaitTimeView() {
     const { data, isLoading, isError, error } = useHospitalWaitTimes()
     const { lang } = useLanguage()
+    const { breakpoint } = useBreakpoint(BREAKPOINTS)
     // Memoize columns to prevent re-creating them on every render
     // The getColumns function internally uses a hook, so this works as intended.
-    const columns = useMemo(() => getColumns(lang), [lang])
+    const columns = useMemo(
+        () => getColumns(lang, breakpoint || "desktop"),
+        [lang, breakpoint]
+    )
 
     if (isLoading) {
         return (

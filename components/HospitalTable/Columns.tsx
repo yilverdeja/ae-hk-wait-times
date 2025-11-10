@@ -62,7 +62,8 @@ const managementStatusCopy: Record<
 }
 
 export const getColumns = (
-    lang: LanguageCode
+    lang: LanguageCode,
+    breakpoint: string
 ): ColumnDef<EnrichedHospitalData>[] => [
     {
         accessorKey: "name",
@@ -204,11 +205,18 @@ export const getColumns = (
     {
         accessorKey: "waitTimes",
         header: ({ column }) => {
-            const headerText = {
+            const longHeaderText = {
                 en: "Wait Time (Semi-Urgent)",
                 zh: "等候時間 (半緊急)",
                 cn: "等候时间 (半紧急)",
             }[lang]
+            const shortHeaderText = {
+                en: "Wait Time",
+                zh: "等候時間",
+                cn: "等候时间",
+            }[lang]
+            const headerText =
+                breakpoint === "mobile" ? shortHeaderText : longHeaderText
             return (
                 <div className="text-right">
                     <Button
