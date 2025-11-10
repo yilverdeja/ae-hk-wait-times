@@ -3,8 +3,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { AlertTriangle, ArrowUpDown, Siren } from "lucide-react";
-import { useLanguage } from "@/hooks/useLanguage";
-import { EnrichedHospitalData, LanguageCode, ManagementStatus, Region } from "@/types";
+import { EnrichedHospitalData, LanguageCode, ManagementStatus } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { regionNames } from "@/data/regions";
@@ -53,12 +52,6 @@ const managementStatusCopy: Record<ManagementStatus, Record<LanguageCode, string
     [LanguageCode.CN]: "没有处理危殆个案",
   },
 };
-
-// This hook encapsulates the language logic to be reused in column definitions
-// const useColumnLanguage = () => {
-//   const { lang } = useLanguage();
-//   return { lang };
-// };
 
 export const getColumns = (lang: LanguageCode): ColumnDef<EnrichedHospitalData>[] => [
   {

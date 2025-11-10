@@ -14,6 +14,8 @@ import {
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DataTableToolbar } from "@/components/HospitalTable/Toolbar";
+import { BREAKPOINTS } from "@/lib/constants";
+import { useBreakpoint } from "use-breakpoint";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -24,6 +26,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   const [sorting, setSorting] = React.useState<SortingState>([]);
   // Column filters will be managed by the parent view component
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const { breakpoint } = useBreakpoint(BREAKPOINTS);
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
@@ -32,17 +35,13 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     state: {
       sorting,
       columnFilters,
+      columnVisibility: { region: breakpoint !== "mobile" },
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    initialState: {
-        columnVisibility: {
-            // region: breakpoint !== "mobile",
-        },
-    }
   });
 
   return (
