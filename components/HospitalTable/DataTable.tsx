@@ -24,22 +24,27 @@ import { DataTableToolbar } from "@/components/HospitalTable/Toolbar"
 import { BREAKPOINTS } from "@/lib/constants"
 import { useBreakpoint } from "use-breakpoint"
 
+// 1. Update props to accept the onRowSelect handler
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    onRowSelect?: (row: TData) => void // Optional handler
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    onRowSelect, // Destructure the new prop
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
-    // Column filters will be managed by the parent view component
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([])
+
+    // 2. Remove rowSelection state. It's no longer needed here.
+    // const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({});
+
     const { breakpoint } = useBreakpoint(BREAKPOINTS)
 
-    // eslint-disable-next-line react-hooks/incompatible-library
     const table = useReactTable({
         data,
         columns,
@@ -47,12 +52,17 @@ export function DataTable<TData, TValue>({
             sorting,
             columnFilters,
             columnVisibility: { region: breakpoint !== "mobile" },
+            // rowSelection is removed from state
         },
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
+        // onRowSelectionChange is removed
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
+        // We enable row selection for the entire table, which allows us to get row.getIsSelected() if needed,
+        // but we won't be using the internal state management for it.
+        enableRowSelection: true,
     })
 
     return (
@@ -89,12 +99,13 @@ export function DataTable<TData, TValue>({
                     <TableBody>
                         {table.getRowModel().rows?.length ? (
                             table.getRowModel().rows.map((row) => (
+                                // 3. Add the onClick handler to the entire row
                                 <TableRow
                                     key={row.id}
-                                    data-state={
-                                        row.getIsSelected() && "selected"
-                                    }
-                                    onClick={() => console.log(row.original)}
+                                    // The data-state is now managed by the parent, but we can remove it
+                                    // as the visual feedback is the opened sheet.
+                                    className="cursor-pointer" // Add cursor-pointer for better UX
+                                    onClick={() => onRowSelect?.(row.original)} // Call the handler with the row's original data
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell

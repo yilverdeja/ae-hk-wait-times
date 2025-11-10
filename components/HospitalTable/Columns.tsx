@@ -61,6 +61,8 @@ const managementStatusCopy: Record<
     },
 }
 
+// REMOVED: The handleSelectHospital function is no longer needed here.
+
 export const getColumns = (
     lang: LanguageCode,
     breakpoint: string
@@ -82,12 +84,12 @@ export const getColumns = (
             )
         },
         cell: ({ row }) => {
+            // REMOVED: 'table' prop is no longer needed
             const hospital = row.original
             const hospitalName = hospital.name[lang]
             const { criticalManagementStatus, emergencyManagementStatus } =
                 hospital
 
-            // Determine the highest severity status
             const isManagingMultiple =
                 criticalManagementStatus ===
                     ManagementStatus.ManagingMultiple ||
@@ -135,6 +137,7 @@ export const getColumns = (
 
             return (
                 <TooltipProvider delayDuration={100}>
+                    {/* REMOVED: onClick handler from the div */}
                     <div className="flex items-center gap-3">
                         {icon}
                         <span className="font-medium">{hospitalName}</span>
@@ -142,12 +145,7 @@ export const getColumns = (
                 </TooltipProvider>
             )
         },
-        // Custom sorting function to sort based on the current language
         sortingFn: (rowA, rowB, columnId) => {
-            // This is a bit of a hack since we can't get lang here directly.
-            // The table will re-sort when data changes, which happens on lang change.
-            // We'll rely on the default string sort which works once the cell values are updated.
-            // For a more robust solution, you'd pass lang into the table instance.
             const lang =
                 (document.documentElement.lang as LanguageCode) ||
                 LanguageCode.EN
@@ -158,10 +156,7 @@ export const getColumns = (
         filterFn: (row, id, value: boolean) => {
             const { criticalManagementStatus, emergencyManagementStatus } =
                 row.original
-            // Show all hospitals
             if (!value) return true
-
-            // If the hospital is not managing any critical cases, return true
             return (
                 criticalManagementStatus === ManagementStatus.NotManaging &&
                 emergencyManagementStatus === ManagementStatus.NotManaging
@@ -185,11 +180,11 @@ export const getColumns = (
             )
         },
         cell: ({ row }) => {
-            // Assuming Region enum values are in English and need no translation map
+            // REMOVED: 'table' prop
             const region = regionNames[row.original.region]
+            // REMOVED: onClick handler from the div
             return <div>{region[lang]}</div>
         },
-        // Add a filter function for the toolbar
         filterFn: (row, id, value) => {
             return value.includes(row.getValue(id))
         },
@@ -232,15 +227,16 @@ export const getColumns = (
             )
         },
         cell: ({ row }) => {
+            // REMOVED: 'table' prop
             const waitTime =
                 row.original.waitTimes.semiUrgentNonUrgentP50Minutes
+            // REMOVED: onClick handler from the div
             return (
                 <div className="text-right font-semibold">
                     {formatMinutes(waitTime, lang)}
                 </div>
             )
         },
-        // Sort by the raw number, not the formatted string
         sortingFn: (rowA, rowB) => {
             const timeA =
                 rowA.original.waitTimes.semiUrgentNonUrgentP50Minutes ??
