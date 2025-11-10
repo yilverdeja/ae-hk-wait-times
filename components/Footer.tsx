@@ -1,12 +1,12 @@
-"use client";
-import { siteConfig } from "@/configs/site";
+"use client"
+import { siteConfig } from "@/configs/site"
 import dayjs from "@/lib/dayjs"
-import { Separator } from "@radix-ui/react-dropdown-menu";
-import { useLanguage } from "@/hooks/useLanguage";
-import Link from "next/link";
+import { Separator } from "@radix-ui/react-dropdown-menu"
+import { useLanguage } from "@/hooks/useLanguage"
+import Link from "next/link"
 
 export default function Footer() {
-    const { lang } = useLanguage();
+    const { lang } = useLanguage()
     return (
         <footer>
             <Separator className="my-2" />
@@ -21,7 +21,10 @@ export default function Footer() {
                 {/* Links */}
                 <ul className="flex flex-row gap-4">
                     <li className="text-sm underline underline-offset-2">
-                        <Link href={siteConfig.originalLink(lang)} target="_blank">
+                        <Link
+                            href={siteConfig.originalLink(lang)}
+                            target="_blank"
+                        >
                             Original Site
                         </Link>
                     </li>
@@ -38,5 +41,5 @@ export default function Footer() {
                 </ul>
             </div>
         </footer>
-    );
+    )
 }

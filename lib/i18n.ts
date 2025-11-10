@@ -1,4 +1,4 @@
-import { LanguageCode, LocalizedString } from '@/types';
+import { LanguageCode, LocalizedString } from "@/types"
 
 /**
  * A helper function to create a LocalizedString object more concisely.
@@ -20,9 +20,9 @@ import { LanguageCode, LocalizedString } from '@/types';
  * // Returns: { en: 'Queen', zh: '皇后', cn: '女王' }
  */
 export const i18n = (en: string, zh: string, cn?: string): LocalizedString => {
-  return {
-    [LanguageCode.EN]: en,
-    [LanguageCode.ZH]: zh,
-    [LanguageCode.CN]: cn ?? zh, // Use 'cn' if provided, otherwise default to 'zh'
-  };
-};
+    return {
+        [LanguageCode.EN]: en,
+        [LanguageCode.ZH]: zh,
+        [LanguageCode.CN]: cn ?? zh, // Use 'cn' if provided, otherwise default to 'zh'
+    }
+}

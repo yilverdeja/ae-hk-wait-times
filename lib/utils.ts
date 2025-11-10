@@ -2,10 +2,10 @@ import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+    return twMerge(clsx(inputs))
 }
 
-import { LanguageCode } from '@/types';
+import { LanguageCode } from "@/types"
 
 /**
  * Maps our internal, clean language codes to the specific codes required
@@ -13,10 +13,10 @@ import { LanguageCode } from '@/types';
  * i18n logic from the external API's implementation details.
  */
 const HA_LANGUAGE_MAP: Record<LanguageCode, string> = {
-  [LanguageCode.EN]: 'ENG',
-  [LanguageCode.ZH]: 'CHIB5',
-  [LanguageCode.CN]: 'CHIGB',
-};
+    [LanguageCode.EN]: "ENG",
+    [LanguageCode.ZH]: "CHIB5",
+    [LanguageCode.CN]: "CHIGB",
+}
 
 /**
  * Constructs the specific URL for a hospital's page on the HA website.
@@ -25,9 +25,9 @@ const HA_LANGUAGE_MAP: Record<LanguageCode, string> = {
  * @returns A fully formed URL string.
  */
 export const buildHospitalLink = (
-  contentId: string,
-  lang: LanguageCode = LanguageCode.EN
+    contentId: string,
+    lang: LanguageCode = LanguageCode.EN
 ): string => {
-  const apiLangCode = HA_LANGUAGE_MAP[lang];
-  return `http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=${contentId}&Lang=${apiLangCode}`;
-};
+    const apiLangCode = HA_LANGUAGE_MAP[lang]
+    return `http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=${contentId}&Lang=${apiLangCode}`
+}

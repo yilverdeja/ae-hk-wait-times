@@ -9,11 +9,11 @@ Revamping the [original A&E Wait Time page](https://www.ha.org.hk/visitor/ha_vis
 Using the [A&E Wait Times Open Data API](https://data.gov.hk/en-data/dataset/hospital-hadata-ae-waiting-time), we can retrieve the current snapshot, in addition to historical snapshots at 15 minute intervals of every A&E hospital. Currently, this application can:
 
 - Display the estimated wait times of each hospital with a dynamic table that can be sorted by their name or wait times, and filtered by their region
-  - Data is automatically retrieved and updated every 15-17 minutes
+    - Data is automatically retrieved and updated every 15-17 minutes
 - Clicking on a hospital opens a side modal with more in depth information:
-  - Hospital information like google maps address, contact information, and relevant links
-  - A text displaying the current wait time relative to the average wait time on that specific day and hour
-  - A bar chart to show the hourly trend of each day from Monday to Sunday. The trend is shown in blue, whilst the current wait time is overlayed with a single pink bar
+    - Hospital information like google maps address, contact information, and relevant links
+    - A text displaying the current wait time relative to the average wait time on that specific day and hour
+    - A bar chart to show the hourly trend of each day from Monday to Sunday. The trend is shown in blue, whilst the current wait time is overlayed with a single pink bar
 - Responsive for desktop and mobile applications
 - "Understanding the Wait" modal to let users understand better how wait times are generated and what they mean
 - A dark and light mode theme toggle
