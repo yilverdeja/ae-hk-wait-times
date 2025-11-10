@@ -85,7 +85,8 @@ export const useHospitalTrends = (hospitalSlug?: string | null) => {
             let trend: "higher" | "lower" | "same"
 
             // Using a small epsilon for floating point comparison
-            if (Math.abs(difference) < 0.1) {
+            if (Math.abs(difference) < 0.5 * 60) {
+                // 0.5 hours
                 trend = "same"
             } else if (difference > 0) {
                 trend = "higher"

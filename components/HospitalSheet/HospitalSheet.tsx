@@ -11,6 +11,8 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { EnrichedHospitalData, LanguageCode } from "@/types"
 import { HospitalSheetInformation } from "@/components/HospitalSheet/HospitalSheetInformation"
 import { HospitalTrendChart } from "@/components/HospitalTrendChart"
+import { useHospitalTrends } from "@/hooks/useHospitalTrends"
+import { HospitalSheetDescriptionBusyness } from "@/components/HospitalSheet/HospitalSheetDescriptionBusyness"
 
 interface HospitalSheetProps {
     hospital: EnrichedHospitalData | null
@@ -25,6 +27,9 @@ export function HospitalSheet({
     onClose,
     lang,
 }: HospitalSheetProps) {
+    const { isLoading, isError, compareWithLiveTime } = useHospitalTrends(
+        hospital?.slug ?? null
+    )
     const handleOpenChange = (open: boolean) => {
         if (!open) {
             onClose()
@@ -35,6 +40,12 @@ export function HospitalSheet({
         return null
     }
 
+    // Get the live wait time, ensuring it's a number (default to 0)
+    const liveWaitTime = hospital.waitTimes.semiUrgentNonUrgentP50Minutes ?? 0
+
+    // Get the comparison data from the hook
+    const comparison = compareWithLiveTime(liveWaitTime)
+
     return (
         <Sheet open={isOpen} onOpenChange={handleOpenChange}>
             <SheetContent className="w-[90%] sm:max-w-2xl flex flex-col p-0">
@@ -43,7 +54,12 @@ export function HospitalSheet({
                         {hospital.name[lang]}
                     </SheetTitle>
                     <SheetDescription className="text-sm text-muted-foreground">
-                        Detailed information for {hospital.name[lang]}.
+                        <HospitalSheetDescriptionBusyness
+                            isLoading={isLoading}
+                            isError={isError}
+                            liveWaitTimeInMinutes={liveWaitTime}
+                            comparison={comparison}
+                        />
                     </SheetDescription>
                 </SheetHeader>
 

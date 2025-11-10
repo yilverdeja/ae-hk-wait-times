@@ -19,7 +19,7 @@ const formatMinutes = (minutes: number | null, lang: LanguageCode): string => {
         return lang === LanguageCode.EN ? "N/A" : "不適用"
     }
     if (minutes === 0) {
-        return lang === LanguageCode.EN ? "Available" : "可用"
+        return lang === LanguageCode.EN ? "No Wait Time" : "無等候時間"
     }
 
     const hours = Math.floor(minutes / 60)
