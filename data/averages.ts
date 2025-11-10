@@ -1,5 +1,6 @@
-export const hospitalAverages = {
-    "Alice Ho Miu Ling Nethersole Hospital": {
+import { AllHospitalTrends, DayOfWeek } from "@/types/trends"
+const rawHospitalAverages = {
+    AHMLNH: {
         Days: {
             Monday: 4.231488138030194,
             Tuesday: 4.448685631976954,
@@ -218,7 +219,7 @@ export const hospitalAverages = {
             "23": 4.089285714285714,
         },
     },
-    "Caritas Medical Centre": {
+    CMC: {
         Days: {
             Monday: 4.710639827462257,
             Tuesday: 4.213179690313288,
@@ -437,7 +438,7 @@ export const hospitalAverages = {
             "23": 3.3392857142857144,
         },
     },
-    "Kwong Wah Hospital": {
+    KWH: {
         Days: {
             Monday: 5.634435657800144,
             Tuesday: 5.429600288080662,
@@ -656,7 +657,7 @@ export const hospitalAverages = {
             "23": 5.294642857142857,
         },
     },
-    "North District Hospital": {
+    NDH: {
         Days: {
             Monday: 5.914450035945363,
             Tuesday: 6.8217500900252075,
@@ -875,7 +876,7 @@ export const hospitalAverages = {
             "23": 5.633928571428571,
         },
     },
-    "North Lantau Hospital": {
+    NLH: {
         Days: {
             Monday: 3.7332854061826026,
             Tuesday: 3.3280518545192654,
@@ -1094,7 +1095,7 @@ export const hospitalAverages = {
             "23": 3.7767857142857144,
         },
     },
-    "Princess Margaret Hospital": {
+    PMH: {
         Days: {
             Monday: 6.0485262401150255,
             Tuesday: 6.624054735325891,
@@ -1313,7 +1314,7 @@ export const hospitalAverages = {
             "23": 5.857142857142857,
         },
     },
-    "Pok Oi Hospital": {
+    POH: {
         Days: {
             Monday: 4.89863407620417,
             Tuesday: 5.199135758012243,
@@ -1532,7 +1533,7 @@ export const hospitalAverages = {
             "23": 4.794642857142857,
         },
     },
-    "Prince of Wales Hospital": {
+    POWH: {
         Days: {
             Monday: 5.903666427030913,
             Tuesday: 5.943104069139359,
@@ -1751,7 +1752,7 @@ export const hospitalAverages = {
             "23": 4.5,
         },
     },
-    "Pamela Youde Nethersole Eastern Hospital": {
+    PYNEH: {
         Days: {
             Monday: 6.41588785046729,
             Tuesday: 6.670507742167807,
@@ -1970,7 +1971,7 @@ export const hospitalAverages = {
             "23": 5.633928571428571,
         },
     },
-    "Queen Elizabeth Hospital": {
+    QEH: {
         Days: {
             Monday: 3.5449317038102084,
             Tuesday: 3.5776017284839754,
@@ -2189,7 +2190,7 @@ export const hospitalAverages = {
             "23": 2.7410714285714284,
         },
     },
-    "Queen Mary Hospital": {
+    QMH: {
         Days: {
             Monday: 4.101725377426312,
             Tuesday: 3.846236946344977,
@@ -2408,7 +2409,7 @@ export const hospitalAverages = {
             "23": 3.7767857142857144,
         },
     },
-    "Ruttonjee Hospital": {
+    RH: {
         Days: {
             Monday: 4.204529115744069,
             Tuesday: 4.790061217140799,
@@ -2627,7 +2628,7 @@ export const hospitalAverages = {
             "23": 4.508928571428571,
         },
     },
-    "St John Hospital": {
+    SJH: {
         Days: {
             Monday: 1.1793673616103522,
             Tuesday: 1.1296362981634858,
@@ -2846,7 +2847,7 @@ export const hospitalAverages = {
             "23": 1.0357142857142858,
         },
     },
-    "Tseung Kwan O Hospital": {
+    TKOH: {
         Days: {
             Monday: 5.293314162473041,
             Tuesday: 5.4756931940943465,
@@ -3065,7 +3066,7 @@ export const hospitalAverages = {
             "23": 4.205357142857143,
         },
     },
-    "Tuen Mun Hospital": {
+    TMH: {
         Days: {
             Monday: 5.9327821710999284,
             Tuesday: 6.403673028447965,
@@ -3284,7 +3285,7 @@ export const hospitalAverages = {
             "23": 5.214285714285714,
         },
     },
-    "Tin Shui Wai Hospital": {
+    TSWH: {
         Days: {
             Monday: 5.261322789360173,
             Tuesday: 5.7050774216780695,
@@ -3503,7 +3504,7 @@ export const hospitalAverages = {
             "23": 4.071428571428571,
         },
     },
-    "United Christian Hospital": {
+    UCH: {
         Days: {
             Monday: 5.174694464414091,
             Tuesday: 5.671948145480735,
@@ -3722,7 +3723,7 @@ export const hospitalAverages = {
             "23": 4.982142857142857,
         },
     },
-    "Yan Chai Hospital": {
+    YCH: {
         Days: {
             Monday: 3.744787922358016,
             Tuesday: 4.060136838314728,
@@ -3939,6 +3940,594 @@ export const hospitalAverages = {
             "21": 3.4054054054054053,
             "22": 3.580357142857143,
             "23": 3.625,
+        },
+    },
+}
+
+/**
+ * A helper function to transform an object with numeric keys ("0", "1"...)
+ * into a sorted array of numbers, converting hours to minutes.
+ */
+const transformHourlyObjectToArrayInMinutes = (
+    hourlyData: Record<string, number>
+): number[] => {
+    return Array.from({ length: 24 }).map(
+        (_, i) => (hourlyData[String(i)] || 0) * 60
+    )
+}
+
+// Helper to convert the "Days" object values from hours to minutes
+const transformDaysObjectToMinutes = (
+    daysData: Record<string, number>
+): Record<DayOfWeek, number> => {
+    return Object.entries(daysData).reduce(
+        (acc, [day, hours]) => {
+            acc[day as DayOfWeek] = hours * 60
+            return acc
+        },
+        {} as Record<DayOfWeek, number>
+    )
+}
+
+/**
+ * The transformed, well-structured, and fully-typed trend data.
+ * This is what our application will consume.
+ */
+export const hospitalWaitTimeTrends: AllHospitalTrends = {
+    AHMLNH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.AHMLNH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.AHMLNH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.AHMLNH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.AHMLNH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.AHMLNH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.AHMLNH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.AHMLNH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.AHMLNH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.AHMLNH.Sunday
+            ),
+        },
+    },
+    CMC: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.CMC.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.CMC.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.CMC.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.CMC.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.CMC.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.CMC.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.CMC.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.CMC.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.CMC.Sunday
+            ),
+        },
+    },
+    KWH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.KWH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.KWH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.KWH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.KWH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.KWH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.KWH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.KWH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.KWH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.KWH.Sunday
+            ),
+        },
+    },
+    NDH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.NDH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.NDH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NDH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NDH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NDH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NDH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NDH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NDH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NDH.Sunday
+            ),
+        },
+    },
+    NLH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.NLH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.NLH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NLH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NLH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NLH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NLH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NLH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NLH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.NLH.Sunday
+            ),
+        },
+    },
+    PMH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.PMH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.PMH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PMH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PMH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PMH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PMH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PMH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PMH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PMH.Sunday
+            ),
+        },
+    },
+    POH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.POH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.POH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POH.Sunday
+            ),
+        },
+    },
+    POWH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.POWH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.POWH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POWH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POWH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POWH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POWH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POWH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POWH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.POWH.Sunday
+            ),
+        },
+    },
+    PYNEH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.PYNEH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.PYNEH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PYNEH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PYNEH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PYNEH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PYNEH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PYNEH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PYNEH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.PYNEH.Sunday
+            ),
+        },
+    },
+    QEH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.QEH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.QEH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QEH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QEH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QEH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QEH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QEH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QEH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QEH.Sunday
+            ),
+        },
+    },
+    QMH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.QMH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.QMH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QMH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QMH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QMH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QMH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QMH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QMH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.QMH.Sunday
+            ),
+        },
+    },
+    RH: {
+        averageByDay: transformDaysObjectToMinutes(rawHospitalAverages.RH.Days),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.RH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.RH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.RH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.RH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.RH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.RH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.RH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.RH.Sunday
+            ),
+        },
+    },
+    SJH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.SJH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.SJH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.SJH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.SJH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.SJH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.SJH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.SJH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.SJH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.SJH.Sunday
+            ),
+        },
+    },
+    TKOH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.TKOH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.TKOH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TKOH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TKOH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TKOH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TKOH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TKOH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TKOH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TKOH.Sunday
+            ),
+        },
+    },
+    TMH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.TMH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.TMH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TMH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TMH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TMH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TMH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TMH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TMH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TMH.Sunday
+            ),
+        },
+    },
+    TSWH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.TSWH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.TSWH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TSWH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TSWH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TSWH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TSWH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TSWH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TSWH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.TSWH.Sunday
+            ),
+        },
+    },
+    UCH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.UCH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.UCH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.UCH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.UCH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.UCH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.UCH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.UCH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.UCH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.UCH.Sunday
+            ),
+        },
+    },
+    YCH: {
+        averageByDay: transformDaysObjectToMinutes(
+            rawHospitalAverages.YCH.Days
+        ),
+        averageByHourAcrossAllDays: transformHourlyObjectToArrayInMinutes(
+            rawHospitalAverages.YCH.Hours
+        ),
+        byHourOfDay: {
+            Monday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.YCH.Monday
+            ),
+            Tuesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.YCH.Tuesday
+            ),
+            Wednesday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.YCH.Wednesday
+            ),
+            Thursday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.YCH.Thursday
+            ),
+            Friday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.YCH.Friday
+            ),
+            Saturday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.YCH.Saturday
+            ),
+            Sunday: transformHourlyObjectToArrayInMinutes(
+                rawHospitalAverages.YCH.Sunday
+            ),
         },
     },
 }
