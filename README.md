@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![Vercel Deploy](https://deploy-badge.vercel.app/vercel/ae-hk-wait-times)
 
-## Getting Started
+# Hong Kong Accident & Emergency Wait Times
 
-First, run the development server:
+Revamping the [original A&E Wait Time page](https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=235504&Lang=ENG) using NextJS by using a responsive design, real-time filtering, and hourly wait trends to optimize visit planning.
+
+## Features
+
+Using the [A&E Wait Times Open Data API](https://data.gov.hk/en-data/dataset/hospital-hadata-ae-waiting-time), we can retrieve the current snapshot, in addition to historical snapshots at 15 minute intervals of every A&E hospital. Currently, this application can:
+
+- Display the estimated wait times of each hospital with a dynamic table that can be sorted by their name or wait times, and filtered by their region
+  - Data is automatically retrieved and updated every 15-17 minutes
+- Clicking on a hospital opens a side modal with more in depth information:
+  - Hospital information like google maps address, contact information, and relevant links
+  - A text displaying the current wait time relative to the average wait time on that specific day and hour
+  - A bar chart to show the hourly trend of each day from Monday to Sunday. The trend is shown in blue, whilst the current wait time is overlayed with a single pink bar
+- Responsive for desktop and mobile applications
+- "Understanding the Wait" modal to let users understand better how wait times are generated and what they mean
+- A dark and light mode theme toggle
+- Switch written languages between English, Traditional Chinese and Simplified Chinese
+
+## Demo
+
+https://ae-hk-wait-times.vercel.app/
+
+## Tech Stack
+
+This app was developed with Typescript, NextJS, and [shadcn/ui](https://ui.shadcn.com/) with TailwindCSS for easier development
+
+## What Inspired Me?
+
+### TLDR;
+
+I needed to use the A&E hospital services, but due to a recent typhoon, the wait times of all hospitals were estimated at 8+ hours... except for the hospital at Cheng Chau island. I took the ferry over, and instantly got admitted when I arrived to the hospital.
+
+Even though the general public can see a snapshot of the estimated wait times at 15 minute intervals, it doesn't help us predict how busy it will be in the future. What if I could do that?
+
+### Story Time
+
+In the summer of 2023, I sprained my left shoulder AC joint playing volleyball. Following the game, there was a typhoon in Hong Kong. The pain wasn't immediate, but it eventually followed with a very limited range of motion, and pain with slight movements.
+
+However, due to the typhoon, trying to make appointments to visit a public general doctor was next to impossible. _Note: Booking a doctor in the public system on normal days is hard enough already._
+
+My friends suggested going to the A&E instead as I wouldn't have to rely on a booking to get admitted - I could just walk in and then wait in line. So I walked into the [Queen Mary Hospital](https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100131) and saw how packed it was. I got a ticket, and asked the nurse how long it would take, and she said it would be more than 8 hours!
+
+I couldn't imagine waiting there for more than 8 hours. Even if I decided to leave then come back, what if I missed my appointment? Could I rely on the hospital app to remind me on when to come back? I didn't feel comfortable taking that risk.
+
+That's when I learned that the [hospital authority has a site with an estimated wait time of each of their A&E hospitals](https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=235504&Lang=ENG). At that time, each hospital had an 8+ hour wait... except for [St John Hospital in Cheng Chau island](https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=100146) with "Around 1 hour" of wait.
+
+So I decided to take a little day trip to Cheng Chau and take my chances - The moment I arrived to the hospital, I instantly got admitted. We went through the process of getting a checkup, an X-ray, an analysis, then getting a customized sling in the Occupational Therapy department in a span of 2 hours.
+
+It was a fun trip, but taking the ferry to another island is not for everyone. So it begged the question... how could we plan our visits better to avoid the wait?
+
+## Local Development
+
+### Getting Started
+
+First, install the dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Improvements
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Display previous hourly averages on current day
 
-## Learn More
+On the hospital chart for the current day, rather than only displaying a bar with the wait time at the current hour, also show the previous hour wait times so users can see if the it's following a trend or not.
 
-To learn more about Next.js, take a look at the following resources:
+### Show map
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Similar to the original site, it would be helpful to have a view of the hospitals on a map with their current wait times.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Predict Future Wait Times
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Create machine learning models to predict future wait times and display them appropriately on the chart view.
