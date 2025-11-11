@@ -1,5 +1,6 @@
 import React from "react"
 import { LanguageCode } from "@/types"
+import Link from "next/link"
 
 // The type for localized text is React.ReactNode to allow for JSX.
 type LocalizedText = {
@@ -42,6 +43,105 @@ export const informationContent: InformationContent = {
         cn: "重要信息，助您了解等候时间的估算方式及其含义。",
     },
     accordionItems: [
+        {
+            id: "minor-illnesses",
+            title: {
+                en: "Where to Go for Minor Illnesses",
+                zh: "輕微病症應往何處求診",
+                cn: "轻微病症应往何处求诊",
+            },
+            content: {
+                en: (
+                    <>
+                        <p className="mb-2">
+                            Priority will be accorded to patients triaged as
+                            critical and emergency. Semi-urgent and non-urgent
+                            patients may experience longer waiting time. Please
+                            be patient while waiting for consultation.
+                        </p>
+                        <p>
+                            Patient with minor illnesses can consider seeking
+                            alternative medical services from private clinics
+                            (as listed in{" "}
+                            <Link
+                                className="underline underline-offset-2"
+                                href="https://apps.pcdirectory.gov.hk/public/en"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Primary Care Directory
+                            </Link>{" "}
+                            or{" "}
+                            <Link
+                                className="underline underline-offset-2"
+                                href="https://www.thkma.org/our_works/hong_kong_doctors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Hong Kong Doctors Homepage
+                            </Link>
+                            ).
+                        </p>
+                    </>
+                ),
+                zh: (
+                    <>
+                        <p className="mb-2">
+                            危殆及危急病人會獲優先處理。次緊急及非緊急病人或需等候較長時間，請耐心等候診症。
+                        </p>
+                        <p>
+                            病情輕微的病人可考慮向私家診所求診（可參考{" "}
+                            <Link
+                                className="underline underline-offset-2"
+                                href="https://apps.pcdirectory.gov.hk/public/TC"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                基層醫療指南
+                            </Link>{" "}
+                            或{" "}
+                            <Link
+                                className="underline underline-offset-2"
+                                href="https://www.thkma.org/our_works/hong_kong_doctors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                香港醫生網
+                            </Link>
+                            ）。
+                        </p>
+                    </>
+                ),
+                cn: (
+                    <>
+                        <p className="mb-2">
+                            危殆及危急病人会获优先处理。次紧急及非紧急病人或需等候较长时间，请耐心等候诊症。
+                        </p>
+                        <p>
+                            病情轻微的病人可考虑向私家诊所求诊（可参考{" "}
+                            <Link
+                                className="underline underline-offset-2"
+                                href="https://apps.pcdirectory.gov.hk/public/SC"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                基层医疗指南
+                            </Link>{" "}
+                            或{" "}
+                            <Link
+                                className="underline underline-offset-2"
+                                href="https://www.thkma.org/our_works/hong_kong_doctors"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                香港医生网
+                            </Link>
+                            ）。
+                        </p>
+                    </>
+                ),
+            },
+        },
         {
             id: "triage-priority",
             title: {
