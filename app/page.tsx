@@ -1,18 +1,13 @@
-import HospitalsViews from "@/components/hospitals-view";
-import InformationDialog from "@/components/information-dialog";
-
+"use client"
+import HospitalWaitTimeView from "@/components/HospitalWaitTimeView"
+import InformationDrawer from "@/components/InformationDrawer"
 export default function Home() {
-  return (
-    <>
-      <header className="w-full flex flex-col justify-center items-center sm:flex-row sm:justify-between sm:items-center">
-        <div className="my-2">
-          <h1 className="text-lg text-center font-bold mb-2 md:text-xl sm:text-left">
-            Current A&E Waiting Times
-          </h1>
-          <InformationDialog />
+    return (
+        <div className="container mx-auto">
+            <div className="flex flex-col gap-4 min-h-screen font-sans my-4">
+                <InformationDrawer />
+                <HospitalWaitTimeView />
+            </div>
         </div>
-      </header>
-      <HospitalsViews />
-    </>
-  );
+    )
 }

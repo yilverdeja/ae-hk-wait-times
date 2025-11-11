@@ -1,15 +1,71 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+    return twMerge(clsx(inputs))
 }
 
-export const getCurrentYear = () => new Date().getFullYear();
+import { LanguageCode } from "@/types"
 
-export const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
+/**
+ * Cookie utility functions for language preference
+ */
+const LANGUAGE_COOKIE_NAME = "app-language"
+const COOKIE_MAX_AGE = 365 * 24 * 60 * 60 // 1 year in seconds
 
-const LANGUAGE = "ENG";
+/**
+ * Sets the language preference cookie on the client side
+ */
+export function setLanguageCookie(lang: LanguageCode): void {
+    if (typeof document === "undefined") return
 
-export const buildHospitalLink = (contentId: string): string =>
-  `http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=${contentId}&Lang=${LANGUAGE}`;
+    const expires = new Date()
+    expires.setTime(expires.getTime() + COOKIE_MAX_AGE * 1000)
+
+    document.cookie = `${LANGUAGE_COOKIE_NAME}=${lang}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`
+}
+
+/**
+ * Gets the language preference cookie value
+ * Returns null if cookie doesn't exist or is invalid
+ */
+export function getLanguageCookie(): LanguageCode | null {
+    if (typeof document === "undefined") return null
+
+    const cookies = document.cookie.split("; ")
+    const cookie = cookies.find((c) => c.startsWith(`${LANGUAGE_COOKIE_NAME}=`))
+
+    if (!cookie) return null
+
+    const value = cookie.split("=")[1]
+    if (Object.values(LanguageCode).includes(value as LanguageCode)) {
+        return value as LanguageCode
+    }
+
+    return null
+}
+
+/**
+ * Maps our internal, clean language codes to the specific codes required
+ * by the external HA (Hospital Authority) API URL. This decouples our app's
+ * i18n logic from the external API's implementation details.
+ */
+const HA_LANGUAGE_MAP: Record<LanguageCode, string> = {
+    [LanguageCode.EN]: "ENG",
+    [LanguageCode.ZH]: "CHIB5",
+    [LanguageCode.CN]: "CHIGB",
+}
+
+/**
+ * Constructs the specific URL for a hospital's page on the HA website.
+ * @param contentId The unique ID for the hospital (from our hospital data).
+ * @param lang The desired language for the page.
+ * @returns A fully formed URL string.
+ */
+export const buildHospitalLink = (
+    contentId: string,
+    lang: LanguageCode = LanguageCode.EN
+): string => {
+    const apiLangCode = HA_LANGUAGE_MAP[lang]
+    return `http://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=${contentId}&Lang=${apiLangCode}`
+}
