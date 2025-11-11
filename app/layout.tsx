@@ -11,23 +11,32 @@ import { LanguageCode } from "@/types"
 const dm_sans = DM_Sans({ weight: ["400", "500", "700"], subsets: ["latin"] })
 
 export const metadata = {
+    metadataBase: new URL("https://ae.wait.hk"),
     title: "Hong Kong A&E Wait Times",
     description:
         "Check real-time accident and emergency department wait times across Hong Kong hospitals. Updated every 15 minutes to help you find the quickest service.",
     generator: "A&E Wait Times",
     application: "A&E Wait Times",
     referrer: "origin-when-cross-origin",
-    keywords: ["Accident", "Emergency", "A&E", "Hong Kong"],
+    keywords: ["Accident", "Emergency", "A&E", "Hong Kong", "Wait", "Times"],
+    canonical: "https://ae.wait.hk",
     authors: [{ name: "Yil Verdeja", url: "https://yilverdeja.com" }],
     creator: "Yil Verdeja",
     openGraph: {
         title: "Hong Kong A&E Wait Times",
         description:
             "Check real-time accident and emergency department wait times across Hong Kong hospitals. Updated every 15 minutes to help you find the quickest service.",
-        url: "https://ae-hk-wait-times.vercel.app",
-        siteName: "Next.js",
-        images: "https://ae-hk-wait-times.vercel.app/og-image.png",
-        locale: "zh_Hant_HK",
+        url: "https://ae.wait.hk",
+        siteName: "A&E Wait Times",
+        images: [
+            {
+                url: "https://ae.wait.hk/og-image.png",
+                width: 1200,
+                height: 630,
+                alt: "A&E Wait Times",
+            },
+        ],
+        locales: ["en_US", "zh_Hant_HK", "zh_Hans_HK"],
         type: "website",
         authors: ["Yil Verdeja"],
     },
@@ -37,7 +46,18 @@ export const metadata = {
         description:
             "Check real-time accident and emergency department wait times across Hong Kong hospitals. Updated every 15 minutes to help you find the quickest service.",
         creator: "@yilverdeja",
-        images: "https://ae-hk-wait-times.vercel.app/og-image.png",
+        images: "https://ae.wait.hk/og-image.png",
+    },
+    robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+            index: true,
+            follow: true,
+            "max-video-preview": -1,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+        },
     },
 }
 
