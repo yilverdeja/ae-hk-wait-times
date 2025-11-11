@@ -23,17 +23,35 @@ import { regionNames } from "@/data/regions"
 // Helper to format minutes into a readable string (e.g., 75 -> "1 hr 15 min")
 const formatMinutes = (minutes: number | null, lang: LanguageCode): string => {
     if (minutes === null || minutes < 0) {
-        return lang === LanguageCode.EN ? "N/A" : "不適用"
+        return lang === LanguageCode.EN
+            ? "N/A"
+            : lang === LanguageCode.ZH
+              ? "不適用"
+              : "不适用"
     }
     if (minutes === 0) {
-        return lang === LanguageCode.EN ? "No Wait Time" : "無等候時間"
+        return lang === LanguageCode.EN
+            ? "No Wait Time"
+            : lang === LanguageCode.ZH
+              ? "無等候時間"
+              : "无等候时间"
     }
 
     const hours = Math.floor(minutes / 60)
     const remainingMinutes = minutes % 60
 
-    const hrText = lang === LanguageCode.EN ? "hr" : "小時"
-    const minText = lang === LanguageCode.EN ? "min" : "分鐘"
+    const hrText =
+        lang === LanguageCode.EN
+            ? "hr"
+            : lang === LanguageCode.ZH
+              ? "小時"
+              : "小时"
+    const minText =
+        lang === LanguageCode.EN
+            ? "min"
+            : lang === LanguageCode.ZH
+              ? "分鐘"
+              : "分钟"
 
     let result = ""
     if (hours > 0) {

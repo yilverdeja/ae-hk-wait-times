@@ -11,8 +11,29 @@ import dayjs from "@/lib/dayjs"
 import { useLanguage } from "@/hooks/useLanguage"
 import { BREAKPOINTS } from "@/lib/constants"
 import { useBreakpoint } from "use-breakpoint"
-import { EnrichedHospitalData } from "@/types"
+import { EnrichedHospitalData, LanguageCode } from "@/types"
 import { HospitalSheet } from "@/components/HospitalSheet/HospitalSheet" // 1. Import the new component
+
+const errorTexts = {
+    [LanguageCode.EN]: {
+        title: "Error",
+        message: "Failed to load hospital wait times.",
+    },
+    [LanguageCode.ZH]: {
+        title: "錯誤",
+        message: "載入醫院等候時間失敗。",
+    },
+    [LanguageCode.CN]: {
+        title: "错误",
+        message: "载入医院等候时间失败。",
+    },
+}
+
+const lastUpdatedText = {
+    [LanguageCode.EN]: "Last Updated:",
+    [LanguageCode.ZH]: "最後更新：",
+    [LanguageCode.CN]: "最后更新：",
+}
 
 function HospitalWaitTimeView() {
     const { data, isLoading, isError, error } = useHospitalWaitTimes()
@@ -62,14 +83,14 @@ function HospitalWaitTimeView() {
     }
 
     if (isError) {
+        const errorCopy = errorTexts[lang]
         return (
             <>
                 <Alert variant="destructive" className="mx-auto">
                     <AlertCircle className="h-4 w-4" />
-                    <AlertTitle>Error</AlertTitle>
+                    <AlertTitle>{errorCopy.title}</AlertTitle>
                     <AlertDescription>
-                        {error?.message ||
-                            "Failed to load hospital wait times."}
+                        {error?.message || errorCopy.message}
                     </AlertDescription>
                 </Alert>
             </>
@@ -80,7 +101,7 @@ function HospitalWaitTimeView() {
         <>
             <div className="mb-4">
                 <p className="text-sm text-muted-foreground">
-                    Last Updated:{" "}
+                    {lastUpdatedText[lang]}{" "}
                     {data
                         ? dayjs(data.lastUpdated).format("MMM Do YYYY, h:mm A")
                         : ""}

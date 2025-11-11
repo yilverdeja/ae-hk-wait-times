@@ -27,18 +27,21 @@ const legendCopy = {
         managingMultiple: "Multiple Cases",
         region: "Filter by region...",
         resuscitation: "Hide hospitals managing critical cases",
+        allRegions: "All Regions",
     },
     [LanguageCode.ZH]: {
         managing: "處理中",
         managingMultiple: "多宗處理中",
         region: "按地區篩選...",
         resuscitation: "隱藏正在處理危殆個案的醫院",
+        allRegions: "所有地區",
     },
     [LanguageCode.CN]: {
         managing: "处理中",
         managingMultiple: "多宗处理中",
         region: "按地区筛选...",
         resuscitation: "隐藏正在处理危殆个案的医院",
+        allRegions: "所有地区",
     },
 }
 
@@ -68,7 +71,7 @@ export function DataTableToolbar<TData>({
                         <SelectValue placeholder={copy.region} />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="all">All Regions</SelectItem>
+                        <SelectItem value="all">{copy.allRegions}</SelectItem>
                         {regionOptions.map((region) => (
                             <SelectItem key={region} value={region}>
                                 {region}

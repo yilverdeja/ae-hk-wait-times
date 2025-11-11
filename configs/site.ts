@@ -19,15 +19,15 @@ type SiteConfig = {
 export const siteConfig: SiteConfig = {
     name: i18n(
         "A&E Hong Kong Wait Times",
-        "香港A&E等待時間",
-        "香港A&E等待時間"
+        "香港急症室等候時間",
+        "香港急诊室等候时间"
     ),
-    title: i18n("A&E Wait Times", "香港A&E等待時間", "香港A&E等待時間"),
+    title: i18n("A&E Wait Times", "急症室等候時間", "急诊室等候时间"),
     url: "https://ae.wait.hk",
     description: i18n(
         "Estimated reference of Hong Kong's Hospital Authority Accident and Emergency waiting times capped at 8 hours",
-        "香港醫院管理局緊急醫療等待時間的估計參考，上限為8小時",
-        "香港醫院管理局緊急醫療等待時間的估計參考，上限為8小時"
+        "香港醫院管理局急症室等候時間的估計參考，上限為8小時",
+        "香港医院管理局急诊室等候时间的估计参考，上限为8小时"
     ),
     links: {
         github: "https://github.com/yilverdeja/ae-hk-wait-times",

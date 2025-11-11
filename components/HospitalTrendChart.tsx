@@ -11,24 +11,49 @@ import {
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
 import { DayOfWeek } from "@/types/trends"
 import { DayOfWeekSelector } from "./DayOfWeekSelector"
+import { useLanguage } from "@/hooks/useLanguage"
+import { LanguageCode } from "@/types"
 
 // Chart configuration with labels for the legend and light/dark mode colors.
-const chartConfig = {
-    averageWait: {
-        label: "Average Wait",
-        theme: {
-            light: "hsl(221.2 83.2% 53.3%)", // blue-600
-            dark: "hsl(217.2 91.2% 59.8%)", // blue-500
+const getChartConfig = (lang: LanguageCode) =>
+    ({
+        averageWait: {
+            label:
+                lang === LanguageCode.EN
+                    ? "Average Wait"
+                    : lang === LanguageCode.ZH
+                      ? "平均等候時間"
+                      : "平均等候时间",
+            theme: {
+                light: "hsl(221.2 83.2% 53.3%)", // blue-600
+                dark: "hsl(217.2 91.2% 59.8%)", // blue-500
+            },
         },
-    },
-    liveWait: {
-        label: "Current Wait",
-        theme: {
-            light: "hsl(322.5 81.3% 56.5%)", // pink-600
-            dark: "hsl(314.3 89.5% 65.1%)", // pink-500
+        liveWait: {
+            label:
+                lang === LanguageCode.EN
+                    ? "Current Wait"
+                    : lang === LanguageCode.ZH
+                      ? "目前等候時間"
+                      : "目前等候时间",
+            theme: {
+                light: "hsl(322.5 81.3% 56.5%)", // pink-600
+                dark: "hsl(314.3 89.5% 65.1%)", // pink-500
+            },
         },
-    },
-} satisfies ChartConfig
+    }) satisfies ChartConfig
+
+const loadingText = {
+    en: "Loading chart...",
+    zh: "載入圖表中...",
+    cn: "载入图表中...",
+}
+
+const errorText = {
+    en: "Error loading chart data.",
+    zh: "載入圖表數據時發生錯誤。",
+    cn: "载入图表数据时发生错误。",
+}
 
 interface HospitalTrendChartProps {
     hospitalSlug: string
@@ -39,11 +64,13 @@ export function HospitalTrendChart({
     hospitalSlug,
     liveWaitTimeInMinutes,
 }: HospitalTrendChartProps) {
+    const { lang } = useLanguage()
     const {
         data: trendData,
         isLoading,
         isError,
     } = useHospitalTrends(hospitalSlug)
+    const chartConfig = getChartConfig(lang)
     const today = useMemo(
         () =>
             new Date().toLocaleDateString("en-US", {
@@ -106,11 +133,11 @@ export function HospitalTrendChart({
     }, [chartData])
 
     if (isLoading) {
-        return <div className="h-[298px]">Loading chart...</div>
+        return <div className="h-[298px]">{loadingText[lang]}</div>
     }
 
     if (isError) {
-        return <div className="h-[298px]">Error loading chart data.</div>
+        return <div className="h-[298px]">{errorText[lang]}</div>
     }
 
     return (
