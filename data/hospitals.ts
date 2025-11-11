@@ -5,16 +5,16 @@ export const hospitals: HospitalData = {
     AHMLNH: {
         name: i18n(
             "Alice Ho Miu Ling Nethersole Hospital",
-            "愛德華七世醫院",
-            "愛德華七世醫院"
+            "雅麗氏何妙齡那打素醫院",
+            "雅丽氏何妙龄那打素医院"
         ),
         region: Region.NewTerritories,
         linkId: "100171",
         cluster: Cluster.NewTerritoriesEast,
         address: i18n(
             "11 Chuen On Road, Tai Po, NT",
-            "元朗大馬路11號, 元朗, 新界",
-            "元朗大馬路11號, 元朗, 新界"
+            "新界大埔全安路11號, 大埔, 新界",
+            "新界大埔全安路11号, 大埔, 新界"
         ),
         telephone: "2689 2000",
         fax: "2662 1690",
@@ -23,14 +23,14 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/xWmgrNkN5PKd1GNB8",
     },
     CMC: {
-        name: i18n("Caritas Medical Centre", "明愛醫院", "明愛醫院"),
+        name: i18n("Caritas Medical Centre", "明愛醫院", "明爱医院"),
         region: Region.Kowloon,
         linkId: "100163",
         cluster: Cluster.KowloonWest,
         address: i18n(
             "111 Wing Hong Street, Sham Shui Po, KLN",
-            "旺角欽州街111號, 旺角, 九龍",
-            "旺角欽州街111號, 旺角, 九龍"
+            "九龍深水埗永康街111號, 深水埗, 九龍",
+            "九龙深水埗永康街111号, 深水埗, 九龙"
         ),
         telephone: "3408 5678",
         fax: "2785 5755",
@@ -38,14 +38,14 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/RHspT8VfgdGJVffY7",
     },
     KWH: {
-        name: i18n("Kwong Wah Hospital", "廣華醫院", "廣華醫院"),
+        name: i18n("Kwong Wah Hospital", "廣華醫院", "广华医院"),
         region: Region.Kowloon,
         linkId: "100153",
         cluster: Cluster.KowloonCentral,
         address: i18n(
             "25 Waterloo Road, KLN",
-            "九龍水兵威道25號, 九龍",
-            "九龍水兵威道25號, 九龍"
+            "九龍窩打老道25號, 九龍",
+            "九龙窝打老道25号, 九龙"
         ),
         telephone: "2332 2311",
         fax: "3517 5481",
@@ -54,7 +54,7 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/v5nGqGXHwhSheXeY7",
     },
     NDH: {
-        name: i18n("North District Hospital", "北區醫院", "北區醫院"),
+        name: i18n("North District Hospital", "北區醫院", "北区医院"),
         region: Region.NewTerritories,
         linkId: "100178",
         cluster: Cluster.NewTerritoriesEast,
@@ -70,7 +70,7 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/bMecWjrymELPVzDD6",
     },
     NLH: {
-        name: i18n("North Lantau Hospital", "北大嶼山醫院", "北大嶼山醫院"),
+        name: i18n("North Lantau Hospital", "北大嶼山醫院", "北大屿山医院"),
         region: Region.NewTerritories,
         linkId: "216546",
         cluster: Cluster.KowloonWest,
@@ -85,14 +85,14 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/3AKWdxSKQrRH3kLR7",
     },
     PMH: {
-        name: i18n("Princess Margaret Hospital", "瑪嘉烈醫院", "瑪嘉烈醫院"),
+        name: i18n("Princess Margaret Hospital", "瑪嘉烈醫院", "玛嘉烈医院"),
         region: Region.NewTerritories,
         linkId: "100160",
         cluster: Cluster.KowloonWest,
         address: i18n(
             "2-10 Princess Margaret Hospital Road, Lai Chi Kok, Kowloon",
             "九龍荔枝角瑪嘉烈醫院道2-10號, 荔枝角, 九龍",
-            "九龍荔枝角瑪嘉烈醫院道2-10號, 荔枝角, 九龍"
+            "九龙荔枝角玛嘉烈医院道2-10号, 荔枝角, 九龙"
         ),
         telephone: "2990 1111",
         fax: "2786 3629",
@@ -100,7 +100,7 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/oahm76MqWJrz58aPA",
     },
     POH: {
-        name: i18n("Pok Oi Hospital", "博愛醫院", "博愛醫院"),
+        name: i18n("Pok Oi Hospital", "博愛醫院", "博爱医院"),
         region: Region.NewTerritories,
         linkId: "100174",
         cluster: Cluster.NewTerritoriesWest,
@@ -119,7 +119,7 @@ export const hospitals: HospitalData = {
         name: i18n(
             "Prince of Wales Hospital",
             "威爾斯親王醫院",
-            "威爾斯親王醫院"
+            "威尔斯亲王医院"
         ),
         region: Region.NewTerritories,
         linkId: "100166",
@@ -127,7 +127,7 @@ export const hospitals: HospitalData = {
         address: i18n(
             "30-32 Ngan Shing Street, Shatin, NT",
             "新界沙田銀城街30-32號, 沙田, 新界",
-            "新界沙田銀城街30-32號, 沙田, 新界"
+            "新界沙田银城街30-32号, 沙田, 新界"
         ),
         telephone: "3505 2211",
         fax: "2637 8244",
@@ -138,16 +138,16 @@ export const hospitals: HospitalData = {
     PYNEH: {
         name: i18n(
             "Pamela Youde Nethersole Eastern Hospital",
-            "鮑思高紀念聖方濟各學校東院",
-            "鮑思高紀念聖方濟各學校東院"
+            "東區尤德夫人那打素醫院",
+            "东区尤德夫人那打素医院"
         ),
         region: Region.HongKongIsland,
         linkId: "100141",
         cluster: Cluster.HongKongEast,
         address: i18n(
             "3 Lok Man Road, Chai Wan, HK",
-            "香港仔鴨脷洲大道3號, 香港仔, 香港島",
-            "香港仔鴨脷洲大道3號, 香港仔, 香港島"
+            "香港島柴灣樂民道3號, 柴灣, 香港島",
+            "香港岛柴湾乐民道3号, 柴湾, 香港岛"
         ),
         telephone: "2595 6111",
         fax: "2515 0794",
@@ -156,14 +156,14 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/3YtnhmSvJBKjR9hXA",
     },
     QEH: {
-        name: i18n("Queen Elizabeth Hospital", "伊利沙伯醫院", "伊利沙伯醫院"),
+        name: i18n("Queen Elizabeth Hospital", "伊利沙伯醫院", "伊利沙伯医院"),
         region: Region.Kowloon,
         linkId: "100149",
         cluster: Cluster.KowloonCentral,
         address: i18n(
             "30 Gascoigne Road, KLN",
             "九龍加士居道30號, 九龍",
-            "九龍加士居道30號, 九龍"
+            "九龙加士居道30号, 九龙"
         ),
         telephone: "3506 8888",
         fax: "3506 8951",
@@ -172,14 +172,14 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/JsNZun7L3ouTaiU66",
     },
     QMH: {
-        name: i18n("Queen Mary Hospital", "瑪麗醫院", "瑪麗醫院"),
+        name: i18n("Queen Mary Hospital", "瑪麗醫院", "玛丽医院"),
         region: Region.HongKongIsland,
         linkId: "100131",
         cluster: Cluster.HongKongWest,
         address: i18n(
             "102 Pokfulam Road, HK",
             "香港薄扶林道102號, 香港, 香港島",
-            "香港薄扶林道102號, 香港, 香港島"
+            "香港薄扶林道102号, 香港, 香港岛"
         ),
         telephone: "2255 3838",
         fax: "2817 5496",
@@ -188,7 +188,7 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/hpzFxt3hmGr7RDHQ7",
     },
     RH: {
-        name: i18n("Ruttonjee Hospital", "養和醫院", "養和醫院"),
+        name: i18n("Ruttonjee Hospital", "養和醫院", "养和医院"),
         region: Region.HongKongIsland,
         linkId: "100144",
         cluster: Cluster.HongKongEast,
@@ -204,14 +204,14 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/LEFkUDTTk2cEY6YU9",
     },
     SJH: {
-        name: i18n("St John Hospital", "聖德肋撒醫院", "聖德肋撒醫院"),
+        name: i18n("St John Hospital", "聖德肋撒醫院", "圣德肋撒医院"),
         region: Region.NewTerritories,
         linkId: "100146",
         cluster: Cluster.HongKongEast,
         address: i18n(
             "Cheung Chau Hospital Road, Tung Wan, Cheung Chau",
             "長洲醫院道, 東灣, 長洲",
-            "長洲醫院道, 東灣, 長洲"
+            "长洲医院道, 东湾, 长洲"
         ),
         telephone: "2986 2100",
         fax: "2981 9050",
@@ -219,7 +219,7 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/8t2jw4ixHnY39Uw77",
     },
     TKOH: {
-        name: i18n("Tseung Kwan O Hospital", "將軍澳醫院", "將軍澳醫院"),
+        name: i18n("Tseung Kwan O Hospital", "將軍澳醫院", "将军澳医院"),
         region: Region.NewTerritories,
         linkId: "101326",
         cluster: Cluster.KowloonEast,
@@ -234,7 +234,7 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/yWfbcF4bKkMAWt8p7",
     },
     TMH: {
-        name: i18n("Tuen Mun Hospital", "屯門醫院", "屯門醫院"),
+        name: i18n("Tuen Mun Hospital", "屯門醫院", "屯门医院"),
         region: Region.NewTerritories,
         linkId: "100173",
         cluster: Cluster.NewTerritoriesWest,
@@ -250,7 +250,7 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/LPBHVjFb75Fzguwv8",
     },
     TSWH: {
-        name: i18n("Tin Shui Wai Hospital", "天水圍醫院", "天水圍醫院"),
+        name: i18n("Tin Shui Wai Hospital", "天水圍醫院", "天水围医院"),
         region: Region.NewTerritories,
         linkId: "235909",
         cluster: Cluster.NewTerritoriesWest,
@@ -276,8 +276,8 @@ export const hospitals: HospitalData = {
         cluster: Cluster.KowloonEast,
         address: i18n(
             "130 Hip Wo Street, Kwun Tong, KLN",
-            "九龍觀塘海濱道130號, 觀塘, 九龍",
-            "九龍觀塘海濱道130號, 觀塘, 九龍"
+            "九龍觀塘協和街130號, 觀塘, 九龍",
+            "九龙观塘协和街130号, 观塘, 九龙"
         ),
         telephone: "2379 9611",
         fax: "2772 7098",
@@ -286,14 +286,14 @@ export const hospitals: HospitalData = {
         googleMapsLink: "https://maps.app.goo.gl/vskcgrVTHMfMakd98",
     },
     YCH: {
-        name: i18n("Yan Chai Hospital", "曉光中醫醫院", "曉光中醫醫院"),
+        name: i18n("Yan Chai Hospital", "仁濟醫院", "仁济医院"),
         region: Region.NewTerritories,
         linkId: "100165",
         cluster: Cluster.KowloonWest,
         address: i18n(
             "7-11 Yan Chai Street, Tsuen Wan, NT",
-            "荃灣街7-11號, 荃灣, 新界",
-            "荃灣街7-11號, 荃灣, 新界"
+            "新界荃灣仁濟街7-11號, 荃灣, 新界",
+            "新界荃湾仁济街7-11号, 荃湾, 新界"
         ),
         telephone: "2417 8383",
         fax: "2414 8562",
