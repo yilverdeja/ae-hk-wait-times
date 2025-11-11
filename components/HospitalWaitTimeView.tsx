@@ -61,8 +61,8 @@ function HospitalWaitTimeView() {
     }, [isSheetOpen, selectedHospital, lang])
 
     const columns = useMemo(
-        () => getColumns(lang, breakpoint || "desktop"),
-        [lang, breakpoint]
+        () => getColumns(lang, breakpoint || "desktop", data?.lastUpdated),
+        [lang, breakpoint, data?.lastUpdated]
     )
 
     // 3. Update the row select handler

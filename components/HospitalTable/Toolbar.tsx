@@ -1,7 +1,13 @@
 "use client"
 
 import { Table } from "@tanstack/react-table"
-import { AlertTriangle, Siren } from "lucide-react"
+import {
+    AlertTriangle,
+    Siren,
+    TrendingUp,
+    TrendingDown,
+    Minus,
+} from "lucide-react"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode, Region } from "@/types"
 import { regionNames } from "@/data/regions"
@@ -30,6 +36,9 @@ const legendCopy = {
         region: "Filter by region...",
         resuscitation: "Hide hospitals managing critical cases",
         allRegions: "All Regions",
+        trendHigher: "Busier than usual",
+        trendLower: "Less busy than usual",
+        trendSame: "About average",
     },
     [LanguageCode.ZH]: {
         managing: "處理中",
@@ -37,6 +46,9 @@ const legendCopy = {
         region: "按地區篩選...",
         resuscitation: "隱藏正在處理危殆個案的醫院",
         allRegions: "所有地區",
+        trendHigher: "較平時繁忙",
+        trendLower: "較平時清閒",
+        trendSame: "接近平均",
     },
     [LanguageCode.CN]: {
         managing: "处理中",
@@ -44,6 +56,9 @@ const legendCopy = {
         region: "按地区筛选...",
         resuscitation: "隐藏正在处理危殆个案的医院",
         allRegions: "所有地区",
+        trendHigher: "较平时繁忙",
+        trendLower: "较平时清闲",
+        trendSame: "接近平均",
     },
 }
 
@@ -112,14 +127,30 @@ export function DataTableToolbar<TData>({
             </div>
 
             {/* Legend */}
-            <div className="flex items-center gap-4 rounded-md border bg-muted p-2 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                    <span>{copy.managing}</span>
+            <div className="flex flex-col gap-2 rounded-md border bg-muted p-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                    <div className="flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                        <span>{copy.managing}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Siren className="h-4 w-4 text-red-600" />
+                        <span>{copy.managingMultiple}</span>
+                    </div>
                 </div>
-                <div className="flex items-center gap-2">
-                    <Siren className="h-4 w-4 text-red-600" />
-                    <span>{copy.managingMultiple}</span>
+                <div className="flex flex-wrap items-center gap-2 border-t pt-2 sm:border-t-0 sm:border-l sm:pl-4 sm:pt-0">
+                    <div className="flex items-center gap-2">
+                        <TrendingUp className="h-4 w-4 text-red-600" />
+                        <span>{copy.trendHigher}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <TrendingDown className="h-4 w-4 text-green-600" />
+                        <span>{copy.trendLower}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Minus className="h-4 w-4 text-muted-foreground" />
+                        <span>{copy.trendSame}</span>
+                    </div>
                 </div>
             </div>
         </div>

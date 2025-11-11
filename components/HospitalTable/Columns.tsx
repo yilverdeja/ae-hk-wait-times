@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/tooltip"
 import { regionNames } from "@/data/regions"
 import { sendGAEvent } from "@next/third-parties/google"
+import { WaitTimeTrendIcon } from "@/components/HospitalTable/WaitTimeTrendIcon"
 
 // Helper to format minutes into a readable string (e.g., 75 -> "1 hr 15 min")
 const formatMinutes = (minutes: number | null, lang: LanguageCode): string => {
@@ -89,7 +90,8 @@ const managementStatusCopy: Record<
 
 export const getColumns = (
     lang: LanguageCode,
-    breakpoint: string
+    breakpoint: string,
+    lastUpdated?: string
 ): ColumnDef<EnrichedHospitalData>[] => [
     {
         accessorKey: "name",
@@ -272,9 +274,18 @@ export const getColumns = (
         cell: ({ row }) => {
             const waitTime =
                 row.original.waitTimes.semiUrgentNonUrgentP50Minutes
+            const hospitalSlug = row.original.slug
+
             return (
-                <div className="text-right font-semibold">
-                    {formatMinutes(waitTime, lang)}
+                <div className="text-right font-semibold flex items-center justify-end">
+                    <span>{formatMinutes(waitTime, lang)}</span>
+                    {lastUpdated && (
+                        <WaitTimeTrendIcon
+                            hospitalSlug={hospitalSlug}
+                            liveWaitTime={waitTime}
+                            lastUpdated={lastUpdated}
+                        />
+                    )}
                 </div>
             )
         },
