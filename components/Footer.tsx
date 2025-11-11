@@ -3,10 +3,30 @@ import { siteConfig } from "@/configs/site"
 import dayjs from "@/lib/dayjs"
 import { Separator } from "@radix-ui/react-dropdown-menu"
 import { useLanguage } from "@/hooks/useLanguage"
+import { LanguageCode } from "@/types"
 import Link from "next/link"
+
+const footerLinks = {
+    [LanguageCode.EN]: {
+        originalSite: "Original Site",
+        openData: "Open Data",
+        github: "Github",
+    },
+    [LanguageCode.ZH]: {
+        originalSite: "原始網站",
+        openData: "開放數據",
+        github: "Github",
+    },
+    [LanguageCode.CN]: {
+        originalSite: "原始网站",
+        openData: "开放数据",
+        github: "Github",
+    },
+}
 
 export default function Footer() {
     const { lang } = useLanguage()
+    const links = footerLinks[lang]
     return (
         <footer>
             <Separator className="my-2" />
@@ -25,17 +45,17 @@ export default function Footer() {
                             href={siteConfig.originalLink(lang)}
                             target="_blank"
                         >
-                            Original Site
+                            {links.originalSite}
                         </Link>
                     </li>
                     <li className="text-sm underline underline-offset-2">
                         <Link href={siteConfig.openDataLink} target="_blank">
-                            Open Data
+                            {links.openData}
                         </Link>
                     </li>
                     <li className="text-sm underline underline-offset-2">
                         <Link href={siteConfig.links.github} target="_blank">
-                            Github
+                            {links.github}
                         </Link>
                     </li>
                 </ul>

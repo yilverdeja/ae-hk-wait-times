@@ -7,7 +7,7 @@ import { DataTable } from "@/components/HospitalTable/DataTable"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
-import dayjs from "@/lib/dayjs"
+import dayjs, { zhCN, zhHK } from "@/lib/dayjs"
 import { useLanguage } from "@/hooks/useLanguage"
 import { BREAKPOINTS } from "@/lib/constants"
 import { useBreakpoint } from "use-breakpoint"
@@ -97,14 +97,26 @@ function HospitalWaitTimeView() {
         )
     }
 
+    // Set dayjs locale based on language
+    const formatDate = (dateString: string) => {
+        let formattedDate = dayjs(dateString)
+        if (lang === LanguageCode.ZH) {
+            formattedDate = formattedDate.locale(zhHK)
+            return formattedDate.format("YYYY年M月D日, h:mm A")
+        } else if (lang === LanguageCode.CN) {
+            formattedDate = formattedDate.locale(zhCN)
+            return formattedDate.format("YYYY年M月D日, h:mm A")
+        } else {
+            return formattedDate.format("MMM Do YYYY, h:mm A")
+        }
+    }
+
     return (
         <>
             <div className="mb-4">
                 <p className="text-sm text-muted-foreground">
                     {lastUpdatedText[lang]}{" "}
-                    {data
-                        ? dayjs(data.lastUpdated).format("MMM Do YYYY, h:mm A")
-                        : ""}
+                    {data ? formatDate(data.lastUpdated) : ""}
                 </p>
             </div>
             <DataTable

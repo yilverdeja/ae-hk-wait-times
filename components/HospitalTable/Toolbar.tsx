@@ -4,6 +4,7 @@ import { Table } from "@tanstack/react-table"
 import { AlertTriangle, Siren } from "lucide-react"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode, Region } from "@/types"
+import { regionNames } from "@/data/regions"
 
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
@@ -74,7 +75,7 @@ export function DataTableToolbar<TData>({
                         <SelectItem value="all">{copy.allRegions}</SelectItem>
                         {regionOptions.map((region) => (
                             <SelectItem key={region} value={region}>
-                                {region}
+                                {regionNames[region][lang]}
                             </SelectItem>
                         ))}
                     </SelectContent>

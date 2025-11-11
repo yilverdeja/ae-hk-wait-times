@@ -150,7 +150,11 @@ export function HospitalTrendChart({
                 <BarChart
                     accessibilityLayer
                     data={chartData}
-                    margin={{ top: 10, right: 10, left: 0 }}
+                    margin={{
+                        top: 10,
+                        right: 10,
+                        left: lang === LanguageCode.EN ? 0 : 20,
+                    }}
                 >
                     <CartesianGrid vertical={false} />
                     <XAxis
@@ -176,9 +180,16 @@ export function HospitalTrendChart({
                         tickLine={false}
                         axisLine={false}
                         tickMargin={8}
-                        tickFormatter={(value) =>
-                            `${Math.round(Number(value) / 60)}h`
-                        }
+                        tickFormatter={(value) => {
+                            const hours = Math.round(Number(value) / 60)
+                            if (lang === LanguageCode.EN) {
+                                return `${hours}h`
+                            } else if (lang === LanguageCode.ZH) {
+                                return `${hours}小時`
+                            } else {
+                                return `${hours}小时`
+                            }
+                        }}
                         domain={yAxisDomain}
                         width={30}
                     />

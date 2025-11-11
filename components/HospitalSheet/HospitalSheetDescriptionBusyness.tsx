@@ -3,17 +3,33 @@ import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
 
 // Helper to format minutes into a more human-readable "Xh Ym" format
-const formatMinutesToHoursAndMinutes = (totalMinutes: number) => {
-    if (totalMinutes < 1) return "0m"
+const formatMinutesToHoursAndMinutes = (
+    totalMinutes: number,
+    lang: LanguageCode
+) => {
+    const hourChar =
+        lang === LanguageCode.EN
+            ? "h"
+            : lang === LanguageCode.ZH
+              ? "小時"
+              : "小时"
+    const minChar =
+        lang === LanguageCode.EN
+            ? "m"
+            : lang === LanguageCode.ZH
+              ? "分鐘"
+              : "分钟"
+
+    if (totalMinutes < 1) return lang === LanguageCode.EN ? "0m" : `0${minChar}`
     const hours = Math.floor(totalMinutes / 60)
     const minutes = Math.round(totalMinutes % 60)
     if (hours > 0 && minutes > 0) {
-        return `${hours}h ${minutes}m`
+        return `${hours}${hourChar} ${minutes}${minChar}`
     }
     if (hours > 0) {
-        return `${hours}h`
+        return `${hours}${hourChar}`
     }
-    return `${minutes}m`
+    return `${minutes}${minChar}`
 }
 
 const busynessTexts = {
@@ -79,7 +95,10 @@ export function HospitalSheetDescriptionBusyness({
                 <span>
                     {texts.currentWaitTime}{" "}
                     <b>
-                        {formatMinutesToHoursAndMinutes(liveWaitTimeInMinutes)}
+                        {formatMinutesToHoursAndMinutes(
+                            liveWaitTimeInMinutes,
+                            lang
+                        )}
                     </b>
                     {lang === LanguageCode.EN ? "." : "。"}
                 </span>
@@ -87,10 +106,12 @@ export function HospitalSheetDescriptionBusyness({
         }
 
         const liveTimeFormatted = formatMinutesToHoursAndMinutes(
-            liveWaitTimeInMinutes
+            liveWaitTimeInMinutes,
+            lang
         )
         const averageTimeFormatted = formatMinutesToHoursAndMinutes(
-            comparison.average
+            comparison.average,
+            lang
         )
 
         switch (comparison.trend) {
