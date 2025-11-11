@@ -26,6 +26,7 @@ import { BREAKPOINTS } from "@/lib/constants"
 import { useBreakpoint } from "use-breakpoint"
 import { EnrichedHospitalData } from "@/types"
 import { useLanguage } from "@/hooks/useLanguage"
+import { cn } from "@/lib/utils"
 
 // 1. Update props to accept the onRowSelect handler
 interface DataTableProps<TData, TValue> {
@@ -74,92 +75,100 @@ export function DataTable<TData, TValue>({
         <div className="space-y-4">
             <DataTableToolbar table={table} />
             <div className="overflow-hidden rounded-md border">
-                <Table>
-                    <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead
-                                            key={header.id}
-                                            className={
-                                                header.id === "region"
-                                                    ? "hidden md:table-cell"
-                                                    : ""
-                                            }
-                                        >
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                      header.column.columnDef
-                                                          .header,
-                                                      header.getContext()
-                                                  )}
-                                        </TableHead>
-                                    )
-                                })}
-                            </TableRow>
-                        ))}
-                    </TableHeader>
-                    <TableBody>
-                        {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
-                                // 3. Add the onClick handler to the entire row
-                                <TableRow
-                                    key={row.id}
-                                    // The data-state is now managed by the parent, but we can remove it
-                                    // as the visual feedback is the opened sheet.
-                                    className="cursor-pointer" // Add cursor-pointer for better UX
-                                    onClick={() => {
-                                        const hospital =
-                                            row.original as EnrichedHospitalData
-                                        // Track row click event
-                                        sendGAEvent(
-                                            "event",
-                                            "hospital_row_clicked",
-                                            {
-                                                hospitalSlug: hospital.slug,
-                                                hospitalName:
-                                                    hospital.name[lang],
-                                                region: hospital.region,
-                                                waitTime:
-                                                    hospital.waitTimes
-                                                        .semiUrgentNonUrgentP50Minutes ??
-                                                    null,
-                                            }
+                <div className="overflow-x-hidden [&_[data-slot=table-container]]:overflow-x-hidden">
+                    <Table>
+                        <TableHeader>
+                            {table.getHeaderGroups().map((headerGroup) => (
+                                <TableRow key={headerGroup.id}>
+                                    {headerGroup.headers.map((header) => {
+                                        return (
+                                            <TableHead
+                                                key={header.id}
+                                                className={cn(
+                                                    header.id === "region"
+                                                        ? "hidden md:table-cell"
+                                                        : "",
+                                                    header.id === "name"
+                                                        ? "whitespace-normal"
+                                                        : ""
+                                                )}
+                                            >
+                                                {header.isPlaceholder
+                                                    ? null
+                                                    : flexRender(
+                                                          header.column
+                                                              .columnDef.header,
+                                                          header.getContext()
+                                                      )}
+                                            </TableHead>
                                         )
-                                        onRowSelect?.(row.original)
-                                    }} // Call the handler with the row's original data
-                                >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell
-                                            key={cell.id}
-                                            className={
-                                                cell.column.id === "region"
-                                                    ? "hidden md:table-cell"
-                                                    : ""
-                                            }
-                                        >
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </TableCell>
-                                    ))}
+                                    })}
                                 </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell
-                                    colSpan={columns.length}
-                                    className="h-24 text-center"
-                                >
-                                    No results.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
+                            ))}
+                        </TableHeader>
+                        <TableBody>
+                            {table.getRowModel().rows?.length ? (
+                                table.getRowModel().rows.map((row) => (
+                                    // 3. Add the onClick handler to the entire row
+                                    <TableRow
+                                        key={row.id}
+                                        // The data-state is now managed by the parent, but we can remove it
+                                        // as the visual feedback is the opened sheet.
+                                        className="cursor-pointer" // Add cursor-pointer for better UX
+                                        onClick={() => {
+                                            const hospital =
+                                                row.original as EnrichedHospitalData
+                                            // Track row click event
+                                            sendGAEvent(
+                                                "event",
+                                                "hospital_row_clicked",
+                                                {
+                                                    hospitalSlug: hospital.slug,
+                                                    hospitalName:
+                                                        hospital.name[lang],
+                                                    region: hospital.region,
+                                                    waitTime:
+                                                        hospital.waitTimes
+                                                            .semiUrgentNonUrgentP50Minutes ??
+                                                        null,
+                                                }
+                                            )
+                                            onRowSelect?.(row.original)
+                                        }} // Call the handler with the row's original data
+                                    >
+                                        {row.getVisibleCells().map((cell) => (
+                                            <TableCell
+                                                key={cell.id}
+                                                className={cn(
+                                                    cell.column.id === "region"
+                                                        ? "hidden md:table-cell"
+                                                        : "",
+                                                    cell.column.id === "name"
+                                                        ? "whitespace-normal"
+                                                        : ""
+                                                )}
+                                            >
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                ))
+                            ) : (
+                                <TableRow>
+                                    <TableCell
+                                        colSpan={columns.length}
+                                        className="h-24 text-center"
+                                    >
+                                        No results.
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
         </div>
     )

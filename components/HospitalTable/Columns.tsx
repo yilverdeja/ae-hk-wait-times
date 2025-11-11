@@ -167,9 +167,11 @@ export const getColumns = (
 
             return (
                 <TooltipProvider delayDuration={100}>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-wrap">
                         {icon}
-                        <span className="font-medium">{hospitalName}</span>
+                        <span className="font-medium break-words">
+                            {hospitalName}
+                        </span>
                     </div>
                 </TooltipProvider>
             )
