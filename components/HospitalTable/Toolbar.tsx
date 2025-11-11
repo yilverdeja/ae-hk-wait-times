@@ -12,6 +12,9 @@ import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode, Region } from "@/types"
 import { regionNames } from "@/data/regions"
 import { sendGAEvent } from "@next/third-parties/google"
+import { BREAKPOINTS } from "@/lib/constants"
+import { useBreakpoint } from "use-breakpoint"
+import { cn } from "@/lib/utils"
 
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
@@ -22,6 +25,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
 
 interface DataTableToolbarProps<TData> {
     table: Table<TData>
@@ -39,6 +50,7 @@ const legendCopy = {
         trendHigher: "Busier than usual",
         trendLower: "Less busy than usual",
         trendSame: "About average",
+        legend: "Legend",
     },
     [LanguageCode.ZH]: {
         managing: "處理中",
@@ -49,6 +61,7 @@ const legendCopy = {
         trendHigher: "較平時繁忙",
         trendLower: "較平時清閒",
         trendSame: "接近平均",
+        legend: "圖例",
     },
     [LanguageCode.CN]: {
         managing: "处理中",
@@ -59,7 +72,53 @@ const legendCopy = {
         trendHigher: "较平时繁忙",
         trendLower: "较平时清闲",
         trendSame: "接近平均",
+        legend: "图例",
     },
+}
+
+// Legend content component to be reused in both expanded and dialog views
+function LegendContent({
+    copy,
+    isDialog = false,
+}: {
+    copy: (typeof legendCopy)[LanguageCode]
+    isDialog?: boolean
+}) {
+    return (
+        <>
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                <div className="flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                    <span>{copy.managing}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Siren className="h-4 w-4 text-red-600" />
+                    <span>{copy.managingMultiple}</span>
+                </div>
+            </div>
+            <div
+                className={cn(
+                    "flex flex-wrap items-center gap-2",
+                    isDialog
+                        ? "border-t pt-4"
+                        : "border-t pt-2 sm:border-t-0 sm:border-l sm:pl-4 sm:pt-0"
+                )}
+            >
+                <div className="flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4 text-red-600" />
+                    <span>{copy.trendHigher}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <TrendingDown className="h-4 w-4 text-green-600" />
+                    <span>{copy.trendLower}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Minus className="h-4 w-4 text-muted-foreground" />
+                    <span>{copy.trendSame}</span>
+                </div>
+            </div>
+        </>
+    )
 }
 
 export function DataTableToolbar<TData>({
@@ -67,6 +126,8 @@ export function DataTableToolbar<TData>({
 }: DataTableToolbarProps<TData>) {
     const { lang } = useLanguage()
     const copy = legendCopy[lang]
+    const { breakpoint } = useBreakpoint(BREAKPOINTS)
+    const isDesktop = breakpoint === "desktop"
 
     return (
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -126,33 +187,28 @@ export function DataTableToolbar<TData>({
                 </div>
             </div>
 
-            {/* Legend */}
-            <div className="flex flex-col gap-2 rounded-md border bg-muted p-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
-                <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-                    <div className="flex items-center gap-2">
-                        <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                        <span>{copy.managing}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Siren className="h-4 w-4 text-red-600" />
-                        <span>{copy.managingMultiple}</span>
-                    </div>
+            {/* Legend - Desktop: Expanded, Mobile/Tablet: Dialog Button */}
+            {isDesktop ? (
+                <div className="flex flex-col gap-2 rounded-md border bg-muted p-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
+                    <LegendContent copy={copy} isDialog={false} />
                 </div>
-                <div className="flex flex-wrap items-center gap-2 border-t pt-2 sm:border-t-0 sm:border-l sm:pl-4 sm:pt-0">
-                    <div className="flex items-center gap-2">
-                        <TrendingUp className="h-4 w-4 text-red-600" />
-                        <span>{copy.trendHigher}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <TrendingDown className="h-4 w-4 text-green-600" />
-                        <span>{copy.trendLower}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Minus className="h-4 w-4 text-muted-foreground" />
-                        <span>{copy.trendSame}</span>
-                    </div>
-                </div>
-            </div>
+            ) : (
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button variant="outline" size="sm">
+                            {copy.legend}
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                            <DialogTitle>{copy.legend}</DialogTitle>
+                        </DialogHeader>
+                        <div className="flex flex-col gap-4 py-4 text-sm text-muted-foreground">
+                            <LegendContent copy={copy} isDialog={true} />
+                        </div>
+                    </DialogContent>
+                </Dialog>
+            )}
         </div>
     )
 }
