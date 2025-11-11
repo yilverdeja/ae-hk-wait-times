@@ -3,6 +3,7 @@
 import { ThemeProvider } from "@/providers/ThemeProvider"
 import { LanguageProvider } from "@/providers/LanguageProvider"
 import TanstackProvider from "@/providers/TanstackProvider"
+import { MicrosoftClarity } from "@/providers/MicrosoftClarity"
 
 export default function Providers({ children }: { children: React.ReactNode }) {
     return (
@@ -14,7 +15,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             disableTransitionOnChange={false}
         >
             <LanguageProvider>
-                <TanstackProvider>{children}</TanstackProvider>
+                <TanstackProvider>
+                    {children}
+                    <MicrosoftClarity />
+                </TanstackProvider>
             </LanguageProvider>
         </ThemeProvider>
     )
