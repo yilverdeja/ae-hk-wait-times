@@ -11,6 +11,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
+import { sendGAEvent } from "@next/third-parties/google"
 
 import {
     Table,
@@ -23,6 +24,8 @@ import {
 import { DataTableToolbar } from "@/components/HospitalTable/Toolbar"
 import { BREAKPOINTS } from "@/lib/constants"
 import { useBreakpoint } from "use-breakpoint"
+import { EnrichedHospitalData } from "@/types"
+import { useLanguage } from "@/hooks/useLanguage"
 
 // 1. Update props to accept the onRowSelect handler
 interface DataTableProps<TData, TValue> {
@@ -39,6 +42,7 @@ export function DataTable<TData, TValue>({
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([])
+    const { lang } = useLanguage()
 
     // 2. Remove rowSelection state. It's no longer needed here.
     // const [rowSelection, setRowSelection] = React.useState<RowSelectionState>({});
@@ -106,7 +110,26 @@ export function DataTable<TData, TValue>({
                                     // The data-state is now managed by the parent, but we can remove it
                                     // as the visual feedback is the opened sheet.
                                     className="cursor-pointer" // Add cursor-pointer for better UX
-                                    onClick={() => onRowSelect?.(row.original)} // Call the handler with the row's original data
+                                    onClick={() => {
+                                        const hospital =
+                                            row.original as EnrichedHospitalData
+                                        // Track row click event
+                                        sendGAEvent(
+                                            "event",
+                                            "hospital_row_clicked",
+                                            {
+                                                hospitalSlug: hospital.slug,
+                                                hospitalName:
+                                                    hospital.name[lang],
+                                                region: hospital.region,
+                                                waitTime:
+                                                    hospital.waitTimes
+                                                        .semiUrgentNonUrgentP50Minutes ??
+                                                    null,
+                                            }
+                                        )
+                                        onRowSelect?.(row.original)
+                                    }} // Call the handler with the row's original data
                                 >
                                     {row.getVisibleCells().map((cell) => (
                                         <TableCell

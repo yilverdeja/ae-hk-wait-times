@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useRef, useEffect } from "react"
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
     ChartConfig,
@@ -13,6 +13,7 @@ import { DayOfWeek } from "@/types/trends"
 import { DayOfWeekSelector } from "./DayOfWeekSelector"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
+import { sendGAEvent } from "@next/third-parties/google"
 
 // Chart configuration with labels for the legend and light/dark mode colors.
 const getChartConfig = (lang: LanguageCode) =>
@@ -79,6 +80,26 @@ export function HospitalTrendChart({
         []
     )
     const [selectedDay, setSelectedDay] = useState<DayOfWeek>(today)
+    const previousDayRef = useRef<DayOfWeek>(today)
+    const isInitialMount = useRef(true)
+
+    // Track day change events (skip initial mount)
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false
+            previousDayRef.current = selectedDay
+            return
+        }
+
+        if (previousDayRef.current !== selectedDay) {
+            sendGAEvent("event", "trend_day_changed", {
+                hospitalSlug: hospitalSlug,
+                selectedDay: selectedDay,
+                previousDay: previousDayRef.current,
+            })
+            previousDayRef.current = selectedDay
+        }
+    }, [selectedDay, hospitalSlug])
 
     const chartData = useMemo(() => {
         if (!trendData) return []

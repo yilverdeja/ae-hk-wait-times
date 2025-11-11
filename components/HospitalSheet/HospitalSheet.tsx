@@ -13,6 +13,7 @@ import { HospitalSheetInformation } from "@/components/HospitalSheet/HospitalShe
 import { HospitalTrendChart } from "@/components/HospitalTrendChart"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
 import { HospitalSheetDescriptionBusyness } from "@/components/HospitalSheet/HospitalSheetDescriptionBusyness"
+import { sendGAEvent } from "@next/third-parties/google"
 
 interface HospitalSheetProps {
     hospital: EnrichedHospitalData | null
@@ -32,6 +33,12 @@ export function HospitalSheet({
     )
     const handleOpenChange = (open: boolean) => {
         if (!open) {
+            // Track sheet closed event
+            if (hospital) {
+                sendGAEvent("event", "hospital_sheet_closed", {
+                    hospitalSlug: hospital.slug,
+                })
+            }
             onClose()
         }
     }

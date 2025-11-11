@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect } from "react"
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
 import { getColumns } from "@/components/HospitalTable/Columns"
 import { DataTable } from "@/components/HospitalTable/DataTable"
@@ -13,6 +13,7 @@ import { BREAKPOINTS } from "@/lib/constants"
 import { useBreakpoint } from "use-breakpoint"
 import { EnrichedHospitalData, LanguageCode } from "@/types"
 import { HospitalSheet } from "@/components/HospitalSheet/HospitalSheet" // 1. Import the new component
+import { sendGAEvent } from "@next/third-parties/google"
 
 const errorTexts = {
     [LanguageCode.EN]: {
@@ -45,6 +46,20 @@ function HospitalWaitTimeView() {
         useState<EnrichedHospitalData | null>(null)
     const [isSheetOpen, setIsSheetOpen] = useState(false)
 
+    // Track sheet opened event
+    useEffect(() => {
+        if (isSheetOpen && selectedHospital) {
+            sendGAEvent("event", "hospital_sheet_opened", {
+                hospitalSlug: selectedHospital.slug,
+                hospitalName: selectedHospital.name[lang],
+                region: selectedHospital.region,
+                waitTime:
+                    selectedHospital.waitTimes.semiUrgentNonUrgentP50Minutes ??
+                    null,
+            })
+        }
+    }, [isSheetOpen, selectedHospital, lang])
+
     const columns = useMemo(
         () => getColumns(lang, breakpoint || "desktop"),
         [lang, breakpoint]
@@ -56,6 +71,8 @@ function HospitalWaitTimeView() {
             "Row selected, setting data and opening sheet for:",
             hospital.slug
         )
+        // Track sheet opened event (note: row click is tracked in DataTable)
+        // We track sheet opened separately here to capture the actual sheet opening
         setSelectedHospital(hospital) // Set the data for the sheet
         setIsSheetOpen(true) // Open the sheet
     }

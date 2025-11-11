@@ -3,12 +3,19 @@
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
+import { sendGAEvent } from "@next/third-parties/google"
 
 export function ThemeSwitcher() {
     const { theme, setTheme } = useTheme()
 
     const toggleTheme = () => {
-        setTheme(theme === "dark" ? "light" : "dark")
+        const previousTheme = theme || "light"
+        const newTheme = theme === "dark" ? "light" : "dark"
+        setTheme(newTheme)
+        sendGAEvent("event", "theme_changed", {
+            newTheme: newTheme,
+            previousTheme: previousTheme,
+        })
     }
 
     return (

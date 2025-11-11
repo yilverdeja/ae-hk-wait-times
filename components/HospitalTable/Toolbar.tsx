@@ -5,6 +5,7 @@ import { AlertTriangle, Siren } from "lucide-react"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode, Region } from "@/types"
 import { regionNames } from "@/data/regions"
+import { sendGAEvent } from "@next/third-parties/google"
 
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
@@ -62,11 +63,15 @@ export function DataTableToolbar<TData>({
                             .getColumn("region")
                             ?.getFilterValue() as string) ?? ""
                     }
-                    onValueChange={(value) =>
+                    onValueChange={(value) => {
+                        const regionValue = value === "all" ? "all" : value
+                        sendGAEvent("event", "region_filter_applied", {
+                            region: regionValue,
+                        })
                         table
                             .getColumn("region")
                             ?.setFilterValue(value === "all" ? "" : value)
-                    }
+                    }}
                 >
                     <SelectTrigger className="w-full sm:w-[180px]">
                         <SelectValue placeholder={copy.region} />
@@ -89,9 +94,16 @@ export function DataTableToolbar<TData>({
                                 .getColumn("name")
                                 ?.getFilterValue() as boolean) ?? false
                         }
-                        onCheckedChange={(value) =>
+                        onCheckedChange={(value) => {
+                            sendGAEvent(
+                                "event",
+                                "critical_cases_filter_toggled",
+                                {
+                                    isEnabled: value,
+                                }
+                            )
                             table.getColumn("name")?.setFilterValue(value)
-                        }
+                        }}
                     />
                     <Label htmlFor="resuscitation-filter">
                         {copy.resuscitation}

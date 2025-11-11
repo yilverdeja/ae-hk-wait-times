@@ -3,6 +3,7 @@
 import { Languages } from "lucide-react"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
+import { sendGAEvent } from "@next/third-parties/google"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -62,7 +63,14 @@ export function LanguageSwitcher() {
                     (code) => (
                         <DropdownMenuItem
                             key={code}
-                            onClick={() => setLang(code)}
+                            onClick={() => {
+                                const previousLanguage = lang
+                                setLang(code)
+                                sendGAEvent("event", "language_changed", {
+                                    newLanguage: code,
+                                    previousLanguage: previousLanguage,
+                                })
+                            }}
                         >
                             {languageDisplayNames2[code]["long"]}
                         </DropdownMenuItem>

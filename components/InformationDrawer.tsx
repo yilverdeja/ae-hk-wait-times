@@ -30,7 +30,9 @@ export default function InformationDrawer() {
         <Drawer>
             <DrawerTrigger
                 asChild
-                onClick={() => sendGAEvent("event", "open_information")}
+                onClick={() =>
+                    sendGAEvent("event", "information_drawer_opened")
+                }
             >
                 <div className="flex cursor-pointer items-center justify-center gap-2 sm:justify-start">
                     <InfoIcon className="order-1 " size={20} />
@@ -43,6 +45,9 @@ export default function InformationDrawer() {
                 <DrawerClose
                     asChild
                     className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none sm:hidden"
+                    onClick={() =>
+                        sendGAEvent("event", "information_drawer_closed")
+                    }
                 >
                     <button>
                         <X className="h-5 w-5" />
@@ -63,6 +68,17 @@ export default function InformationDrawer() {
                         className="grid grid-cols-1 gap-2"
                         type="single"
                         collapsible
+                        onValueChange={(value) => {
+                            if (value) {
+                                sendGAEvent(
+                                    "event",
+                                    "information_accordion_expanded",
+                                    {
+                                        accordionItemId: value,
+                                    }
+                                )
+                            }
+                        }}
                     >
                         {informationContent.accordionItems.map((item) => (
                             <AccordionItem key={item.id} value={item.id}>
@@ -86,18 +102,23 @@ export default function InformationDrawer() {
                             href="https://www.ha.org.hk/visitor/ha_serviceguide_details.asp?Content_ID=10051"
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() =>
+                                sendGAEvent("event", "external_link_clicked", {
+                                    linkType: "ha_service_guide",
+                                })
+                            }
                         >
                             {informationContent.footer.haServiceGuide[lang]}
                         </Link>
                         .
                     </div>
-                    {/* 
-            FIX: The 'asChild' prop is added here.
-            This tells DrawerClose not to render its own <button>, but to pass its closing
-            functionality to its direct child, the <Button> component.
-            This prevents the invalid <button> inside <button> HTML structure.
-          */}
-                    <DrawerClose asChild className="hidden sm:block">
+                    <DrawerClose
+                        asChild
+                        className="hidden sm:block"
+                        onClick={() =>
+                            sendGAEvent("event", "information_drawer_closed")
+                        }
+                    >
                         <Button variant="outline">
                             {informationContent.footer.closeButton[lang]}
                         </Button>

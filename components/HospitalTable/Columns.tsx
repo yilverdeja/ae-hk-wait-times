@@ -19,6 +19,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { regionNames } from "@/data/regions"
+import { sendGAEvent } from "@next/third-parties/google"
 
 // Helper to format minutes into a readable string (e.g., 75 -> "1 hr 15 min")
 const formatMinutes = (minutes: number | null, lang: LanguageCode): string => {
@@ -97,9 +98,15 @@ export const getColumns = (
             return (
                 <Button
                     variant="ghost"
-                    onClick={() =>
+                    onClick={() => {
+                        const newSortDirection =
+                            column.getIsSorted() === "asc" ? "desc" : "asc"
+                        sendGAEvent("event", "table_column_sorted", {
+                            columnName: "name",
+                            sortDirection: newSortDirection,
+                        })
                         column.toggleSorting(column.getIsSorted() === "asc")
-                    }
+                    }}
                 >
                     {headerText}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -192,9 +199,15 @@ export const getColumns = (
             return (
                 <Button
                     variant="ghost"
-                    onClick={() =>
+                    onClick={() => {
+                        const newSortDirection =
+                            column.getIsSorted() === "asc" ? "desc" : "asc"
+                        sendGAEvent("event", "table_column_sorted", {
+                            columnName: "region",
+                            sortDirection: newSortDirection,
+                        })
                         column.toggleSorting(column.getIsSorted() === "asc")
-                    }
+                    }}
                 >
                     {headerText}
                     <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -238,9 +251,15 @@ export const getColumns = (
                 <div className="text-right">
                     <Button
                         variant="ghost"
-                        onClick={() =>
+                        onClick={() => {
+                            const newSortDirection =
+                                column.getIsSorted() === "asc" ? "desc" : "asc"
+                            sendGAEvent("event", "table_column_sorted", {
+                                columnName: "waitTimes",
+                                sortDirection: newSortDirection,
+                            })
                             column.toggleSorting(column.getIsSorted() === "asc")
-                        }
+                        }}
                     >
                         {headerText}
                         <ArrowUpDown className="ml-2 h-4 w-4" />

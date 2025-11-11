@@ -8,6 +8,7 @@ import {
 } from "lucide-react"
 import { EnrichedHospitalData, LanguageCode } from "@/types"
 import { buildHospitalLink } from "@/lib/utils"
+import { sendGAEvent } from "@next/third-parties/google"
 
 interface HospitalSheetInformationProps {
     hospital: EnrichedHospitalData
@@ -70,6 +71,12 @@ export function HospitalSheetInformation({
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:underline"
+                            onClick={() =>
+                                sendGAEvent("event", "external_link_clicked", {
+                                    linkType: "google_maps",
+                                    hospitalSlug: hospital.slug,
+                                })
+                            }
                         >
                             {hospital.address[lang]}
                         </a>
@@ -81,6 +88,12 @@ export function HospitalSheetInformation({
                         <a
                             href={`tel:${hospital.telephone}`}
                             className="hover:underline"
+                            onClick={() =>
+                                sendGAEvent("event", "external_link_clicked", {
+                                    linkType: "phone",
+                                    hospitalSlug: hospital.slug,
+                                })
+                            }
                         >
                             {hospital.telephone}
                         </a>
@@ -104,6 +117,12 @@ export function HospitalSheetInformation({
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:underline"
+                            onClick={() =>
+                                sendGAEvent("event", "external_link_clicked", {
+                                    linkType: "email",
+                                    hospitalSlug: hospital.slug,
+                                })
+                            }
                         >
                             {hospital.email}
                         </a>
@@ -116,6 +135,12 @@ export function HospitalSheetInformation({
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:underline"
+                        onClick={() =>
+                            sendGAEvent("event", "external_link_clicked", {
+                                linkType: "ha_profile",
+                                hospitalSlug: hospital.slug,
+                            })
+                        }
                     >
                         {texts.haProfile}
                     </a>
@@ -128,6 +153,12 @@ export function HospitalSheetInformation({
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:underline"
+                            onClick={() =>
+                                sendGAEvent("event", "external_link_clicked", {
+                                    linkType: "website",
+                                    hospitalSlug: hospital.slug,
+                                })
+                            }
                         >
                             {texts.officialWebsite}
                         </a>

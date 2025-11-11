@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import dayjs from "@/lib/dayjs"
+import { sendGAEvent } from "@next/third-parties/google"
+import { useEffect, useRef } from "react"
 
 // Import our types and static data
 import type {
@@ -75,8 +77,12 @@ const getEnrichedHospitalWaitTimes = async (): Promise<EnrichedApiResponse> => {
  * - Implements a smart refetching interval.
  */
 export const useHospitalWaitTimes = () => {
+    // Track previous data to detect refetches
+    const previousDataRef = useRef<EnrichedApiResponse | undefined>(undefined)
+    const isInitialMount = useRef(true)
+
     // We provide the EnrichedApiResponse type to useQuery for full type safety.
-    return useQuery<EnrichedApiResponse>({
+    const queryResult = useQuery<EnrichedApiResponse>({
         // A unique key for this query. TanStack Query uses this for caching.
         queryKey: ["hospitalWaitTimes"],
 
@@ -120,4 +126,45 @@ export const useHospitalWaitTimes = () => {
             return timeUntilNextCheck
         },
     })
+
+    // Track auto-fetch events when data changes (refetch)
+    useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false
+            previousDataRef.current = queryResult.data
+            return
+        }
+
+        // If we have new data and previous data existed, it's a refetch
+        if (queryResult.data && previousDataRef.current) {
+            const lastUpdated = previousDataRef.current.lastUpdated
+            const lastUpdateTime = dayjs(lastUpdated, "D/M/YYYY h:mmA")
+            const nextCheckTime = lastUpdateTime.add(14, "minute")
+            const currentTime = dayjs()
+            const isStale = currentTime.isAfter(nextCheckTime)
+
+            sendGAEvent("event", "data_auto_fetch", {
+                fetchType: "wait_times",
+                lastUpdated: lastUpdated,
+                isStale: isStale,
+            })
+        }
+
+        previousDataRef.current = queryResult.data
+    }, [queryResult.data])
+
+    // Track fetch errors
+    useEffect(() => {
+        if (queryResult.isError && queryResult.error) {
+            sendGAEvent("event", "data_fetch_error", {
+                fetchType: "wait_times",
+                errorMessage:
+                    queryResult.error instanceof Error
+                        ? queryResult.error.message
+                        : "Unknown error",
+            })
+        }
+    }, [queryResult.isError, queryResult.error])
+
+    return queryResult
 }

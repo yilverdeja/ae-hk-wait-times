@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import { hospitalWaitTimeTrends } from "@/data/averages"
 import { DayOfWeek, HospitalTrendData, HourlyAverages } from "@/types/trends"
-import { useMemo } from "react"
+import { useMemo, useEffect } from "react"
+import { sendGAEvent } from "@next/third-parties/google"
 
 // Helper array to map Date.getDay() (where Sunday is 0) to our DayOfWeek string type
 const dayIndexToDayOfWeek: DayOfWeek[] = [
@@ -108,6 +109,19 @@ export const useHospitalTrends = (hospitalSlug?: string | null) => {
             getTrendForDay,
         }
     }, [data])
+
+    // Track fetch errors
+    useEffect(() => {
+        if (queryResult.isError && queryResult.error) {
+            sendGAEvent("event", "data_fetch_error", {
+                fetchType: "trends",
+                errorMessage:
+                    queryResult.error instanceof Error
+                        ? queryResult.error.message
+                        : "Unknown error",
+            })
+        }
+    }, [queryResult.isError, queryResult.error])
 
     return {
         ...queryResult,

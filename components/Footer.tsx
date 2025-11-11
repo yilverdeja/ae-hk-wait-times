@@ -5,6 +5,7 @@ import { Separator } from "@radix-ui/react-dropdown-menu"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
 import Link from "next/link"
+import { sendGAEvent } from "@next/third-parties/google"
 
 const footerLinks = {
     [LanguageCode.EN]: {
@@ -44,17 +45,38 @@ export default function Footer() {
                         <Link
                             href={siteConfig.originalLink(lang)}
                             target="_blank"
+                            onClick={() =>
+                                sendGAEvent("event", "footer_link_clicked", {
+                                    linkType: "original_site",
+                                })
+                            }
                         >
                             {links.originalSite}
                         </Link>
                     </li>
                     <li className="text-sm underline underline-offset-2">
-                        <Link href={siteConfig.openDataLink} target="_blank">
+                        <Link
+                            href={siteConfig.openDataLink}
+                            target="_blank"
+                            onClick={() =>
+                                sendGAEvent("event", "footer_link_clicked", {
+                                    linkType: "open_data",
+                                })
+                            }
+                        >
                             {links.openData}
                         </Link>
                     </li>
                     <li className="text-sm underline underline-offset-2">
-                        <Link href={siteConfig.links.github} target="_blank">
+                        <Link
+                            href={siteConfig.links.github}
+                            target="_blank"
+                            onClick={() =>
+                                sendGAEvent("event", "footer_link_clicked", {
+                                    linkType: "github",
+                                })
+                            }
+                        >
                             {links.github}
                         </Link>
                     </li>
