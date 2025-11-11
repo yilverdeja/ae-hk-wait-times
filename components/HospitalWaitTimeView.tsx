@@ -130,7 +130,7 @@ function HospitalWaitTimeView() {
 
     return (
         <>
-            <div className="mb-4">
+            <div className="flex items-center justify-center sm:justify-start">
                 <p className="text-sm text-muted-foreground">
                     {lastUpdatedText[lang]}{" "}
                     {data ? formatDate(data.lastUpdated) : ""}
