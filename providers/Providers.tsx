@@ -4,8 +4,15 @@ import { ThemeProvider } from "@/providers/ThemeProvider"
 import { LanguageProvider } from "@/providers/LanguageProvider"
 import TanstackProvider from "@/providers/TanstackProvider"
 import { MicrosoftClarity } from "@/providers/MicrosoftClarity"
+import { LanguageCode } from "@/types"
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({
+    children,
+    initialLang,
+}: {
+    children: React.ReactNode
+    initialLang: LanguageCode
+}) {
     return (
         <ThemeProvider
             attribute="class"
@@ -14,7 +21,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             enableColorScheme={true}
             disableTransitionOnChange={false}
         >
-            <LanguageProvider>
+            <LanguageProvider initialLang={initialLang}>
                 <TanstackProvider>
                     {children}
                     <MicrosoftClarity />

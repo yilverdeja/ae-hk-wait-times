@@ -1,10 +1,13 @@
 import { cn } from "@/lib/utils"
 import { DM_Sans } from "next/font/google"
 import { GoogleAnalytics } from "@next/third-parties/google"
+import { cookies } from "next/headers"
 import "./globals.css"
 import Providers from "@/providers/Providers"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import { LanguageCode } from "@/types"
+
 const dm_sans = DM_Sans({ weight: ["400", "500", "700"], subsets: ["latin"] })
 
 export const metadata = {
@@ -38,19 +41,30 @@ export const metadata = {
     },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
+    // Read language preference from cookie on the server
+    const cookieStore = await cookies()
+    const languageCookie = cookieStore.get("app-language")
+    const initialLang =
+        languageCookie?.value &&
+        Object.values(LanguageCode).includes(
+            languageCookie.value as LanguageCode
+        )
+            ? (languageCookie.value as LanguageCode)
+            : LanguageCode.EN
+
     return (
         <html
-            lang="en"
+            lang={initialLang}
             className={cn(dm_sans.className, "no-scrollbar")}
             suppressHydrationWarning
         >
             <body>
-                <Providers>
+                <Providers initialLang={initialLang}>
                     <div className="p-4">
                         <Header />
                         {children}

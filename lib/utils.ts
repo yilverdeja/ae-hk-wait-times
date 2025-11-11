@@ -8,6 +8,44 @@ export function cn(...inputs: ClassValue[]) {
 import { LanguageCode } from "@/types"
 
 /**
+ * Cookie utility functions for language preference
+ */
+const LANGUAGE_COOKIE_NAME = "app-language"
+const COOKIE_MAX_AGE = 365 * 24 * 60 * 60 // 1 year in seconds
+
+/**
+ * Sets the language preference cookie on the client side
+ */
+export function setLanguageCookie(lang: LanguageCode): void {
+    if (typeof document === "undefined") return
+
+    const expires = new Date()
+    expires.setTime(expires.getTime() + COOKIE_MAX_AGE * 1000)
+
+    document.cookie = `${LANGUAGE_COOKIE_NAME}=${lang}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`
+}
+
+/**
+ * Gets the language preference cookie value
+ * Returns null if cookie doesn't exist or is invalid
+ */
+export function getLanguageCookie(): LanguageCode | null {
+    if (typeof document === "undefined") return null
+
+    const cookies = document.cookie.split("; ")
+    const cookie = cookies.find((c) => c.startsWith(`${LANGUAGE_COOKIE_NAME}=`))
+
+    if (!cookie) return null
+
+    const value = cookie.split("=")[1]
+    if (Object.values(LanguageCode).includes(value as LanguageCode)) {
+        return value as LanguageCode
+    }
+
+    return null
+}
+
+/**
  * Maps our internal, clean language codes to the specific codes required
  * by the external HA (Hospital Authority) API URL. This decouples our app's
  * i18n logic from the external API's implementation details.

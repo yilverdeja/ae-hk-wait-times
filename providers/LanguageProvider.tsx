@@ -1,56 +1,68 @@
 "use client"
 
-import { useState, useCallback, useMemo, ReactNode } from "react"
+import { useState, useCallback, useMemo, useEffect, ReactNode } from "react"
 import {
     LanguageContext,
     LanguageContextType,
 } from "@/contexts/LanguageContext"
 import { LanguageCode } from "@/types"
+import { setLanguageCookie } from "@/lib/utils"
 
 const LANGUAGE_STORAGE_KEY = "app-language"
 
-export const LanguageProvider = ({ children }: { children: ReactNode }) => {
+export const LanguageProvider = ({
+    children,
+    initialLang,
+}: {
+    children: ReactNode
+    initialLang: LanguageCode
+}) => {
     /**
-     * Use lazy initialization for useState.
-     * This function runs ONLY ONCE during the initial render.
+     * Initialize with the language from the server (read from cookie).
+     * This ensures server and client render the same content, preventing hydration mismatches.
      */
-    const [lang, setLangState] = useState<LanguageCode>(() => {
-        // This code block will NOT run on the server.
-        if (typeof window === "undefined") {
-            return LanguageCode.EN // Default for SSR and initial server render.
-        }
+    const [lang, setLangState] = useState<LanguageCode>(initialLang)
 
+    /**
+     * Migrate from localStorage to cookie on first client-side mount.
+     * This is a one-time migration for users who have localStorage but no cookie.
+     */
+    useEffect(() => {
         try {
+            // Check if we have localStorage but no cookie (migration scenario)
             const storedLang = window.localStorage.getItem(LANGUAGE_STORAGE_KEY)
-            // Check if the stored value is a valid LanguageCode.
             if (
                 storedLang &&
                 Object.values(LanguageCode).includes(storedLang as LanguageCode)
             ) {
-                return storedLang as LanguageCode
+                // Migrate to cookie
+                setLanguageCookie(storedLang as LanguageCode)
+                // Update state if it differs from initial
+                if (storedLang !== initialLang) {
+                    setTimeout(() => {
+                        setLangState(storedLang as LanguageCode)
+                    }, 0)
+                }
+                // Clean up localStorage
+                window.localStorage.removeItem(LANGUAGE_STORAGE_KEY)
             }
         } catch (error) {
-            console.error(
-                "Failed to read language from localStorage on init:",
-                error
-            )
+            // Silently fail migration - not critical
+            console.debug("Language migration from localStorage failed:", error)
         }
-
-        // If nothing is stored or the stored value is invalid, return the default.
-        return LanguageCode.EN
-    })
+    }, [initialLang])
 
     /**
      * A memoized function to update the language.
-     * It updates the state and persists the new value to localStorage.
+     * It updates the state and persists the new value to a cookie.
      * useCallback prevents this function from being recreated on every render.
      */
     const setLang = useCallback((newLang: LanguageCode) => {
         try {
-            window.localStorage.setItem(LANGUAGE_STORAGE_KEY, newLang)
+            setLanguageCookie(newLang)
             setLangState(newLang)
         } catch (error) {
-            console.error("Failed to save language to localStorage:", error)
+            console.error("Failed to save language to cookie:", error)
         }
     }, [])
 
