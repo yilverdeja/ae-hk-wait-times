@@ -116,7 +116,7 @@ function HospitalWaitTimeView() {
 
     // Set dayjs locale based on language
     const formatDate = (dateString: string) => {
-        let formattedDate = dayjs(dateString)
+        let formattedDate = dayjs(dateString, "DD/MM/YYYY hh:mm A")
         if (lang === LanguageCode.ZH) {
             formattedDate = formattedDate.locale(zhHK)
             return formattedDate.format("YYYY年M月D日, h:mm A")
