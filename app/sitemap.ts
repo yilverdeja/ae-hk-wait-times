@@ -8,8 +8,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         {
             url: baseUrl,
             lastModified: currentDate,
-            changeFrequency: "hourly", // updated every 15 minutes
+            changeFrequency: "always", // updated every 15 minutes
             priority: 1,
+        },
+        {
+            url: `${baseUrl}/llms.txt`,
         },
     ]
 }
