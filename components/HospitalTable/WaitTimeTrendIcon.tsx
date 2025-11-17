@@ -5,6 +5,7 @@ import { useHospitalTrends } from "@/hooks/useHospitalTrends"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
 import { cn } from "@/lib/utils"
+import dayjs from "@/lib/dayjs"
 import {
     Tooltip,
     TooltipContent,
@@ -45,19 +46,33 @@ export function WaitTimeTrendIcon({
     liveWaitTime,
     lastUpdated,
 }: WaitTimeTrendIconProps) {
-    const { getAverageForDateTime, isLoading } = useHospitalTrends(hospitalSlug)
+    const { getAverageForDateTime, isLoading, isError, data } =
+        useHospitalTrends(hospitalSlug)
     const { lang } = useLanguage()
 
-    // Don't show icon if data is loading, wait time is null, or no trend data available
-    if (isLoading || liveWaitTime === null) {
+    // Don't show icon if data is loading, has error, wait time is null, or no data available
+    if (
+        isLoading ||
+        isError ||
+        !data ||
+        liveWaitTime === null ||
+        !lastUpdated
+    ) {
         return null
     }
 
     // Get the average for the specific date and time when data was last updated
-    const lastUpdatedDate = new Date(lastUpdated)
+    // Parse the date using dayjs since it's in "DD/MM/YYYY hh:mm A" format
+    const lastUpdatedDate = dayjs(lastUpdated, "DD/MM/YYYY hh:mm A").toDate()
+
+    // Validate the date is valid
+    if (isNaN(lastUpdatedDate.getTime())) {
+        return null
+    }
+
     const trendAverage = getAverageForDateTime(lastUpdatedDate)
 
-    // If no trend data available, don't show icon
+    // If no trend data available for this specific date/time, don't show icon
     if (trendAverage === null) {
         return null
     }
