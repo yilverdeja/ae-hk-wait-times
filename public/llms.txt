@@ -2,6 +2,9 @@
 
 > This website provides real-time estimated waiting times for Accident & Emergency departments across Hong Kong hospitals. It specializes in displaying wait times for semi-urgent (Category IV) and non-urgent (Category V) cases, which often have longer waiting periods. The site enhances the official data with advanced filtering, sorting, and detailed hospital insights to help users make informed decisions.
 
+FAQs: /faq.jsonld
+Press: /press.jsonld
+
 ## About This Service
 
 This service, ae.wait.hk, is an independent improvement upon the original Hospital Authority (HA) waiting time display. It aims to offer a more user-friendly and informative experience for individuals seeking Accident & Emergency waiting times in Hong Kong.
@@ -85,10 +88,14 @@ To get comprehensive details about a specific hospital, users can click on any h
 
 ## Relevant Links
 
-*   [Official Data Source (data.gov.hk)](https://data.gov.hk/en-data/dataset/hospital-hadata-ae-waiting-time) [[1]](https://www.seo-kreativ.de/en/blog/llms-txt-guide/)
+*   [Official Data Source (data.gov.hk)](https://data.gov.hk/en-data/dataset/hospital-hadata-ae-waiting-time)
 *   [Hospital Authority Open Data API (English)](https://www.ha.org.hk/opendata/aed/aedwtdata2-en.json)
 *   [Our Transformed API](https://ae.wait.hk/api/waits)
 *   [Original Hospital Authority A&E Waiting Time Page](https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=235504)
+
+## Press
+*   [Reddit Post Launch](https://www.reddit.com/r/HongKong/comments/1f8n5he/tired_of_long_ae_waits_in_hong_kong_this_wait/)
+*   [Linkedin Post Launch](https://www.linkedin.com/posts/yilverdeja_healthcaresolutions-healthtech-hongkong-activity-7231574651699650560-1qB0)
 
 ## Contact Information
 

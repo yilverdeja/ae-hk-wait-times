@@ -12,6 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 1,
         },
         {
+            url: `${baseUrl}/faq.jsonld`,
+        },
+        {
+            url: `${baseUrl}/press.jsonld`,
+        },
+        {
             url: `${baseUrl}/llms.txt`,
         },
     ]

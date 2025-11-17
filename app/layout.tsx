@@ -59,6 +59,9 @@ export const metadata = {
             "max-snippet": -1,
         },
     },
+    alternates: {
+        canonical: "https://ae.wait.hk",
+    },
 }
 
 export default async function RootLayout({

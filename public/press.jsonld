@@ -1,0 +1,47 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Press Mentions for ae.wait.hk",
+    "about": "A collection of press mentions and backlinks for ae.wait.hk",
+    "mainEntity": [
+      {
+        "@type": "NewsArticle",
+        "headline": "Yil Verdeja's Post: Frustrated by long wait times for non-emergency doctor visits? You're not alone.",
+        "url": "https://www.linkedin.com/posts/yilverdeja_healthcaresolutions-healthtech-hongkong-activity-7231574651699650560-1qB0",
+        "datePublished": "2024-11-17T00:00:00Z",
+        "author": {
+          "@type": "Person",
+          "name": "Yil Verdeja"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "LinkedIn"
+        },
+        "mentions": {
+          "@type": "WebSite",
+          "name": "ae.wait.hk",
+          "url": "https://ae.wait.hk"
+        }
+      },
+      {
+        "@type": "NewsArticle",
+        "headline": "Tired of long A&E waits in Hong Kong? This wait time tracker might help!",
+        "url": "https://www.reddit.com/r/HongKong/comments/1f8n5he/tired_of_long_ae_waits_in_hong_kong_this_wait/",
+        "datePublished": "2024-09-04T00:00:00Z",
+        "author": {
+          "@type": "Person",
+          "name": "Polayi"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Reddit",
+          "url": "https://www.reddit.com/r/HongKong/"
+        },
+        "mentions": {
+          "@type": "WebSite",
+          "name": "ae.wait.hk",
+          "url": "https://ae.wait.hk"
+        }
+      }
+    ]
+  }
