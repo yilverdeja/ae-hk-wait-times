@@ -12,7 +12,12 @@ import {
     getWaitTimeCategory,
     formatWaitTimeHoursMinutes,
 } from "@/utils/waitTimeColors"
-import { EnrichedHospitalData, ManagementStatus, Coordinates } from "@/types"
+import {
+    EnrichedHospitalData,
+    ManagementStatus,
+    Coordinates,
+    LanguageCode,
+} from "@/types"
 import { useLanguage } from "@/hooks/useLanguage"
 import { AlertCircle, MapPin } from "lucide-react"
 

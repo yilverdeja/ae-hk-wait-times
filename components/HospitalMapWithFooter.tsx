@@ -8,10 +8,16 @@ import * as turf from "@turf/turf"
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
 import { useMapboxDistance } from "@/hooks/useMapboxDistance"
 import { getWaitTimeColor } from "@/utils/waitTimeColors"
-import { EnrichedHospitalData, ManagementStatus, Coordinates } from "@/types"
+import {
+    EnrichedHospitalData,
+    ManagementStatus,
+    Coordinates,
+    LanguageCode,
+} from "@/types"
 import { useLanguage } from "@/hooks/useLanguage"
 import { AlertCircle } from "lucide-react"
 import { HospitalMapOverlay } from "@/components/HospitalMapOverlay"
+import MapboxLanguage from "@mapbox/mapbox-gl-language"
 
 // Improved geofence: A larger circle covering Hong Kong (approximately 30km radius)
 const GEOFENCE = turf.circle([114.176611, 22.311637], 30, {
@@ -76,6 +82,7 @@ export function HospitalMapWithFooter({
 
     const [viewState, setViewState] = useState(initialViewState)
     const mapRef = useRef<MapRef>(null)
+    const languageControlRef = useRef<MapboxLanguage | null>(null)
 
     // Resize map when container becomes visible (fixes dialog opening issue)
     useEffect(() => {
@@ -157,6 +164,74 @@ export function HospitalMapWithFooter({
         )
     }
 
+    // Map LanguageCode to Mapbox language code
+    const getMapboxLanguageCode = (langCode: LanguageCode): string => {
+        switch (langCode) {
+            case LanguageCode.EN:
+                return "en"
+            case LanguageCode.ZH:
+                return "zh-Hant" // Traditional Chinese
+            case LanguageCode.CN:
+                return "zh-Hans" // Simplified Chinese
+            default:
+                return "en"
+        }
+    }
+
+    // Create language control instance early with current language
+    const languageControl = useMemo(() => {
+        const mapboxLangCode = getMapboxLanguageCode(lang)
+        return new MapboxLanguage({
+            defaultLanguage: mapboxLangCode,
+        })
+    }, [lang])
+
+    // Add language control as early as possible to prevent English flash
+    // Use onStyleData which fires when style data is loaded (before rendering)
+    const handleStyleData = useCallback(() => {
+        if (!mapRef.current || languageControlRef.current) return
+
+        const map = mapRef.current.getMap()
+        const mapboxLangCode = getMapboxLanguageCode(lang)
+
+        // Add control immediately - it will automatically handle style.load
+        map.addControl(languageControl)
+        languageControlRef.current = languageControl
+
+        // If style is already loaded, apply language immediately
+        if (map.isStyleLoaded()) {
+            try {
+                const currentStyle = map.getStyle()
+                if (currentStyle) {
+                    const updatedStyle = languageControl.setLanguage(
+                        currentStyle,
+                        mapboxLangCode
+                    )
+                    map.setStyle(updatedStyle)
+                }
+            } catch (error) {
+                console.error("Error applying map language:", error)
+            }
+        }
+    }, [lang, languageControl])
+
+    // Cleanup language control on unmount
+    useEffect(() => {
+        const currentMapRef = mapRef.current
+        return () => {
+            if (languageControlRef.current && currentMapRef) {
+                try {
+                    currentMapRef
+                        .getMap()
+                        .removeControl(languageControlRef.current)
+                } catch {
+                    // Map might be unmounted, ignore error
+                }
+                languageControlRef.current = null
+            }
+        }
+    }, [])
+
     return (
         <div className="w-full h-full relative overflow-hidden">
             {/* Map - full size */}
@@ -167,6 +242,7 @@ export function HospitalMapWithFooter({
                 initialViewState={initialViewState}
                 style={{ width: "100%", height: "100%" }}
                 onMove={onMove}
+                onStyleData={handleStyleData}
                 onLoad={() => {
                     // Resize map after it loads to ensure proper fit
                     if (mapRef.current) {
@@ -174,8 +250,13 @@ export function HospitalMapWithFooter({
                             mapRef.current?.resize()
                         }, 50)
                     }
+
+                    // Fallback: ensure language control is added if onStyleData didn't fire
+                    if (mapRef.current && !languageControlRef.current) {
+                        handleStyleData()
+                    }
                 }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
+                mapStyle="mapbox://styles/mapbox/streets-v11"
                 minZoom={MIN_ZOOM}
                 maxZoom={MAX_ZOOM}
             >
