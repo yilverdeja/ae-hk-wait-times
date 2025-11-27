@@ -4,6 +4,8 @@ import dynamic from "next/dynamic"
 import { ThemeSwitcher } from "@/components/ThemeSwitcher"
 import { siteConfig } from "@/configs/site"
 import { useLanguage } from "@/hooks/useLanguage"
+import { MapButton } from "@/components/MapButton"
+import { MapDialog } from "@/components/MapDialog"
 
 // Dynamically import the LanguageSwitcher and disable SSR
 // The 'loading' option provides a fallback UI while the component is loading
@@ -36,6 +38,8 @@ export default function Header() {
                 {/* Switcher Components */}
                 <DynamicLanguageSwitcher />
                 <ThemeSwitcher />
+                {/* <MapButton /> */}
+                <MapDialog />
             </div>
         </header>
     )

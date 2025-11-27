@@ -26,6 +26,11 @@ export enum Cluster {
     NewTerritoriesWest = "New Territories West",
 }
 
+export interface Coordinates {
+    latitude: number
+    longitude: number
+}
+
 /**
  * Defines the structure for a single hospital's static information.
  * Region and Cluster are stored as enums for robust filtering and sorting.
@@ -42,6 +47,7 @@ export interface Hospital {
     email: string
     website?: string
     googleMapsLink: string
+    coordinates: Coordinates
 }
 
 // For the hospitals data
