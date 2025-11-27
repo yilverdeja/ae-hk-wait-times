@@ -1,9 +1,9 @@
 "use client"
 
 import { useGeolocated } from "react-geolocated"
-import Map, { Marker, Popup, ViewState } from "react-map-gl/mapbox"
+import Map, { Marker, Popup, ViewState, MapRef } from "react-map-gl/mapbox"
 import "mapbox-gl/dist/mapbox-gl.css"
-import { useState, useCallback, useMemo } from "react"
+import { useState, useCallback, useMemo, useRef, useEffect } from "react"
 import * as turf from "@turf/turf"
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
 import { useMapboxDistance } from "@/hooks/useMapboxDistance"
@@ -74,10 +74,29 @@ export function HospitalMap() {
     )
 
     const [viewState, setViewState] = useState(initialViewState)
+    const mapRef = useRef<MapRef>(null)
 
-    // Note: User marker uses userLocation directly, so it will always be positioned correctly
-    // The map view will center on default or user location based on initialViewState
-    // If user location becomes available after mount, the marker will update automatically
+    // Resize map when container becomes visible (fixes dialog opening issue)
+    useEffect(() => {
+        const resizeMap = () => {
+            if (mapRef.current) {
+                mapRef.current.resize()
+            }
+        }
+
+        // Initial resize with delay to ensure container is fully rendered
+        const timer1 = setTimeout(resizeMap, 100)
+        const timer2 = setTimeout(resizeMap, 300) // Second attempt for slower renders
+
+        // Also resize when window resizes
+        window.addEventListener("resize", resizeMap)
+
+        return () => {
+            clearTimeout(timer1)
+            clearTimeout(timer2)
+            window.removeEventListener("resize", resizeMap)
+        }
+    }, [])
 
     // Use enriched hospital data (already merged with wait times from the hook)
     const enrichedHospitals = useMemo(() => {
@@ -147,11 +166,20 @@ export function HospitalMap() {
     return (
         <div className="w-full h-full flex justify-center items-center overflow-hidden">
             <Map
+                ref={mapRef}
                 {...viewState}
                 mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
                 initialViewState={initialViewState}
                 style={{ width: "100%", height: "100%" }}
                 onMove={onMove}
+                onLoad={() => {
+                    // Resize map after it loads to ensure proper fit
+                    if (mapRef.current) {
+                        setTimeout(() => {
+                            mapRef.current?.resize()
+                        }, 50)
+                    }
+                }}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
                 minZoom={MIN_ZOOM}
                 maxZoom={MAX_ZOOM}
