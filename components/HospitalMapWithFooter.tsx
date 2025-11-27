@@ -176,6 +176,10 @@ export function HospitalMapWithFooter({
                             hospital.criticalManagementStatus ===
                                 ManagementStatus.Managing ||
                             hospital.criticalManagementStatus ===
+                                ManagementStatus.ManagingMultiple ||
+                            hospital.emergencyManagementStatus ===
+                                ManagementStatus.Managing ||
+                            hospital.emergencyManagementStatus ===
                                 ManagementStatus.ManagingMultiple
 
                         return (
