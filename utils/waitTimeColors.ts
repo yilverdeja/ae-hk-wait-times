@@ -48,3 +48,27 @@ export function getWaitTimeCategory(minutes: number | null): string {
         return "7+ hours"
     }
 }
+
+/**
+ * Format wait time in hours and minutes format (e.g., "2h 30m" or "45m")
+ * @param minutes - Wait time in minutes (can be null)
+ * @returns Formatted string
+ */
+export function formatWaitTimeHoursMinutes(minutes: number | null): string {
+    if (minutes === null || minutes === undefined) {
+        return "N/A"
+    }
+
+    if (minutes < 60) {
+        return `${Math.round(minutes)}m`
+    }
+
+    const hours = Math.floor(minutes / 60)
+    const mins = Math.round(minutes % 60)
+
+    if (mins === 0) {
+        return `${hours}h`
+    }
+
+    return `${hours}h ${mins}m`
+}

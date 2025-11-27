@@ -7,8 +7,12 @@ import { useState, useCallback, useMemo } from "react"
 import * as turf from "@turf/turf"
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
 import { useMapboxDistance } from "@/hooks/useMapboxDistance"
-import { getWaitTimeColor, getWaitTimeCategory } from "@/utils/waitTimeColors"
-import { EnrichedHospitalData, ManagementStatus } from "@/types"
+import {
+    getWaitTimeColor,
+    getWaitTimeCategory,
+    formatWaitTimeHoursMinutes,
+} from "@/utils/waitTimeColors"
+import { EnrichedHospitalData, ManagementStatus, Coordinates } from "@/types"
 import { useLanguage } from "@/hooks/useLanguage"
 import { AlertCircle, MapPin } from "lucide-react"
 
@@ -28,6 +32,15 @@ const DEFAULT_COORDINATES = {
     latitude: 22.311637,
 }
 
+/**
+ * Check if user coordinates are within Hong Kong geofence
+ */
+function isUserInHongKong(coords: Coordinates | null): boolean {
+    if (!coords) return false
+    const point = [coords.longitude, coords.latitude]
+    return turf.booleanPointInPolygon(point, GEOFENCE)
+}
+
 export function HospitalMap() {
     const { coords, isGeolocationEnabled } = useGeolocated({
         suppressLocationOnMount: true,
@@ -35,12 +48,16 @@ export function HospitalMap() {
     const { data: waitTimesData } = useHospitalWaitTimes()
     const { lang } = useLanguage()
 
-    // Determine user location (use geolocation if available, otherwise default)
+    // Determine user location (use geolocation if available and in Hong Kong, otherwise default)
     const userLocation = useMemo(() => {
         if (isGeolocationEnabled && coords) {
-            return {
+            const userCoords = {
                 longitude: coords.longitude,
                 latitude: coords.latitude,
+            }
+            // Check if user is in Hong Kong, otherwise use default
+            if (isUserInHongKong(userCoords)) {
+                return userCoords
             }
         }
         return DEFAULT_COORDINATES
@@ -57,6 +74,10 @@ export function HospitalMap() {
     )
 
     const [viewState, setViewState] = useState(initialViewState)
+
+    // Note: User marker uses userLocation directly, so it will always be positioned correctly
+    // The map view will center on default or user location based on initialViewState
+    // If user location becomes available after mount, the marker will update automatically
 
     // Use enriched hospital data (already merged with wait times from the hook)
     const enrichedHospitals = useMemo(() => {
@@ -124,12 +145,12 @@ export function HospitalMap() {
     }
 
     return (
-        <div className="w-full h-full flex justify-center items-center">
+        <div className="w-full h-full flex justify-center items-center overflow-hidden">
             <Map
                 {...viewState}
                 mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
                 initialViewState={initialViewState}
-                style={{ width: "100%", height: 400 }}
+                style={{ width: "100%", height: "100%" }}
                 onMove={onMove}
                 mapStyle="mapbox://styles/mapbox/streets-v9"
                 minZoom={MIN_ZOOM}
@@ -159,7 +180,7 @@ export function HospitalMap() {
                             <Marker
                                 longitude={hospital.coordinates.longitude}
                                 latitude={hospital.coordinates.latitude}
-                                anchor="bottom"
+                                anchor="center"
                                 onClick={(e) => {
                                     e.originalEvent.stopPropagation()
                                     setSelectedHospital(hospital)
@@ -170,12 +191,20 @@ export function HospitalMap() {
                                     onMouseEnter={() =>
                                         setSelectedHospital(hospital)
                                     }
-                                    style={{
-                                        position: "relative",
-                                        transform: "translate(-50%, -100%)",
+                                    onMouseLeave={() => {
+                                        // Close popup when mouse leaves marker
+                                        // Small delay to allow moving to popup
+                                        setTimeout(() => {
+                                            if (
+                                                selectedHospital?.slug ===
+                                                hospital.slug
+                                            ) {
+                                                setSelectedHospital(null)
+                                            }
+                                        }, 100)
                                     }}
                                 >
-                                    {/* Custom colored marker */}
+                                    {/* Custom colored marker - Issue 5: Fixed anchor and removed transform */}
                                     <div
                                         style={{
                                             width: "24px",
@@ -188,8 +217,10 @@ export function HospitalMap() {
                                             display: "flex",
                                             alignItems: "center",
                                             justifyContent: "center",
+                                            transform: "translate(-50%, -50%)",
                                         }}
                                     >
+                                        {/* Issue 2: Icon shows for all hospitals with critical cases */}
                                         {hasCriticalCases && (
                                             <AlertCircle
                                                 className="h-3 w-3 text-white"
@@ -202,88 +233,131 @@ export function HospitalMap() {
                                 </div>
                             </Marker>
 
-                            {/* Popup on hover/click */}
+                            {/* Popup on hover/click - Issue 1: Improved UX with hover-out */}
                             {selectedHospital?.slug === hospital.slug && (
                                 <Popup
                                     longitude={hospital.coordinates.longitude}
                                     latitude={hospital.coordinates.latitude}
                                     anchor="bottom"
                                     onClose={() => setSelectedHospital(null)}
-                                    closeButton={true}
+                                    closeButton={false}
                                     closeOnClick={false}
                                     className="max-w-xs"
                                 >
-                                    <div className="p-2 space-y-2">
-                                        <h3 className="font-semibold text-sm">
-                                            {hospital.name[lang]}
-                                        </h3>
-                                        <div className="text-xs text-muted-foreground">
-                                            <p>{hospital.address[lang]}</p>
-                                        </div>
-
-                                        {/* Wait times */}
-                                        <div className="space-y-1 text-xs">
-                                            <div className="flex items-center gap-2">
-                                                <div
-                                                    className="w-3 h-3 rounded-full"
-                                                    style={{
-                                                        backgroundColor: color,
-                                                    }}
-                                                />
-                                                <span>
-                                                    {getWaitTimeCategory(
-                                                        waitTime
-                                                    )}
-                                                    :{" "}
-                                                    {waitTime !== null
-                                                        ? `${waitTime} min`
-                                                        : "N/A"}
-                                                </span>
+                                    <div
+                                        onMouseEnter={() => {
+                                            // Keep popup open when hovering over it
+                                            setSelectedHospital(hospital)
+                                        }}
+                                        onMouseLeave={() => {
+                                            // Close popup when mouse leaves
+                                            setSelectedHospital(null)
+                                        }}
+                                    >
+                                        {/* Issue 1: Sleeker popup design with better typography */}
+                                        <div className="p-3 space-y-2.5">
+                                            <h3 className="font-semibold text-base leading-tight">
+                                                {hospital.name[lang]}
+                                            </h3>
+                                            <div className="text-xs text-muted-foreground leading-relaxed">
+                                                <p>{hospital.address[lang]}</p>
                                             </div>
 
-                                            {hospital.waitTimes
-                                                .urgentP50Minutes !== null && (
-                                                <div className="text-xs text-muted-foreground">
-                                                    Urgent:{" "}
-                                                    {
-                                                        hospital.waitTimes
-                                                            .urgentP50Minutes
-                                                    }{" "}
-                                                    min
+                                            {/* Issue 3: Wait times with proper formatting */}
+                                            <div className="space-y-1.5">
+                                                {/* Primary: Semi-urgent/Non-urgent (most prominent) */}
+                                                <div className="flex items-center gap-2">
+                                                    <div
+                                                        className="w-3 h-3 rounded-full flex-shrink-0"
+                                                        style={{
+                                                            backgroundColor:
+                                                                color,
+                                                        }}
+                                                    />
+                                                    <div className="flex flex-col">
+                                                        <span className="text-sm font-medium">
+                                                            {formatWaitTimeHoursMinutes(
+                                                                waitTime
+                                                            )}
+                                                        </span>
+                                                        <span className="text-xs text-muted-foreground">
+                                                            {getWaitTimeCategory(
+                                                                waitTime
+                                                            )}
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            )}
 
-                                            {hasCriticalCases && (
-                                                <div className="flex items-center gap-1 text-xs text-red-600">
-                                                    <AlertCircle className="h-3 w-3" />
-                                                    <span>
-                                                        {hospital.criticalManagementStatus ===
-                                                        ManagementStatus.ManagingMultiple
-                                                            ? "Managing multiple critical cases"
-                                                            : "Managing critical case"}
-                                                    </span>
+                                                {/* Secondary: Urgent (subtext) */}
+                                                {hospital.waitTimes
+                                                    .urgentP50Minutes !==
+                                                    null && (
+                                                    <div className="text-xs text-muted-foreground pl-5">
+                                                        Urgent:{" "}
+                                                        {formatWaitTimeHoursMinutes(
+                                                            hospital.waitTimes
+                                                                .urgentP50Minutes
+                                                        )}
+                                                    </div>
+                                                )}
+
+                                                {/* Tertiary: Critical/Emergency (subtext) */}
+                                                {hospital.waitTimes
+                                                    .criticalMinutes !==
+                                                    null && (
+                                                    <div className="text-xs text-muted-foreground pl-5">
+                                                        Critical:{" "}
+                                                        {formatWaitTimeHoursMinutes(
+                                                            hospital.waitTimes
+                                                                .criticalMinutes
+                                                        )}
+                                                    </div>
+                                                )}
+
+                                                {hospital.waitTimes
+                                                    .emergencyMinutes !==
+                                                    null && (
+                                                    <div className="text-xs text-muted-foreground pl-5">
+                                                        Emergency:{" "}
+                                                        {formatWaitTimeHoursMinutes(
+                                                            hospital.waitTimes
+                                                                .emergencyMinutes
+                                                        )}
+                                                    </div>
+                                                )}
+
+                                                {hasCriticalCases && (
+                                                    <div className="flex items-center gap-1 text-xs text-red-600 font-medium pt-1">
+                                                        <AlertCircle className="h-3 w-3" />
+                                                        <span>
+                                                            {hospital.criticalManagementStatus ===
+                                                            ManagementStatus.ManagingMultiple
+                                                                ? "Managing multiple critical cases"
+                                                                : "Managing critical case"}
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Distance (if available) */}
+                                            {distance && (
+                                                <div className="text-xs text-muted-foreground border-t pt-2">
+                                                    <div className="flex items-center gap-1">
+                                                        <MapPin className="h-3 w-3" />
+                                                        <span>
+                                                            {formatDistance(
+                                                                distance.distance
+                                                            )}{" "}
+                                                            •{" "}
+                                                            {formatDuration(
+                                                                distance.duration
+                                                            )}{" "}
+                                                            drive
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             )}
                                         </div>
-
-                                        {/* Distance (if available) */}
-                                        {distance && (
-                                            <div className="text-xs text-muted-foreground border-t pt-2">
-                                                <div className="flex items-center gap-1">
-                                                    <MapPin className="h-3 w-3" />
-                                                    <span>
-                                                        {formatDistance(
-                                                            distance.distance
-                                                        )}{" "}
-                                                        •{" "}
-                                                        {formatDuration(
-                                                            distance.duration
-                                                        )}{" "}
-                                                        drive
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        )}
                                     </div>
                                 </Popup>
                             )}
