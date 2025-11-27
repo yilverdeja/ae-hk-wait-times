@@ -7,13 +7,11 @@ import { useState, useCallback, useMemo, useRef, useEffect } from "react"
 import * as turf from "@turf/turf"
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
 import { useMapboxDistance } from "@/hooks/useMapboxDistance"
-import {
-    getWaitTimeColor,
-    formatWaitTimeHoursMinutes,
-} from "@/utils/waitTimeColors"
+import { getWaitTimeColor } from "@/utils/waitTimeColors"
 import { EnrichedHospitalData, ManagementStatus, Coordinates } from "@/types"
 import { useLanguage } from "@/hooks/useLanguage"
-import { AlertCircle, MapPin } from "lucide-react"
+import { AlertCircle } from "lucide-react"
+import { HospitalMapOverlay } from "@/components/HospitalMapOverlay"
 
 // Improved geofence: A larger circle covering Hong Kong (approximately 30km radius)
 const GEOFENCE = turf.circle([114.176611, 22.311637], 30, {
@@ -150,31 +148,13 @@ export function HospitalMapWithFooter({
         }
     }, [])
 
-    // Get wait time for display
+    // Get wait time for display (for marker color)
     const getDisplayWaitTime = (hospital: EnrichedHospitalData) => {
         return (
             hospital.waitTimes.semiUrgentNonUrgentP50Minutes ??
             hospital.waitTimes.urgentP50Minutes ??
             null
         )
-    }
-
-    // Format distance for display
-    const formatDistance = (km: number): string => {
-        if (km < 1) {
-            return `${Math.round(km * 1000)}m`
-        }
-        return `${km.toFixed(1)}km`
-    }
-
-    // Format duration for display
-    const formatDuration = (minutes: number): string => {
-        if (minutes < 60) {
-            return `${Math.round(minutes)} min`
-        }
-        const hours = Math.floor(minutes / 60)
-        const mins = Math.round(minutes % 60)
-        return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`
     }
 
     return (
@@ -270,135 +250,12 @@ export function HospitalMapWithFooter({
 
             {/* Overlay info panel - always visible, positioned above map */}
             {selectedHospital && (
-                <div
-                    className="absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:bottom-4 sm:w-auto pointer-events-none z-10"
-                    style={{ maxWidth: "calc(100% - 2rem)" }}
-                >
-                    <div
-                        className="bg-background/95 backdrop-blur-sm rounded-lg border shadow-lg p-3 sm:p-4 pointer-events-auto"
-                        style={{ maxWidth: "600px" }}
-                    >
-                        {/* Mobile: Vertical layout */}
-                        <div className="flex flex-col sm:flex-row sm:items-start sm:gap-4 space-y-2 sm:space-y-0">
-                            {/* Left section: Hospital info and wait times */}
-                            <div className="flex-1 min-w-0">
-                                <h3 className="font-semibold text-sm sm:text-base leading-tight mb-1">
-                                    {selectedHospital.name[lang]}
-                                </h3>
-                                <p className="text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
-                                    {selectedHospital.address[lang]}
-                                </p>
-
-                                {/* Wait times - vertical on mobile, horizontal on larger screens */}
-                                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 space-y-1.5 sm:space-y-0">
-                                    {/* Primary wait time */}
-                                    <div className="flex items-center gap-2">
-                                        <div
-                                            className="w-3 h-3 rounded-full flex-shrink-0"
-                                            style={{
-                                                backgroundColor:
-                                                    getWaitTimeColor(
-                                                        getDisplayWaitTime(
-                                                            selectedHospital
-                                                        )
-                                                    ),
-                                            }}
-                                        />
-                                        <div className="flex flex-col">
-                                            <span className="text-sm sm:text-base font-semibold">
-                                                {formatWaitTimeHoursMinutes(
-                                                    getDisplayWaitTime(
-                                                        selectedHospital
-                                                    )
-                                                )}
-                                            </span>
-                                            <span className="text-xs text-muted-foreground">
-                                                Semi-urgent / Non-urgent
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    {/* Secondary wait times - horizontal on larger screens */}
-                                    <div className="flex flex-col sm:flex-row sm:gap-3 pl-5 sm:pl-0 space-y-1 sm:space-y-0 text-xs text-muted-foreground">
-                                        {selectedHospital.waitTimes
-                                            .urgentP50Minutes !== null && (
-                                            <div className="sm:border-l sm:pl-3">
-                                                Urgent:{" "}
-                                                {formatWaitTimeHoursMinutes(
-                                                    selectedHospital.waitTimes
-                                                        .urgentP50Minutes
-                                                )}
-                                            </div>
-                                        )}
-                                        {selectedHospital.waitTimes
-                                            .emergencyMinutes !== null && (
-                                            <div className="sm:border-l sm:pl-3">
-                                                Emergency:{" "}
-                                                {formatWaitTimeHoursMinutes(
-                                                    selectedHospital.waitTimes
-                                                        .emergencyMinutes
-                                                )}
-                                            </div>
-                                        )}
-                                        {selectedHospital.waitTimes
-                                            .criticalMinutes !== null && (
-                                            <div className="sm:border-l sm:pl-3">
-                                                Critical:{" "}
-                                                {formatWaitTimeHoursMinutes(
-                                                    selectedHospital.waitTimes
-                                                        .criticalMinutes
-                                                )}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* Critical case status */}
-                                {(selectedHospital.criticalManagementStatus ===
-                                    ManagementStatus.Managing ||
-                                    selectedHospital.criticalManagementStatus ===
-                                        ManagementStatus.ManagingMultiple ||
-                                    selectedHospital.emergencyManagementStatus ===
-                                        ManagementStatus.Managing ||
-                                    selectedHospital.emergencyManagementStatus ===
-                                        ManagementStatus.ManagingMultiple) && (
-                                    <div className="flex items-center gap-1 text-xs text-red-600 font-medium pt-1.5 sm:pt-2">
-                                        <AlertCircle className="h-3 w-3" />
-                                        <span>
-                                            {selectedHospital.criticalManagementStatus ===
-                                            ManagementStatus.ManagingMultiple
-                                                ? "Managing multiple critical cases"
-                                                : "Managing critical case"}
-                                        </span>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Right section: Distance (if available) */}
-                            {distanceData[selectedHospital.slug] && (
-                                <div className="text-xs sm:text-sm text-muted-foreground border-t sm:border-t-0 sm:border-l pt-2 sm:pt-0 sm:pl-4 sm:ml-0 flex-shrink-0">
-                                    <div className="flex items-center gap-1 mb-1">
-                                        <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
-                                        <span className="font-medium">
-                                            {formatDistance(
-                                                distanceData[
-                                                    selectedHospital.slug
-                                                ].distance
-                                            )}
-                                        </span>
-                                    </div>
-                                    <div className="text-xs">
-                                        {formatDuration(
-                                            distanceData[selectedHospital.slug]
-                                                .duration
-                                        )}{" "}
-                                        drive
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
+                <HospitalMapOverlay
+                    hospital={selectedHospital}
+                    lang={lang}
+                    distance={distanceData[selectedHospital.slug]}
+                    lastUpdated={waitTimesData?.lastUpdated}
+                />
             )}
         </div>
     )
