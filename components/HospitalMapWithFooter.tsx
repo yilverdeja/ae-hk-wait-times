@@ -331,22 +331,22 @@ export function HospitalMapWithFooter({
                                             </div>
                                         )}
                                         {selectedHospital.waitTimes
-                                            .criticalMinutes !== null && (
-                                            <div className="sm:border-l sm:pl-3">
-                                                Critical:{" "}
-                                                {formatWaitTimeHoursMinutes(
-                                                    selectedHospital.waitTimes
-                                                        .criticalMinutes
-                                                )}
-                                            </div>
-                                        )}
-                                        {selectedHospital.waitTimes
                                             .emergencyMinutes !== null && (
                                             <div className="sm:border-l sm:pl-3">
                                                 Emergency:{" "}
                                                 {formatWaitTimeHoursMinutes(
                                                     selectedHospital.waitTimes
                                                         .emergencyMinutes
+                                                )}
+                                            </div>
+                                        )}
+                                        {selectedHospital.waitTimes
+                                            .criticalMinutes !== null && (
+                                            <div className="sm:border-l sm:pl-3">
+                                                Critical:{" "}
+                                                {formatWaitTimeHoursMinutes(
+                                                    selectedHospital.waitTimes
+                                                        .criticalMinutes
                                                 )}
                                             </div>
                                         )}
@@ -357,6 +357,10 @@ export function HospitalMapWithFooter({
                                 {(selectedHospital.criticalManagementStatus ===
                                     ManagementStatus.Managing ||
                                     selectedHospital.criticalManagementStatus ===
+                                        ManagementStatus.ManagingMultiple ||
+                                    selectedHospital.emergencyManagementStatus ===
+                                        ManagementStatus.Managing ||
+                                    selectedHospital.emergencyManagementStatus ===
                                         ManagementStatus.ManagingMultiple) && (
                                     <div className="flex items-center gap-1 text-xs text-red-600 font-medium pt-1.5 sm:pt-2">
                                         <AlertCircle className="h-3 w-3" />
