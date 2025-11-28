@@ -53,6 +53,9 @@ export function HospitalMapWithFooter({
     const { lang } = useLanguage()
     const { theme, resolvedTheme } = useTheme()
 
+    // Determine current theme for color calculations
+    const currentTheme = (resolvedTheme || theme || "light") as "light" | "dark"
+
     // Determine map style based on theme
     // resolvedTheme handles "system" theme by resolving to "light" or "dark"
     const mapStyle = useMemo(() => {
@@ -196,17 +199,17 @@ export function HospitalMapWithFooter({
                 <MapLanguageControl lang={lang} />
 
                 {/* User location marker (always shown) */}
-                <Marker
+                {/* <Marker
                     longitude={userLocation.longitude}
                     latitude={userLocation.latitude}
                     color="red"
                     anchor="center"
-                />
+                /> */}
 
                 {/* Hospital markers */}
                 {enrichedHospitals.map((hospital) => {
                     const waitTime = getDisplayWaitTime(hospital)
-                    const color = getWaitTimeColor(waitTime)
+                    const color = getWaitTimeColor(waitTime, currentTheme)
                     const isSelected = selectedHospital?.slug === hospital.slug
                     const hasCriticalCases =
                         hospital.criticalManagementStatus ===

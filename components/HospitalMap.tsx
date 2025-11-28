@@ -12,14 +12,10 @@ import {
     getWaitTimeCategory,
     formatWaitTimeHoursMinutes,
 } from "@/utils/waitTimeColors"
-import {
-    EnrichedHospitalData,
-    ManagementStatus,
-    Coordinates,
-    LanguageCode,
-} from "@/types"
+import { EnrichedHospitalData, ManagementStatus, Coordinates } from "@/types"
 import { useLanguage } from "@/hooks/useLanguage"
 import { AlertCircle, MapPin } from "lucide-react"
+import { useTheme } from "next-themes"
 
 // Improved geofence: A larger circle covering Hong Kong (approximately 30km radius)
 // This covers Hong Kong Island, Kowloon, and most of New Territories
@@ -52,6 +48,8 @@ export function HospitalMap() {
     })
     const { data: waitTimesData } = useHospitalWaitTimes()
     const { lang } = useLanguage()
+    const { theme, resolvedTheme } = useTheme()
+    const currentTheme = (resolvedTheme || theme || "light") as "light" | "dark"
 
     // Determine user location (use geolocation if available and in Hong Kong, otherwise default)
     const userLocation = useMemo(() => {
@@ -200,7 +198,7 @@ export function HospitalMap() {
                 {/* Hospital markers */}
                 {enrichedHospitals.map((hospital) => {
                     const waitTime = getDisplayWaitTime(hospital)
-                    const color = getWaitTimeColor(waitTime)
+                    const color = getWaitTimeColor(waitTime, currentTheme)
                     const distance = distanceData[hospital.slug]
                     const hasCriticalCases =
                         hospital.criticalManagementStatus ===

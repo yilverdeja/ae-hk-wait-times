@@ -1,17 +1,14 @@
 "use client"
 
 import { EnrichedHospitalData, ManagementStatus, LanguageCode } from "@/types"
-import {
-    getWaitTimeColor,
-    formatWaitTimeHoursMinutes,
-} from "@/utils/waitTimeColors"
+import { getWaitTimeColor } from "@/utils/waitTimeColors"
 import { AlertCircle, MapPin, ExternalLink } from "lucide-react"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
 import { TrendingUp, TrendingDown, Minus } from "lucide-react"
-import { cn } from "@/lib/utils"
 import dayjs from "@/lib/dayjs"
 import { sendGAEvent } from "@next/third-parties/google"
 import Link from "next/link"
+import { useTheme } from "next-themes"
 
 interface HospitalMapOverlayProps {
     hospital: EnrichedHospitalData
@@ -80,7 +77,7 @@ const formatWaitTimeLocalized = (
 }
 
 // Format distance for display
-const formatDistance = (km: number, lang: LanguageCode): string => {
+const formatDistance = (km: number): string => {
     if (km < 1) {
         return `${Math.round(km * 1000)}m`
     }
@@ -116,9 +113,11 @@ export function HospitalMapOverlay({
     distance,
     lastUpdated,
 }: HospitalMapOverlayProps) {
+    const { theme, resolvedTheme } = useTheme()
+    const currentTheme = (resolvedTheme || theme || "light") as "light" | "dark"
     const texts = waitTimeCategoryTexts[lang]
     const waitTime = getDisplayWaitTime(hospital)
-    const color = getWaitTimeColor(waitTime)
+    const color = getWaitTimeColor(waitTime, currentTheme)
 
     // Get trend data
     const { getAverageForDateTime, isLoading: isTrendLoading } =
@@ -295,7 +294,7 @@ export function HospitalMapOverlay({
                             <div className="flex items-center gap-1 mb-1">
                                 <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
                                 <span className="font-medium">
-                                    {formatDistance(distance.distance, lang)}
+                                    {formatDistance(distance.distance)}
                                 </span>
                             </div>
                             <div className="text-xs">
