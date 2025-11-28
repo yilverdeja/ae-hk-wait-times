@@ -1,5 +1,5 @@
 import { i18n } from "@/lib/i18n"
-import { HospitalData, Region, Cluster } from "@/types"
+import { Cluster, HospitalData, Region } from "@/types"
 
 export const hospitals: HospitalData = {
     AHMLNH: {
@@ -21,6 +21,10 @@ export const hospitals: HospitalData = {
         email: "ahnh_enquiry@ha.org.hk",
         website: "https://www3.ha.org.hk/AHNH/index_e.asp",
         googleMapsLink: "https://maps.app.goo.gl/xWmgrNkN5PKd1GNB8",
+        coordinates: {
+            latitude: 22.45867,
+            longitude: 114.17476,
+        },
     },
     CMC: {
         name: i18n("Caritas Medical Centre", "明愛醫院", "明爱医院"),
@@ -36,6 +40,10 @@ export const hospitals: HospitalData = {
         fax: "2785 5755",
         email: "cmc.enq@ha.org.hk",
         googleMapsLink: "https://maps.app.goo.gl/RHspT8VfgdGJVffY7",
+        coordinates: {
+            latitude: 22.34143,
+            longitude: 114.15333,
+        },
     },
     KWH: {
         name: i18n("Kwong Wah Hospital", "廣華醫院", "广华医院"),
@@ -52,6 +60,10 @@ export const hospitals: HospitalData = {
         email: "kwh.enquiry@ha.org.hk",
         website: "https://www3.ha.org.hk/kwh/main/en/index.asp",
         googleMapsLink: "https://maps.app.goo.gl/v5nGqGXHwhSheXeY7",
+        coordinates: {
+            latitude: 22.31518,
+            longitude: 114.1724,
+        },
     },
     NDH: {
         name: i18n("North District Hospital", "北區醫院", "北区医院"),
@@ -68,6 +80,10 @@ export const hospitals: HospitalData = {
         email: "ndh_enquiry@ha.org.hk",
         website: "https://www3.ha.org.hk/ndh/index_e.asp",
         googleMapsLink: "https://maps.app.goo.gl/bMecWjrymELPVzDD6",
+        coordinates: {
+            latitude: 22.49687,
+            longitude: 114.12466,
+        },
     },
     NLH: {
         name: i18n("North Lantau Hospital", "北大嶼山醫院", "北大屿山医院"),
@@ -83,6 +99,10 @@ export const hospitals: HospitalData = {
         fax: "3467 7004",
         email: "nlth.enquiry@ha.org.hk",
         googleMapsLink: "https://maps.app.goo.gl/3AKWdxSKQrRH3kLR7",
+        coordinates: {
+            latitude: 22.28218,
+            longitude: 113.93933,
+        },
     },
     PMH: {
         name: i18n("Princess Margaret Hospital", "瑪嘉烈醫院", "玛嘉烈医院"),
@@ -98,6 +118,10 @@ export const hospitals: HospitalData = {
         fax: "2786 3629",
         email: "pmh.enquiry@ha.org.hk",
         googleMapsLink: "https://maps.app.goo.gl/oahm76MqWJrz58aPA",
+        coordinates: {
+            latitude: 22.34147,
+            longitude: 114.13372,
+        },
     },
     POH: {
         name: i18n("Pok Oi Hospital", "博愛醫院", "博爱医院"),
@@ -114,6 +138,10 @@ export const hospitals: HospitalData = {
         email: "poh.service@ha.org.hk",
         website: "https://www3.ha.org.hk/poh/en/Default.asp",
         googleMapsLink: "https://maps.app.goo.gl/9ddP2PsjarwjZRpw7",
+        coordinates: {
+            latitude: 22.44472,
+            longitude: 114.04186,
+        },
     },
     POWH: {
         name: i18n(
@@ -134,6 +162,10 @@ export const hospitals: HospitalData = {
         email: "pwh_enquiry@ha.org.hk",
         website: "https://www3.ha.org.hk/pwh/index_e.asp",
         googleMapsLink: "https://maps.app.goo.gl/oFaaRsSYuKTEGQtG7",
+        coordinates: {
+            latitude: 22.38026,
+            longitude: 114.20177,
+        },
     },
     PYNEH: {
         name: i18n(
@@ -154,6 +186,10 @@ export const hospitals: HospitalData = {
         email: "pyneh_enquiry@ha.org.hk",
         website: "https://hkec.ha.org.hk/pyneh/internet/index.html",
         googleMapsLink: "https://maps.app.goo.gl/3YtnhmSvJBKjR9hXA",
+        coordinates: {
+            latitude: 22.26927,
+            longitude: 114.23554,
+        },
     },
     QEH: {
         name: i18n("Queen Elizabeth Hospital", "伊利沙伯醫院", "伊利沙伯医院"),
@@ -170,6 +206,10 @@ export const hospitals: HospitalData = {
         email: "qeh_webmaster@ha.org.hk",
         website: "https://www3.ha.org.hk/qeh/eng/main/index.htm",
         googleMapsLink: "https://maps.app.goo.gl/JsNZun7L3ouTaiU66",
+        coordinates: {
+            latitude: 22.30945,
+            longitude: 114.17608,
+        },
     },
     QMH: {
         name: i18n("Queen Mary Hospital", "瑪麗醫院", "玛丽医院"),
@@ -186,6 +226,10 @@ export const hospitals: HospitalData = {
         email: "qmh_enquiry@ha.org.hk",
         website: "https://www8.ha.org.hk/qmh/",
         googleMapsLink: "https://maps.app.goo.gl/hpzFxt3hmGr7RDHQ7",
+        coordinates: {
+            latitude: 22.27034,
+            longitude: 114.13132,
+        },
     },
     RH: {
         name: i18n("Ruttonjee Hospital", "養和醫院", "养和医院"),
@@ -202,6 +246,10 @@ export const hospitals: HospitalData = {
         email: "rtskh_enquiry@ha.org.hk",
         website: "https://www3.ha.org.hk/rtskh/eng/welcome_eng.html",
         googleMapsLink: "https://maps.app.goo.gl/LEFkUDTTk2cEY6YU9",
+        coordinates: {
+            latitude: 22.27567,
+            longitude: 114.17524,
+        },
     },
     SJH: {
         name: i18n("St John Hospital", "聖德肋撒醫院", "圣德肋撒医院"),
@@ -217,6 +265,10 @@ export const hospitals: HospitalData = {
         fax: "2981 9050",
         email: "sjh_enquiry@ha.org.hk",
         googleMapsLink: "https://maps.app.goo.gl/8t2jw4ixHnY39Uw77",
+        coordinates: {
+            latitude: 22.20812,
+            longitude: 114.03164,
+        },
     },
     TKOH: {
         name: i18n("Tseung Kwan O Hospital", "將軍澳醫院", "将军澳医院"),
@@ -232,6 +284,10 @@ export const hospitals: HospitalData = {
         fax: "2177 0161",
         email: "tkoh.enquiry@ha.org.hk",
         googleMapsLink: "https://maps.app.goo.gl/yWfbcF4bKkMAWt8p7",
+        coordinates: {
+            latitude: 22.31648,
+            longitude: 114.27038,
+        },
     },
     TMH: {
         name: i18n("Tuen Mun Hospital", "屯門醫院", "屯门医院"),
@@ -248,6 +304,10 @@ export const hospitals: HospitalData = {
         email: "ntwc.pa@ha.org.hk",
         website: "https://www3.ha.org.hk/tmh/en/Default.asp",
         googleMapsLink: "https://maps.app.goo.gl/LPBHVjFb75Fzguwv8",
+        coordinates: {
+            latitude: 22.40754,
+            longitude: 113.97598,
+        },
     },
     TSWH: {
         name: i18n("Tin Shui Wai Hospital", "天水圍醫院", "天水围医院"),
@@ -264,6 +324,10 @@ export const hospitals: HospitalData = {
         email: "tswh.service@ha.org.hk",
         website: "https://www3.ha.org.hk/tswh/en/Default.asp",
         googleMapsLink: "https://maps.app.goo.gl/R8bU1W6uLPyTqmqs6",
+        coordinates: {
+            latitude: 22.45871,
+            longitude: 113.99583,
+        },
     },
     UCH: {
         name: i18n(
@@ -284,6 +348,10 @@ export const hospitals: HospitalData = {
         email: "uch.enquiry@ha.org.hk",
         website: "https://kec.ha.org.hk/uch/en/index.html",
         googleMapsLink: "https://maps.app.goo.gl/vskcgrVTHMfMakd98",
+        coordinates: {
+            latitude: 22.32253,
+            longitude: 114.23133,
+        },
     },
     YCH: {
         name: i18n("Yan Chai Hospital", "仁濟醫院", "仁济医院"),
@@ -299,5 +367,9 @@ export const hospitals: HospitalData = {
         fax: "2414 8562",
         email: "ych.enquiry@ha.org.hk",
         googleMapsLink: "https://maps.app.goo.gl/VHyiYm5DR1hxj77t8",
+        coordinates: {
+            latitude: 22.36966,
+            longitude: 114.11943,
+        },
     },
 }

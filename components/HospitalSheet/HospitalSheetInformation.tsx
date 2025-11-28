@@ -1,3 +1,6 @@
+import { buildHospitalLink } from "@/lib/utils"
+import { EnrichedHospitalData, LanguageCode } from "@/types"
+import { sendGAEvent } from "@next/third-parties/google"
 import {
     ExternalLink,
     Hospital,
@@ -6,9 +9,6 @@ import {
     Phone,
     Printer,
 } from "lucide-react"
-import { EnrichedHospitalData, LanguageCode } from "@/types"
-import { buildHospitalLink } from "@/lib/utils"
-import { sendGAEvent } from "@next/third-parties/google"
 
 interface HospitalSheetInformationProps {
     hospital: EnrichedHospitalData

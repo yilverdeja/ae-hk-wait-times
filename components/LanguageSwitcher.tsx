@@ -1,9 +1,9 @@
 "use client"
 
-import { Languages } from "lucide-react"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
 import { sendGAEvent } from "@next/third-parties/google"
+import { Languages } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {

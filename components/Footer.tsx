@@ -1,11 +1,11 @@
 "use client"
 import { siteConfig } from "@/configs/site"
-import dayjs from "@/lib/dayjs"
-import { Separator } from "@radix-ui/react-dropdown-menu"
 import { useLanguage } from "@/hooks/useLanguage"
+import dayjs from "@/lib/dayjs"
 import { LanguageCode } from "@/types"
-import Link from "next/link"
 import { sendGAEvent } from "@next/third-parties/google"
+import { Separator } from "@radix-ui/react-dropdown-menu"
+import Link from "next/link"
 
 const footerLinks = {
     [LanguageCode.EN]: {

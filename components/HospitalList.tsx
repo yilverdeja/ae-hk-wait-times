@@ -1,6 +1,6 @@
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
-import { ManagementStatus } from "@/types"
 import { useLanguage } from "@/hooks/useLanguage"
+import { ManagementStatus } from "@/types"
 
 const HospitalList = () => {
     const { data, isLoading, isError, error } = useHospitalWaitTimes()

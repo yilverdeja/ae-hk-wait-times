@@ -1,5 +1,5 @@
-import { buildHospitalLink } from "@/lib/utils"
 import { i18n } from "@/lib/i18n"
+import { buildHospitalLink } from "@/lib/utils"
 import { LanguageCode, LocalizedString } from "@/types"
 
 const contentId = "235504"

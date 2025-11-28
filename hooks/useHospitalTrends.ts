@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query"
 import { hospitalWaitTimeTrends } from "@/data/averages"
 import { DayOfWeek, HospitalTrendData, HourlyAverages } from "@/types/trends"
-import { useMemo, useEffect } from "react"
 import { sendGAEvent } from "@next/third-parties/google"
+import { useQuery } from "@tanstack/react-query"
+import { useEffect, useMemo } from "react"
 
 // Helper array to map Date.getDay() (where Sunday is 0) to our DayOfWeek string type
 const dayIndexToDayOfWeek: DayOfWeek[] = [

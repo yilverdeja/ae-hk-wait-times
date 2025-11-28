@@ -1,16 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
-import {
-    AlertTriangle,
-    ArrowUpDown,
-    Siren,
-    TrendingUp,
-    TrendingDown,
-    Minus,
-} from "lucide-react"
-import { EnrichedHospitalData, LanguageCode, ManagementStatus } from "@/types"
+import { WaitTimeTrendIcon } from "@/components/HospitalTable/WaitTimeTrendIcon"
 import { Button } from "@/components/ui/button"
 import {
     Tooltip,
@@ -19,8 +10,10 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { regionNames } from "@/data/regions"
+import { EnrichedHospitalData, LanguageCode, ManagementStatus } from "@/types"
 import { sendGAEvent } from "@next/third-parties/google"
-import { WaitTimeTrendIcon } from "@/components/HospitalTable/WaitTimeTrendIcon"
+import { ColumnDef } from "@tanstack/react-table"
+import { AlertTriangle, ArrowUpDown, Siren } from "lucide-react"
 
 // Helper to format minutes into a readable string (e.g., 75 -> "1 hr 15 min")
 const formatMinutes = (minutes: number | null, lang: LanguageCode): string => {

@@ -1,6 +1,6 @@
-import React from "react"
 import { LanguageCode } from "@/types"
 import Link from "next/link"
+import React from "react"
 
 // The type for localized text is React.ReactNode to allow for JSX.
 type LocalizedText = {

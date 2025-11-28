@@ -1,7 +1,7 @@
 "use client"
 
-import { createContext } from "react"
 import { LanguageCode } from "@/types"
+import { createContext } from "react"
 
 // Define the shape of the data and functions the context will provide.
 export interface LanguageContextType {

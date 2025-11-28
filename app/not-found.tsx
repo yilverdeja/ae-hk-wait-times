@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect } from "react"
-import Link from "next/link"
+import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
-import { Button } from "@/components/ui/button"
 import { sendGAEvent } from "@next/third-parties/google"
+import Link from "next/link"
+import { useEffect } from "react"
 
 const notFoundTexts = {
     [LanguageCode.EN]: {

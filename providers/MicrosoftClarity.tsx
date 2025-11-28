@@ -1,6 +1,6 @@
 "use client"
-import { useEffect } from "react"
 import Clarity from "@microsoft/clarity"
+import { useEffect } from "react"
 
 const projectId = "u4dn615if9"
 

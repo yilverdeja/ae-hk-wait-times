@@ -1,17 +1,17 @@
 "use client"
 
-import { TrendingUp, TrendingDown, Minus } from "lucide-react"
-import { useHospitalTrends } from "@/hooks/useHospitalTrends"
-import { useLanguage } from "@/hooks/useLanguage"
-import { LanguageCode } from "@/types"
-import { cn } from "@/lib/utils"
-import dayjs from "@/lib/dayjs"
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useHospitalTrends } from "@/hooks/useHospitalTrends"
+import { useLanguage } from "@/hooks/useLanguage"
+import dayjs from "@/lib/dayjs"
+import { cn } from "@/lib/utils"
+import { LanguageCode } from "@/types"
+import { Minus, TrendingDown, TrendingUp } from "lucide-react"
 
 interface WaitTimeTrendIconProps {
     hospitalSlug: string

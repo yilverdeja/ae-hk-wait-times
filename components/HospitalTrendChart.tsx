@@ -1,7 +1,5 @@
 "use client"
 
-import { useState, useMemo, useRef, useEffect } from "react"
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
     ChartConfig,
     ChartContainer,
@@ -9,11 +7,13 @@ import {
     ChartLegendContent,
 } from "@/components/ui/chart"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
-import { DayOfWeek } from "@/types/trends"
-import { DayOfWeekSelector } from "./DayOfWeekSelector"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
+import { DayOfWeek } from "@/types/trends"
 import { sendGAEvent } from "@next/third-parties/google"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { DayOfWeekSelector } from "./DayOfWeekSelector"
 
 // Chart configuration with labels for the legend and light/dark mode colors.
 const getChartConfig = (lang: LanguageCode) =>

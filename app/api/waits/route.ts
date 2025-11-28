@@ -1,9 +1,9 @@
 // app/api/waits/route.ts
 
-import { NextResponse } from "next/server"
-import axios from "axios"
-import { ManagementStatus, ApiResponse, TransformedHospitalData } from "@/types"
 import dayjs from "@/lib/dayjs"
+import { ApiResponse, ManagementStatus, TransformedHospitalData } from "@/types"
+import axios from "axios"
+import { NextResponse } from "next/server"
 
 // ============================================================================
 // 1. DATA MODELING (TYPES & INTERFACES)
