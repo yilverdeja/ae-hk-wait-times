@@ -1,6 +1,6 @@
 "use client"
 
-import { MapDialog } from "@/components/MapDialog"
+import { MapDialog } from "@/components/HospitalMap/MapDialog"
 import { ThemeSwitcher } from "@/components/ThemeSwitcher"
 import { siteConfig } from "@/configs/site"
 import { useLanguage } from "@/hooks/useLanguage"
@@ -37,7 +37,6 @@ export default function Header() {
                 {/* Switcher Components */}
                 <DynamicLanguageSwitcher />
                 <ThemeSwitcher />
-                {/* <MapButton /> */}
                 <MapDialog />
             </div>
         </header>

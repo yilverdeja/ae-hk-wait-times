@@ -1,7 +1,7 @@
 "use client"
 
-import { HospitalMapOverlay } from "@/components/HospitalMapOverlay"
-import { MapLanguageControl } from "@/components/MapLanguageControl"
+import { HospitalMapOverlay } from "@/components/HospitalMap/HospitalMapOverlay"
+import { MapLanguageControl } from "@/components/HospitalMap/MapLanguageControl"
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
 import { useLanguage } from "@/hooks/useLanguage"
 import { useMapboxDistance } from "@/hooks/useMapboxDistance"
@@ -165,7 +165,7 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
     const getDisplayWaitTime = (hospital: EnrichedHospitalData) => {
         return (
             hospital.waitTimes.semiUrgentNonUrgentP50Minutes ??
-            hospital.waitTimes.urgentP50Minutes ??
+            hospital.waitTimes.semiUrgentNonUrgentP95Minutes ??
             null
         )
     }

@@ -104,11 +104,11 @@ const formatDuration = (minutes: number, lang: LanguageCode): string => {
     return `${hours}${texts.hour} ${mins}${texts.minute}`
 }
 
-// Get wait time for display (prefer semi-urgent, fallback to urgent)
+// Get wait time for display (prefer p50 wait time, fallback to p95 wait time)
 const getDisplayWaitTime = (hospital: EnrichedHospitalData) => {
     return (
         hospital.waitTimes.semiUrgentNonUrgentP50Minutes ??
-        hospital.waitTimes.urgentP50Minutes ??
+        hospital.waitTimes.semiUrgentNonUrgentP95Minutes ??
         null
     )
 }

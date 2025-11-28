@@ -1,6 +1,6 @@
 "use client"
 
-import { HospitalMap } from "@/components/HospitalMap"
+import { HospitalMap } from "@/components/HospitalMap/HospitalMap"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
