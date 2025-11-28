@@ -62,11 +62,17 @@ export function MapDialog() {
             <DialogTrigger asChild>
                 <Button
                     variant="outline"
-                    size="icon"
+                    size="sm"
                     onClick={handleClick}
-                    className="cursor-pointer"
+                    className="cursor-pointer gap-2 flex-1 min-w-0 md:flex-initial"
                 >
-                    <Map className="h-[1.2rem] w-[1.2rem]" />
+                    <Map className="h-[1.2rem] w-[1.2rem] flex-shrink-0" />
+                    <span className="inline">
+                        {getLocalizedText(
+                            mapDialogTranslations.buttonLabel,
+                            lang
+                        )}
+                    </span>
                 </Button>
             </DialogTrigger>
             <DialogContent className="w-full h-full m-0 max-w-none max-h-none rounded-none sm:w-[90vw] sm:h-[85vh] sm:max-w-6xl sm:rounded-lg md:w-[85vw] md:h-[80vh] md:max-w-7xl flex flex-col p-0">

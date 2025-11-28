@@ -26,10 +26,11 @@ export const waitTimeNA = i18n("N/A", "不適用", "不适用")
 // Map dialog texts
 export const mapDialogTranslations = {
     title: i18n("Hospital Map", "醫院地圖", "医院地图"),
+    buttonLabel: i18n("Map", "地圖", "地图"),
     description: i18n(
-        "View all hospitals on the map. Markers are color-coded by wait times. Hover or click on markers for details.",
-        "在地圖上查看所有醫院。標記按等候時間以顏色編碼。懸停或點擊標記以查看詳情。",
-        "在地图上查看所有医院。标记按等候时间以颜色编码。悬停或点击标记以查看详情。"
+        "View all hospitals on the map. Markers are color-coded by wait times. Click on markers to view details.",
+        "在地圖上查看所有醫院。標記按等候時間以顏色編碼。點擊標記以查看詳情。",
+        "在地图上查看所有医院。标记按等候时间以颜色编码。点击标记以查看详情。"
     ),
     noGeolocation: i18n(
         "Enable location services to see distances from your location.",

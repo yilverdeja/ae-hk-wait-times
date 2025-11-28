@@ -14,8 +14,10 @@ import {
     TrendingDown,
     TrendingUp,
 } from "lucide-react"
+import * as React from "react"
 import { useBreakpoint } from "use-breakpoint"
 
+import { MapDialog } from "@/components/HospitalMap/MapDialog"
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -127,7 +129,21 @@ export function DataTableToolbar<TData>({
     const { lang } = useLanguage()
     const copy = legendCopy[lang]
     const { breakpoint } = useBreakpoint(BREAKPOINTS)
-    const isDesktop = breakpoint === "desktop"
+    // Switch to dialog button earlier to prevent table shrinking
+    // Use a custom breakpoint check: desktop is 1280px, but we want to switch at ~1400px
+    const [isWideEnough, setIsWideEnough] = React.useState(false)
+
+    React.useEffect(() => {
+        if (typeof window !== "undefined") {
+            const checkWidth = () => setIsWideEnough(window.innerWidth >= 1400)
+            checkWidth()
+            window.addEventListener("resize", checkWidth)
+            return () => window.removeEventListener("resize", checkWidth)
+        }
+    }, [])
+
+    // Only show expanded legend on desktop AND when wide enough
+    const isDesktop = breakpoint === "desktop" && isWideEnough
 
     return (
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -187,28 +203,37 @@ export function DataTableToolbar<TData>({
                 </div>
             </div>
 
-            {/* Legend - Desktop: Expanded, Mobile/Tablet: Dialog Button */}
-            {isDesktop ? (
-                <div className="flex flex-col gap-2 rounded-md border bg-muted p-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
-                    <LegendContent copy={copy} isDialog={false} />
-                </div>
-            ) : (
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button variant="outline" size="sm">
-                            {copy.legend}
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-md">
-                        <DialogHeader>
-                            <DialogTitle>{copy.legend}</DialogTitle>
-                        </DialogHeader>
-                        <div className="flex flex-col gap-4 py-4 text-sm text-muted-foreground">
-                            <LegendContent copy={copy} isDialog={true} />
-                        </div>
-                    </DialogContent>
-                </Dialog>
-            )}
+            {/* Legend and Map - Right side with gap */}
+            <div className="flex w-full items-center justify-end gap-2 sm:gap-3 md:w-auto">
+                {/* Legend - Desktop: Expanded, Mobile/Tablet: Dialog Button */}
+                {isDesktop ? (
+                    <div className="flex flex-col gap-2 rounded-md border bg-muted p-2 text-sm text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
+                        <LegendContent copy={copy} isDialog={false} />
+                    </div>
+                ) : (
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="flex-[2] min-w-0 md:flex-initial"
+                            >
+                                {copy.legend}
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-md">
+                            <DialogHeader>
+                                <DialogTitle>{copy.legend}</DialogTitle>
+                            </DialogHeader>
+                            <div className="flex flex-col gap-4 py-4 text-sm text-muted-foreground">
+                                <LegendContent copy={copy} isDialog={true} />
+                            </div>
+                        </DialogContent>
+                    </Dialog>
+                )}
+                {/* Map Dialog - Optional, only render if needed */}
+                <MapDialog />
+            </div>
         </div>
     )
 }
