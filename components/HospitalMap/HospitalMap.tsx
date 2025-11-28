@@ -5,8 +5,17 @@ import { MapLanguageControl } from "@/components/HospitalMap/MapLanguageControl"
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
 import { useLanguage } from "@/hooks/useLanguage"
 import { useMapboxDistance } from "@/hooks/useMapboxDistance"
-import { getWaitTimeColor } from "@/lib/map"
-import { Coordinates, EnrichedHospitalData, ManagementStatus } from "@/types"
+import {
+    DEFAULT_COORDINATES,
+    getDisplayWaitTime,
+    getWaitTimeColor,
+    hasCriticalCases,
+    HONG_KONG_GEOFENCE,
+    isUserInHongKong,
+    MAX_ZOOM,
+    MIN_ZOOM,
+} from "@/lib/map"
+import { EnrichedHospitalData } from "@/types"
 import * as turf from "@turf/turf"
 import { AlertCircle } from "lucide-react"
 import "mapbox-gl/dist/mapbox-gl.css"
@@ -14,30 +23,6 @@ import { useTheme } from "next-themes"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useGeolocated } from "react-geolocated"
 import Map, { MapRef, Marker, ViewState } from "react-map-gl/mapbox"
-
-// Improved geofence: A larger circle covering Hong Kong (approximately 30km radius)
-const GEOFENCE = turf.circle([114.176611, 22.311637], 30, {
-    units: "kilometers",
-})
-
-// Zoom restrictions
-const MIN_ZOOM = 8
-const MAX_ZOOM = 18
-
-// Default coordinates (central Hong Kong)
-const DEFAULT_COORDINATES = {
-    longitude: 114.176611,
-    latitude: 22.311637,
-}
-
-/**
- * Check if user coordinates are within Hong Kong geofence
- */
-function isUserInHongKong(coords: Coordinates | null): boolean {
-    if (!coords) return false
-    const point = [coords.longitude, coords.latitude]
-    return turf.booleanPointInPolygon(point, GEOFENCE)
-}
 
 interface HospitalMapProps {
     onHospitalSelect?: (hospital: EnrichedHospitalData | null) => void
@@ -152,7 +137,10 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
         const newViewState = evt.viewState
         const newCenter = [newViewState.longitude, newViewState.latitude]
 
-        const isInsideGeofence = turf.booleanPointInPolygon(newCenter, GEOFENCE)
+        const isInsideGeofence = turf.booleanPointInPolygon(
+            newCenter,
+            HONG_KONG_GEOFENCE
+        )
         const isZoomValid =
             newViewState.zoom >= MIN_ZOOM && newViewState.zoom <= MAX_ZOOM
 
@@ -160,15 +148,6 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
             setViewState(newViewState)
         }
     }, [])
-
-    // Get wait time for display (for marker color)
-    const getDisplayWaitTime = (hospital: EnrichedHospitalData) => {
-        return (
-            hospital.waitTimes.semiUrgentNonUrgentP50Minutes ??
-            hospital.waitTimes.semiUrgentNonUrgentP95Minutes ??
-            null
-        )
-    }
 
     return (
         <div className="w-full h-full relative overflow-hidden">
@@ -209,15 +188,7 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
                     const waitTime = getDisplayWaitTime(hospital)
                     const color = getWaitTimeColor(waitTime, currentTheme)
                     const isSelected = selectedHospital?.slug === hospital.slug
-                    const hasCriticalCases =
-                        hospital.criticalManagementStatus ===
-                            ManagementStatus.Managing ||
-                        hospital.criticalManagementStatus ===
-                            ManagementStatus.ManagingMultiple ||
-                        hospital.emergencyManagementStatus ===
-                            ManagementStatus.Managing ||
-                        hospital.emergencyManagementStatus ===
-                            ManagementStatus.ManagingMultiple
+                    const hasCritical = hasCriticalCases(hospital)
 
                     return (
                         <Marker
@@ -250,7 +221,7 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
                                         transition: "all 0.2s ease",
                                     }}
                                 >
-                                    {hasCriticalCases && (
+                                    {hasCritical && (
                                         <AlertCircle
                                             className="h-3 w-3 text-white"
                                             style={{

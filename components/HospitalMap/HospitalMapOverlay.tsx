@@ -2,7 +2,19 @@
 
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
 import dayjs from "@/lib/dayjs"
-import { getWaitTimeColor } from "@/lib/map"
+import {
+    formatDistance,
+    formatDuration,
+    formatWaitTimeLocalized,
+    getDisplayWaitTime,
+    getWaitTimeColor,
+    hasCriticalCases,
+} from "@/lib/map"
+import {
+    getLocalizedText,
+    managementStatusTranslations,
+    waitTimeCategoryLabels,
+} from "@/lib/map-translations"
 import { EnrichedHospitalData, LanguageCode, ManagementStatus } from "@/types"
 import { sendGAEvent } from "@next/third-parties/google"
 import {
@@ -26,93 +38,6 @@ interface HospitalMapOverlayProps {
     lastUpdated?: string
 }
 
-// Localized text for wait time categories
-const waitTimeCategoryTexts = {
-    [LanguageCode.EN]: {
-        semiUrgent: "Semi-urgent / Non-urgent",
-        urgent: "Urgent",
-        emergency: "Emergency",
-        critical: "Critical",
-        hour: "h",
-        minute: "m",
-        drive: "drive",
-    },
-    [LanguageCode.ZH]: {
-        semiUrgent: "半緊急 / 非緊急",
-        urgent: "緊急",
-        emergency: "急症",
-        critical: "危殆",
-        hour: "小時",
-        minute: "分鐘",
-        drive: "車程",
-    },
-    [LanguageCode.CN]: {
-        semiUrgent: "半紧急 / 非紧急",
-        urgent: "紧急",
-        emergency: "急症",
-        critical: "危殆",
-        hour: "小时",
-        minute: "分钟",
-        drive: "车程",
-    },
-}
-
-// Localized format for wait time with units
-const formatWaitTimeLocalized = (
-    minutes: number | null,
-    lang: LanguageCode
-): string => {
-    if (minutes === null) {
-        return lang === LanguageCode.EN ? "N/A" : "不適用"
-    }
-
-    const texts = waitTimeCategoryTexts[lang]
-
-    if (minutes < 60) {
-        return `${Math.round(minutes)}${texts.minute}`
-    }
-
-    const hours = Math.floor(minutes / 60)
-    const mins = Math.round(minutes % 60)
-
-    if (mins === 0) {
-        return `${hours}${texts.hour}`
-    }
-
-    return `${hours}${texts.hour} ${mins}${texts.minute}`
-}
-
-// Format distance for display
-const formatDistance = (km: number): string => {
-    if (km < 1) {
-        return `${Math.round(km * 1000)}m`
-    }
-    return `${km.toFixed(1)}km`
-}
-
-// Format duration for display
-const formatDuration = (minutes: number, lang: LanguageCode): string => {
-    const texts = waitTimeCategoryTexts[lang]
-    if (minutes < 60) {
-        return `${Math.round(minutes)}${texts.minute}`
-    }
-    const hours = Math.floor(minutes / 60)
-    const mins = Math.round(minutes % 60)
-    if (mins === 0) {
-        return `${hours}${texts.hour}`
-    }
-    return `${hours}${texts.hour} ${mins}${texts.minute}`
-}
-
-// Get wait time for display (prefer p50 wait time, fallback to p95 wait time)
-const getDisplayWaitTime = (hospital: EnrichedHospitalData) => {
-    return (
-        hospital.waitTimes.semiUrgentNonUrgentP50Minutes ??
-        hospital.waitTimes.semiUrgentNonUrgentP95Minutes ??
-        null
-    )
-}
-
 export function HospitalMapOverlay({
     hospital,
     lang,
@@ -121,7 +46,6 @@ export function HospitalMapOverlay({
 }: HospitalMapOverlayProps) {
     const { theme, resolvedTheme } = useTheme()
     const currentTheme = (resolvedTheme || theme || "light") as "light" | "dark"
-    const texts = waitTimeCategoryTexts[lang]
     const waitTime = getDisplayWaitTime(hospital)
     const color = getWaitTimeColor(waitTime, currentTheme)
 
@@ -163,12 +87,7 @@ export function HospitalMapOverlay({
         }
     }
 
-    const hasCriticalCases =
-        hospital.criticalManagementStatus === ManagementStatus.Managing ||
-        hospital.criticalManagementStatus ===
-            ManagementStatus.ManagingMultiple ||
-        hospital.emergencyManagementStatus === ManagementStatus.Managing ||
-        hospital.emergencyManagementStatus === ManagementStatus.ManagingMultiple
+    const hasCritical = hasCriticalCases(hospital)
 
     return (
         <div
@@ -232,7 +151,10 @@ export function HospitalMapOverlay({
                                         )}
                                     </div>
                                     <span className="text-xs text-muted-foreground">
-                                        {texts.semiUrgent}
+                                        {getLocalizedText(
+                                            waitTimeCategoryLabels.semiUrgent,
+                                            lang
+                                        )}
                                     </span>
                                 </div>
                             </div>
@@ -242,7 +164,11 @@ export function HospitalMapOverlay({
                                 {hospital.waitTimes.urgentP50Minutes !==
                                     null && (
                                     <div className="sm:border-l sm:pl-3 sm:pb-0.5">
-                                        {texts.urgent}:{" "}
+                                        {getLocalizedText(
+                                            waitTimeCategoryLabels.urgent,
+                                            lang
+                                        )}
+                                        :{" "}
                                         {formatWaitTimeLocalized(
                                             hospital.waitTimes.urgentP50Minutes,
                                             lang
@@ -252,7 +178,11 @@ export function HospitalMapOverlay({
                                 {hospital.waitTimes.emergencyMinutes !==
                                     null && (
                                     <div className="sm:border-l sm:pl-3 sm:pb-0.5">
-                                        {texts.emergency}:{" "}
+                                        {getLocalizedText(
+                                            waitTimeCategoryLabels.emergency,
+                                            lang
+                                        )}
+                                        :{" "}
                                         {formatWaitTimeLocalized(
                                             hospital.waitTimes.emergencyMinutes,
                                             lang
@@ -262,7 +192,11 @@ export function HospitalMapOverlay({
                                 {hospital.waitTimes.criticalMinutes !==
                                     null && (
                                     <div className="sm:border-l sm:pl-3 sm:pb-0.5">
-                                        {texts.critical}:{" "}
+                                        {getLocalizedText(
+                                            waitTimeCategoryLabels.critical,
+                                            lang
+                                        )}
+                                        :{" "}
                                         {formatWaitTimeLocalized(
                                             hospital.waitTimes.criticalMinutes,
                                             lang
@@ -273,22 +207,25 @@ export function HospitalMapOverlay({
                         </div>
 
                         {/* Critical case status */}
-                        {hasCriticalCases && (
+                        {hasCritical && (
                             <div className="flex items-center gap-1 text-xs text-red-600 font-medium pt-1.5 sm:pt-2">
                                 <AlertCircle className="h-3 w-3" />
                                 <span>
                                     {hospital.criticalManagementStatus ===
                                     ManagementStatus.ManagingMultiple
-                                        ? lang === LanguageCode.EN
-                                            ? "Managing multiple critical cases"
-                                            : lang === LanguageCode.ZH
-                                              ? "正在處理多個危殆個案"
-                                              : "正在处理多个危殆个案"
-                                        : lang === LanguageCode.EN
-                                          ? "Managing critical case"
-                                          : lang === LanguageCode.ZH
-                                            ? "正在處理危殆個案"
-                                            : "正在处理危殆个案"}
+                                        ? getLocalizedText(
+                                              managementStatusTranslations[
+                                                  ManagementStatus
+                                                      .ManagingMultiple
+                                              ],
+                                              lang
+                                          )
+                                        : getLocalizedText(
+                                              managementStatusTranslations[
+                                                  ManagementStatus.Managing
+                                              ],
+                                              lang
+                                          )}
                                 </span>
                             </div>
                         )}
@@ -305,7 +242,10 @@ export function HospitalMapOverlay({
                             </div>
                             <div className="text-xs">
                                 {formatDuration(distance.duration, lang)}{" "}
-                                {texts.drive}
+                                {getLocalizedText(
+                                    waitTimeCategoryLabels.drive,
+                                    lang
+                                )}
                             </div>
                         </div>
                     )}
