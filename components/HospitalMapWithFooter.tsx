@@ -13,6 +13,7 @@ import { useLanguage } from "@/hooks/useLanguage"
 import { AlertCircle } from "lucide-react"
 import { HospitalMapOverlay } from "@/components/HospitalMapOverlay"
 import { MapLanguageControl } from "@/components/MapLanguageControl"
+import { useTheme } from "next-themes"
 
 // Improved geofence: A larger circle covering Hong Kong (approximately 30km radius)
 const GEOFENCE = turf.circle([114.176611, 22.311637], 30, {
@@ -50,6 +51,16 @@ export function HospitalMapWithFooter({
     })
     const { data: waitTimesData } = useHospitalWaitTimes()
     const { lang } = useLanguage()
+    const { theme, resolvedTheme } = useTheme()
+
+    // Determine map style based on theme
+    // resolvedTheme handles "system" theme by resolving to "light" or "dark"
+    const mapStyle = useMemo(() => {
+        const currentTheme = resolvedTheme || theme || "light"
+        return currentTheme === "dark"
+            ? "mapbox://styles/mapbox/dark-v11"
+            : "mapbox://styles/mapbox/light-v11"
+    }, [theme, resolvedTheme])
 
     // Determine user location (use geolocation if available and in Hong Kong, otherwise default)
     const userLocation = useMemo(() => {
@@ -177,7 +188,7 @@ export function HospitalMapWithFooter({
                         }, 50)
                     }
                 }}
-                mapStyle="mapbox://styles/mapbox/streets-v11"
+                mapStyle={mapStyle}
                 minZoom={MIN_ZOOM}
                 maxZoom={MAX_ZOOM}
             >

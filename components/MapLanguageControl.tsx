@@ -55,7 +55,7 @@ export function MapLanguageControl({ lang }: MapLanguageControlProps) {
     )
 
     // Update language when lang prop changes
-    // This handles both initial load and dynamic language changes
+    // Also listen to all style.load events to reapply language when theme changes
     useEffect(() => {
         if (!control || !mapInstanceRef.current) return
 
@@ -65,29 +65,49 @@ export function MapLanguageControl({ lang }: MapLanguageControlProps) {
         // Update language dynamically using setLanguage
         const updateLanguage = () => {
             try {
-                const currentStyle = map.getStyle()
-                if (currentStyle) {
-                    const updatedStyle = control.setLanguage(
-                        currentStyle,
-                        newMapboxLangCode
-                    )
-                    map.setStyle(updatedStyle)
-                }
+                // Small delay to ensure style is fully loaded
+                setTimeout(() => {
+                    if (!map.isStyleLoaded()) return
+
+                    const currentStyle = map.getStyle()
+                    if (currentStyle) {
+                        const updatedStyle = control.setLanguage(
+                            currentStyle,
+                            newMapboxLangCode
+                        )
+                        map.setStyle(updatedStyle)
+                    }
+                }, 100)
             } catch (error) {
+                // Silently handle "Style is not done loading" errors
+                if (
+                    error instanceof Error &&
+                    error.message.includes("Style is not done loading")
+                ) {
+                    return
+                }
                 console.error("Error updating map language:", error)
             }
         }
 
+        // Listen to all style.load events (not just once)
+        // This ensures language is reapplied when:
+        // - Map first loads
+        // - Theme changes (which triggers style.load)
+        // - Map reopens with reuseMaps
+        map.on("style.load", updateLanguage)
+
         // If style is already loaded, update immediately
         if (map.isStyleLoaded()) {
             updateLanguage()
-        } else {
-            // Otherwise wait for style to load
-            map.once("style.load", updateLanguage)
+        }
+
+        // Cleanup: remove event listener
+        return () => {
+            map.off("style.load", updateLanguage)
         }
     }, [lang, control])
 
     // This component doesn't render anything
     return null
 }
-
