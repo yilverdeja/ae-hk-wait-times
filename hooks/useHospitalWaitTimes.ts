@@ -93,6 +93,11 @@ export const useHospitalWaitTimes = () => {
         // Fresh data will not be refetched on component mounts or window focus.
         staleTime: 14 * 60 * 1000, // 14 minutes
 
+        // Disable automatic refetches - we only want to refetch via polling interval
+        refetchOnWindowFocus: false, // Don't refetch when window regains focus
+        refetchOnMount: false, // Don't refetch on component mount (use cached data)
+        refetchOnReconnect: false, // Don't refetch on network reconnect (polling handles it)
+
         // refetchInterval: The core of our smart polling logic. This logic remains
         // unchanged as it only depends on the `lastUpdated` property, which is
         // present in our new EnrichedApiResponse type.
@@ -108,21 +113,12 @@ export const useHospitalWaitTimes = () => {
             const currentTime = dayjs()
 
             if (currentTime.isAfter(nextCheckTime)) {
-                console.log(
-                    `[Wait Times] Expected update after ${nextCheckTime.format("h:mm:ss A")}, but data is still from ${lastUpdateTime.format("h:mm:ss A")}. Polling every 30s.`
-                )
+                // Data is stale - poll more frequently
                 return 30 * 1000 // 30 seconds
             }
 
+            // Data is fresh - calculate time until next check
             const timeUntilNextCheck = nextCheckTime.diff(currentTime)
-            const minutesUntilNextCheck = (timeUntilNextCheck / 60000).toFixed(
-                1
-            )
-
-            console.log(
-                `[Wait Times] Data is fresh (Updated: ${lastUpdateTime.format("h:mm:ss A")}). Next check scheduled in ${minutesUntilNextCheck} minutes.`
-            )
-
             return timeUntilNextCheck
         },
     })
@@ -132,20 +128,34 @@ export const useHospitalWaitTimes = () => {
         if (isInitialMount.current) {
             isInitialMount.current = false
             previousDataRef.current = queryResult.data
+            // Log initial fetch
+            if (queryResult.data) {
+                console.log(
+                    `[Wait Times] Initial data loaded: ${queryResult.data.lastUpdated}`
+                )
+            }
             return
         }
 
         // If we have new data and previous data existed, it's a refetch
         if (queryResult.data && previousDataRef.current) {
             const lastUpdated = previousDataRef.current.lastUpdated
+            const newLastUpdated = queryResult.data.lastUpdated
             const lastUpdateTime = dayjs(lastUpdated, "D/M/YYYY h:mmA")
             const nextCheckTime = lastUpdateTime.add(14, "minute")
             const currentTime = dayjs()
             const isStale = currentTime.isAfter(nextCheckTime)
 
+            // Only log if data actually changed
+            if (newLastUpdated !== lastUpdated) {
+                console.log(
+                    `[Wait Times] Data refetched: ${newLastUpdated} (was ${lastUpdated})`
+                )
+            }
+
             sendGAEvent("event", "data_auto_fetch", {
                 fetchType: "wait_times",
-                lastUpdated: lastUpdated,
+                lastUpdated: newLastUpdated,
                 isStale: isStale,
             })
         }
