@@ -14,11 +14,10 @@ import {
 import { sendGAEvent } from "@next/third-parties/google"
 import { useGeolocated } from "react-geolocated"
 import { useState, useEffect, useMemo } from "react"
-import { HospitalMap } from "./HospitalMap"
+import { HospitalMap } from "@/components/HospitalMap"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
 import * as turf from "@turf/turf"
-import { HospitalMapWithFooter } from "./HospitalMapWithFooter"
 
 // Geofence for Hong Kong (same as in HospitalMap)
 const GEOFENCE = turf.circle([114.176611, 22.311637], 30, {
@@ -119,8 +118,7 @@ export function MapDialog() {
                     </DialogDescription>
                 </DialogHeader>
                 <div className="flex-1 w-full overflow-hidden px-6 pb-4">
-                    {/* <HospitalMap /> */}
-                    <HospitalMapWithFooter />
+                    <HospitalMap />
                 </div>
                 <DialogFooter className="px-6 pb-6">
                     <Button onClick={() => setOpen(false)}>Close</Button>

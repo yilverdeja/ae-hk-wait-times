@@ -1,24 +1,21 @@
 "use client"
 
 import { useGeolocated } from "react-geolocated"
-import Map, { Marker, Popup, ViewState, MapRef } from "react-map-gl/mapbox"
+import Map, { Marker, ViewState, MapRef } from "react-map-gl/mapbox"
 import "mapbox-gl/dist/mapbox-gl.css"
 import { useState, useCallback, useMemo, useRef, useEffect } from "react"
 import * as turf from "@turf/turf"
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
 import { useMapboxDistance } from "@/hooks/useMapboxDistance"
-import {
-    getWaitTimeColor,
-    getWaitTimeCategory,
-    formatWaitTimeHoursMinutes,
-} from "@/utils/waitTimeColors"
+import { getWaitTimeColor } from "@/utils/waitTimeColors"
 import { EnrichedHospitalData, ManagementStatus, Coordinates } from "@/types"
 import { useLanguage } from "@/hooks/useLanguage"
-import { AlertCircle, MapPin } from "lucide-react"
+import { AlertCircle } from "lucide-react"
+import { HospitalMapOverlay } from "@/components/HospitalMapOverlay"
+import { MapLanguageControl } from "@/components/MapLanguageControl"
 import { useTheme } from "next-themes"
 
 // Improved geofence: A larger circle covering Hong Kong (approximately 30km radius)
-// This covers Hong Kong Island, Kowloon, and most of New Territories
 const GEOFENCE = turf.circle([114.176611, 22.311637], 30, {
     units: "kilometers",
 })
@@ -42,14 +39,29 @@ function isUserInHongKong(coords: Coordinates | null): boolean {
     return turf.booleanPointInPolygon(point, GEOFENCE)
 }
 
-export function HospitalMap() {
+interface HospitalMapProps {
+    onHospitalSelect?: (hospital: EnrichedHospitalData | null) => void
+}
+
+export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
     const { coords, isGeolocationEnabled } = useGeolocated({
         suppressLocationOnMount: true,
     })
     const { data: waitTimesData } = useHospitalWaitTimes()
     const { lang } = useLanguage()
     const { theme, resolvedTheme } = useTheme()
+
+    // Determine current theme for color calculations
     const currentTheme = (resolvedTheme || theme || "light") as "light" | "dark"
+
+    // Determine map style based on theme
+    // resolvedTheme handles "system" theme by resolving to "light" or "dark"
+    const mapStyle = useMemo(() => {
+        const currentTheme = resolvedTheme || theme || "light"
+        return currentTheme === "dark"
+            ? "mapbox://styles/mapbox/dark-v11"
+            : "mapbox://styles/mapbox/light-v11"
+    }, [theme, resolvedTheme])
 
     // Determine user location (use geolocation if available and in Hong Kong, otherwise default)
     const userLocation = useMemo(() => {
@@ -58,7 +70,6 @@ export function HospitalMap() {
                 longitude: coords.longitude,
                 latitude: coords.latitude,
             }
-            // Check if user is in Hong Kong, otherwise use default
             if (isUserInHongKong(userCoords)) {
                 return userCoords
             }
@@ -117,29 +128,40 @@ export function HospitalMap() {
         }))
     )
 
-    // Selected hospital for popup
-    const [selectedHospital, setSelectedHospital] =
+    // Selected hospital - default to first hospital
+    const defaultSelectedHospital = useMemo(() => {
+        return enrichedHospitals.length > 0 ? enrichedHospitals[0] : null
+    }, [enrichedHospitals])
+
+    const [userSelectedHospital, setUserSelectedHospital] =
         useState<EnrichedHospitalData | null>(null)
+
+    // Use user selection if available, otherwise use default
+    const selectedHospital = userSelectedHospital || defaultSelectedHospital
+
+    // Handle hospital selection (click only, no hover)
+    const handleHospitalClick = (hospital: EnrichedHospitalData) => {
+        setUserSelectedHospital(hospital)
+        if (onHospitalSelect) {
+            onHospitalSelect(hospital)
+        }
+    }
 
     // Handle map movement with geofence and zoom restrictions
     const onMove = useCallback((evt: { viewState: ViewState }) => {
         const newViewState = evt.viewState
         const newCenter = [newViewState.longitude, newViewState.latitude]
 
-        // Check if center is inside geofence
         const isInsideGeofence = turf.booleanPointInPolygon(newCenter, GEOFENCE)
-
-        // Check zoom limits
         const isZoomValid =
             newViewState.zoom >= MIN_ZOOM && newViewState.zoom <= MAX_ZOOM
 
-        // Only update if both conditions are met
         if (isInsideGeofence && isZoomValid) {
             setViewState(newViewState)
         }
     }, [])
 
-    // Get wait time for display (prefer semi-urgent, fallback to urgent)
+    // Get wait time for display (for marker color)
     const getDisplayWaitTime = (hospital: EnrichedHospitalData) => {
         return (
             hospital.waitTimes.semiUrgentNonUrgentP50Minutes ??
@@ -148,27 +170,11 @@ export function HospitalMap() {
         )
     }
 
-    // Format distance for display
-    const formatDistance = (km: number): string => {
-        if (km < 1) {
-            return `${Math.round(km * 1000)}m`
-        }
-        return `${km.toFixed(1)}km`
-    }
-
-    // Format duration for display
-    const formatDuration = (minutes: number): string => {
-        if (minutes < 60) {
-            return `${Math.round(minutes)} min`
-        }
-        const hours = Math.floor(minutes / 60)
-        const mins = Math.round(minutes % 60)
-        return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`
-    }
-
     return (
-        <div className="w-full h-full flex justify-center items-center overflow-hidden">
+        <div className="w-full h-full relative overflow-hidden">
+            {/* Map - full size */}
             <Map
+                reuseMaps
                 ref={mapRef}
                 {...viewState}
                 mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
@@ -183,219 +189,91 @@ export function HospitalMap() {
                         }, 50)
                     }
                 }}
-                mapStyle="mapbox://styles/mapbox/streets-v9"
+                mapStyle={mapStyle}
                 minZoom={MIN_ZOOM}
                 maxZoom={MAX_ZOOM}
             >
+                {/* Language control - managed by useControl hook */}
+                <MapLanguageControl lang={lang} />
+
                 {/* User location marker (always shown) */}
-                <Marker
+                {/* <Marker
                     longitude={userLocation.longitude}
                     latitude={userLocation.latitude}
                     color="red"
                     anchor="center"
-                />
+                /> */}
 
                 {/* Hospital markers */}
                 {enrichedHospitals.map((hospital) => {
                     const waitTime = getDisplayWaitTime(hospital)
                     const color = getWaitTimeColor(waitTime, currentTheme)
-                    const distance = distanceData[hospital.slug]
+                    const isSelected = selectedHospital?.slug === hospital.slug
                     const hasCriticalCases =
                         hospital.criticalManagementStatus ===
                             ManagementStatus.Managing ||
                         hospital.criticalManagementStatus ===
+                            ManagementStatus.ManagingMultiple ||
+                        hospital.emergencyManagementStatus ===
+                            ManagementStatus.Managing ||
+                        hospital.emergencyManagementStatus ===
                             ManagementStatus.ManagingMultiple
 
                     return (
-                        <div key={hospital.slug}>
-                            <Marker
-                                longitude={hospital.coordinates.longitude}
-                                latitude={hospital.coordinates.latitude}
-                                anchor="center"
-                                onClick={(e) => {
-                                    e.originalEvent.stopPropagation()
-                                    setSelectedHospital(hospital)
-                                }}
-                            >
+                        <Marker
+                            key={hospital.slug}
+                            longitude={hospital.coordinates.longitude}
+                            latitude={hospital.coordinates.latitude}
+                            anchor="center"
+                            onClick={(e) => {
+                                e.originalEvent.stopPropagation()
+                                handleHospitalClick(hospital)
+                            }}
+                        >
+                            <div className="cursor-pointer">
                                 <div
-                                    className="cursor-pointer"
-                                    onMouseEnter={() =>
-                                        setSelectedHospital(hospital)
-                                    }
-                                    onMouseLeave={() => {
-                                        // Close popup when mouse leaves marker
-                                        // Small delay to allow moving to popup
-                                        setTimeout(() => {
-                                            if (
-                                                selectedHospital?.slug ===
-                                                hospital.slug
-                                            ) {
-                                                setSelectedHospital(null)
-                                            }
-                                        }, 100)
+                                    style={{
+                                        width: "24px",
+                                        height: "24px",
+                                        backgroundColor: color,
+                                        border: isSelected
+                                            ? "3px solid #3b82f6"
+                                            : "2px solid white",
+                                        borderRadius: "50%",
+                                        boxShadow: isSelected
+                                            ? "0 0 0 2px rgba(59, 130, 246, 0.3), 0 2px 4px rgba(0,0,0,0.3)"
+                                            : "0 2px 4px rgba(0,0,0,0.3)",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        transform: "translate(-50%, -50%)",
+                                        transition: "all 0.2s ease",
                                     }}
                                 >
-                                    {/* Custom colored marker - Issue 5: Fixed anchor and removed transform */}
-                                    <div
-                                        style={{
-                                            width: "24px",
-                                            height: "24px",
-                                            backgroundColor: color,
-                                            border: "2px solid white",
-                                            borderRadius: "50%",
-                                            boxShadow:
-                                                "0 2px 4px rgba(0,0,0,0.3)",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                            transform: "translate(-50%, -50%)",
-                                        }}
-                                    >
-                                        {/* Issue 2: Icon shows for all hospitals with critical cases */}
-                                        {hasCriticalCases && (
-                                            <AlertCircle
-                                                className="h-3 w-3 text-white"
-                                                style={{
-                                                    filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.5))",
-                                                }}
-                                            />
-                                        )}
-                                    </div>
+                                    {hasCriticalCases && (
+                                        <AlertCircle
+                                            className="h-3 w-3 text-white"
+                                            style={{
+                                                filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.5))",
+                                            }}
+                                        />
+                                    )}
                                 </div>
-                            </Marker>
-
-                            {/* Popup on hover/click - Issue 1: Improved UX with hover-out */}
-                            {selectedHospital?.slug === hospital.slug && (
-                                <Popup
-                                    longitude={hospital.coordinates.longitude}
-                                    latitude={hospital.coordinates.latitude}
-                                    anchor="bottom"
-                                    onClose={() => setSelectedHospital(null)}
-                                    closeButton={false}
-                                    closeOnClick={false}
-                                    className="max-w-xs"
-                                >
-                                    <div
-                                        onMouseEnter={() => {
-                                            // Keep popup open when hovering over it
-                                            setSelectedHospital(hospital)
-                                        }}
-                                        onMouseLeave={() => {
-                                            // Close popup when mouse leaves
-                                            setSelectedHospital(null)
-                                        }}
-                                    >
-                                        {/* Issue 1: Sleeker popup design with better typography */}
-                                        <div className="p-3 space-y-2.5">
-                                            <h3 className="font-semibold text-base leading-tight">
-                                                {hospital.name[lang]}
-                                            </h3>
-                                            <div className="text-xs text-muted-foreground leading-relaxed">
-                                                <p>{hospital.address[lang]}</p>
-                                            </div>
-
-                                            {/* Issue 3: Wait times with proper formatting */}
-                                            <div className="space-y-1.5">
-                                                {/* Primary: Semi-urgent/Non-urgent (most prominent) */}
-                                                <div className="flex items-center gap-2">
-                                                    <div
-                                                        className="w-3 h-3 rounded-full flex-shrink-0"
-                                                        style={{
-                                                            backgroundColor:
-                                                                color,
-                                                        }}
-                                                    />
-                                                    <div className="flex flex-col">
-                                                        <span className="text-sm font-medium">
-                                                            {formatWaitTimeHoursMinutes(
-                                                                waitTime
-                                                            )}
-                                                        </span>
-                                                        <span className="text-xs text-muted-foreground">
-                                                            {getWaitTimeCategory(
-                                                                waitTime
-                                                            )}
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                {/* Secondary: Urgent (subtext) */}
-                                                {hospital.waitTimes
-                                                    .urgentP50Minutes !==
-                                                    null && (
-                                                    <div className="text-xs text-muted-foreground pl-5">
-                                                        Urgent:{" "}
-                                                        {formatWaitTimeHoursMinutes(
-                                                            hospital.waitTimes
-                                                                .urgentP50Minutes
-                                                        )}
-                                                    </div>
-                                                )}
-
-                                                {/* Tertiary: Critical/Emergency (subtext) */}
-                                                {hospital.waitTimes
-                                                    .criticalMinutes !==
-                                                    null && (
-                                                    <div className="text-xs text-muted-foreground pl-5">
-                                                        Critical:{" "}
-                                                        {formatWaitTimeHoursMinutes(
-                                                            hospital.waitTimes
-                                                                .criticalMinutes
-                                                        )}
-                                                    </div>
-                                                )}
-
-                                                {hospital.waitTimes
-                                                    .emergencyMinutes !==
-                                                    null && (
-                                                    <div className="text-xs text-muted-foreground pl-5">
-                                                        Emergency:{" "}
-                                                        {formatWaitTimeHoursMinutes(
-                                                            hospital.waitTimes
-                                                                .emergencyMinutes
-                                                        )}
-                                                    </div>
-                                                )}
-
-                                                {hasCriticalCases && (
-                                                    <div className="flex items-center gap-1 text-xs text-red-600 font-medium pt-1">
-                                                        <AlertCircle className="h-3 w-3" />
-                                                        <span>
-                                                            {hospital.criticalManagementStatus ===
-                                                            ManagementStatus.ManagingMultiple
-                                                                ? "Managing multiple critical cases"
-                                                                : "Managing critical case"}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                            </div>
-
-                                            {/* Distance (if available) */}
-                                            {distance && (
-                                                <div className="text-xs text-muted-foreground border-t pt-2">
-                                                    <div className="flex items-center gap-1">
-                                                        <MapPin className="h-3 w-3" />
-                                                        <span>
-                                                            {formatDistance(
-                                                                distance.distance
-                                                            )}{" "}
-                                                            •{" "}
-                                                            {formatDuration(
-                                                                distance.duration
-                                                            )}{" "}
-                                                            drive
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-                                </Popup>
-                            )}
-                        </div>
+                            </div>
+                        </Marker>
                     )
                 })}
             </Map>
+
+            {/* Overlay info panel - always visible, positioned above map */}
+            {selectedHospital && (
+                <HospitalMapOverlay
+                    hospital={selectedHospital}
+                    lang={lang}
+                    distance={distanceData[selectedHospital.slug]}
+                    lastUpdated={waitTimesData?.lastUpdated}
+                />
+            )}
         </div>
     )
 }
