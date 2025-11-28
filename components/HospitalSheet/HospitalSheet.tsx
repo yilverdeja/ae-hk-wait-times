@@ -1,5 +1,9 @@
 "use client"
 
+import { HospitalSheetDescriptionBusyness } from "@/components/HospitalSheet/HospitalSheetDescriptionBusyness"
+import { HospitalSheetInformation } from "@/components/HospitalSheet/HospitalSheetInformation"
+import { HospitalTrendChart } from "@/components/HospitalTrendChart"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import {
     Sheet,
     SheetContent,
@@ -7,12 +11,8 @@ import {
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import { EnrichedHospitalData, LanguageCode } from "@/types"
-import { HospitalSheetInformation } from "@/components/HospitalSheet/HospitalSheetInformation"
-import { HospitalTrendChart } from "@/components/HospitalTrendChart"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
-import { HospitalSheetDescriptionBusyness } from "@/components/HospitalSheet/HospitalSheetDescriptionBusyness"
+import { EnrichedHospitalData, LanguageCode } from "@/types"
 import { sendGAEvent } from "@next/third-parties/google"
 
 interface HospitalSheetProps {

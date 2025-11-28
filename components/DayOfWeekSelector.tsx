@@ -1,6 +1,5 @@
 "use client"
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
     Select,
     SelectContent,
@@ -8,9 +7,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { DayOfWeek } from "@/types/trends"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
+import { DayOfWeek } from "@/types/trends"
 
 // Define the options in a structured way, making the component self-contained.
 const dayOptions: {

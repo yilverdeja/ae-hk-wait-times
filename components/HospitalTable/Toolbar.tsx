@@ -1,30 +1,22 @@
 "use client"
 
+import { regionNames } from "@/data/regions"
+import { useLanguage } from "@/hooks/useLanguage"
+import { BREAKPOINTS } from "@/lib/constants"
+import { cn } from "@/lib/utils"
+import { LanguageCode, Region } from "@/types"
+import { sendGAEvent } from "@next/third-parties/google"
 import { Table } from "@tanstack/react-table"
 import {
     AlertTriangle,
-    Siren,
-    TrendingUp,
-    TrendingDown,
     Minus,
+    Siren,
+    TrendingDown,
+    TrendingUp,
 } from "lucide-react"
-import { useLanguage } from "@/hooks/useLanguage"
-import { LanguageCode, Region } from "@/types"
-import { regionNames } from "@/data/regions"
-import { sendGAEvent } from "@next/third-parties/google"
-import { BREAKPOINTS } from "@/lib/constants"
 import { useBreakpoint } from "use-breakpoint"
-import { cn } from "@/lib/utils"
 
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
@@ -32,7 +24,15 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
 
 interface DataTableToolbarProps<TData> {
     table: Table<TData>

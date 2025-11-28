@@ -1,7 +1,6 @@
 "use client"
 
-import { useLanguage } from "@/hooks/useLanguage"
-import { sendGAEvent } from "@next/third-parties/google"
+import { informationContent } from "@/components/InformationContent"
 import {
     Accordion,
     AccordionContent,
@@ -19,7 +18,8 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
-import { informationContent } from "@/components/InformationContent"
+import { useLanguage } from "@/hooks/useLanguage"
+import { sendGAEvent } from "@next/third-parties/google"
 import { InfoIcon, X } from "lucide-react"
 import Link from "next/link"
 

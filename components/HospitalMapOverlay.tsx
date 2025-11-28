@@ -1,14 +1,20 @@
 "use client"
 
-import { EnrichedHospitalData, ManagementStatus, LanguageCode } from "@/types"
-import { getWaitTimeColor } from "@/utils/waitTimeColors"
-import { AlertCircle, MapPin, ExternalLink } from "lucide-react"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
-import { TrendingUp, TrendingDown, Minus } from "lucide-react"
 import dayjs from "@/lib/dayjs"
+import { getWaitTimeColor } from "@/lib/map"
+import { EnrichedHospitalData, LanguageCode, ManagementStatus } from "@/types"
 import { sendGAEvent } from "@next/third-parties/google"
-import Link from "next/link"
+import {
+    AlertCircle,
+    ExternalLink,
+    MapPin,
+    Minus,
+    TrendingDown,
+    TrendingUp,
+} from "lucide-react"
 import { useTheme } from "next-themes"
+import Link from "next/link"
 
 interface HospitalMapOverlayProps {
     hospital: EnrichedHospitalData

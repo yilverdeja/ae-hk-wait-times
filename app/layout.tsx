@@ -1,12 +1,12 @@
+import Footer from "@/components/Footer"
+import Header from "@/components/Header"
 import { cn } from "@/lib/utils"
-import { DM_Sans } from "next/font/google"
+import Providers from "@/providers/Providers"
+import { LanguageCode } from "@/types"
 import { GoogleAnalytics } from "@next/third-parties/google"
+import { DM_Sans } from "next/font/google"
 import { cookies } from "next/headers"
 import "./globals.css"
-import Providers from "@/providers/Providers"
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
-import { LanguageCode } from "@/types"
 
 const dm_sans = DM_Sans({ weight: ["400", "500", "700"], subsets: ["latin"] })
 

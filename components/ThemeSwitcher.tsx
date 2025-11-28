@@ -1,9 +1,9 @@
 "use client"
 
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { sendGAEvent } from "@next/third-parties/google"
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 
 export function ThemeSwitcher() {
     const { theme, setTheme } = useTheme()

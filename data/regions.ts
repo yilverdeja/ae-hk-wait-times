@@ -1,5 +1,5 @@
-import { Region, LocalizedString } from "@/types"
 import { i18n } from "@/lib/i18n"
+import { LocalizedString, Region } from "@/types"
 
 /**
  * A map providing the localized names for each Region enum member.

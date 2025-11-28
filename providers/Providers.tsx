@@ -1,9 +1,9 @@
 "use client"
 
-import { ThemeProvider } from "@/providers/ThemeProvider"
 import { LanguageProvider } from "@/providers/LanguageProvider"
-import TanstackProvider from "@/providers/TanstackProvider"
 import { MicrosoftClarity } from "@/providers/MicrosoftClarity"
+import TanstackProvider from "@/providers/TanstackProvider"
+import { ThemeProvider } from "@/providers/ThemeProvider"
 import { LanguageCode } from "@/types"
 
 export default function Providers({

@@ -1,8 +1,8 @@
 "use client"
+import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister"
 import { QueryClient } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client"
-import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister"
 import { ReactNode, useState } from "react"
 
 // Create the persister

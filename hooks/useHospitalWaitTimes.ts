@@ -1,16 +1,16 @@
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
 import dayjs from "@/lib/dayjs"
 import { sendGAEvent } from "@next/third-parties/google"
+import { useQuery } from "@tanstack/react-query"
+import axios from "axios"
 import { useEffect, useRef } from "react"
 
 // Import our types and static data
+import { hospitals } from "@/data/hospitals"
 import type {
     ApiResponse,
     EnrichedApiResponse,
     EnrichedHospitalData,
 } from "@/types"
-import { hospitals } from "@/data/hospitals"
 
 /**
  * @description Fetches wait time data from the API and enriches it with static hospital data.

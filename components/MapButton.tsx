@@ -1,8 +1,8 @@
 "use client"
 
-import { Map } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { sendGAEvent } from "@next/third-parties/google"
+import { Map } from "lucide-react"
 import { useGeolocated } from "react-geolocated"
 
 export function MapButton() {

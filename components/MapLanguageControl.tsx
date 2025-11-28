@@ -1,10 +1,10 @@
 "use client"
 
-import { useEffect, useRef } from "react"
-import { useControl } from "react-map-gl/mapbox"
-import MapboxLanguage from "@mapbox/mapbox-gl-language"
 import { LanguageCode } from "@/types"
+import MapboxLanguage from "@mapbox/mapbox-gl-language"
+import { useEffect, useRef } from "react"
 import type { MapRef } from "react-map-gl/mapbox"
+import { useControl } from "react-map-gl/mapbox"
 
 interface MapLanguageControlProps {
     lang: LanguageCode

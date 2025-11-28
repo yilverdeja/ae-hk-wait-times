@@ -1,8 +1,8 @@
-import { useContext } from "react"
 import {
     LanguageContext,
     LanguageContextType,
 } from "@/contexts/LanguageContext"
+import { useContext } from "react"
 
 /**
  * Custom hook for accessing the language context.

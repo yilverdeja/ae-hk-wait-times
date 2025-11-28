@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import { sendGAEvent } from "@next/third-parties/google"
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -11,8 +11,9 @@ import {
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
-import { sendGAEvent } from "@next/third-parties/google"
+import * as React from "react"
 
+import { DataTableToolbar } from "@/components/HospitalTable/Toolbar"
 import {
     Table,
     TableBody,
@@ -21,12 +22,11 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { DataTableToolbar } from "@/components/HospitalTable/Toolbar"
-import { BREAKPOINTS } from "@/lib/constants"
-import { useBreakpoint } from "use-breakpoint"
-import { EnrichedHospitalData } from "@/types"
 import { useLanguage } from "@/hooks/useLanguage"
+import { BREAKPOINTS } from "@/lib/constants"
 import { cn } from "@/lib/utils"
+import { EnrichedHospitalData } from "@/types"
+import { useBreakpoint } from "use-breakpoint"
 
 // 1. Update props to accept the onRowSelect handler
 interface DataTableProps<TData, TValue> {

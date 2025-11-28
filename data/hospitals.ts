@@ -1,5 +1,5 @@
 import { i18n } from "@/lib/i18n"
-import { HospitalData, Region, Cluster } from "@/types"
+import { Cluster, HospitalData, Region } from "@/types"
 
 export const hospitals: HospitalData = {
     AHMLNH: {
