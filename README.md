@@ -18,6 +18,7 @@ Using the [A&E Wait Times Open Data API](https://data.gov.hk/en-data/dataset/hos
 - "Understanding the Wait" modal to let users understand better how wait times are generated and what they mean
 - A dark and light mode theme toggle
 - Switch written languages between English, Traditional Chinese and Simplified Chinese
+- View hospital wait times in a dynamic map
 
 ## Demo
 
@@ -74,10 +75,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ### Display previous hourly averages on current day
 
 On the hospital chart for the current day, rather than only displaying a bar with the wait time at the current hour, also show the previous hour wait times so users can see if the it's following a trend or not.
-
-### Show map
-
-Similar to the original site, it would be helpful to have a view of the hospitals on a map with their current wait times.
 
 ### Predict Future Wait Times
 

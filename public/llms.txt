@@ -8,7 +8,7 @@ Press: /press.jsonld
 ## About This Service
 
 This service, ae.wait.hk, is an independent improvement upon the original Hospital Authority (HA) waiting time display. It aims to offer a more user-friendly and informative experience for individuals seeking Accident & Emergency waiting times in Hong Kong.
-The data is retrieved from the official open data platform data.gov.hk  via the Hospital Authority's API . Our transformed API endpoint is available at [https://ae.wait.hk/api/waits].
+The data is retrieved from the official open data platform data.gov.hk  via the Hospital Authority's API.
 The waiting time information is updated approximately every 15 minutes.
 
 ## Key Features and Differences
@@ -21,64 +21,6 @@ Here are the unique features offered by ae.wait.hk:
 *   **Advanced Sorting:** Hospitals can be sorted by name, region, and various waiting time metrics.
 *   **Multi-Locale Support:** The site is available in English, Traditional Chinese, and Simplified Chinese.
 
-## Transformed API Data Structure
-
-The API endpoint `https://ae.wait.hk/api/waits` returns data in a structured JSON format. Understanding this structure is crucial for accurate data interpretation. Below are the TypeScript interfaces that define the shape of the API response:
-
-```typescript
-export interface TransformedHospitalData {
-    // The full name of the hospital.
-    hospitalName: string
-    // A short acronym for the hospital, e.g., "AHMLNH".
-    hospitalSlug: string // Represents HospitalAcronym
-    // Indicates if the hospital is managing critical (Category I) cases.
-    // Possible values: "MANAGING", "NOT_MANAGING".
-    criticalManagementStatus: "MANAGING" | "NOT_MANAGING" // Represents ManagementStatus
-    // Indicates if the hospital is managing emergency (Category II) cases.
-    // Possible values: "MANAGING", "NOT_MANAGING".
-    emergencyManagementStatus: "MANAGING" | "NOT_MANAGING" // Represents ManagementStatus
-    // An object containing various waiting time metrics in minutes.
-    waitTimes: {
-        // Waiting time for critical (Category I) cases in minutes. Can be null if not applicable.
-        criticalMinutes: number | null
-        // Waiting time for emergency (Category II) cases in minutes. Can be null if not applicable.
-        emergencyMinutes: number | null
-        // 50th percentile waiting time for urgent (Category III) cases in minutes.
-        urgentP50Minutes: number | null
-        // 95th percentile waiting time for urgent (Category III) cases in minutes.
-        urgentP95Minutes: number | null
-        // 50th percentile waiting time for semi-urgent (Category IV) and non-urgent (Category V) cases in minutes.
-        semiUrgentNonUrgentP50Minutes: number | null
-        // 95th percentile waiting time for semi-urgent (Category IV) and non-urgent (Category V) cases in minutes.
-        semiUrgentNonUrgentP95Minutes: number | null
-    }
-}
-
-export interface ApiResponse {
-    // The timestamp when the data was last updated, in "DD/MM/YYYY HH:MM AM/PM" format.
-    lastUpdated: string
-    // An array of TransformedHospitalData objects, each representing a hospital's waiting times.
-    waitTimes: TransformedHospitalData[]
-}
-```
-
-**Explanation of Fields:**
-
-*   `lastUpdated`: A string indicating the timestamp of the last data update.
-*   `waitTimes`: An array where each element (`TransformedHospitalData`) represents a specific hospital.
-    *   `hospitalName`: The full name of the hospital.
-    *   `hospitalSlug`: A unique, short identifier for the hospital.
-    *   `criticalManagementStatus`: Status indicating if the hospital is actively managing critical (Category I) cases.
-    *   `emergencyManagementStatus`: Status indicating if the hospital is actively managing emergency (Category II) cases.
-    *   `waitTimes` (nested object): Contains detailed waiting time metrics for different triage categories:
-        *   `criticalMinutes`: Waiting time for Category I cases.
-        *   `emergencyMinutes`: Waiting time for Category II cases.
-        *   `urgentP50Minutes`: 50th percentile waiting time for Category III (Urgent) cases.
-        *   `urgentP95Minutes`: 95th percentile waiting time for Category III (Urgent) cases.
-        *   `semiUrgentNonUrgentP50Minutes`: 50th percentile waiting time for Category IV (Semi-Urgent) and Category V (Non-Urgent) cases combined.
-        *   `semiUrgentNonUrgentP95Minutes`: 95th percentile waiting time for Category IV (Semi-Urgent) and Category V (Non-Urgent) cases combined.
-        *   *Note: `null` values indicate that data for that specific category or percentile might not be available or applicable at the moment.*
-
 ## How to Access Detailed Hospital Information
 
 To get comprehensive details about a specific hospital, users can click on any hospital record in the main table. This action opens a side panel with the following information:
@@ -90,7 +32,6 @@ To get comprehensive details about a specific hospital, users can click on any h
 
 *   [Official Data Source (data.gov.hk)](https://data.gov.hk/en-data/dataset/hospital-hadata-ae-waiting-time)
 *   [Hospital Authority Open Data API (English)](https://www.ha.org.hk/opendata/aed/aedwtdata2-en.json)
-*   [Our Transformed API](https://ae.wait.hk/api/waits)
 *   [Original Hospital Authority A&E Waiting Time Page](https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=235504)
 
 ## Press

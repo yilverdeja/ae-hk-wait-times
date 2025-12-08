@@ -1,29 +1,25 @@
 import dayjs from "@/lib/dayjs"
 import { sendGAEvent } from "@next/third-parties/google"
 import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
 import { useEffect, useRef } from "react"
 
 // Import our types and static data
+import { getWaitTimes } from "@/app/actions/waits"
 import { hospitals } from "@/data/hospitals"
-import type {
-    ApiResponse,
-    EnrichedApiResponse,
-    EnrichedHospitalData,
-} from "@/types"
+import type { EnrichedApiResponse, EnrichedHospitalData } from "@/types"
 
 /**
- * @description Fetches wait time data from the API and enriches it with static hospital data.
+ * @description Fetches wait time data from the server action and enriches it with static hospital data.
  * This function performs the critical merge operation.
- * 1. Fetches the dynamic wait time data from our Next.js API route.
+ * 1. Fetches the dynamic wait time data from our server action.
  * 2. For each hospital in the API response, it looks up the corresponding static data
  *    (name, address, region, etc.) from `data/hospitals.ts` using the hospital's slug.
  * 3. It combines them into a single, "enriched" object.
  * @returns {Promise<EnrichedApiResponse>} A promise that resolves to the fully merged and enriched data.
  */
 const getEnrichedHospitalWaitTimes = async (): Promise<EnrichedApiResponse> => {
-    // Step 1: Fetch the dynamic data from the API
-    const { data: apiResponse } = await axios.get<ApiResponse>("/api/waits")
+    // Step 1: Fetch the dynamic data from the server action
+    const apiResponse = await getWaitTimes()
 
     // Step 2: Merge the API data with our static hospital data
     const enrichedWaitTimes = apiResponse.waitTimes

@@ -1,9 +1,8 @@
-// app/api/waits/route.ts
+"use server"
 
 import dayjs from "@/lib/dayjs"
 import { ApiResponse, ManagementStatus, TransformedHospitalData } from "@/types"
 import axios from "axios"
-import { NextResponse } from "next/server"
 
 // ============================================================================
 // 1. DATA MODELING (TYPES & INTERFACES)
@@ -110,10 +109,14 @@ const parseManagementStatus = (
 }
 
 // ============================================================================
-// 4. API HANDLER (GET)
+// 4. SERVER ACTION
 // ============================================================================
 
-export async function GET(request: Request) {
+/**
+ * @description Server action to fetch and transform A&E wait time data from the Hospital Authority API.
+ * @returns A promise that resolves to the transformed API response, or throws an error.
+ */
+export async function getWaitTimes(): Promise<ApiResponse> {
     try {
         const response = await axios.get<RawApiResponse>(API_URL)
         const rawData = response.data
@@ -164,13 +167,9 @@ export async function GET(request: Request) {
             waitTimes: transformedData,
         }
 
-        return NextResponse.json(apiResponse)
+        return apiResponse
     } catch (error) {
         console.error("Error fetching or processing A&E wait time data:", error)
-
-        return NextResponse.json(
-            { message: "An error occurred while fetching A&E waiting times." },
-            { status: 500 }
-        )
+        throw new Error("An error occurred while fetching A&E waiting times.")
     }
 }
