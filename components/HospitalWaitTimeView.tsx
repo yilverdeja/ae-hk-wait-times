@@ -86,19 +86,6 @@ function HospitalWaitTimeView() {
         // CRUCIALLY, we DO NOT set selectedHospital to null here.
     }
 
-    if (isLoading) {
-        return (
-            <>
-                <Skeleton className="h-8 w-1/4" />
-                <div className="space-y-2">
-                    <Skeleton className="h-12 w-full" />
-                    <Skeleton className="h-12 w-full" />
-                    <Skeleton className="h-12 w-full" />
-                </div>
-            </>
-        )
-    }
-
     if (isError) {
         const errorCopy = errorTexts[lang]
         return (
@@ -110,6 +97,21 @@ function HospitalWaitTimeView() {
                         {error?.message || errorCopy.message}
                     </AlertDescription>
                 </Alert>
+            </>
+        )
+    }
+
+    // Show loading state if actively loading, or if we don't have data yet (handles localStorage hydration)
+    // Only show this if we're not in an error state
+    if (isLoading || !data) {
+        return (
+            <>
+                <Skeleton className="h-8 w-1/4" />
+                <div className="space-y-2">
+                    <Skeleton className="h-12 w-full" />
+                    <Skeleton className="h-12 w-full" />
+                    <Skeleton className="h-12 w-full" />
+                </div>
             </>
         )
     }

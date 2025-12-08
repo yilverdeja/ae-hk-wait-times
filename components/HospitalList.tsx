@@ -6,7 +6,9 @@ const HospitalList = () => {
     const { data, isLoading, isError, error } = useHospitalWaitTimes()
     const { lang } = useLanguage()
 
-    if (isLoading) {
+    // Show loading state if actively loading, or if we don't have data yet (handles localStorage hydration)
+    // Only show data/error states if we're not in a loading state
+    if (isLoading || !data) {
         return <div>Loading hospital wait times...</div>
     }
 
