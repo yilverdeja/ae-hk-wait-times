@@ -37,7 +37,8 @@ const lastUpdatedText = {
 }
 
 function HospitalWaitTimeView() {
-    const { data, isLoading, isError, error } = useHospitalWaitTimes()
+    const { data, isLoading, isError, error, isFetched } =
+        useHospitalWaitTimes()
     const { lang } = useLanguage()
     const { breakpoint } = useBreakpoint(BREAKPOINTS)
 
@@ -101,9 +102,10 @@ function HospitalWaitTimeView() {
         )
     }
 
-    // Show loading state if actively loading, or if we don't have data yet (handles localStorage hydration)
+    // Show loading state if actively loading, or if query hasn't completed yet (handles localStorage hydration)
     // Only show this if we're not in an error state
-    if (isLoading || !data) {
+    // Using isFetched ensures we don't get stuck in loading if the query completed but failed
+    if (isLoading || !isFetched) {
         return (
             <>
                 <Skeleton className="h-8 w-1/4" />
