@@ -158,8 +158,8 @@ export async function getWaitTimes(): Promise<ApiResponse> {
             }
         )
 
-        // Transform the updateTime from "D/MM/YYYY HH:mmA" to "DD/MM/YYYY HH:mm A" (make sure the day is 2 digits)
-        const updateTime = dayjs(rawData.updateTime, "D/MM/YYYY hh:mmA").format(
+        // Transform the updateTime from "D/M/YYYY HH:mmA" to "DD/MM/YYYY HH:mm A" (make sure the day and month is 2 digits)
+        const updateTime = dayjs(rawData.updateTime, "D/M/YYYY hh:mmA").format(
             "DD/MM/YYYY hh:mm A"
         )
         const apiResponse: ApiResponse = {
