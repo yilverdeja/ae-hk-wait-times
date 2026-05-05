@@ -13,6 +13,7 @@ import {
 interface HospitalSheetInformationProps {
     hospital: EnrichedHospitalData
     lang: LanguageCode
+    layout?: "list" | "grid"
 }
 
 const informationTexts = {
@@ -53,6 +54,7 @@ const InfoItem = ({
 export function HospitalSheetInformation({
     hospital,
     lang,
+    layout = "list",
 }: HospitalSheetInformationProps) {
     // Build the HA profile link using the utility function
     const haProfileLink = buildHospitalLink(hospital.linkId, lang)
@@ -63,7 +65,7 @@ export function HospitalSheetInformation({
             <h3 className="mb-4 text-lg font-semibold tracking-tight">
                 {texts.title}
             </h3>
-            <ul className="space-y-4 text-sm">
+            <ul className={layout === "grid" ? "grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-sm" : "space-y-4 text-sm"}>
                 {hospital.address[lang] && (
                     <InfoItem icon={<MapPin size={20} />}>
                         <a

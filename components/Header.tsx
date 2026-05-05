@@ -4,6 +4,7 @@ import { ThemeSwitcher } from "@/components/ThemeSwitcher"
 import { siteConfig } from "@/configs/site"
 import { useLanguage } from "@/hooks/useLanguage"
 import dynamic from "next/dynamic"
+import Link from "next/link"
 
 // Dynamically import the LanguageSwitcher and disable SSR
 // The 'loading' option provides a fallback UI while the component is loading
@@ -25,11 +26,11 @@ export default function Header() {
     return (
         <header className="flex h-16 items-center border-b bg-background px-4 md:px-6">
             {/* Left side of the header */}
-            <div>
+            <Link href="/">
                 <h1 className="text-xl sm:text-2xl md:text-3xl">
                     {siteConfig.title[lang]}
                 </h1>
-            </div>
+            </Link>
 
             {/* Right side of the header */}
             <div className="ml-auto flex items-center gap-4">
