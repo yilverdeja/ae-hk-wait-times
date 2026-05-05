@@ -129,7 +129,7 @@ export function DataTable<TData, TValue>({
                                                     region: hospital.region,
                                                     waitTime:
                                                         hospital.waitTimes
-                                                            .semiUrgentNonUrgentP50Minutes ??
+                                                            .semiUrgentNonUrgentP95Minutes ??
                                                         null,
                                                 }
                                             )

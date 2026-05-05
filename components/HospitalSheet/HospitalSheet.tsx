@@ -48,7 +48,7 @@ export function HospitalSheet({
     }
 
     // Get the live wait time, ensuring it's a number (default to 0)
-    const liveWaitTime = hospital.waitTimes.semiUrgentNonUrgentP50Minutes ?? 0
+    const liveWaitTime = hospital.waitTimes.semiUrgentNonUrgentP95Minutes ?? 0
 
     // Get the comparison data from the hook
     const comparison = compareWithLiveTime(liveWaitTime)
@@ -76,7 +76,7 @@ export function HospitalSheet({
                             hospitalSlug={hospital.slug}
                             liveWaitTimeInMinutes={
                                 hospital.waitTimes
-                                    .semiUrgentNonUrgentP50Minutes ?? 0
+                                    .semiUrgentNonUrgentP95Minutes ?? 0
                             }
                         />
                         <HospitalSheetInformation

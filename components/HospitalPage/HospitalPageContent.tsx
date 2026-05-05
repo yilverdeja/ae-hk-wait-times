@@ -113,7 +113,7 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
     const { isLoading, isError, compareWithLiveTime } = useHospitalTrends(
         hospital.slug
     )
-    const liveWaitTime = hospital.waitTimes.semiUrgentNonUrgentP50Minutes ?? 0
+    const liveWaitTime = hospital.waitTimes.semiUrgentNonUrgentP95Minutes ?? 0
     const comparison = compareWithLiveTime(liveWaitTime)
     const texts = pageTexts[lang]
     const { waitTimes } = hospital

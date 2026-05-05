@@ -55,7 +55,7 @@ function HospitalWaitTimeView() {
                 hospitalName: selectedHospital.name[lang],
                 region: selectedHospital.region,
                 waitTime:
-                    selectedHospital.waitTimes.semiUrgentNonUrgentP50Minutes ??
+                    selectedHospital.waitTimes.semiUrgentNonUrgentP95Minutes ??
                     null,
             })
         }

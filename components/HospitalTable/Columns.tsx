@@ -266,7 +266,7 @@ export const getColumns = (
         },
         cell: ({ row }) => {
             const waitTime =
-                row.original.waitTimes.semiUrgentNonUrgentP50Minutes
+                row.original.waitTimes.semiUrgentNonUrgentP95Minutes
             const hospitalSlug = row.original.slug
 
             return (
@@ -284,10 +284,10 @@ export const getColumns = (
         },
         sortingFn: (rowA, rowB) => {
             const timeA =
-                rowA.original.waitTimes.semiUrgentNonUrgentP50Minutes ??
+                rowA.original.waitTimes.semiUrgentNonUrgentP95Minutes ??
                 Infinity
             const timeB =
-                rowB.original.waitTimes.semiUrgentNonUrgentP50Minutes ??
+                rowB.original.waitTimes.semiUrgentNonUrgentP95Minutes ??
                 Infinity
             return timeA < timeB ? -1 : timeA > timeB ? 1 : 0
         },

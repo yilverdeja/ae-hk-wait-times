@@ -161,7 +161,7 @@ export function HospitalMapOverlay({
 
                             {/* Secondary wait times - horizontal on larger screens, aligned at bottom */}
                             <div className="flex flex-col sm:flex-row sm:items-end sm:gap-3 pl-5 sm:pl-0 space-y-1 sm:space-y-0 text-xs text-muted-foreground">
-                                {hospital.waitTimes.urgentP50Minutes !==
+                                {hospital.waitTimes.urgentP95Minutes !==
                                     null && (
                                     <div className="sm:border-l sm:pl-3 sm:pb-0.5">
                                         {getLocalizedText(
@@ -170,7 +170,7 @@ export function HospitalMapOverlay({
                                         )}
                                         :{" "}
                                         {formatWaitTimeLocalized(
-                                            hospital.waitTimes.urgentP50Minutes,
+                                            hospital.waitTimes.urgentP95Minutes,
                                             lang
                                         )}
                                     </div>

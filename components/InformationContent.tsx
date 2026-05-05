@@ -259,7 +259,7 @@ export const informationContent: InformationContent = {
                             Triage Categories IV (Semi-urgent) and V
                             (Non-urgent)
                         </strong>{" "}
-                        only. The time represents the 50th percentile, displayed
+                        only. The time represents the 95th percentile, displayed
                         in 0.5-hour increments. This data is for reference only
                         and may not accurately reflect the current, dynamic wait
                         times in the department.
@@ -269,14 +269,14 @@ export const informationContent: InformationContent = {
                     <p>
                         顯示的等候時間為過去數小時的歷史參考數據，且僅適用於
                         <strong>第四類（次緊急）和第五類（非緊急）</strong>
-                        的病人。該時間為第50百分位數，以0.5小時為單位顯示。此數據僅供參考，未必能準確反映急症室當前的實時等候情況。
+                        的病人。該時間為第95百分位數，以0.5小時為單位顯示。此數據僅供參考，未必能準確反映急症室當前的實時等候情況。
                     </p>
                 ),
                 cn: (
                     <p>
                         显示的等候时间为过去数小时的历史参考数据，且仅适用于
                         <strong>第四类（次紧急）和第五类（非紧急）</strong>
-                        的病人。该时间为第50百分位数，以0.5小时为单位显示。此数据仅供参考，未必能准确反映急诊室当前的实时等候情况。
+                        的病人。该时间为第95百分位数，以0.5小时为单位显示。此数据仅供参考，未必能准确反映急诊室当前的实时等候情况。
                     </p>
                 ),
             },

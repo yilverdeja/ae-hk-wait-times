@@ -85,14 +85,14 @@ export function isUserInHongKong(
 // ===================================================================================
 
 /**
- * Get wait time for display (prefer p50 wait time, fallback to p95 wait time)
+ * Get wait time for display (prefer p95 wait time, fallback to p50 wait time)
  */
 export function getDisplayWaitTime(
     hospital: EnrichedHospitalData
 ): number | null {
     return (
-        hospital.waitTimes.semiUrgentNonUrgentP50Minutes ??
         hospital.waitTimes.semiUrgentNonUrgentP95Minutes ??
+        hospital.waitTimes.semiUrgentNonUrgentP50Minutes ??
         null
     )
 }
