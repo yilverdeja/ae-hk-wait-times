@@ -28,6 +28,31 @@ To get comprehensive details about a specific hospital, users can click on any h
 *   **Hourly Trend Graph:** A graph illustrating the waiting time trends hour-by-hour for the current day. Users can also select different days (Monday to Sunday) to view historical waiting time trends for all 24 hours of those days.
 *   **Hospital Contact and Location:** Includes the hospital's Google Maps location, phone number, fax, email, official website (if available), and its profile on the Hospital Authority website.
 
+## Individual Hospital Pages
+
+Each hospital has a dedicated page at /hospital/<slug> with real-time A&E wait times by triage category (Critical, Emergency, Urgent, Semi-Urgent/Non-Urgent), a wait time trend chart for the current and historical days, and hospital contact details (address, telephone, fax, email, website, Google Maps link).
+
+| Slug | English Name | Region |
+|------|-------------|--------|
+| AHMLNH | Alice Ho Miu Ling Nethersole Hospital | New Territories |
+| CMC | Caritas Medical Centre | Kowloon |
+| KWH | Kwong Wah Hospital | Kowloon |
+| NDH | North District Hospital | New Territories |
+| NLH | North Lantau Hospital | New Territories |
+| PMH | Princess Margaret Hospital | New Territories |
+| POH | Pok Oi Hospital | New Territories |
+| POWH | Prince of Wales Hospital | New Territories |
+| PYNEH | Pamela Youde Nethersole Eastern Hospital | Hong Kong Island |
+| QEH | Queen Elizabeth Hospital | Kowloon |
+| QMH | Queen Mary Hospital | Hong Kong Island |
+| RH | Ruttonjee Hospital | Hong Kong Island |
+| SJH | St John Hospital | New Territories |
+| TKOH | Tseung Kwan O Hospital | New Territories |
+| TMH | Tuen Mun Hospital | New Territories |
+| TSWH | Tin Shui Wai Hospital | New Territories |
+| UCH | United Christian Hospital | Kowloon |
+| YCH | Yan Chai Hospital | New Territories |
+
 ## Relevant Links
 
 *   [Official Data Source (data.gov.hk)](https://data.gov.hk/en-data/dataset/hospital-hadata-ae-waiting-time)

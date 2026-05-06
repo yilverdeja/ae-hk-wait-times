@@ -1,3 +1,4 @@
+import { hospitals } from "@/data/hospitals"
 import { MetadataRoute } from "next"
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -11,6 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: "always", // updated every 15 minutes
             priority: 1,
         },
+        ...Object.keys(hospitals).map((slug) => ({
+            url: `${baseUrl}/hospital/${slug}`,
+            lastModified: currentDate,
+            changeFrequency: "daily" as const,
+            priority: 0.8,
+        })),
         {
             url: `${baseUrl}/faq.jsonld`,
         },
