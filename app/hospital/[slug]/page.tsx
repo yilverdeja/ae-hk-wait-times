@@ -13,7 +13,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-    const { slug } = await params
+    const { slug: rawSlug } = await params
+    const slug = rawSlug.toUpperCase()
     const hospital = hospitals[slug]
     if (!hospital) return {}
     const pageUrl = `https://ae.wait.hk/hospital/${slug}`
@@ -62,7 +63,8 @@ const nullWaitTimes: EnrichedHospitalData["waitTimes"] = {
 }
 
 export default async function HospitalPage({ params }: PageProps) {
-    const { slug } = await params
+    const { slug: rawSlug } = await params
+    const slug = rawSlug.toUpperCase()
     const hospital = hospitals[slug]
 
     if (!hospital) {
