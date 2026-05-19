@@ -74,6 +74,7 @@ export function HospitalSheetAlternatives({
                     <li key={facility.slug}>
                         <Link
                             href={`/alternatives/${facility.slug}`}
+                            target="_blank"
                             className="flex items-start justify-between gap-2 text-sm hover:underline"
                         >
                             <span className="font-medium leading-snug">
@@ -95,6 +96,7 @@ export function HospitalSheetAlternatives({
             </ul>
             <Link
                 href="/alternatives"
+                target="_blank"
                 className="mt-3 inline-flex items-center gap-1 text-xs text-amber-700 dark:text-amber-400 hover:underline"
             >
                 {t.viewAll}

@@ -108,7 +108,7 @@ export function AlternativeDetailContent({ entry }: AlternativeDetailContentProp
     const name = localizedText(entry.name.en, entry.name.zh, lang)
 
     return (
-        <div className="mx-auto max-w-3xl px-4 py-8">
+        <div className="mx-auto px-4 py-8">
             <Link
                 href="/alternatives"
                 className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
