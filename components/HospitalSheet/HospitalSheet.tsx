@@ -1,5 +1,6 @@
 "use client"
 
+import { HospitalSheetAlternatives } from "@/components/HospitalSheet/HospitalSheetAlternatives"
 import { HospitalSheetDescriptionBusyness } from "@/components/HospitalSheet/HospitalSheetDescriptionBusyness"
 import { HospitalSheetInformation } from "@/components/HospitalSheet/HospitalSheetInformation"
 import { HospitalTrendChart } from "@/components/HospitalTrendChart"
@@ -78,6 +79,11 @@ export function HospitalSheet({
                                 hospital.waitTimes
                                     .semiUrgentNonUrgentP95Minutes ?? 0
                             }
+                        />
+                        <HospitalSheetAlternatives
+                            hospitalCoordinates={hospital.coordinates}
+                            waitTimeMinutes={liveWaitTime}
+                            lang={lang}
                         />
                         <HospitalSheetInformation
                             hospital={hospital}

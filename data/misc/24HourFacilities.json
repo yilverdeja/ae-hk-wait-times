@@ -1,0 +1,419 @@
+[
+    {
+      "slug": "canossa-hospital",
+      "name": {
+        "en": "Canossa Hospital (Caritas)",
+        "zh": "嘉諾撒醫院"
+      },
+      "type": "Private Hospital",
+      "district": "Mid-Levels",
+      "address": {
+        "en": "1 Old Peak Road, Mid-Levels, Hong Kong",
+        "zh": "香港舊山頂道一號"
+      },
+      "coordinates": {
+        "latitude": 22.2778,
+        "longitude": 114.1500
+      },
+      "phone": "2522 2181 (General) / 2825 5805 (24-hour OPD)",
+      "url": "https://www.canossahospital.org.hk/en/service/24_hours_out_patient_services/",
+      "referringUrls": [
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours",
+        "https://www.blue.com.hk/blog/hk/%E5%81%A5%E5%BA%B7%E8%B3%87%E8%A8%8A/24-hour-outpatient-clinic-private-hospital-fee",
+        "https://www.healthymatters.com.hk/complete-guide-canossa-hospital-caritas-%E5%98%89%E8%AB%BE%E6%92%92%E9%86%AB%E9%99%A2-hong-kong/"
+      ],
+      "facilities": [
+        "X-Ray",
+        "Pharmacy",
+        "Laboratory",
+        "Wound Clinic",
+        "Endoscopy Centre",
+        "Physiotherapy",
+        "Dietetic Service",
+        "Child Health Centre",
+        "Special Care Unit",
+        "Dual-Energy X-Ray (Reveal 35C)"
+      ],
+      "baseConsultationFee": "HK$388 (Mon-Fri 08:00-17:59). Night/weekend surcharges apply. Excludes drugs, lab tests, and medical supplies.",
+      "additionalInfo": "24-hour OPD consultation conducted by experienced Resident Medical Officers. Walk-in and phone appointment accepted (Tel: 2825 5805). Does NOT have its own A&E; patients requiring casualty treatment will be transferred to a nearby HA hospital. Founded in 1929, 148 beds."
+    },
+    {
+      "slug": "gleneagles-hospital-hk",
+      "name": {
+        "en": "Gleneagles Hospital Hong Kong",
+        "zh": "港怡醫院"
+      },
+      "type": "Private Hospital",
+      "district": "Wong Chuk Hang",
+      "address": {
+        "en": "1 Nam Fung Path, Wong Chuk Hang, Hong Kong",
+        "zh": "香港黃竹坑南風徑1號"
+      },
+      "coordinates": {
+        "latitude": 22.2480,
+        "longitude": 114.1740
+      },
+      "phone": "3153 9000",
+      "url": "https://gleneagles.hk/facilities-services/explore-facilities-and-services/general-facilities/24-hour-outpatient-and-emergency",
+      "referringUrls": [
+        "https://www.sassymamahk.com/hong-kong-public-private-hospital-emergency-department-health/",
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours",
+        "https://www.blue.com.hk/blog/hk/%E5%81%A5%E5%BA%B7%E8%B3%87%E8%A8%8A/24-hour-outpatient-clinic-private-hospital-fee"
+      ],
+      "facilities": [
+        "X-Ray",
+        "Pharmacy",
+        "Laboratory",
+        "ECG",
+        "Resuscitation Room",
+        "Negative-Pressure Room",
+        "Observation Beds",
+        "Triage Zone (Infection Control)",
+        "CT Scanner",
+        "MRI",
+        "Radiology Services",
+        "Dialysis Centre",
+        "Endoscopy and Day Surgery Centre",
+        "Radiotherapy",
+        "Rehabilitation Services"
+      ],
+      "baseConsultationFee": "HK$420 - HK$1,100 depending on day and time. Excludes medication and laboratory services.",
+      "additionalInfo": "The first and only private hospital on Hong Kong Island providing round-the-clock outpatient and emergency medical services. At least two doctors on duty at all times, including at least one Emergency Medicine Specialist. Special paediatric sessions available. Free shuttle bus from MTR Wong Chuk Hang Station. Part of IHH Healthcare."
+    },
+    {
+      "slug": "adventist-hospital-stubbs-road",
+      "name": {
+        "en": "Hong Kong Adventist Hospital – Stubbs Road",
+        "zh": "香港港安醫院–司徒拔道"
+      },
+      "type": "Private Hospital",
+      "district": "Happy Valley",
+      "address": {
+        "en": "40 Stubbs Road, Happy Valley, Hong Kong",
+        "zh": "香港司徒拔道四十號"
+      },
+      "coordinates": {
+        "latitude": 22.2680,
+        "longitude": 114.1830
+      },
+      "phone": "3651 8888 (General) / 3651 8991 (Urgent Care)",
+      "url": "https://www.hkah.org.hk/en/specialist-clinics/24-7-urgent-care-clinic",
+      "referringUrls": [
+        "https://www.littlestepsasia.com/hong-kong/family-life/parenting-life/emergency-public-private-hospital/",
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours",
+        "https://www.sassymamahk.com/hong-kong-public-private-hospital-emergency-department-health/"
+      ],
+      "facilities": [
+        "X-Ray",
+        "Pharmacy",
+        "ECG",
+        "Laboratory",
+        "Emergency Angioplasty (24/7)",
+        "Hybrid Cardiac Catheterization & Interventional Operating Room",
+        "Special Care Ward (24-hour monitoring)",
+        "Stroke Emergency (thrombolytic therapy)",
+        "Orthopedic Trauma (cast, reduction, braces)"
+      ],
+      "baseConsultationFee": "HK$1,200 (24-hour Urgent Care). HK$450 (Mon-Fri outpatient GP/Family Medicine). HK$550 (Weekends & Public Holidays outpatient GP/Family Medicine). Excludes medication, tests, and specialist fees.",
+      "additionalInfo": "24/7 Urgent Care Clinic managed by Emergency Medicine Specialists. Single activation emergency response team can mobilize doctors, nurses, radiotherapists, and specialists at a moment's notice. Meets international 90-minute golden hour standard for heart attack patients. Provides paediatric urgent care for children."
+    },
+    {
+      "slug": "hk-sanatorium",
+      "name": {
+        "en": "Hong Kong Sanatorium & Hospital",
+        "zh": "養和醫院"
+      },
+      "type": "Private Hospital",
+      "district": "Happy Valley",
+      "address": {
+        "en": "2 Village Road, Happy Valley, Hong Kong",
+        "zh": "香港跑馬地山村道二號"
+      },
+      "coordinates": {
+        "latitude": 22.2710,
+        "longitude": 114.1830
+      },
+      "phone": "2572 0211 (General) / 2835 8600 (24-hour OPD)",
+      "url": "https://www.hksh-hospital.com/en/clinical-services/24-hour-outpatient-service",
+      "referringUrls": [
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours",
+        "https://www.bowtie.com.hk/blog/zh/%E7%A7%81%E5%AE%B6%E9%86%AB%E9%99%A2%E7%99%BE%E7%A7%91/%E9%A4%8A%E5%92%8C%E9%86%AB%E9%99%A2-%E9%96%80%E8%A8%BA-%E6%80%A5%E7%97%87/",
+        "https://www.yourevercare.com/%E9%A4%8A%E5%92%8C%E9%86%AB%E9%99%A2"
+      ],
+      "facilities": [
+        "X-Ray",
+        "Pharmacy",
+        "ECG",
+        "Laboratory",
+        "Treatment Rooms (suturing, foreign body removal, casting)",
+        "Cardiac Monitoring",
+        "Resuscitation Equipment",
+        "Lithotripsy Centre",
+        "Radiotherapy",
+        "Diagnostic & Interventional Radiology"
+      ],
+      "baseConsultationFee": "HK$500 (Mon-Fri 19:00-00:00). HK$700 (Daily 00:00-08:00). Daytime fees lower. 20% surcharge for services outside normal hours (Mon-Fri after 19:00, Sat after 13:00, Sun & PH). Excludes drugs, tests, and specialist fees.",
+      "additionalInfo": "Founded in 1922. About 500 beds with over 30 specialist centres. 24-hour general outpatient service including Sundays and public holidays via Family Medicine and Primary Care Centre. On-call specialists available around the clock. Walk-in and phone appointment accepted. WhatsApp enquiry: 2835 8600. Waiting time typically less than 30 minutes."
+    },
+    {
+      "slug": "matilda-hospital",
+      "name": {
+        "en": "Matilda International Hospital",
+        "zh": "明德國際醫院"
+      },
+      "type": "Private Hospital",
+      "district": "The Peak",
+      "address": {
+        "en": "41 Mount Kellett Road, The Peak, Hong Kong",
+        "zh": "香港山頂加列山道41號"
+      },
+      "coordinates": {
+        "latitude": 22.2630,
+        "longitude": 114.1490
+      },
+      "phone": "2849 0111",
+      "url": "https://www.matilda.org/en/services-specialities/24-hours-outpatient",
+      "referringUrls": [
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours",
+        "https://en.wikipedia.org/wiki/Matilda_International_Hospital",
+        "https://www.welloft.com/en/merchant/matilda-international-hospital-3"
+      ],
+      "facilities": [
+        "X-Ray",
+        "Pharmacy",
+        "Laboratory",
+        "MRI",
+        "CT Scanner",
+        "Private Consultation Rooms",
+        "Treatment Rooms",
+        "Radiotherapy Department",
+        "Physiotherapy Department",
+        "Adult High-Dependency Unit",
+        "Special Care Baby Unit"
+      ],
+      "baseConsultationFee": "Fees vary by time of day and doctor. Consultation fees are set by individual private practitioners. Contact hospital for current rates. Excludes medication, lab services, and procedures.",
+      "additionalInfo": "Founded in 1907. Nonprofit private hospital with no religious, commercial, or academic affiliation. First hospital in the world to receive Outstanding Achievement from ACHS International EQuIP7. Patient pledge: seen within 30 minutes if doctor available, max 60 minutes unless fully booked. Walk-in accepted; appointments encouraged. Also has an in-town Medical Centre in Central. Service remains unchanged during Black Rainstorm or Typhoon Signal No.8+."
+    },
+    {
+      "slug": "st-pauls-hospital",
+      "name": {
+        "en": "St. Paul's Hospital",
+        "zh": "聖保祿醫院"
+      },
+      "type": "Private Hospital",
+      "district": "Causeway Bay",
+      "address": {
+        "en": "2 Eastern Hospital Road, Causeway Bay, Hong Kong",
+        "zh": "香港銅鑼灣東院道2號"
+      },
+      "coordinates": {
+        "latitude": 22.2760,
+        "longitude": 114.1880
+      },
+      "phone": "2890 6008 / 2830 8888",
+      "url": "https://www.stpaul.org.hk/en/center-and-service/detail/24-hour-outpatient-department-general",
+      "referringUrls": [
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours",
+        "https://www.sunlife.com.hk/zh-hant/life-moments/staying-healthy/24-hours-clinics/",
+        "https://www.blue.com.hk/blog/hk/%E5%81%A5%E5%BA%B7%E8%B3%87%E8%A8%8A/24-hour-outpatient-clinic-private-hospital-fee"
+      ],
+      "facilities": [
+        "X-Ray",
+        "Pharmacy",
+        "Laboratory",
+        "Imaging and Diagnostics",
+        "Minor Surgical Procedures",
+        "ECG"
+      ],
+      "baseConsultationFee": "HK$280 (Mon-Sat 08:00-19:59). Night and holiday surcharges apply. Excludes drugs, tests, and procedures.",
+      "additionalInfo": "Comprehensive acute private hospital at the heart of Causeway Bay with around 500 beds and more than 20 departments. 24-hour General Outpatient Department provides one-stop professional service covering daytime, nighttime, and holiday periods. No appointment required; walk-in only for 24-hour OPD. Service remains unchanged during Black Rainstorm or Typhoon Signal No.8+."
+    },
+    {
+      "slug": "baptist-hospital",
+      "name": {
+        "en": "Hong Kong Baptist Hospital",
+        "zh": "香港浸信會醫院"
+      },
+      "type": "Private Hospital",
+      "district": "Kowloon Tong",
+      "address": {
+        "en": "222 Waterloo Road, Kowloon Tong, Kowloon",
+        "zh": "九龍窩打老道222號"
+      },
+      "coordinates": {
+        "latitude": 22.3380,
+        "longitude": 114.1750
+      },
+      "phone": "2339 8888 (General) / 2339 8941-8944 (OPD)",
+      "url": "https://www.hkbh.org.hk/general_specialist/24-hr-general-out-patient-cliinic/?lang=en",
+      "referringUrls": [
+        "https://www.littlestepsasia.com/hong-kong/family-life/parenting-life/emergency-public-private-hospital/",
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours",
+        "https://hongkongcheapo.com/lifestyle/hospitals-emergency-healthcare-tourists/"
+      ],
+      "facilities": [
+        "X-Ray",
+        "Pharmacy",
+        "ECG",
+        "Laboratory",
+        "Specialist Clinics (General Surgery, Nephrology, Neurology, Respiratory Medicine, Orthopaedics, Geriatric Medicine)",
+        "Nurse Clinic (Stoma & Wound Care)"
+      ],
+      "baseConsultationFee": "HK$400 - HK$1,000 depending on day and time. Mon-Fri 18:00-22:00: HK$700. Mon-Fri 22:00-08:00: HK$1,000. Excludes medication, tests, and specialist fees.",
+      "additionalInfo": "Triage system allocates patients to 24-hour Out Patient Clinic or specialist clinics. Walk-in accepted. 30-story private hospital connected to the Baptist Convention of Hong Kong. Paediatric specialist support available for emergencies. Non-duty specialist call-back fee of HK$1,000 during Mon-Sat 19:00-08:00, all day Sun & PH. Special procedure facility fee: HK$500 per 30 minutes."
+    },
+    {
+      "slug": "st-teresas-hospital",
+      "name": {
+        "en": "St. Teresa's Hospital",
+        "zh": "聖德肋撒醫院"
+      },
+      "type": "Private Hospital",
+      "district": "Kowloon City",
+      "address": {
+        "en": "327 Prince Edward Road West, Kowloon, Hong Kong",
+        "zh": "九龍太子道西327號"
+      },
+      "coordinates": {
+        "latitude": 22.3260,
+        "longitude": 114.1870
+      },
+      "phone": "2200 3434 (General) / 2200 3108 (OPD)",
+      "url": "https://www.sth.org.hk/",
+      "referringUrls": [
+        "https://www.bowtie.com.hk/blog/en/hospitals/st-teresa-hospital-check/",
+        "https://www.sassymamahk.com/hong-kong-public-private-hospital-emergency-department-health/",
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours"
+      ],
+      "facilities": [
+        "X-Ray",
+        "Pharmacy",
+        "ECG",
+        "Laboratory",
+        "35 Consultation Rooms",
+        "1 Treatment Room",
+        "1 Cohort Room",
+        "Breast Centre",
+        "Heart & Diagnostic Centre",
+        "Rehabilitation Centre",
+        "Chinese Medicine Centre",
+        "Endoscopy Centre"
+      ],
+      "baseConsultationFee": "HK$180 - HK$470. Mon-Sat 08:00-19:59 from HK$180. Mon-Sat night (20:00-07:59): HK$430. Sun & PH night (20:00-07:59): HK$470. Excludes tests, procedures, drugs, and operations.",
+      "additionalInfo": "Largest nonprofit Roman Catholic hospital in Kowloon. Founded in 1940. Locally known as the French Hospital or Kowloon French Hospital. Approximately 1,000 beds. Out-Patient Department has Day Outpatient (East Wing lobby) and Night Outpatient (South Wing) entrances. Bookings can be made minimum 2 days in advance via email."
+    },
+    {
+      "slug": "union-hospital",
+      "name": {
+        "en": "Union Hospital",
+        "zh": "仁安醫院"
+      },
+      "type": "Private Hospital",
+      "district": "Tai Wai",
+      "address": {
+        "en": "18 Fu Kin Street, Tai Wai, Sha Tin, New Territories",
+        "zh": "新界沙田大圍富健街18號"
+      },
+      "coordinates": {
+        "latitude": 22.3720,
+        "longitude": 114.1710
+      },
+      "phone": "2608 3388 (General) / 2608 3355 (24-hour Emergency Hotline)",
+      "url": "https://www.union.org/en/service-overview/emergency-outpatient",
+      "referringUrls": [
+        "https://www.sassymamahk.com/hong-kong-public-private-hospital-emergency-department-health/",
+        "https://www.littlestepsasia.com/hong-kong/family-life/parenting-life/emergency-public-private-hospital/",
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours"
+      ],
+      "facilities": [
+        "X-Ray",
+        "Pharmacy",
+        "ECG",
+        "Laboratory",
+        "24-hour Thrombolysis Service (Acute MI)",
+        "Stroke Emergency Service",
+        "Dental",
+        "Paediatrics",
+        "Radiology",
+        "Endoscopy & Day Procedure Centre",
+        "Renal Dialysis Centre",
+        "Intensive Care / High Dependency Care"
+      ],
+      "baseConsultationFee": "HK$330 - HK$1,300 depending on day and time. Mon-Fri 20:00-23:59: HK$900. Daily 02:00-07:59: HK$1,300. Excludes medication, tests, and specialist fees.",
+      "additionalInfo": "24-hour emergency medicine consultation services and specialist outpatient services. Also has polyclinics in Kowloon and New Territories. Paediatric department with experienced doctors. Free shuttle bus from Tai Wai MTR Station (every 5-15 minutes). Hotel-style imaging, flat rate pricing, and set-price operation packages."
+    },
+    {
+      "slug": "adventist-hospital-tsuen-wan",
+      "name": {
+        "en": "Hong Kong Adventist Hospital – Tsuen Wan",
+        "zh": "香港港安醫院–荃灣"
+      },
+      "type": "Private Hospital",
+      "district": "Tsuen Wan",
+      "address": {
+        "en": "199 Tsuen King Circuit, Tsuen Wan, New Territories",
+        "zh": "新界荃灣荃景圍199號"
+      },
+      "coordinates": {
+        "latitude": 22.3680,
+        "longitude": 114.1070
+      },
+      "phone": "2276 6688 (General) / 2275 6888 (Urgent Care Center)",
+      "url": "https://www.twah.org.hk/en/specialist-clinics/24-hours-urgent-care-center",
+      "referringUrls": [
+        "https://www.littlestepsasia.com/hong-kong/family-life/parenting-life/emergency-public-private-hospital/",
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours",
+        "https://www.pacificprime.com/blog/best-private-hospitals-in-hong-kong.html"
+      ],
+      "facilities": [
+        "X-Ray",
+        "Pharmacy",
+        "ECG",
+        "Laboratory",
+        "Emergency Resuscitation Equipment",
+        "Triage Station"
+      ],
+      "baseConsultationFee": "Fees vary by time of day and service. Contact hospital for current rates. Excludes medication, tests, and specialist fees.",
+      "additionalInfo": "The only private hospital in New Territories West providing emergency care services. 24-hour Emergency Medicine Specialist on duty. Nurses perform immediate triage upon arrival. Resident in-house Family Medicine doctors with specialist backup. WhatsApp booking available."
+    },
+    {
+      "slug": "cuhk-medical-centre",
+      "name": {
+        "en": "CUHK Medical Centre",
+        "zh": "香港中文大學醫院"
+      },
+      "type": "Private Hospital",
+      "district": "Sha Tin",
+      "address": {
+        "en": "9 Chak Cheung Street, Sha Tin, New Territories",
+        "zh": "新界沙田澤祥街9號"
+      },
+      "coordinates": {
+        "latitude": 22.3830,
+        "longitude": 114.2020
+      },
+      "phone": "3946 6888 (General) / 3946 6333 (Emergency Medicine Centre)",
+      "url": "https://www.cuhkmc.hk/",
+      "referringUrls": [
+        "https://www.blue.com.hk/blog/hk/%E5%81%A5%E5%BA%B7%E8%B3%87%E8%A8%8A/24-hour-outpatient-clinic-private-hospital-fee",
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours",
+        "https://www.thestandard.com.hk/news/article/320719/CUHK-Medical-Centre-to-slash-24-hour-urgent-care-prices"
+      ],
+      "facilities": [
+        "X-Ray",
+        "Pharmacy",
+        "ECG",
+        "Laboratory",
+        "CT Scanner",
+        "MRI",
+        "Emergency Medicine Centre",
+        "Specialist Outpatient Centre",
+        "Day Surgery Centre",
+        "Bluetooth-enabled Navigation System",
+        "Self-service Kiosks",
+        "Fully Paperless Electronic Medical Record System"
+      ],
+      "baseConsultationFee": "HK$600 (Mon-Fri 18:00-21:59; Sat 13:00-21:59). HK$800 (Daily 22:00-07:59). New package prices for common conditions (fever, cold, flu, gastroenteritis) including consultation and basic medication. Excludes other medication and tests.",
+      "additionalInfo": "Non-profit private teaching hospital wholly owned by The Chinese University of Hong Kong. Hong Kong's first smart hospital. Emergency Medicine Centre staffed by Emergency Medicine Specialists and nurses 24 hours. Phase III price adjustment streamlined 24-hour outpatient and emergency service pricing and launched outpatient medication packages. Accepts Octopus payment at Emergency Medicine Centre."
+    }
+  ]

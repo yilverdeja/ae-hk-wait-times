@@ -1,3 +1,4 @@
+import { alternatives } from "@/data/alternatives"
 import { hospitals } from "@/data/hospitals"
 import { MetadataRoute } from "next"
 
@@ -27,5 +28,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
         {
             url: `${baseUrl}/llms.txt`,
         },
+        {
+            url: `${baseUrl}/alternatives`,
+            lastModified: currentDate,
+            changeFrequency: "monthly" as const,
+            priority: 0.7,
+        },
+        ...alternatives.map((e) => ({
+            url: `${baseUrl}/alternatives/${e.slug}`,
+            lastModified: currentDate,
+            changeFrequency: "monthly" as const,
+            priority: 0.6,
+        })),
     ]
 }

@@ -1,0 +1,860 @@
+[
+    {
+      "slug": "precious-blood-hospital",
+      "name": {
+        "en": "Precious Blood Hospital (Caritas)",
+        "zh": "寶血醫院（明愛）"
+      },
+      "type": "Private Hospital",
+      "district": "Sham Shui Po",
+      "address": {
+        "en": "113 Castle Peak Road, Sham Shui Po, Kowloon, Hong Kong",
+        "zh": "九龍深水埗青山道113號"
+      },
+      "coordinates": {
+        "latitude": 22.3310,
+        "longitude": 114.1610
+      },
+      "phone": "3971 9900 (General) / 3971 9980 (OPD)",
+      "operationHours": {
+        "general_outpatient": "Mon-Sat 08:00-22:00 (registration closes 21:40). Sun, Public Holidays, Typhoon Signal No.8+ & Black Rain: 08:00-22:00.",
+        "specialist_outpatient": "By appointment only. Varies by specialist (typically Mon-Sat, daytime hours). Must book 3 working days in advance online or via WhatsApp 9249 1904."
+      },
+      "url": "https://www.pbh.hk/out-patient/",
+      "referringUrls": [
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours",
+        "https://www.healthymatters.com.hk/complete-guide-to-precious-blood-hospital-caritas-%E5%AF%B6%E8%A1%80%E9%86%AB%E9%99%A2-in-hong-kong/",
+        "https://www.bowtie.com.hk/blog/zh/%E7%A7%81%E5%AE%B6%E9%86%AB%E9%99%A2%E7%99%BE%E7%A7%91/%E5%AF%B6%E8%A1%80%E9%86%AB%E9%99%A2-%E9%96%80%E8%A8%BA-%E6%80%A5%E7%97%87/",
+        "https://www.blue.com.hk/blog/hk/%E5%81%A5%E5%BA%B7%E8%B3%87%E8%A8%8A/24-hour-outpatient-clinic-private-hospital-fee"
+      ],
+      "facilities": [
+        "MRI",
+        "CT Scanner",
+        "X-Ray",
+        "Mammogram",
+        "Bone Density (DEXA)",
+        "Ultrasound",
+        "Endoscopy Centre",
+        "Clinical Pathology Laboratory (HOKLAS Accredited)",
+        "Pharmacy",
+        "Physiotherapy (Chan Tang Rehabilitation Centre)",
+        "Optometry Centre",
+        "Operating Theatres (including Minimally Invasive Surgery Centre)",
+        "Day Surgery Ward",
+        "Haemodialysis Service",
+        "Histopathology Service",
+        "Dietary Service"
+      ],
+      "baseConsultationFee": "General OPD: HK$280 (Mon-Sat 08:00-19:59). HK$390 (Sun, PH, Typhoon No.8+, Black Rain all day). Consultation fee excludes drugs, injections, dressing changes, lab tests, X-ray, minor surgery, and other procedures.",
+      "additionalInfo": "NOT a 24-hour facility. Founded in 1937 by the Sisters of the Precious Blood, managed by Caritas Hong Kong since 1993. Approximately 180 beds. Grade III Historic Building in Hong Kong. Does NOT provide A&E services; patients requiring casualty treatment will be transferred to a nearby HA hospital. The hospital is the first private hospital in Hong Kong to offer discounted surgical packages for public hospital patients. Walk-in accepted for general OPD; specialist OPD requires appointment. Maternity services available (reopened in 2009). MTR: Sham Shui Po Station Exit D2 (5-minute walk). Undergoing redevelopment in partnership with Parkway Medical Services (IHH Healthcare) under a 2024 MOU. Accepts cash, EPS, Visa/Mastercard, UnionPay, WeChat Pay."
+    },
+    {
+      "slug": "evangel-hospital",
+      "name": {
+        "en": "Evangel Hospital",
+        "zh": "播道醫院"
+      },
+      "type": "Private Hospital",
+      "district": "Kowloon City",
+      "address": {
+        "en": "222 Argyle Street, Kowloon, Hong Kong",
+        "zh": "九龍亞皆老街222號"
+      },
+      "coordinates": {
+        "latitude": 22.3270,
+        "longitude": 114.1870
+      },
+      "phone": "2711 5222 (General) / 2711 5221 (OPD)",
+      "operationHours": {
+        "general_outpatient": "Daily 07:00-23:00 (including Sundays and Public Holidays). Registration: 07:00-22:45 (subject to fine adjustment).",
+        "specialist_outpatient": "By appointment. Enquiry & Appointment: 2760 3420. Varies by specialist (see downloadable timetable on hospital website).",
+        "chinese_medicine": "Varies. Address: Shop 45, G/F, Chi Chun Lau, Chun Seen Mei Chuen, Fu Ning Street, Kowloon City. Tel: 2762 2218.",
+        "dental": "Available at hospital. Contact OPD for schedule."
+      },
+      "url": "https://evangel.org.hk/en/services/opd/general_clinic/service_hours/",
+      "referringUrls": [
+        "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours",
+        "https://www.healthymatters.com.hk/complete-guide-to-evangel-hospital-%E6%92%AD%E9%81%93%E9%86%AB%E9%99%A2-in-hong-kong/",
+        "https://www.bowtie.com.hk/blog/zh/%E7%A7%81%E5%AE%B6%E9%86%AB%E9%99%A2%E7%99%BE%E7%A7%91/%E6%92%AD%E9%81%93%E9%86%AB%E9%99%A2-%E9%96%80%E8%A8%BA/",
+        "https://www.fwd.com.hk/zh/blog/health/guideline-of-evangel-hospital/"
+      ],
+      "facilities": [
+        "CT Scanner",
+        "MRI",
+        "PET-CT Scanner",
+        "X-Ray",
+        "Lithotripsy",
+        "4 Operating Theatres",
+        "4 Endoscopy Suites",
+        "Clinical Laboratory",
+        "Pharmacy",
+        "Physiotherapy",
+        "Dietetics",
+        "Optometric Centre",
+        "Psychological Assessment & Counselling Centre",
+        "DEXA Bone Density Scanner"
+      ],
+      "baseConsultationFee": "General OPD: HK$285 (Mon-Fri). HK$395 (Sat, Sun & Public Holidays). 10% discount on outpatient consultation and drug for persons aged 65 or above. Excludes drugs, medical supplies, lab tests, and other special treatments.",
+      "additionalInfo": "NOT a 24-hour facility. Hours are 07:00-23:00 daily. Does NOT provide A&E services; patients needing casualty treatment are transferred to nearby HA hospitals. Founded in the 1950s by the Evangelical Free Church of China. Non-profit, self-financing with no government subvention. Over 60 beds. Five-storey hospital. Provides holistic care including pastoral/chaplaincy services. Evangel Hospital mobile app allows access to medical records, consultation history, and appointment booking. Limited services maintained during Black Rainstorm or Typhoon Signal No. 8+. MTR: Sung Wong Toi Station Exit B1, or Mong Kok Station Exit D2 (then bus). Has district clinics in Sha Tin (Unit 1317, Level 13, Tower 1, Grand Central Plaza; Tel: 2699 1113) and To Kwa Wan (G/F, 2 Sung Wong Toi Road; Psychological Assessment). Accepts cash, EPS, Visa/Mastercard, UnionPay, Alipay, WeChat Pay. No cheque payments."
+    },
+    {
+      "slug": "town-health-tai-wai",
+      "name": {
+        "en": "Town Health Medical – Tai Wai Night Clinic",
+        "zh": "康健醫療–大圍夜診"
+      },
+      "type": "Private Clinic",
+      "district": "Tai Wai",
+      "address": {
+        "en": "Shop No. 7, G/F, Tin Po Building, 98 Tai Wai Road, Sha Tin, New Territories",
+        "zh": "新界沙田大圍道98號田寶大廈地下7號舖"
+      },
+      "coordinates": {
+        "latitude": 22.3730,
+        "longitude": 114.1780
+      },
+      "phone": null,
+      "operationHours": {
+        "general_outpatient": "Mon-Tue, Thu-Sun: 08:00-13:00, 15:30-20:30, 20:30-04:30. Wed: 08:00-13:00, 15:30-20:30, 20:30-05:30. Public Holidays: 08:00-13:00, 15:30-20:30, 20:30-04:30."
+      },
+      "url": "https://thmd.townhealth.com/en/service.php?id=33",
+      "referringUrls": [
+        "https://www.finddoc.com/en/emergency-services",
+        "https://thmd.townhealth.com/en/service.php?id=33"
+      ],
+      "facilities": [
+        "General Practice Consultation",
+        "Pharmacy"
+      ],
+      "baseConsultationFee": null,
+      "additionalInfo": "One of the most well-known late-night private clinics in Hong Kong, frequently referenced in medical directories. NOT 24 hours: closed between approximately 04:30-08:00 (05:30 on Wednesdays). Walk-in accepted. Near MTR Tai Wai Station Exit A. Operated by Town Health Medical & Dental Services Limited, one of Hong Kong's largest private healthcare groups."
+    },
+    {
+      "slug": "night-clinic-tai-po",
+      "name": {
+        "en": "Night Clinic – Tai Po (Fook On Building)",
+        "zh": "夜診–大埔（福安大廈）"
+      },
+      "type": "Private Clinic",
+      "district": "Tai Po",
+      "address": {
+        "en": "Shop 6A, G/F, Fook On Building, 49 Heung Sze Wui Street, Tai Po, New Territories",
+        "zh": "新界大埔鄉事會街49號福安大廈地下6A舖"
+      },
+      "coordinates": {
+        "latitude": 22.4510,
+        "longitude": 114.1680
+      },
+      "phone": null,
+      "operationHours": {
+        "general_outpatient": "Mon-Fri & Sun: 09:00-13:00, 16:00-21:00, 21:00-00:30. Sat: 09:00-13:00, 14:00-19:00, 21:00-00:30. Public Holidays: 09:00-13:00, 16:00-21:00, 21:00-00:30."
+      },
+      "url": null,
+      "referringUrls": [
+        "https://www.finddoc.com/en/emergency-services"
+      ],
+      "facilities": [
+        "General Practice Consultation",
+        "Pharmacy"
+      ],
+      "baseConsultationFee": null,
+      "additionalInfo": "Extended-hours private clinic in Tai Po providing late-night consultation until 00:30. NOT 24 hours. Walk-in accepted. Note: there is a gap between the afternoon/evening session and the night session depending on the day."
+    },
+    {
+      "slug": "night-clinic-ngau-tau-kok",
+      "name": {
+        "en": "Night Clinic – Ngau Tau Kok (Yan On Mansion)",
+        "zh": "夜診–牛頭角（仁安大廈）"
+      },
+      "type": "Private Clinic",
+      "district": "Kwun Tong",
+      "address": {
+        "en": "Shop I, G/F, Yan On Mansion, Nos. 357-375 Ngau Tau Kok Road, Kwun Tong, Kowloon",
+        "zh": "九龍觀塘牛頭角道357-375號仁安大廈地下I舖"
+      },
+      "coordinates": {
+        "latitude": 22.3140,
+        "longitude": 114.2180
+      },
+      "phone": null,
+      "operationHours": {
+        "general_outpatient": "Mon-Sat: 09:00-21:00, 21:00-00:30. Sun & Public Holidays: 09:00-13:00, 15:00-20:30, 21:00-00:30."
+      },
+      "url": null,
+      "referringUrls": [
+        "https://www.finddoc.com/en/emergency-services"
+      ],
+      "facilities": [
+        "General Practice Consultation",
+        "Pharmacy"
+      ],
+      "baseConsultationFee": null,
+      "additionalInfo": "Extended-hours private clinic in Kwun Tong area providing night consultation until 00:30. NOT 24 hours. Walk-in accepted."
+    },
+    {
+      "slug": "otp-healthcare-central",
+      "name": {
+        "en": "OT&P Healthcare – Central Family Clinic",
+        "zh": null
+      },
+      "type": "Private Clinic",
+      "district": "Central",
+      "address": {
+        "en": "5/F, Century Square, 1 D'Aguilar Street, Central, Hong Kong",
+        "zh": null
+      },
+      "coordinates": {
+        "latitude": 22.2810,
+        "longitude": 114.1570
+      },
+      "phone": "2521 2038",
+      "operationHours": {
+        "general_outpatient": "Mon-Fri: 08:30-18:00. Sat: 09:00-14:00. Closed Sun & Public Holidays. Specific hours may vary by doctor."
+      },
+      "url": "https://www.otandp.com/contact",
+      "referringUrls": [
+        "https://www.otandp.com/"
+      ],
+      "facilities": [
+        "General Practice",
+        "Family Medicine",
+        "Vaccinations",
+        "Health Screenings",
+        "Women's Health",
+        "Pharmacy (wholesale licence holder)",
+        "Minor Procedures",
+        "Travel Medicine"
+      ],
+      "baseConsultationFee": "Varies by doctor and service. Contact clinic for current fee schedule. Direct billing with 35+ insurance companies.",
+      "additionalInfo": "OT&P is the first clinic in Hong Kong to achieve international accreditation from the Australian Council on Healthcare Standards (ACHS). Over 50 international doctors, nurses, physicians, and allied health professionals across all OT&P clinics. Multiple locations: Central Family Clinic, Central General Practice Clinic, Clearwater Bay Clinic, Repulse Bay Clinic, Central Specialists Clinic, BodyWorX Physiotherapy Clinic, MindWorX Mental Health Clinic. Primarily serves the expat community and English-speaking patients. Not an emergency or night clinic."
+    },
+    {
+      "slug": "otp-healthcare-repulse-bay",
+      "name": {
+        "en": "OT&P Healthcare – Repulse Bay Clinic",
+        "zh": null
+      },
+      "type": "Private Clinic",
+      "district": "Repulse Bay",
+      "address": {
+        "en": "G09, The Pulse, 28 Beach Road, Repulse Bay, Hong Kong",
+        "zh": null
+      },
+      "coordinates": {
+        "latitude": 22.2360,
+        "longitude": 114.1970
+      },
+      "phone": "2592 9920",
+      "operationHours": {
+        "general_outpatient": "Mon-Fri: 08:30-18:00. Sat: 09:00-14:00. Closed Sun & Public Holidays. Hours may vary; confirm before visiting."
+      },
+      "url": "https://www.otandp.com/contact",
+      "referringUrls": [
+        "https://www.otandp.com/"
+      ],
+      "facilities": [
+        "General Practice",
+        "Family Medicine",
+        "Women's Health",
+        "Vaccinations",
+        "Health Screenings",
+        "Physiotherapy",
+        "Pharmacy"
+      ],
+      "baseConsultationFee": "Varies by doctor and service. Contact clinic for current fee schedule. Direct billing with 35+ insurance companies.",
+      "additionalInfo": "Part of OT&P Healthcare network. ACHS-accredited. Serves South Side residents. Daytime hours only."
+    },
+    {
+      "slug": "otp-healthcare-clearwater-bay",
+      "name": {
+        "en": "OT&P Healthcare – Clearwater Bay Clinic",
+        "zh": null
+      },
+      "type": "Private Clinic",
+      "district": "Clearwater Bay",
+      "address": {
+        "en": "G/F, 5 Razor Hill Road, Clearwater Bay, Sai Kung, New Territories",
+        "zh": null
+      },
+      "coordinates": {
+        "latitude": 22.2830,
+        "longitude": 114.2840
+      },
+      "phone": "2719 9178",
+      "operationHours": {
+        "general_outpatient": "Mon-Fri: 08:30-18:00. Sat: 09:00-14:00. Closed Sun & Public Holidays. Hours may vary; confirm before visiting."
+      },
+      "url": "https://www.otandp.com/contact",
+      "referringUrls": [
+        "https://www.otandp.com/"
+      ],
+      "facilities": [
+        "General Practice",
+        "Family Medicine",
+        "Vaccinations",
+        "Health Screenings",
+        "Pharmacy"
+      ],
+      "baseConsultationFee": "Varies by doctor and service. Contact clinic for current fee schedule. Direct billing with 35+ insurance companies.",
+      "additionalInfo": "Part of OT&P Healthcare network. ACHS-accredited. Serves Clearwater Bay / Sai Kung area. Daytime hours only."
+    },
+    {
+      "slug": "evangel-sha-tin",
+      "name": {
+        "en": "Evangel Hospital – Sha Tin Community Clinic",
+        "zh": "播道醫院–沙田社區診所"
+      },
+      "type": "Private Clinic",
+      "district": "Sha Tin",
+      "address": {
+        "en": "Unit 1317, Level 13, Tower 1, Grand Central Plaza, Sha Tin, New Territories",
+        "zh": "新界沙田新城市中央廣場一期13樓1317室"
+      },
+      "coordinates": {
+        "latitude": 22.3820,
+        "longitude": 114.1880
+      },
+      "phone": "2699 1113 / 2699 1369",
+      "operationHours": {
+        "general_outpatient": "By appointment only. Contact for current schedule."
+      },
+      "url": "https://evangel.org.hk/en/location/outpatient/",
+      "referringUrls": [
+        "https://www.healthymatters.com.hk/complete-guide-to-evangel-hospital-%E6%92%AD%E9%81%93%E9%86%AB%E9%99%A2-in-hong-kong/"
+      ],
+      "facilities": [
+        "General Practice Consultation",
+        "Family Medicine"
+      ],
+      "baseConsultationFee": null,
+      "additionalInfo": "District community clinic operated by Evangel Hospital. By appointment only. Near MTR Sha Tin Station. Not an emergency or night clinic."
+    },
+    {
+      "slug": "evangel-psych-centre",
+      "name": {
+        "en": "Evangel Hospital – Psychological Assessment & Counselling Centre",
+        "zh": "播道醫院–心理評測及輔導中心"
+      },
+      "type": "Private Clinic",
+      "district": "To Kwa Wan",
+      "address": {
+        "en": "G/F, 2 Sung Wong Toi Road, To Kwa Wan, Kowloon",
+        "zh": "九龍土瓜灣宋皇臺道2號地下"
+      },
+      "coordinates": {
+        "latitude": 22.3260,
+        "longitude": 114.1890
+      },
+      "phone": "2176 0222",
+      "operationHours": {
+        "general_outpatient": "Contact for current schedule. By appointment."
+      },
+      "url": "https://evangel.org.hk/en/location/outpatient/",
+      "referringUrls": [
+        "https://www.healthymatters.com.hk/complete-guide-to-evangel-hospital-%E6%92%AD%E9%81%93%E9%86%AB%E9%99%A2-in-hong-kong/"
+      ],
+      "facilities": [
+        "Psychological Assessment",
+        "Counselling"
+      ],
+      "baseConsultationFee": null,
+      "additionalInfo": "Specialist psychological assessment and counselling centre operated by Evangel Hospital. Near Sung Wong Toi MTR. By appointment only."
+    },
+    {
+      "slug": "gopc-central",
+      "name": {
+        "en": "Central District Health Centre GOPC (HA)",
+        "zh": "中區健康院普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Central",
+      "address": {
+        "en": "2/F, Central Health Education Centre, Rental Coach Terminus, Man Yiu Street, Central, Hong Kong",
+        "zh": "香港中環民耀街中環碼頭巴士總站中區健康教育中心2樓"
+      },
+      "coordinates": {
+        "latitude": 22.2870,
+        "longitude": 114.1590
+      },
+      "phone": "3543 5055",
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Sat: varies. Closed Sun & most Public Holidays. Appointment required via HA GOPC telephone booking or 'HA Go' mobile app."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://gia.info.gov.hk/general/201909/29/P2019092700577_322788_1_1569583170961.pdf",
+        "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services",
+        "Patient Education"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons (Hong Kong residents with HKID). HK$445 per visit for non-eligible persons. Note: Fee reform effective 2026 will raise eligible person fee to HK$150.",
+      "additionalInfo": "Hospital Authority General Outpatient Clinic (now being renamed to Family Medicine Clinics). Primarily serves low-income, elderly, and chronic disease patients. Appointment required; walk-in not available for routine visits. HA GOPC telephone booking system opens at 08:00 (next working day appointments) or through HA Go app. Part of Hong Kong West Cluster."
+    },
+    {
+      "slug": "gopc-sai-wan-ho",
+      "name": {
+        "en": "Sai Wan Ho GOPC (HA)",
+        "zh": "西灣河普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Sai Wan Ho",
+      "address": {
+        "en": "1/F, 28 Tai Hong Street, Sai Wan Ho, Hong Kong",
+        "zh": "香港西灣河太康街28號1樓"
+      },
+      "coordinates": {
+        "latitude": 22.2830,
+        "longitude": 114.2220
+      },
+      "phone": "3157 0066",
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Some evening extended sessions may be available. Closed Sun & most Public Holidays. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://gia.info.gov.hk/general/201909/29/P2019092700577_322788_1_1569583170961.pdf"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons. Note: Fee reform effective 2026 will raise eligible person fee to HK$150.",
+      "additionalInfo": "Part of Hong Kong East Cluster. Near Sai Wan Ho MTR Station. Appointment required via telephone or HA Go app."
+    },
+    {
+      "slug": "gopc-chai-wan",
+      "name": {
+        "en": "Chai Wan GOPC (HA)",
+        "zh": "柴灣普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Chai Wan",
+      "address": {
+        "en": "G/F, 1 Hong Man Street, Chai Wan, Hong Kong",
+        "zh": "香港柴灣康民街1號地下"
+      },
+      "coordinates": {
+        "latitude": 22.2640,
+        "longitude": 114.2370
+      },
+      "phone": "3157 0088",
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Closed Sun & most Public Holidays. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://gia.info.gov.hk/general/201909/29/P2019092700577_322788_1_1569583170961.pdf"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of Hong Kong East Cluster. Near Chai Wan MTR Station."
+    },
+    {
+      "slug": "gopc-anne-black",
+      "name": {
+        "en": "Anne Black GOPC (HA)",
+        "zh": "柏立基普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "North Point",
+      "address": {
+        "en": "1/F, 140 Tsat Tse Mui Road, North Point, Hong Kong",
+        "zh": "香港北角察石美道140號1樓"
+      },
+      "coordinates": {
+        "latitude": 22.2920,
+        "longitude": 114.2030
+      },
+      "phone": "3157 0055",
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours with some extended evening sessions. Mon-Fri: 09:00-13:00, 14:00-17:30, plus extended evening hours available (up to 22:00). Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://gia.info.gov.hk/general/201909/29/P2019092700577_322788_1_1569583170961.pdf"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of Hong Kong East Cluster. One of the HA clinics with extended evening hours. Near MTR North Point Station."
+    },
+    {
+      "slug": "gopc-aberdeen",
+      "name": {
+        "en": "Aberdeen Jockey Club GOPC (HA)",
+        "zh": "香港仔賽馬會普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Aberdeen",
+      "address": {
+        "en": "G/F, 10 Aberdeen Reservoir Road, Aberdeen, Hong Kong",
+        "zh": "香港香港仔水塘道10號地下"
+      },
+      "coordinates": {
+        "latitude": 22.2490,
+        "longitude": 114.1560
+      },
+      "phone": "3543 5011",
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Closed Sun & most Public Holidays. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://gia.info.gov.hk/general/201909/29/P2019092700577_322788_1_1569583170961.pdf"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of Hong Kong West Cluster (Southern District)."
+    },
+    {
+      "slug": "gopc-ap-lei-chau",
+      "name": {
+        "en": "Ap Lei Chau GOPC (HA)",
+        "zh": "鴨脷洲普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Ap Lei Chau",
+      "address": {
+        "en": "1/F, 161 Ap Lei Chau Main Street, Ap Lei Chau, Hong Kong",
+        "zh": "香港鴨脷洲大街161號1樓"
+      },
+      "coordinates": {
+        "latitude": 22.2420,
+        "longitude": 114.1530
+      },
+      "phone": "3543 5022",
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Closed Sun & most Public Holidays. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://gia.info.gov.hk/general/201909/29/P2019092700577_322788_1_1569583170961.pdf"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of Hong Kong West Cluster (Southern District). Near Lei Tung MTR Station."
+    },
+    {
+      "slug": "gopc-stanley",
+      "name": {
+        "en": "Stanley GOPC (HA)",
+        "zh": "赤柱普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Stanley",
+      "address": {
+        "en": "G/F, 14 Wong Ma Kok Road, Stanley, Hong Kong",
+        "zh": "香港赤柱黃麻角道14號地下"
+      },
+      "coordinates": {
+        "latitude": 22.2180,
+        "longitude": 114.2120
+      },
+      "phone": "3157 0011",
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Closed Sun & most Public Holidays. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://gia.info.gov.hk/general/201909/29/P2019092700577_322788_1_1569583170961.pdf"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of Hong Kong West Cluster (Southern District). Serves Stanley / South Side area."
+    },
+    {
+      "slug": "gopc-tai-wai",
+      "name": {
+        "en": "Shatin (Tai Wai) GOPC (HA)",
+        "zh": "沙田（大圍）普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Tai Wai",
+      "address": {
+        "en": "G/F, Tai Wai Government Offices, 2 Mei Tin Road, Tai Wai, Sha Tin, New Territories",
+        "zh": "新界沙田大圍美田路2號大圍政府合署地下"
+      },
+      "coordinates": {
+        "latitude": 22.3740,
+        "longitude": 114.1730
+      },
+      "phone": null,
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://www.info.gov.hk/gia/general/202402/28/P2024022800458.htm"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of New Territories East Cluster. Sha Tin District. Near Tai Wai MTR Station."
+    },
+    {
+      "slug": "gopc-lek-yuen",
+      "name": {
+        "en": "Lek Yuen GOPC (HA)",
+        "zh": "瀝源普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Sha Tin",
+      "address": {
+        "en": "Lek Yuen Health Centre, Lek Yuen Estate, Sha Tin, New Territories",
+        "zh": "新界沙田瀝源邨瀝源健康院"
+      },
+      "coordinates": {
+        "latitude": 22.3850,
+        "longitude": 114.1920
+      },
+      "phone": null,
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://www.info.gov.hk/gia/general/202402/28/P2024022800458.htm"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of New Territories East Cluster. Sha Tin District."
+    },
+    {
+      "slug": "gopc-ma-on-shan",
+      "name": {
+        "en": "Ma On Shan Family Medicine Centre (HA)",
+        "zh": "馬鞍山家庭醫學中心"
+      },
+      "type": "Public Clinic",
+      "district": "Ma On Shan",
+      "address": {
+        "en": "Ma On Shan Health Centre, Ma On Shan, Sha Tin, New Territories",
+        "zh": "新界沙田馬鞍山健康中心"
+      },
+      "coordinates": {
+        "latitude": 22.4250,
+        "longitude": 114.2320
+      },
+      "phone": null,
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. No holiday outpatient service currently planned. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://www.info.gov.hk/gia/general/202402/28/P2024022800458.htm"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of New Territories East Cluster. There is no plan to introduce holiday outpatient services at Ma On Shan Family Medicine Centre at this stage (per LegCo reply, Feb 2024)."
+    },
+    {
+      "slug": "gopc-mona-fong",
+      "name": {
+        "en": "Mona Fong GOPC (HA)",
+        "zh": "方逸華普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Tseung Kwan O",
+      "address": {
+        "en": "Mona Fong General Outpatient Clinic, Tseung Kwan O, New Territories",
+        "zh": "新界將軍澳方逸華普通科門診"
+      },
+      "coordinates": {
+        "latitude": 22.3100,
+        "longitude": 114.2590
+      },
+      "phone": null,
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://www.info.gov.hk/gia/general/202402/28/P2024022800458.htm"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of Kowloon East Cluster (Sai Kung District). Improvement works and facility enhancement completed in 2013."
+    },
+    {
+      "slug": "gopc-tko-po-ning-road",
+      "name": {
+        "en": "Tseung Kwan O (Po Ning Road) GOPC (HA)",
+        "zh": "將軍澳（寶寧路）普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Tseung Kwan O",
+      "address": {
+        "en": "Tseung Kwan O (Po Ning Road) General Outpatient Clinic, Tseung Kwan O, New Territories",
+        "zh": "新界將軍澳寶寧路普通科門診"
+      },
+      "coordinates": {
+        "latitude": 22.3150,
+        "longitude": 114.2590
+      },
+      "phone": null,
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://www.info.gov.hk/gia/general/202402/28/P2024022800458.htm"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of Kowloon East Cluster (Sai Kung District). Facility enhancement completed in 2015."
+    },
+    {
+      "slug": "gopc-tko-jockey-club",
+      "name": {
+        "en": "Tseung Kwan O Jockey Club GOPC (HA)",
+        "zh": "將軍澳賽馬會普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Tseung Kwan O",
+      "address": {
+        "en": "Tseung Kwan O Jockey Club General Outpatient Clinic, Tseung Kwan O, New Territories",
+        "zh": "新界將軍澳賽馬會普通科門診"
+      },
+      "coordinates": {
+        "latitude": 22.3200,
+        "longitude": 114.2640
+      },
+      "phone": null,
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://www.info.gov.hk/gia/general/202402/28/P2024022800458.htm"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of Kowloon East Cluster (Sai Kung District). Facility enhancement completed in 2020."
+    },
+    {
+      "slug": "gopc-wan-tsui-estate",
+      "name": {
+        "en": "Wan Tsui Estate GOPC (HA)",
+        "zh": "環翠邨普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Chai Wan",
+      "address": {
+        "en": "G/F, Block 12, Wan Tsui Estate, Chai Wan, Hong Kong",
+        "zh": "香港柴灣環翠邨第12座地下"
+      },
+      "coordinates": {
+        "latitude": 22.2630,
+        "longitude": 114.2410
+      },
+      "phone": "3157 0099",
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://gia.info.gov.hk/general/201909/29/P2019092700577_322788_1_1569583170961.pdf"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of Hong Kong East Cluster."
+    },
+    {
+      "slug": "gopc-shau-kei-wan-jockey-club",
+      "name": {
+        "en": "Shau Kei Wan Jockey Club GOPC (HA)",
+        "zh": "筲箕灣賽馬會普通科門診"
+      },
+      "type": "Public Clinic",
+      "district": "Shau Kei Wan",
+      "address": {
+        "en": "1/F, 8 Chai Wan Road, Shau Kei Wan, Hong Kong",
+        "zh": "香港筲箕灣柴灣道8號1樓"
+      },
+      "coordinates": {
+        "latitude": 22.2780,
+        "longitude": 114.2280
+      },
+      "phone": "3157 0077",
+      "operationHours": {
+        "general_outpatient": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Appointment required."
+      },
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+      "referringUrls": [
+        "https://gia.info.gov.hk/general/201909/29/P2019092700577_322788_1_1569583170961.pdf"
+      ],
+      "facilities": [
+        "General Medical Consultation",
+        "Chronic Disease Management",
+        "Pharmacy",
+        "Nursing Services"
+      ],
+      "baseConsultationFee": "HK$50 per visit for eligible persons. HK$445 for non-eligible persons.",
+      "additionalInfo": "Part of Hong Kong East Cluster. Near Shau Kei Wan MTR Station."
+    }
+  ]

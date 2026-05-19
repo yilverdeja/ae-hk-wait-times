@@ -1,0 +1,606 @@
+[
+    {
+      "slug": "ha-go-telehealth",
+      "name": {
+        "en": "HA Go (Hospital Authority Telehealth)",
+        "zh": "醫管局 HA Go 遙距醫療"
+      },
+      "providerType": "Public/HA",
+      "operatingHours": "Follows individual HA clinic appointment schedules; patients check in via app up to 2 hours before appointment",
+      "description": {
+        "en": "The Hospital Authority's official app offering telehealth follow-up consultations for existing HA patients. Doctors assess recovery progress, wound healing, and medication status via video. Medication delivery is available via the app.",
+        "zh": "醫管局官方應用程式，為現有醫管局病人提供遙距覆診服務。醫生透過視像跟進病情，包括康復進度、傷口癒合及服藥情況，並可安排藥物送遞。"
+      },
+      "pricing": {
+        "baseConsultation": "Standard HA public fees (e.g., HK$135 for specialist outpatient follow-up as of 2026)",
+        "medicationDeliveryFee": null,
+        "notes": "Only for existing HA follow-up patients assessed as clinically suitable by their doctor. Supports multiple payment methods including credit card, Apple Pay, Alipay HK, Octopus, PayMe, WeChat Pay."
+      },
+      "deliverySpeed": "Same day possible; fastest on the day of appointment",
+      "urls": {
+        "website": "https://www2.ha.org.hk/hago/features/appointment-related/telehealth",
+        "ios": "https://apps.apple.com/hk/app/ha-go/id1521117011",
+        "android": "https://play.google.com/store/apps/details?id=hk.org.ha.hago"
+      },
+      "referringUrls": [
+        "https://www2.ha.org.hk/hago/features/appointment-related/telehealth",
+        "https://topick.hket.com/article/4093143",
+        "https://www.stheadline.com/health-edu/3547881"
+      ],
+      "features": [
+        "Follow-up Consultations",
+        "Medication Delivery",
+        "Appointment Management",
+        "Psychiatry Follow-up",
+        "Chronic Disease Follow-up",
+        "Physiotherapy/Occupational Therapy Follow-up"
+      ]
+    },
+    {
+      "slug": "drgo-telehealth",
+      "name": {
+        "en": "DrGo",
+        "zh": "DrGo"
+      },
+      "providerType": "Dedicated App",
+      "operatingHours": "8:00 AM - 8:00 PM, Monday to Sunday including public holidays, 365 days a year",
+      "description": {
+        "en": "HKT's flagship HealthTech platform connecting users with HK-registered doctors via video consultation. Covers GP, Chinese medicine, paediatrics, and specialty services through partner hospitals and clinic chains including Gleneagles Hospital Hong Kong.",
+        "zh": "HKT旗下健康科技平台，透過視像診症連接用戶與香港註冊醫生。涵蓋普通科、中醫、兒科及專科服務，與港怡醫院等多間醫院及診所合作。"
+      },
+      "pricing": {
+        "baseConsultation": "From HK$398 (includes consultation, up to 3-day basic medication, and one-time delivery)",
+        "medicationDeliveryFee": "Included (first delivery free; second delivery chargeable)",
+        "notes": "Fees vary depending on doctor chosen. DrGo One Wellness membership offers free consultations and HK$50 discount per session. Extra or designated medicines incur additional cost."
+      },
+      "deliverySpeed": "Same day, typically within 4 hours of consultation completion",
+      "urls": {
+        "website": "https://www.drgo.com.hk",
+        "ios": "https://apps.apple.com/hk/app/drgo/id1498911504",
+        "android": "https://play.google.com/store/apps/details?id=com.hkt.nightingale"
+      },
+      "referringUrls": [
+        "https://www.drgo.com.hk/faq/",
+        "https://www.drgo.com.hk/about_en.html",
+        "https://www.pccw.com/assets/Common/files/press-release/2020/Jul/20200729e%20DrGo%20telemedicine%20platform%20launch.pdf",
+        "https://www.1010.com.hk/en/DrGo"
+      ],
+      "features": [
+        "General Practice (GP)",
+        "Chinese Medicine (TCM)",
+        "Paediatrics",
+        "Specialist Services",
+        "Medical Certificate (Sick Leave)",
+        "Specialist Referral Letters",
+        "Same-day Medicine Delivery",
+        "Available on Weekends and Public Holidays",
+        "DrGo One Wellness Membership (includes overseas video consultations)"
+      ]
+    },
+    {
+      "slug": "doctornow-telehealth",
+      "name": {
+        "en": "DoctorNow",
+        "zh": "DoctorNow"
+      },
+      "providerType": "Dedicated App",
+      "operatingHours": "Immediate or scheduled appointments; service hours vary by doctor availability",
+      "description": {
+        "en": "Founded in 2016 as Hong Kong's first telemedicine provider. Offers GP and specialist video consultations via its proprietary encrypted app with same-day medicine delivery. Also powers Cigna Virtual Health Service. A founding member of the Hong Kong Telemedicine Association.",
+        "zh": "2016年成立，為香港首個遙距醫療服務供應商。透過自家研發的加密應用程式提供普通科及專科視像診症，並提供即日送藥服務。亦為信諾虛擬醫療服務的技術供應商，及香港遠程醫療協會創始成員。"
+      },
+      "pricing": {
+        "baseConsultation": null,
+        "medicationDeliveryFee": null,
+        "notes": "All consultation and medicine delivery charges are clearly listed before booking in the app. Electronic receipts provided for insurance claims."
+      },
+      "deliverySpeed": "Same-day medication delivery",
+      "urls": {
+        "website": "https://app.doctornow.hk",
+        "ios": "https://apps.apple.com/app/doctornow/id1447498730",
+        "android": "https://play.google.com/store/apps/details?id=com.doctornow.hk"
+      },
+      "referringUrls": [
+        "https://app.doctornow.hk/telemedicine/",
+        "https://hk.linkedin.com/company/doctornow-hk",
+        "https://hktelemed.org/doctornowneeds/"
+      ],
+      "features": [
+        "GP Consultation",
+        "Specialist Consultation",
+        "Medical Certificate (Sick Leave)",
+        "Referral Letters",
+        "Same-day Medicine Delivery",
+        "Proprietary Encrypted Video Platform",
+        "DoctorNow NEEDS (elderly door-to-door service)",
+        "Corporate/B2B Telemedicine Solutions"
+      ]
+    },
+    {
+      "slug": "watsons-edr-telehealth",
+      "name": {
+        "en": "Watsons eDr",
+        "zh": "屈臣氏 eDr"
+      },
+      "providerType": "Dedicated App",
+      "operatingHours": "Day service and night service available (exact hours displayed in-app; night service extends evening availability)",
+      "description": {
+        "en": "Watsons Hong Kong's online doctor app offering 1-on-1 live video consultations with licensed GPs and Chinese Medicine Practitioners. Part of A.S. Watson Group (CK Hutchison). Features a 3-Highs chronic disease management program and as-fast-as-3-minute booking.",
+        "zh": "屈臣氏香港推出的視像醫生應用程式，提供註冊西醫及中醫一對一即時視像診症服務。隸屬屈臣氏集團（長江和記實業成員）。設有三高慢性病管理計劃，最快3分鐘即可見醫生。"
+      },
+      "pricing": {
+        "baseConsultation": null,
+        "medicationDeliveryFee": null,
+        "notes": "Night service available at higher rates. Includes GP and TCM options. Pricing displayed in-app before booking."
+      },
+      "deliverySpeed": "Same-day medication delivery; as fast as 4 hours for designated time slots",
+      "urls": {
+        "website": "https://www.watsons.com.hk/en/watsons_edr",
+        "ios": "https://apps.apple.com/hk/app/watsons-edr/id1455830207",
+        "android": "https://play.google.com/store/apps/details?id=com.asw.health"
+      },
+      "referringUrls": [
+        "https://www.watsons.com.hk/en/watsons_edr",
+        "https://www.watsonsasia.com/news/online-doctor-consultation/",
+        "https://topick.hket.com/article/4093143"
+      ],
+      "features": [
+        "General Practice (GP)",
+        "Chinese Medicine (TCM)",
+        "Night Service",
+        "3-Highs GO Plan (Chronic Disease Management)",
+        "Medical Certificate (Sick Leave)",
+        "Referral Letters",
+        "Same-day Medicine Delivery",
+        "As-fast-as-3-minute Booking"
+      ]
+    },
+    {
+      "slug": "qhms-telehealth",
+      "name": {
+        "en": "Quality HealthCare (QHMS) Video Consultation",
+        "zh": "卓健醫療視像診症"
+      },
+      "providerType": "Clinic Network",
+      "operatingHours": "Day and night service available; consultation hours from 9:00 AM; night service extends into evening",
+      "description": {
+        "en": "One of Hong Kong's largest private outpatient healthcare providers (part of Bupa). Offers video consultation via its mobile app covering Western Medicine GP, specialists, paediatrics, mental health, dietetics, designated dental services, and Chinese medicine with same-day drug delivery.",
+        "zh": "香港最大私營門診醫療服務供應商之一（保柏集團成員）。透過手機應用程式提供視像診症，涵蓋西醫普通科、專科、兒科、心理健康、營養諮詢、指定牙科服務及中醫服務，並提供即日送藥。"
+      },
+      "pricing": {
+        "baseConsultation": "Western Medicine from HK$398 (includes 3-day basic medication); Night Service from HK$500; TCM from HK$440 (includes 4-day basic Chinese medicine)",
+        "medicationDeliveryFee": "Free basic delivery; extra HK$120 for outlying islands and remote areas",
+        "notes": "Bupa members can access video consultation services through Bupa's network coverage."
+      },
+      "deliverySpeed": "Same-day if consultation completed before 3:00 PM; next day otherwise",
+      "urls": {
+        "website": "https://www.qhms.com/en/promo/video-consultation",
+        "ios": "https://apps.apple.com/hk/app/quality-healthcare-mobile-app/id1493247674",
+        "android": "https://play.google.com/store/apps/details?id=com.qhms.mobileapp"
+      },
+      "referringUrls": [
+        "https://www.qhms.com/en/promo/video-consultation",
+        "https://www.bupa.com.hk/en/media-centre/2020-07-21/",
+        "https://www.bowtie.com.hk/blog/zh/新冠肺炎/視像診症/"
+      ],
+      "features": [
+        "General Practice (GP)",
+        "Specialist Services",
+        "Paediatrics",
+        "Mental Health / Psychology",
+        "Dietetics",
+        "Designated Dental Services",
+        "Chinese Medicine (TCM)",
+        "Night Service",
+        "Virtual Nurse Service",
+        "Medical Certificate (Sick Leave)",
+        "Referral Letters",
+        "Same-day Medicine Delivery",
+        "e-Ticketing for Walk-in GP Visits",
+        "Health Record Tracking"
+      ]
+    },
+    {
+      "slug": "gleneagles-hospital-telehealth",
+      "name": {
+        "en": "Gleneagles Hospital Hong Kong - Virtual Consultation",
+        "zh": "港怡醫院視像會診"
+      },
+      "providerType": "Private Hospital",
+      "operatingHours": "GP Virtual Consultation: Mon-Fri 9:00 AM - 5:00 PM, Sat 9:00 AM - 1:00 PM; also available Sundays and public holidays",
+      "description": {
+        "en": "Private hospital offering both GP and specialist virtual consultations. GP service includes 3-day basic medications and delivery. Specialist virtual consultations are available for existing follow-up patients across 7 designated specialties. Also offers a 2-person conjoint consultation option.",
+        "zh": "私家醫院提供普通科及專科視像會診服務。普通科服務包括三天基本藥物及送遞。專科視像會診適用於七個指定專科的覆診病人。亦設有二人聯合視像會診選項。"
+      },
+      "pricing": {
+        "baseConsultation": "GP: From HK$468 (Mon-Fri/Sat, includes basic medication and delivery); Sun/PH: HK$998 for conjoint (2-person) consultation",
+        "medicationDeliveryFee": "Included in GP virtual consultation package; additional medication charges apply for non-basic prescriptions",
+        "notes": "Service valid from 1 Jan 2026 to 31 Dec 2026. GP available for new and existing patients aged 6+. Specialist VC for existing follow-up patients only. Male-only designated medication consultation for patients 18+."
+      },
+      "deliverySpeed": null,
+      "urls": {
+        "website": "https://gleneagles.hk/facilities-services/general-practice-virtual-consultation",
+        "ios": "https://apps.apple.com/hk/app/my-gleneagles-smarthealth/id1487498498",
+        "android": "https://play.google.com/store/apps/details?id=com.ihh.gleneagleshk"
+      },
+      "referringUrls": [
+        "https://gleneagles.hk/facilities-services/general-practice-virtual-consultation",
+        "https://gleneagles.hk/facilities-services/virtual-consultation",
+        "https://topick.hket.com/article/4093143"
+      ],
+      "features": [
+        "General Practice (GP) Virtual Consultation",
+        "Specialist Virtual Consultation (7 specialties)",
+        "2-Person Conjoint Virtual Consultation",
+        "Paediatrics (aged 6+)",
+        "Oncology",
+        "Gastroenterology & Hepatology",
+        "Medical Certificate (Sick Leave)",
+        "Medication Delivery Included (GP)",
+        "Online Appointment Booking"
+      ]
+    },
+    {
+      "slug": "hksh-telehealth",
+      "name": {
+        "en": "Hong Kong Sanatorium & Hospital (HKSH) Telemedicine",
+        "zh": "養和醫院遙距診症"
+      },
+      "providerType": "Private Hospital",
+      "operatingHours": "Family Medicine and multiple specialist centres; appointment-based (specific hours vary by specialist centre)",
+      "description": {
+        "en": "One of Hong Kong's most prestigious private hospitals offering telemedicine services across family medicine and multiple specialist departments. Available for patients aged 12+ (some specialist services restricted to existing patients). Medication delivery service (DeliveryMed) available across most of Hong Kong.",
+        "zh": "香港最具聲譽的私家醫院之一，提供家庭醫學及多個專科部門的遙距診症服務。適用於12歲或以上人士（部分專科僅限舊症病人）。藥物送遞服務覆蓋香港大部分地區。"
+      },
+      "pricing": {
+        "baseConsultation": "Family Medicine & Primary Care Centre: HK$500 (consultation only; medication and delivery extra)",
+        "medicationDeliveryFee": "HK$200 per delivery",
+        "notes": "Telemedicine services are not eligible for insurance claims or Elderly Health Care Voucher Scheme. Additional charges for prescribed medicines and tests. Tele-consultation sessions are recorded as part of medical records."
+      },
+      "deliverySpeed": null,
+      "urls": {
+        "website": "https://www.hksh.com/telemedicine/en/",
+        "ios": null,
+        "android": null
+      },
+      "referringUrls": [
+        "https://www.hksh.com/telemedicine/en/",
+        "https://www.stheadline.com/health-edu/3547881",
+        "https://topick.hket.com/article/4093143"
+      ],
+      "features": [
+        "Family Medicine",
+        "Multiple Specialist Departments",
+        "Medical Certificate (Sick Leave)",
+        "DeliveryMed Service",
+        "Available for New Patients (Family Medicine)",
+        "Existing Patients Only (Some Specialist Centres)"
+      ]
+    },
+    {
+      "slug": "hkah-telehealth",
+      "name": {
+        "en": "Hong Kong Adventist Hospital – Stubbs Road Teleconsultation",
+        "zh": "香港港安醫院（司徒拔道）遙距診症"
+      },
+      "providerType": "Private Hospital",
+      "operatingHours": "Mon-Fri: 9:00 AM - 1:00 PM, 2:00 PM - 5:00 PM (Family Medicine Outpatient)",
+      "description": {
+        "en": "Private hospital providing teleconsultation for existing registered patients of the Family Practice Out-Patient Clinic and health assessment follow-ups. Not available for first-time patients. Patient must be physically in Hong Kong during the session.",
+        "zh": "私家醫院為家庭醫學門診及體檢跟進之已登記病人提供遙距診症服務。不適用於首次求診病人。病人在診症期間必須身處香港。"
+      },
+      "pricing": {
+        "baseConsultation": "HK$450 (Mon-Fri Family Practice consultation fee)",
+        "medicationDeliveryFee": "Additional fee for delivery (amount confirmed after consultation)",
+        "notes": "Not eligible for insurance direct billing or health care vouchers. Consultation fee paid on the day of appointment booking. Medication and delivery fees confirmed after video session."
+      },
+      "deliverySpeed": "Same-day if payment completed before 2:00 PM; next day if after 2:00 PM (delivery by 10:00 PM)",
+      "urls": {
+        "website": "https://www.hkah.org.hk/en/specialist-clinics/telemedicine-service",
+        "ios": null,
+        "android": null
+      },
+      "referringUrls": [
+        "https://www.hkah.org.hk/en/specialist-clinics/telemedicine-service",
+        "https://www.hkah.org.hk/tc/specialist-clinics/telemedicine-service",
+        "https://www.stheadline.com/health-edu/3547881"
+      ],
+      "features": [
+        "Family Medicine Follow-up",
+        "Health Assessment Follow-up",
+        "Medical Certificate (Sick Leave)",
+        "Medication Delivery",
+        "Existing Patients Only",
+        "Under-16 Must Be Accompanied by Adult 21+"
+      ]
+    },
+    {
+      "slug": "cuhkmc-telehealth",
+      "name": {
+        "en": "CUHK Medical Centre Telemedicine",
+        "zh": "香港中文大學醫院遠程醫療"
+      },
+      "providerType": "Private Hospital",
+      "operatingHours": "Mon-Fri 9:30 AM - 5:00 PM, Sat 9:30 AM - 1:00 PM (appointment changes only during these hours)",
+      "description": {
+        "en": "University-affiliated private hospital offering telemedicine for specialist outpatient and paediatric follow-up patients (existing patients only). Medication delivery or 24-hour pharmacy self-collection available.",
+        "zh": "大學附屬私家醫院，為專科門診及兒科覆診病人（僅限已登記舊症）提供遠程醫療服務。可選擇藥物送遞或到院24小時藥房自取。"
+      },
+      "pricing": {
+        "baseConsultation": "HK$200 registration fee (deducted from final consultation and medication fees) + doctor's fee and medication fees per price list",
+        "medicationDeliveryFee": "HK$150 per delivery address",
+        "notes": "Registration fee must be paid on booking day via FPS or bank transfer, or appointment may be cancelled. Existing follow-up patients only for specialist and paediatric telemedicine."
+      },
+      "deliverySpeed": "Next working day after full payment confirmed (no delivery on weekends; Fri/Sat consultations receive medication by the following Tuesday)",
+      "urls": {
+        "website": "https://www.cuhkmc.hk/tc/hospital-service/telemedicine-service",
+        "ios": null,
+        "android": null
+      },
+      "referringUrls": [
+        "https://www.cuhkmc.hk/tc/hospital-service/telemedicine-service",
+        "https://www.stheadline.com/health-edu/3547881",
+        "https://topick.hket.com/article/4093143"
+      ],
+      "features": [
+        "Specialist Outpatient Follow-up",
+        "Paediatric Follow-up",
+        "Medication Delivery",
+        "24-Hour Pharmacy Self-Collection",
+        "Existing Patients Only"
+      ]
+    },
+    {
+      "slug": "pbh-telehealth",
+      "name": {
+        "en": "Precious Blood Hospital (Caritas) Video Consultation",
+        "zh": "寶血醫院（明愛）視像會診"
+      },
+      "providerType": "Private Hospital",
+      "operatingHours": "Mon-Fri 9:00 AM - 6:00 PM (alternate platform available on weekends)",
+      "description": {
+        "en": "Non-profit private hospital in Sham Shui Po offering video consultation via WhatsApp booking. Suitable for patients with fever, respiratory symptoms, or COVID-19 related needs. Third-party medication delivery service available.",
+        "zh": "位於深水埗的非牟利私家醫院，透過WhatsApp預約提供視像會診服務。適用於發燒、呼吸道感染徵狀或新冠相關需要的病人。設有第三方藥物送遞服務。"
+      },
+      "pricing": {
+        "baseConsultation": "HK$480 - HK$800 (consultation fee only; medication and delivery extra)",
+        "medicationDeliveryFee": "Kowloon: from HK$200/delivery; HK Island & New Territories: from HK$300/delivery",
+        "notes": "Only for persons 18+ with FPS account. Payment via FPS (Faster Payment System). Not eligible for insurance claims or health care vouchers. Weekday morning consultations get same-day delivery."
+      },
+      "deliverySpeed": "Same day if consultation and payment completed in the morning (Mon-Fri); next working day if after 12:00 PM or for remote areas like Tung Chung",
+      "urls": {
+        "website": "https://www.pbh.hk/online-booking-telemedicine/",
+        "ios": null,
+        "android": null
+      },
+      "referringUrls": [
+        "https://www.pbh.hk/online-booking-telemedicine/",
+        "https://www.stheadline.com/health-edu/3547881",
+        "https://topick.hket.com/article/4093143"
+      ],
+      "features": [
+        "General Practice Video Consultation",
+        "Respiratory Infection / Fever Assessment",
+        "Medical Certificate (Sick Leave)",
+        "Medication Delivery (Third-party)",
+        "WhatsApp Booking",
+        "Alternate Weekend Platform Available"
+      ]
+    },
+    {
+      "slug": "cigna-telehealth",
+      "name": {
+        "en": "Cigna Virtual Health Service",
+        "zh": "信諾虛擬醫療服務"
+      },
+      "providerType": "Dedicated App",
+      "operatingHours": "8:00 AM - 8:00 PM, Monday to Sunday (except public holidays for Telehealth Service)",
+      "description": {
+        "en": "Cigna Healthcare's virtual consultation service powered by DoctorNow, offering video consultations with HK-registered doctors. Available to Cigna employer group insurance members and also as a standalone subscription. Includes specialist referrals, doctor's certificates, and same-day medication delivery.",
+        "zh": "信諾醫療保健透過DoctorNow提供的虛擬診症服務，提供與香港註冊醫生的視像診症。適用於信諾僱主團體保險會員，亦可獨立訂閱。包括專科轉介、醫生證明書及即日送藥服務。"
+      },
+      "pricing": {
+        "baseConsultation": "First GP virtual consultation from HK$75 (promotional pricing with Mastercard); Telehealth Service subscription from HK$100",
+        "medicationDeliveryFee": "Included (except outlying islands)",
+        "notes": "Cigna group insurance members can enter Member Code for coverage. Free face-to-face follow-up within 2 working days if virtual consultation cannot resolve issue. OTC medicine delivery via Mannings / Teladoc Health for Telehealth Service."
+      },
+      "deliverySpeed": "Same-day medication delivery",
+      "urls": {
+        "website": "https://www.cigna.com.hk/en/telehealth-service-virtual-consultation-app",
+        "ios": null,
+        "android": null
+      },
+      "referringUrls": [
+        "https://www.cigna.com.hk/en/telehealth-service-virtual-consultation-app",
+        "https://www.cigna.com.hk/en/cigna-telehealth-service",
+        "https://www.cigna.com.hk/en/smarthealth/medical/video-medical-consultation-and-telehealth-service"
+      ],
+      "features": [
+        "GP Consultation",
+        "Specialist Referrals",
+        "Medical Certificate (Sick Leave)",
+        "Same-day Medicine Delivery",
+        "Free Face-to-Face Follow-up (within 2 working days)",
+        "Electronic Medical Receipt",
+        "Insurance Direct Billing (for Cigna members)",
+        "OTC Medicine Delivery via Mannings"
+      ]
+    },
+    {
+      "slug": "axa-telehealth",
+      "name": {
+        "en": "AXA Dr@Live (via Emma by AXA app)",
+        "zh": "AXA 安盛 Dr@Live"
+      },
+      "providerType": "Dedicated App",
+      "operatingHours": null,
+      "description": {
+        "en": "AXA Hong Kong's digital doctor consultation service accessible through the Emma by AXA app. Allows insured employees and dependents of designated Employee Benefits policies to have virtual consultations and book physical consultations via mobile. Available in Hong Kong and Macau app stores.",
+        "zh": "AXA 安盛香港透過 Emma by AXA 應用程式提供的數碼醫生診症服務。指定僱員福利保單的受保僱員及其家屬可進行視像診症或透過手機預約實體診症。適用於香港及澳門應用商店。"
+      },
+      "pricing": {
+        "baseConsultation": null,
+        "medicationDeliveryFee": null,
+        "notes": "Exclusively for insured employees and dependents of designated AXA Employee Benefits policies. Not available as a standalone consumer product."
+      },
+      "deliverySpeed": null,
+      "urls": {
+        "website": "https://www.axa.com.hk/en/dr-at-live",
+        "ios": "https://apps.apple.com/hk/app/emma-by-axa/id1460692608",
+        "android": "https://play.google.com/store/apps/details?id=com.axa.hk.emma"
+      },
+      "referringUrls": [
+        "https://www.axa.com.hk/en/dr-at-live"
+      ],
+      "features": [
+        "Virtual Doctor Consultation",
+        "Physical Consultation Booking/Queue",
+        "For AXA Employee Benefits Members Only"
+      ]
+    },
+    {
+      "slug": "bupa-telehealth",
+      "name": {
+        "en": "Bupa Video Consultation Services (via Quality HealthCare)",
+        "zh": "保柏視像診症服務（透過卓健醫療）"
+      },
+      "providerType": "Clinic Network",
+      "operatingHours": null,
+      "description": {
+        "en": "Bupa Hong Kong's video consultation service for eligible members, partnered with Quality HealthCare. Members can remotely consult selected GPs about common conditions via video call, with door-to-door medication delivery across Hong Kong.",
+        "zh": "保柏香港為合資格會員提供的視像診症服務，與卓健醫療合作。會員可透過視像與指定普通科醫生就常見疾病進行遙距診症，並享有全港藥物送遞上門服務。"
+      },
+      "pricing": {
+        "baseConsultation": "Covered under Bupa member network Clinical Benefit (co-payment may apply)",
+        "medicationDeliveryFee": "HK$50 (may be waived during promotional periods)",
+        "notes": "Only for eligible Bupa members with network Clinical Benefit and eligible medical card. Free follow-up physical consultation at Quality HealthCare clinic within 24 hours if needed. Extra medication fees settled by members via FPS."
+      },
+      "deliverySpeed": null,
+      "urls": {
+        "website": "https://www.bupa.com.hk/en/customer-care/video-consultation-services/",
+        "ios": null,
+        "android": null
+      },
+      "referringUrls": [
+        "https://www.bupa.com.hk/en/customer-care/video-consultation-services/",
+        "https://www.bupa.com.hk/en/media-centre/2020-07-21/"
+      ],
+      "features": [
+        "GP Consultation",
+        "Medical Certificate (Sick Leave)",
+        "Referral Letters",
+        "Door-to-door Medication Delivery",
+        "Free 24-hour Follow-up In-person Consultation",
+        "For Eligible Bupa Members Only"
+      ]
+    },
+    {
+      "slug": "ump-telehealth",
+      "name": {
+        "en": "UMP Healthcare Virtual Care Service",
+        "zh": "聯合醫務虛擬診症服務"
+      },
+      "providerType": "Clinic Network",
+      "operatingHours": "Mon-Fri 9:00 AM - 6:00 PM; limited evening and Saturday service",
+      "description": {
+        "en": "One of Hong Kong's largest and longest-established listed medical groups (SEHK: 722) offering virtual care video consultations. Covers general medical consultations, chronic disease follow-up, and health management. Medication can be picked up at designated pharmacies or delivered.",
+        "zh": "香港最大及歷史最悠久的上市醫療集團之一（港交所：722），提供虛擬診症視像服務。涵蓋普通科診症、慢性病跟進及健康管理。藥物可於指定藥房取藥或安排送遞。"
+      },
+      "pricing": {
+        "baseConsultation": null,
+        "medicationDeliveryFee": null,
+        "notes": "Consultation fee displayed during booking with secure online payment. Electronic prescriptions issued after consultation. Network of 1,100+ self-owned and affiliated medical service points in Hong Kong and Macau."
+      },
+      "deliverySpeed": "Pickup at designated pharmacies or delivery available",
+      "urls": {
+        "website": "https://www.www2.ump.com.hk/server.php?id=67&lang_id=2",
+        "ios": null,
+        "android": null
+      },
+      "referringUrls": [
+        "https://www.www2.ump.com.hk/server.php?id=67&lang_id=2",
+        "https://group.ump.com.hk/en/media/news-room/news-detail/36/UMP-Healthcare-Offers-Free-Telemedicine-Service-to-COVID-19-Patients"
+      ],
+      "features": [
+        "General Practice Consultation",
+        "Chronic Disease Follow-up",
+        "Health Management",
+        "Medication Delivery or Pharmacy Pickup",
+        "Electronic Prescriptions",
+        "Corporate Healthcare Solutions"
+      ]
+    },
+    {
+      "slug": "otandp-telehealth",
+      "name": {
+        "en": "OT&P Healthcare Teleconsultation",
+        "zh": "領康醫療遙距診症"
+      },
+      "providerType": "Clinic Network",
+      "operatingHours": "By appointment via hotline (2155 9055); follows regular clinic hours",
+      "description": {
+        "en": "Internationally accredited (ACHS) private clinic group in Hong Kong offering teleconsultation services. Established in 1994, operates 8 clinics with 80+ medical professionals covering general practice, paediatrics, psychiatry, psychology, physiotherapy, and more.",
+        "zh": "國際認證（ACHS）的香港私營診所集團，提供遙距診症服務。1994年創立，營運8間診所，逾80位醫療專業人員，涵蓋普通科、兒科、精神科、心理學、物理治療等。"
+      },
+      "pricing": {
+        "baseConsultation": null,
+        "medicationDeliveryFee": null,
+        "notes": "Over 35 direct billing agreements with insurance companies. First clinic in Hong Kong accredited by the Australian Council on Healthcare Standards (ACHS). Book via appointment hotline 2155 9055."
+      },
+      "deliverySpeed": null,
+      "urls": {
+        "website": "https://www.otandp.com/blog/telemedicine-in-hong-kong",
+        "ios": "https://apps.apple.com/hk/app/ot-p-healthcare/id1524373498",
+        "android": "https://play.google.com/store/apps/details?id=com.otandp.app"
+      },
+      "referringUrls": [
+        "https://www.otandp.com/blog/telemedicine-in-hong-kong",
+        "https://www.otandp.com/"
+      ],
+      "features": [
+        "General Practice",
+        "Paediatrics",
+        "Psychiatry",
+        "Psychology & Counselling",
+        "Insurance Direct Billing (35+ insurers)",
+        "Multilingual (English, Cantonese, Mandarin)",
+        "International Accreditation (ACHS)"
+      ]
+    },
+    {
+      "slug": "bowtiego-telehealth",
+      "name": {
+        "en": "BowtieGo VDoctor+",
+        "zh": "BowtieGo 視像醫生+"
+      },
+      "providerType": "Dedicated App",
+      "operatingHours": null,
+      "description": {
+        "en": "Bowtie Life Insurance's health and wellness membership program offering member-exclusive rates for GP and Chinese Medicine consultations across a network of 1,300+ service points in Hong Kong. Includes a Free plan bundled with Bowtie VHIS policies and paid plans with outpatient coverage.",
+        "zh": "保泰人壽的健康會員計劃，於全港逾1,300個服務點提供會員專屬優惠價格的普通科及中醫診症服務。包括隨保泰自願醫保附送的免費計劃，以及設有門診保障的付費計劃。"
+      },
+      "pricing": {
+        "baseConsultation": "Member-exclusive rates (varies by clinic in network; co-payment from HK$30 for insured plans)",
+        "medicationDeliveryFee": null,
+        "notes": "BowtieGo Free plan included with Bowtie VHIS. Standard and Premium insurance plans currently suspended for new applications. Network covers HK Island 270+, Kowloon 600+, New Territories 440+ service points. Primarily for in-person clinic visits at member rates."
+      },
+      "deliverySpeed": null,
+      "urls": {
+        "website": "https://bowtiego.com/en",
+        "ios": null,
+        "android": null
+      },
+      "referringUrls": [
+        "https://bowtiego.com/en",
+        "https://bowtiego.com/en/offers/existing-vhis-customers",
+        "https://help.bowtie.com.hk/hc/en-gb/articles/39366509976601"
+      ],
+      "features": [
+        "GP Consultation at Member Rates",
+        "Chinese Medicine at Member Rates",
+        "1,300+ Network Service Points",
+        "Free Plan with Bowtie VHIS",
+        "Dental Services at Member Rates"
+      ]
+    }
+  ]
