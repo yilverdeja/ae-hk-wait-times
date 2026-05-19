@@ -5,6 +5,19 @@ import type { Coordinates } from "@/types"
 
 export type AlternativeCategory = "24hour" | "non24hour" | "telehealth"
 
+export const ALTERNATIVE_CATEGORIES: AlternativeCategory[] = [
+    "24hour",
+    "non24hour",
+    "telehealth",
+]
+
+export function parseAlternativeCategory(value: string | undefined): AlternativeCategory {
+    if (value && ALTERNATIVE_CATEGORIES.includes(value as AlternativeCategory)) {
+        return value as AlternativeCategory
+    }
+    return "24hour"
+}
+
 export interface LocalizedText {
     en: string
     zh: string | null

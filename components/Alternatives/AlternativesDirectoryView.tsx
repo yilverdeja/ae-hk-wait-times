@@ -1,12 +1,23 @@
 "use client"
 
 import { AlternativeCard } from "@/components/Alternatives/AlternativeCard"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { type AlternativeCategory, type AlternativeEntry } from "@/data/alternatives"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import {
+    ALTERNATIVE_CATEGORIES,
+    type AlternativeCategory,
+    type AlternativeEntry,
+} from "@/data/alternatives"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
+import { usePathname, useRouter } from "next/navigation"
 
-const tabLabels = {
+const categoryLabels = {
     [LanguageCode.EN]: {
         "24hour": "24-Hour Facilities",
         non24hour: "Outpatient Clinics",
@@ -26,36 +37,46 @@ const tabLabels = {
 
 interface AlternativesDirectoryViewProps {
     alternatives: AlternativeEntry[]
-    defaultTab?: AlternativeCategory
+    category: AlternativeCategory
 }
 
 export function AlternativesDirectoryView({
     alternatives,
-    defaultTab = "24hour",
+    category,
 }: AlternativesDirectoryViewProps) {
     const { lang } = useLanguage()
-    const labels = tabLabels[lang]
+    const labels = categoryLabels[lang]
+    const router = useRouter()
+    const pathname = usePathname()
 
-    const byCategory = (cat: AlternativeCategory) =>
-        alternatives.filter((e) => e.category === cat)
+    const filtered = alternatives.filter((e) => e.category === category)
+
+    function handleCategoryChange(value: AlternativeCategory) {
+        const params = new URLSearchParams()
+        params.set("category", value)
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+    }
 
     return (
-        <Tabs defaultValue={defaultTab}>
-            <TabsList>
-                <TabsTrigger value="24hour">{labels["24hour"]}</TabsTrigger>
-                <TabsTrigger value="non24hour">{labels.non24hour}</TabsTrigger>
-                <TabsTrigger value="telehealth">{labels.telehealth}</TabsTrigger>
-            </TabsList>
+        <>
+            <Select value={category} onValueChange={handleCategoryChange}>
+                <SelectTrigger className="w-full sm:max-w-xs">
+                    <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                    {ALTERNATIVE_CATEGORIES.map((cat) => (
+                        <SelectItem key={cat} value={cat}>
+                            {labels[cat]}
+                        </SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
 
-            {(["24hour", "non24hour", "telehealth"] as AlternativeCategory[]).map((cat) => (
-                <TabsContent key={cat} value={cat} className="mt-6">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {byCategory(cat).map((entry) => (
-                            <AlternativeCard key={entry.slug} entry={entry} lang={lang} />
-                        ))}
-                    </div>
-                </TabsContent>
-            ))}
-        </Tabs>
+            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {filtered.map((entry) => (
+                    <AlternativeCard key={entry.slug} entry={entry} lang={lang} />
+                ))}
+            </div>
+        </>
     )
 }

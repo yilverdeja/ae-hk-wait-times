@@ -1,6 +1,10 @@
 import { AlternativesDirectoryView } from "@/components/Alternatives/AlternativesDirectoryView"
-import { alternatives } from "@/data/alternatives"
+import { alternatives, parseAlternativeCategory } from "@/data/alternatives"
 import type { Metadata } from "next"
+
+interface PageProps {
+    searchParams: Promise<{ category?: string }>
+}
 
 export const metadata: Metadata = {
     title: "Alternative Care Options in Hong Kong | ae.wait.hk",
@@ -28,7 +32,9 @@ export const metadata: Metadata = {
     },
 }
 
-export default function AlternativesPage() {
+export default async function AlternativesPage({ searchParams }: PageProps) {
+    const { category: rawCategory } = await searchParams
+    const category = parseAlternativeCategory(rawCategory)
     const pageUrl = "https://ae.wait.hk/alternatives"
 
     const itemListSchema = {
@@ -77,7 +83,7 @@ export default function AlternativesPage() {
                         Hong Kong.
                     </p>
                 </div>
-                <AlternativesDirectoryView alternatives={alternatives} />
+                <AlternativesDirectoryView alternatives={alternatives} category={category} />
             </div>
         </>
     )
