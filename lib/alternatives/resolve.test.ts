@@ -2,7 +2,7 @@ import assert from "node:assert/strict"
 import { describe, it } from "node:test"
 import { getPrimaryChannel, isChannelOpenNow, resolveCurrentPrice } from "@/lib/alternatives/resolve"
 import { scheduleContext } from "@/lib/alternatives/time"
-import { alternatives } from "@/data/alternatives2"
+import { alternatives } from "@/data/alternatives"
 
 function hkDate(iso: string): Date {
     return new Date(iso)

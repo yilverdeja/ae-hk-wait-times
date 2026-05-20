@@ -1,5 +1,14 @@
 import { AlternativeDetailContent } from "@/components/Alternatives/AlternativeDetailContent"
-import { alternativesBySlug, getSlugs, isPhysicalFacility, isTelehealthFacility } from "@/data/alternatives"
+import {
+    alternativesBySlug,
+    getSlugs,
+    isPhysicalFacility,
+    isTelehealthFacility,
+} from "@/data/alternatives"
+import { primaryPhone, primaryWebsite } from "@/lib/alternatives/display"
+import { getPrimaryChannel, resolveCurrentPrice } from "@/lib/alternatives/resolve"
+import { scheduleContext } from "@/lib/alternatives/time"
+import { LanguageCode } from "@/types"
 import { notFound } from "next/navigation"
 
 interface PageProps {
@@ -16,31 +25,36 @@ export async function generateMetadata({ params }: PageProps) {
     if (!entry) return {}
 
     const pageUrl = `https://ae.wait.hk/alternatives/${slug}`
-    let description = ""
+    const channel = getPrimaryChannel(entry, scheduleContext())
+    const price = channel ? resolveCurrentPrice(channel, scheduleContext()) : null
+    const priceSnippet = price?.label[LanguageCode.EN] ?? ""
 
+    let description = ""
     if (isPhysicalFacility(entry)) {
-        description = `${entry.name.en} is a ${entry.type.toLowerCase()} in ${entry.district}, Hong Kong.${entry.baseConsultationFee ? ` Consultation fee: ${entry.baseConsultationFee.slice(0, 80)}.` : ""}`
+        description = `${entry.name[LanguageCode.EN]} is a ${entry.providerType.toLowerCase()} in ${entry.location.district}, Hong Kong.${priceSnippet ? ` ${priceSnippet}.` : ""}`
     } else if (isTelehealthFacility(entry)) {
-        description = entry.description.en.slice(0, 160)
+        description =
+            entry.description?.[LanguageCode.EN]?.slice(0, 160) ??
+            `${entry.name[LanguageCode.EN]} telehealth in Hong Kong.`
     }
 
     const keywords = [
-        entry.name.en,
-        entry.name.zh ?? undefined,
-        isPhysicalFacility(entry) ? entry.district : undefined,
-        isPhysicalFacility(entry) ? entry.type : "telehealth",
+        entry.name[LanguageCode.EN],
+        entry.name[LanguageCode.ZH],
+        isPhysicalFacility(entry) ? entry.location.district : undefined,
+        isPhysicalFacility(entry) ? entry.providerType : "telehealth",
         "Hong Kong",
         "alternative care",
         "clinic",
     ].filter(Boolean) as string[]
 
     return {
-        title: `${entry.name.en} | Alternative Care in Hong Kong`,
+        title: `${entry.name[LanguageCode.EN]} | Alternative Care in Hong Kong`,
         description,
         keywords,
         alternates: { canonical: pageUrl },
         openGraph: {
-            title: `${entry.name.en} | Alternative Care in Hong Kong`,
+            title: `${entry.name[LanguageCode.EN]} | Alternative Care in Hong Kong`,
             description,
             url: pageUrl,
             images: [{ url: "https://ae.wait.hk/og-image.png", width: 1200, height: 630 }],
@@ -58,29 +72,28 @@ export default async function AlternativeDetailPage({ params }: PageProps) {
     }
 
     const pageUrl = `https://ae.wait.hk/alternatives/${slug}`
+    const phone = primaryPhone(entry.contacts)
+    const website = primaryWebsite(entry.contacts)
 
     const facilitySchema = isPhysicalFacility(entry)
         ? {
               "@context": "https://schema.org",
               "@type": "MedicalClinic",
-              name: entry.name.en,
-              ...(entry.name.zh ? { alternateName: entry.name.zh } : {}),
+              name: entry.name[LanguageCode.EN],
+              alternateName: entry.name[LanguageCode.ZH],
               address: {
                   "@type": "PostalAddress",
-                  streetAddress: entry.address.en,
-                  addressLocality: entry.district,
+                  streetAddress: entry.location.address[LanguageCode.EN],
+                  addressLocality: entry.location.district,
                   addressCountry: "HK",
               },
               geo: {
                   "@type": "GeoCoordinates",
-                  latitude: entry.coordinates.latitude,
-                  longitude: entry.coordinates.longitude,
+                  latitude: entry.location.coordinates.latitude,
+                  longitude: entry.location.coordinates.longitude,
               },
-              ...(entry.phone ? { telephone: entry.phone.split(" ")[0] } : {}),
-              ...(entry.url ? { url: entry.url } : {}),
-              ...(entry.baseConsultationFee
-                  ? { priceRange: entry.baseConsultationFee.slice(0, 50) }
-                  : {}),
+              ...(phone ? { telephone: phone } : {}),
+              ...(website ? { url: website } : {}),
               ...(entry.category === "24hour"
                   ? { openingHours: "Mo-Su 00:00-24:00" }
                   : {}),
@@ -89,13 +102,10 @@ export default async function AlternativeDetailPage({ params }: PageProps) {
         : {
               "@context": "https://schema.org",
               "@type": "MedicalOrganization",
-              name: entry.name.en,
-              ...(entry.name.zh ? { alternateName: entry.name.zh } : {}),
-              description: entry.description.en,
-              ...(entry.urls.website ? { url: entry.urls.website } : {}),
-              ...(entry.pricing.baseConsultation
-                  ? { priceRange: entry.pricing.baseConsultation.slice(0, 50) }
-                  : {}),
+              name: entry.name[LanguageCode.EN],
+              alternateName: entry.name[LanguageCode.ZH],
+              description: entry.description?.[LanguageCode.EN],
+              ...(website ? { url: website } : {}),
               availableService: {
                   "@type": "MedicalTherapy",
                   name: "Video Consultation",
@@ -113,7 +123,12 @@ export default async function AlternativeDetailPage({ params }: PageProps) {
                 name: "Alternative Care Options",
                 item: "https://ae.wait.hk/alternatives",
             },
-            { "@type": "ListItem", position: 3, name: entry.name.en, item: pageUrl },
+            {
+                "@type": "ListItem",
+                position: 3,
+                name: entry.name[LanguageCode.EN],
+                item: pageUrl,
+            },
         ],
     }
 

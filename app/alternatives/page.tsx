@@ -1,5 +1,6 @@
 import { AlternativesDirectoryView } from "@/components/Alternatives/AlternativesDirectoryView"
 import { alternatives, parseAlternativeCategory } from "@/data/alternatives"
+import { LanguageCode } from "@/types"
 import type { Metadata } from "next"
 
 interface PageProps {
@@ -48,7 +49,7 @@ export default async function AlternativesPage({ searchParams }: PageProps) {
         itemListElement: alternatives.map((entry, i) => ({
             "@type": "ListItem",
             position: i + 1,
-            name: entry.name.en,
+            name: entry.name[LanguageCode.EN],
             url: `https://ae.wait.hk/alternatives/${entry.slug}`,
         })),
     }

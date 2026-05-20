@@ -1,11 +1,15 @@
 "use client"
 
 import { alternatives24Hour } from "@/data/alternatives"
+import { alternativeName } from "@/lib/alternatives/display"
+import { getPrimaryChannel, resolveCurrentPrice } from "@/lib/alternatives/resolve"
+import { scheduleContext } from "@/lib/alternatives/time"
 import { LanguageCode } from "@/types"
 import type { Coordinates } from "@/types"
 import { distance } from "@turf/turf"
 import { ArrowRight, Building2 } from "lucide-react"
 import Link from "next/link"
+import { useMemo } from "react"
 
 const WAIT_TIME_THRESHOLD_MINUTES = 120
 
@@ -41,6 +45,8 @@ export function HospitalSheetAlternatives({
     waitTimeMinutes,
     lang,
 }: HospitalSheetAlternativesProps) {
+    const ctx = useMemo(() => scheduleContext(), [])
+
     if (waitTimeMinutes < WAIT_TIME_THRESHOLD_MINUTES) return null
 
     const t = texts[lang]
@@ -51,9 +57,16 @@ export function HospitalSheetAlternatives({
             facility,
             distanceKm: distance(
                 origin,
-                [facility.coordinates.longitude, facility.coordinates.latitude],
+                [
+                    facility.location.coordinates.longitude,
+                    facility.location.coordinates.latitude,
+                ],
                 { units: "kilometers" }
             ),
+            price: (() => {
+                const ch = getPrimaryChannel(facility, ctx)
+                return ch ? resolveCurrentPrice(ch, ctx) : null
+            })(),
         }))
         .sort((a, b) => a.distanceKm - b.distanceKm)
         .slice(0, 3)
@@ -70,7 +83,7 @@ export function HospitalSheetAlternatives({
             </div>
             <p className="text-xs text-amber-700 dark:text-amber-400 mb-3">{t.subtitle}</p>
             <ul className="space-y-2">
-                {nearby.map(({ facility, distanceKm }) => (
+                {nearby.map(({ facility, distanceKm, price }) => (
                     <li key={facility.slug}>
                         <Link
                             href={`/alternatives/${facility.slug}`}
@@ -78,17 +91,15 @@ export function HospitalSheetAlternatives({
                             className="flex items-start justify-between gap-2 text-sm hover:underline"
                         >
                             <span className="font-medium leading-snug">
-                                {lang === LanguageCode.EN
-                                    ? facility.name.en
-                                    : (facility.name.zh ?? facility.name.en)}
+                                {alternativeName(facility, lang)}
                             </span>
                             <span className="shrink-0 text-xs text-muted-foreground tabular-nums">
                                 {distanceKm.toFixed(1)} {t.km}
                             </span>
                         </Link>
-                        {facility.baseConsultationFee && (
+                        {price && (
                             <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
-                                {facility.baseConsultationFee}
+                                {price.label[lang]}
                             </p>
                         )}
                     </li>

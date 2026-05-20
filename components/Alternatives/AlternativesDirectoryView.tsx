@@ -8,14 +8,17 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { getPrimaryChannel, isChannelOpenNow } from "@/lib/alternatives/resolve"
+import { scheduleContext } from "@/lib/alternatives/time"
 import {
     ALTERNATIVE_CATEGORIES,
     type AlternativeCategory,
-    type AlternativeEntry,
-} from "@/data/alternatives"
+} from "@/types/alternatives"
+import type { Alternative } from "@/types/alternatives"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
 import { usePathname, useRouter } from "next/navigation"
+import { useMemo } from "react"
 
 const categoryLabels = {
     [LanguageCode.EN]: {
@@ -35,8 +38,23 @@ const categoryLabels = {
     },
 }
 
+const OPEN_SORT_RANK: Record<string, number> = {
+    always_open: 0,
+    open: 1,
+    appointment_only: 2,
+    unknown: 3,
+    closed: 4,
+}
+
+function openSortRank(entry: Alternative): number {
+    const ctx = scheduleContext()
+    const channel = getPrimaryChannel(entry, ctx)
+    if (!channel) return 5
+    return OPEN_SORT_RANK[isChannelOpenNow(channel, ctx).kind] ?? 5
+}
+
 interface AlternativesDirectoryViewProps {
-    alternatives: AlternativeEntry[]
+    alternatives: Alternative[]
     category: AlternativeCategory
 }
 
@@ -49,7 +67,11 @@ export function AlternativesDirectoryView({
     const router = useRouter()
     const pathname = usePathname()
 
-    const filtered = alternatives.filter((e) => e.category === category)
+    const filtered = useMemo(() => {
+        return alternatives
+            .filter((e) => e.category === category)
+            .sort((a, b) => openSortRank(a) - openSortRank(b))
+    }, [alternatives, category])
 
     function handleCategoryChange(value: AlternativeCategory) {
         const params = new URLSearchParams()
