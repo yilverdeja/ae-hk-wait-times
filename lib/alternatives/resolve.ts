@@ -183,15 +183,21 @@ export function resolvePricing(
         .filter((t) => tierMatchesContext(t, ctx) && tierMatchesEligibility(t, viewerEligibility))
         .sort((a, b) => tierSpecificity(b, ctx) - tierSpecificity(a, ctx))
 
-    if (matching.length === 0) {
-        const fallback = pricing.tiers.find((t) =>
-            t.appliesWhen.some((w) => w.type === "default")
-        )
-        if (!fallback) return null
-        return formatResolvedTier(fallback)
+    const priced = matching.filter(
+        (t) => t.consultation !== "variable" && t.consultation !== "member_covered"
+    )
+
+    if (priced.length > 0) {
+        return formatResolvedTier(priced[0])
     }
 
-    return formatResolvedTier(matching[0])
+    if (matching.length > 0) {
+        return formatResolvedTier(matching[0])
+    }
+
+    const fallback = pricing.tiers.find((t) => t.appliesWhen.some((w) => w.type === "default"))
+    if (!fallback) return null
+    return formatResolvedTier(fallback)
 }
 
 function formatResolvedTier(tier: FeeTier): ResolvedPrice {

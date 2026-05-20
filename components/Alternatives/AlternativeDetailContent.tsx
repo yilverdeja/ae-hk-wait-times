@@ -2,7 +2,8 @@
 
 import { Badge } from "@/components/ui/badge"
 import { localizedFacilityTag } from "@/lib/alternatives/catalog"
-import { alternativeName, localized, telHref } from "@/lib/alternatives/display"
+import { alternativeName, localized, telHref, voucherLabel } from "@/lib/alternatives/display"
+import { VOUCHER_CATALOG } from "@/lib/alternatives/vouchers"
 import { isChannelOpenNow, resolveCurrentPrice } from "@/lib/alternatives/resolve"
 import { scheduleContext } from "@/lib/alternatives/time"
 import type { Alternative, FeeTier, Schedule, ServiceChannel } from "@/types/alternatives"
@@ -17,6 +18,7 @@ import {
     Phone,
     Smartphone,
     Stethoscope,
+    Ticket,
     Truck,
 } from "lucide-react"
 import Link from "next/link"
@@ -43,6 +45,7 @@ const texts = {
         closed: "Closed",
         appointmentOnly: "By appointment only",
         alwaysOpen: "Open 24 hours",
+        vouchers: "Accepted vouchers",
     },
     [LanguageCode.ZH]: {
         back: "替代醫療選項",
@@ -64,6 +67,7 @@ const texts = {
         closed: "已關閉",
         appointmentOnly: "只限預約",
         alwaysOpen: "24小時開放",
+        vouchers: "接受的醫療券",
     },
     [LanguageCode.CN]: {
         back: "替代医疗选项",
@@ -85,6 +89,7 @@ const texts = {
         closed: "已关闭",
         appointmentOnly: "仅限预约",
         alwaysOpen: "24小时开放",
+        vouchers: "接受的医疗券",
     },
 }
 
@@ -195,6 +200,11 @@ function ChannelSection({
                         <li key={tier.id}>{formatTier(tier, lang)}</li>
                     ))}
                 </ul>
+                {channel.pricing.displayNotes && (
+                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                        {localized(channel.pricing.displayNotes, lang)}
+                    </p>
+                )}
             </InfoRow>
         </section>
     )
@@ -270,6 +280,41 @@ export function AlternativeDetailContent({ entry }: AlternativeDetailContentProp
                                         </a>
                                     </li>
                                 ))}
+                        </ul>
+                    </InfoRow>
+                )}
+
+                {entry.acceptedVouchers && entry.acceptedVouchers.length > 0 && (
+                    <InfoRow icon={<Ticket size={18} />} label={t.vouchers}>
+                        <ul className="space-y-2">
+                            {entry.acceptedVouchers.map((v) => {
+                                const catalog = VOUCHER_CATALOG[v.id]
+                                const details = v.details?.[lang] ?? catalog.details?.[lang]
+                                const url = v.url ?? catalog.officialUrl
+                                return (
+                                    <li key={v.id}>
+                                        <p className="font-medium">{voucherLabel(v, lang)}</p>
+                                        <p className="text-xs text-muted-foreground">
+                                            {localized(catalog.name, lang)}
+                                        </p>
+                                        {details && (
+                                            <p className="text-xs text-muted-foreground mt-0.5">
+                                                {details}
+                                            </p>
+                                        )}
+                                        {url && (
+                                            <a
+                                                href={url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-xs hover:underline mt-0.5 inline-block"
+                                            >
+                                                {url}
+                                            </a>
+                                        )}
+                                    </li>
+                                )
+                            })}
                         </ul>
                     </InfoRow>
                 )}

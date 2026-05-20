@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { alternativeName } from "@/lib/alternatives/display"
+import { alternativeName, alternativeVoucherLabels } from "@/lib/alternatives/display"
 import {
     getEligibilityBadge,
     getPrimaryChannel,
@@ -57,6 +57,7 @@ export function AlternativeCard({ entry, lang }: AlternativeCardProps) {
     const openStatus = channel ? isChannelOpenNow(channel, ctx) : null
     const price = channel ? resolveCurrentPrice(channel, ctx) : null
     const eligibilityBadge = channel ? getEligibilityBadge(channel, lang) : null
+    const voucherLabels = alternativeVoucherLabels(entry, lang)
 
     const typeLabel = isPhysicalAlternative(entry) ? entry.providerType : t.telehealth
 
@@ -95,6 +96,15 @@ export function AlternativeCard({ entry, lang }: AlternativeCardProps) {
                                 {eligibilityBadge}
                             </Badge>
                         )}
+                        {voucherLabels.map((label) => (
+                            <Badge
+                                key={label}
+                                variant="outline"
+                                className="text-[10px] px-1.5 py-0 border-blue-200 text-blue-800 dark:border-blue-800 dark:text-blue-200"
+                            >
+                                {label}
+                            </Badge>
+                        ))}
                     </div>
                     {isPhysicalAlternative(entry) ? (
                         <span className="flex items-center gap-1 text-xs text-muted-foreground">

@@ -57,6 +57,17 @@ export interface EligibilityRule {
     details?: LocalizedString
 }
 
+/** Government or scheme vouchers accepted for payment (expand catalog over time). */
+export type PaymentVoucherId = "hcvs"
+
+export interface AcceptedPaymentVoucher {
+    id: PaymentVoucherId
+    /** Override catalog summary when provider-specific wording is needed. */
+    summary?: LocalizedString
+    details?: LocalizedString
+    url?: string
+}
+
 /** 0 = Sunday … 6 = Saturday (matches JavaScript Date#getDay in HK-local interpretation). */
 export type DayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
@@ -195,6 +206,7 @@ interface AlternativeBase {
     features?: FeatureTag[]
     scope?: AlternativeScope
     sourceUrls?: SourceReference[]
+    acceptedVouchers?: AcceptedPaymentVoucher[]
     lastUpdated?: string
     additionalInfo?: LocalizedString
 }

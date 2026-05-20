@@ -9,6 +9,18 @@ export const EXCLUDES_DRUGS_LABS: LocalizedString[] = [
     i18n("Medical supplies", "醫療用品"),
 ]
 
+/** Standard outpatient consultation exclusions for private hospital fee tables. */
+export const EXCLUDES_CONSULTATION_STANDARD: LocalizedString[] = [
+    ...EXCLUDES_DRUGS_LABS,
+    i18n("Minor procedures", "小型手術"),
+    i18n("Other clinical services", "其他醫療服務"),
+]
+
+export const CONSULTATION_FEE_DISCLAIMER = i18n(
+    "Outpatient consultation fee only. Excludes medication, laboratory tests, minor procedures, and other services. Critical-case fees may apply separately.",
+    "只包括門診診金，不包括藥物、化驗、小型手術及其他服務。危殆個案或另收急症診金。"
+)
+
 export const ELIGIBLE_GOPC: EligibilityRule = {
     audience: "hk_resident_eligible",
     summary: i18n("Eligible HK residents (HKID)", "合資格香港居民（香港身份證）"),

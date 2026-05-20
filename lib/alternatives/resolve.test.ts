@@ -73,6 +73,27 @@ describe("resolveCurrentPrice", () => {
     })
 })
 
+describe("Gleneagles structured pricing", () => {
+    it("resolves weekday daytime outpatient fee", () => {
+        const gleneagles = alternatives.find((a) => a.slug === "gleneagles-hospital-hk")!
+        const price = resolveCurrentPrice(
+            gleneagles.channels[0],
+            scheduleContext(new Date("2026-05-20T10:00:00+08:00"))
+        )
+        assert.equal(price?.amount, 420)
+        assert.equal(price?.kind, "exact")
+    })
+
+    it("resolves weekday evening outpatient fee", () => {
+        const gleneagles = alternatives.find((a) => a.slug === "gleneagles-hospital-hk")!
+        const price = resolveCurrentPrice(
+            gleneagles.channels[0],
+            scheduleContext(new Date("2026-05-20T21:00:00+08:00"))
+        )
+        assert.equal(price?.amount, 600)
+    })
+})
+
 describe("getPrimaryChannel", () => {
     it("returns primary channel for Canossa", () => {
         const canossa = alternatives.find((a) => a.slug === "canossa-hospital")!
