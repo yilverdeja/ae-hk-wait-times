@@ -1,20 +1,20 @@
 import type { Alternative, PhysicalAlternative } from "@/types/alternatives"
 
+import { adventistHospitalStubbsRoad } from "./entries/adventist-hospital-stubbs-road"
+import { adventistHospitalTsuenWan } from "./entries/adventist-hospital-tsuen-wan"
 import { axaTelehealth } from "./entries/axa-telehealth"
+import { baptistHospital } from "./entries/baptist-hospital"
 import { bupaTelehealth } from "./entries/bupa-telehealth"
 import { canossaHospital } from "./entries/canossa-hospital"
+import { cuhkMedicalCentre } from "./entries/cuhk-medical-centre"
 import { drgoTelehealth } from "./entries/drgo-telehealth"
 import { gleneaglesHospitalHk } from "./entries/gleneagles-hospital-hk"
 import { gopcCentral } from "./entries/gopc-central"
 import { preciousBloodHospital } from "./entries/precious-blood-hospital"
 
 // --- Auto-generated (needs review) ---
-import { adventistHospitalStubbsRoad } from "./entries/adventist-hospital-stubbs-road"
-import { adventistHospitalTsuenWan } from "./entries/adventist-hospital-tsuen-wan"
-import { baptistHospital } from "./entries/baptist-hospital"
 import { bowtiegoTelehealth } from "./entries/bowtiego-telehealth"
 import { cignaTelehealth } from "./entries/cigna-telehealth"
-import { cuhkMedicalCentre } from "./entries/cuhk-medical-centre"
 import { cuhkmcTelehealth } from "./entries/cuhkmc-telehealth"
 import { doctornowTelehealth } from "./entries/doctornow-telehealth"
 import { evangelHospital } from "./entries/evangel-hospital"
@@ -57,9 +57,13 @@ import { watsonsEdrTelehealth } from "./entries/watsons-edr-telehealth"
 
 // --- Reviewed ---
 const reviewedAlternatives: Alternative[] = [
+    adventistHospitalStubbsRoad,
+    adventistHospitalTsuenWan,
     axaTelehealth,
     bupaTelehealth,
+    baptistHospital,
     canossaHospital,
+    cuhkMedicalCentre,
     drgoTelehealth,
     gleneaglesHospitalHk,
     gopcCentral,
@@ -68,12 +72,8 @@ const reviewedAlternatives: Alternative[] = [
 
 // --- Auto-generated (needs review) ---
 const generatedAlternatives: Alternative[] = [
-    adventistHospitalStubbsRoad,
-    adventistHospitalTsuenWan,
-    baptistHospital,
     bowtiegoTelehealth,
     cignaTelehealth,
-    cuhkMedicalCentre,
     cuhkmcTelehealth,
     doctornowTelehealth,
     evangelHospital,

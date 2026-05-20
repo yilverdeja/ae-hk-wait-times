@@ -78,6 +78,12 @@ export function isScheduleOpen(schedule: Schedule, ctx: ScheduleContext): OpenSt
             }
         case "weekly": {
             const { day, minutes } = getHongKongParts(ctx.at)
+            if (schedule.closedOnPublicHolidays && ctx.isPublicHoliday) {
+                return {
+                    kind: "closed",
+                    label: schedule.notes ?? enZh("Closed now", "現已關閉"),
+                }
+            }
             for (const rule of schedule.rules) {
                 if (!isDayInRules(day, rule.days)) continue
                 for (const range of rule.ranges) {
@@ -104,6 +110,8 @@ function appliesWhenScore(when: PriceAppliesWhen, ctx: ScheduleContext): number 
             return isDayInRules(day, when.days) ? 10 : -1
         case "public_holiday":
             return ctx.isPublicHoliday ? 20 : -1
+        case "not_public_holiday":
+            return ctx.isPublicHoliday ? -1 : 8
         case "tier":
             return 5
         case "time": {

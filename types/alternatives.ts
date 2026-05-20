@@ -90,6 +90,8 @@ export type Schedule =
           kind: "weekly"
           timezone: "Asia/Hong_Kong"
           rules: WeeklyRule[]
+          /** When true, treat as closed whenever `ctx.isPublicHoliday` is true (e.g. general OPD on hospital holidays). */
+          closedOnPublicHolidays?: boolean
           notes?: LocalizedString
       }
     | { kind: "appointment_only"; notes?: LocalizedString }
@@ -118,6 +120,8 @@ export type PriceAppliesWhen =
     | { type: "days"; days: DayOfWeek[] }
     | { type: "time"; ranges: TimeRange[]; days?: DayOfWeek[] }
     | { type: "public_holiday" }
+    /** Matches only when ctx.isPublicHoliday is false (e.g. general outpatient excluding hospital holidays). */
+    | { type: "not_public_holiday" }
     | { type: "tier"; tier: PriceTierKind }
 
 export interface FeeTier {

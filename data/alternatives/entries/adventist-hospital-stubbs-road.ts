@@ -1,186 +1,113 @@
-/** AUTO-GENERATED — needs manual review. Source: archive/24HourFacilities.json */
+/** Reviewed — hand-curated entry. */
+import { customFacility, facility } from "@/lib/alternatives/catalog"
+import { i18n } from "@/lib/i18n"
 import type { PhysicalAlternative } from "@/types/alternatives"
+import { EXCLUDES_CONSULTATION_STANDARD, OPEN_PUBLIC } from "../shared"
+
+const HKAH_URGENT_CARE_PAGE = i18n(
+    "https://www.hkah.org.hk/en/specialist-clinics/24-7-urgent-care-clinic",
+    "https://www.hkah.org.hk/tc/specialist-clinics/24-7-urgent-care-clinic",
+    "https://www.hkah.org.hk/sc/specialist-clinics/24-7-urgent-care-clinic"
+)
 
 export const adventistHospitalStubbsRoad: PhysicalAlternative = {
-    "slug": "adventist-hospital-stubbs-road",
-    "category": "24hour",
-    "name": {
-        "en": "Hong Kong Adventist Hospital – Stubbs Road",
-        "zh": "香港港安醫院–司徒拔道",
-        "cn": "香港港安醫院–司徒拔道"
+    slug: "adventist-hospital-stubbs-road",
+    category: "24hour",
+    name: i18n("Hong Kong Adventist Hospital – Stubbs Road", "香港港安醫院－司徒拔道"),
+    providerType: "Private Hospital",
+    description: i18n(
+        "24/7 urgent care clinic staffed by emergency medicine specialists. Walk-in accepted. Emergency response team can mobilise doctors, nurses, and specialists at short notice, including paediatric urgent care.",
+        "由急症科專科醫生提供24小時急症門診，接受即時求診。急症應變團隊可迅速調動醫生、護士及專科支援，並提供兒童急症服務。"
+    ),
+    location: {
+        district: "Happy Valley",
+        address: i18n(
+            "G/F, Hong Kong Adventist Hospital – Stubbs Road, 40 Stubbs Road, Hong Kong",
+            "香港司徒拔道40號香港港安醫院－司徒拔道地下"
+        ),
+        coordinates: { latitude: 22.2634133, longitude: 114.1841954 },
     },
-    "providerType": "Private Hospital",
-    "location": {
-        "district": "Happy Valley",
-        "address": {
-            "en": "40 Stubbs Road, Happy Valley, Hong Kong",
-            "zh": "香港司徒拔道四十號",
-            "cn": "香港司徒拔道四十號"
-        },
-        "coordinates": {
-            "latitude": 22.268,
-            "longitude": 114.183
-        }
-    },
-    "contacts": [
+    contacts: [
+        { kind: "phone", value: "3651 8991", label: i18n("24-hour urgent care", "24小時急症門診") },
         {
-            "kind": "phone",
-            "value": "3651 8888",
-            "label": {
-                "en": "General",
-                "zh": "General",
-                "cn": "General"
-            }
+            kind: "whatsapp",
+            value: "36518808",
+            label: i18n("WhatsApp / WeChat", "WhatsApp／微信"),
         },
         {
-            "kind": "phone",
-            "value": "3651 8991",
-            "label": {
-                "en": "Urgent Care",
-                "zh": "Urgent Care",
-                "cn": "Urgent Care"
-            }
+            kind: "url",
+            value: HKAH_URGENT_CARE_PAGE,
+            label: i18n("24-hour urgent care clinic", "24小時急症門診", "24小时急症门诊"),
         },
         {
-            "kind": "url",
-            "value": "https://www.hkah.org.hk/en/specialist-clinics/24-7-urgent-care-clinic",
-            "label": {
-                "en": "Official site",
-                "zh": "官網",
-                "cn": "官網"
-            }
-        }
+            kind: "url",
+            value: "https://maps.app.goo.gl/wUbqPmM9TBrcJkdZ7",
+            label: i18n("Google Maps", "Google地圖", "Google地图"),
+        },
     ],
-    "channels": [
+    channels: [
         {
-            "id": "24h_opd",
-            "name": {
-                "en": "24-hour outpatient",
-                "zh": "24小時門診",
-                "cn": "24小時門診"
+            id: "24h_urgent_care",
+            name: i18n("24-hour urgent care clinic", "24小時急症門診"),
+            channelType: "in_person",
+            primary: true,
+            schedule: { kind: "always_open" },
+            eligibility: OPEN_PUBLIC,
+            booking: {
+                walkIn: true,
+                methods: i18n(
+                    "Walk-in, phone (3651 8991), or WhatsApp / WeChat (36518808)",
+                    "即時、電話（3651 8991）或WhatsApp／微信（36518808）"
+                ),
             },
-            "channelType": "in_person",
-            "primary": true,
-            "schedule": {
-                "kind": "always_open"
-            },
-            "eligibility": [
-                {
-                    "audience": "open",
-                    "summary": {
-                        "en": "Open to public",
-                        "zh": "開放予公眾",
-                        "cn": "开放予公众"
-                    }
-                }
-            ],
-            "booking": {
-                "walkIn": true
-            },
-            "pricing": {
-                "tiers": [
+            pricing: {
+                tiers: [
                     {
-                        "id": "default",
-                        "label": {
-                            "en": "Consultation",
-                            "zh": "診症",
-                            "cn": "診症"
-                        },
-                        "consultation": "variable",
-                        "appliesWhen": [
-                            {
-                                "type": "default"
-                            }
-                        ],
-                        "notes": {
-                            "en": "HK$1,200 (24-hour Urgent Care). HK$450 (Mon-Fri outpatient GP/Family Medicine). HK$550 (Weekends & Public Holidays outpatient GP/Family Medicine). Excludes medication, tests, and specialist fees.",
-                            "zh": "HK$1,200 (24-hour Urgent Care). HK$450 (Mon-Fri outpatient GP/Family Medicine). HK$550 (Weekends & Public Holidays outpatient GP/Family Medicine). Excludes medication, tests, and specialist fees.",
-                            "cn": "HK$1,200 (24-hour Urgent Care). HK$450 (Mon-Fri outpatient GP/Family Medicine). HK$550 (Weekends & Public Holidays outpatient GP/Family Medicine). Excludes medication, tests, and specialist fees."
-                        }
-                    }
-                ]
-            }
-        }
+                        id: "initial",
+                        label: i18n(
+                            "Urgent care consultation (initial)",
+                            "急症診症（首次）",
+                            "急症诊症（首次）"
+                        ),
+                        consultation: { currency: "HKD", amount: 1200 },
+                        appliesWhen: [{ type: "default" }],
+                        excludes: EXCLUDES_CONSULTATION_STANDARD,
+                    },
+                ],
+                displayNotes: i18n(
+                    "Initial consultation fee for emergency medicine / urgent care only. Excludes minor procedures, medication, laboratory services, and medical supplies. Total charges depend on the attending doctor's assessment of the patient's condition.",
+                    "只包括急症科首次診症診金，不包括小型手術、藥物、化驗及醫療用品。實際收費視當值醫生對病人情況的評估而定。"
+                ),
+            },
+        },
     ],
-    "facilities": [
-        {
-            "custom": {
-                "en": "X-Ray",
-                "zh": "X-Ray",
-                "cn": "X-Ray"
-            }
-        },
-        {
-            "custom": {
-                "en": "Pharmacy",
-                "zh": "Pharmacy",
-                "cn": "Pharmacy"
-            }
-        },
-        {
-            "custom": {
-                "en": "ECG",
-                "zh": "ECG",
-                "cn": "ECG"
-            }
-        },
-        {
-            "custom": {
-                "en": "Laboratory",
-                "zh": "Laboratory",
-                "cn": "Laboratory"
-            }
-        },
-        {
-            "custom": {
-                "en": "Emergency Angioplasty (24/7)",
-                "zh": "Emergency Angioplasty (24/7)",
-                "cn": "Emergency Angioplasty (24/7)"
-            }
-        },
-        {
-            "custom": {
-                "en": "Hybrid Cardiac Catheterization & Interventional Operating Room",
-                "zh": "Hybrid Cardiac Catheterization & Interventional Operating Room",
-                "cn": "Hybrid Cardiac Catheterization & Interventional Operating Room"
-            }
-        },
-        {
-            "custom": {
-                "en": "Special Care Ward (24-hour monitoring)",
-                "zh": "Special Care Ward (24-hour monitoring)",
-                "cn": "Special Care Ward (24-hour monitoring)"
-            }
-        },
-        {
-            "custom": {
-                "en": "Stroke Emergency (thrombolytic therapy)",
-                "zh": "Stroke Emergency (thrombolytic therapy)",
-                "cn": "Stroke Emergency (thrombolytic therapy)"
-            }
-        },
-        {
-            "custom": {
-                "en": "Orthopedic Trauma (cast, reduction, braces)",
-                "zh": "Orthopedic Trauma (cast, reduction, braces)",
-                "cn": "Orthopedic Trauma (cast, reduction, braces)"
-            }
-        }
+    facilities: [
+        facility("xray"),
+        facility("pharmacy"),
+        facility("laboratory"),
+        facility("ecg"),
+        customFacility("Emergency angioplasty (24/7)", "緊急通波仔（24小時）"),
+        customFacility(
+            "Hybrid cardiac catheterization & interventional operating room",
+            "混合式心導管及介入治療手術室"
+        ),
+        customFacility("Special care ward (24-hour monitoring)", "特別護理病房（24小時監察）"),
+        customFacility("Stroke emergency (thrombolytic therapy)", "中風急症（溶栓治療）"),
+        customFacility("Orthopedic trauma (cast, reduction, braces)", "骨科創傷（石膏、復位、支架）"),
     ],
-    "additionalInfo": {
-        "en": "24/7 Urgent Care Clinic managed by Emergency Medicine Specialists. Single activation emergency response team can mobilize doctors, nurses, radiotherapists, and specialists at a moment's notice. Meets international 90-minute golden hour standard for heart attack patients. Provides paediatric urgent care for children.",
-        "zh": "24/7 Urgent Care Clinic managed by Emergency Medicine Specialists. Single activation emergency response team can mobilize doctors, nurses, radiotherapists, and specialists at a moment's notice. Meets international 90-minute golden hour standard for heart attack patients. Provides paediatric urgent care for children.",
-        "cn": "24/7 Urgent Care Clinic managed by Emergency Medicine Specialists. Single activation emergency response team can mobilize doctors, nurses, radiotherapists, and specialists at a moment's notice. Meets international 90-minute golden hour standard for heart attack patients. Provides paediatric urgent care for children."
+    scope: {
+        hasAe: true,
+        urgencyLevel: "emergency_capable",
+        summary: i18n(
+            "24/7 urgent care clinic with emergency medicine specialists and emergency response capabilities.",
+            "24小時急症門診，由急症科專科醫生提供及具急症應變能力。"
+        ),
     },
-    "sourceUrls": [
+    sourceUrls: [
         {
-            "url": "https://www.littlestepsasia.com/hong-kong/family-life/parenting-life/emergency-public-private-hospital/"
+            url: HKAH_URGENT_CARE_PAGE,
+            label: i18n("Official 24-hour urgent care", "官方24小時急症門診", "官方24小时急症门诊"),
         },
-        {
-            "url": "https://www.10life.com/en/blog/24hours-clinic-hospital-operation-hours"
-        },
-        {
-            "url": "https://www.sassymamahk.com/hong-kong-public-private-hospital-emergency-department-health/"
-        }
-    ]
-} as PhysicalAlternative
+    ],
+    lastUpdated: "2026-05-20",
+}
