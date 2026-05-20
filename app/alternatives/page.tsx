@@ -77,7 +77,7 @@ export default async function AlternativesPage({ searchParams }: PageProps) {
                     <h1 className="text-3xl font-bold tracking-tight mb-2">
                         Alternative Care Options
                     </h1>
-                    <p className="text-muted-foreground max-w-2xl">
+                    <p className="text-muted-foreground">
                         Considering alternatives to A&amp;E? Browse 24-hour private hospitals,
                         government outpatient clinics (GOPC), and telehealth services available in
                         Hong Kong.

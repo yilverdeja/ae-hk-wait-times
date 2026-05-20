@@ -120,3 +120,5 @@ export interface EnrichedApiResponse {
     lastUpdated: string
     waitTimes: EnrichedHospitalData[]
 }
+
+export * from "./alternatives"

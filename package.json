@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:alternatives": "npx tsx --test lib/alternatives/resolve.test.ts"
   },
   "dependencies": {
     "@mapbox/mapbox-gl-language": "^1.0.1",
