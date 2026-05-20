@@ -29,13 +29,15 @@ export type ContactKind =
 
 export interface LabeledContact {
     kind: ContactKind
-    value: string
+    /** Phone/WhatsApp/email: plain string. URLs may use `i18n()` for en/tc/sc paths. */
+    value: string | LocalizedString
     label?: LocalizedString
 }
 
 export interface SourceReference {
-    url: string
-    label?: string
+    /** Official page URLs — use `i18n(enUrl, tcUrl, scUrl)` when the provider has locale paths. */
+    url: string | LocalizedString
+    label?: string | LocalizedString
     retrievedAt?: string
 }
 

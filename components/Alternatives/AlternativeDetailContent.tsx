@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge"
 import { localizedFacilityTag } from "@/lib/alternatives/catalog"
-import { alternativeName, localized, telHref, voucherLabel } from "@/lib/alternatives/display"
+import { alternativeName, localized, pickLocalized, telHref, voucherLabel } from "@/lib/alternatives/display"
 import { VOUCHER_CATALOG } from "@/lib/alternatives/vouchers"
 import { isChannelOpenNow, resolveCurrentPrice } from "@/lib/alternatives/resolve"
 import { scheduleContext } from "@/lib/alternatives/time"
@@ -268,9 +268,9 @@ export function AlternativeDetailContent({ entry }: AlternativeDetailContentProp
                             {entry.contacts
                                 .filter((c) => c.kind === "phone")
                                 .map((c) => (
-                                    <li key={c.value}>
-                                        <a href={telHref(c.value)} className="hover:underline">
-                                            {c.value}
+                                    <li key={pickLocalized(c.value, LanguageCode.EN)}>
+                                        <a href={telHref(pickLocalized(c.value, LanguageCode.EN))} className="hover:underline">
+                                            {pickLocalized(c.value, lang)}
                                             {c.label && (
                                                 <span className="text-muted-foreground">
                                                     {" "}
@@ -366,10 +366,11 @@ export function AlternativeDetailContent({ entry }: AlternativeDetailContentProp
                     <div className="flex flex-wrap gap-3">
                         {entry.contacts.map((c) => {
                             if (c.kind === "url") {
+                                const href = pickLocalized(c.value, lang)
                                 return (
                                     <a
-                                        key={c.value}
-                                        href={c.value}
+                                        key={pickLocalized(c.value, LanguageCode.EN)}
+                                        href={href}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center gap-1.5 text-sm hover:underline"
@@ -382,8 +383,8 @@ export function AlternativeDetailContent({ entry }: AlternativeDetailContentProp
                             if (c.kind === "app_ios") {
                                 return (
                                     <a
-                                        key={c.value}
-                                        href={c.value}
+                                        key={pickLocalized(c.value, LanguageCode.EN)}
+                                        href={pickLocalized(c.value, lang)}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center gap-1.5 text-sm hover:underline"
@@ -396,8 +397,8 @@ export function AlternativeDetailContent({ entry }: AlternativeDetailContentProp
                             if (c.kind === "app_android") {
                                 return (
                                     <a
-                                        key={c.value}
-                                        href={c.value}
+                                        key={pickLocalized(c.value, LanguageCode.EN)}
+                                        href={pickLocalized(c.value, lang)}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center gap-1.5 text-sm hover:underline"
@@ -423,18 +424,22 @@ export function AlternativeDetailContent({ entry }: AlternativeDetailContentProp
                 {entry.sourceUrls && entry.sourceUrls.length > 0 && (
                     <InfoRow icon={<ExternalLink size={18} />} label={t.sources}>
                         <ul className="space-y-1 text-xs break-all">
-                            {entry.sourceUrls.map((s) => (
-                                <li key={s.url}>
-                                    <a
-                                        href={s.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="hover:underline text-muted-foreground"
-                                    >
-                                        {s.label ?? s.url}
-                                    </a>
-                                </li>
-                            ))}
+                            {entry.sourceUrls.map((s) => {
+                                const href = pickLocalized(s.url, lang)
+                                const linkLabel = s.label ? pickLocalized(s.label, lang) : href
+                                return (
+                                    <li key={pickLocalized(s.url, LanguageCode.EN)}>
+                                        <a
+                                            href={href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="hover:underline text-muted-foreground"
+                                        >
+                                            {linkLabel}
+                                        </a>
+                                    </li>
+                                )
+                            })}
                         </ul>
                     </InfoRow>
                 )}

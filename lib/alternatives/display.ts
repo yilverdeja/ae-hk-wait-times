@@ -1,6 +1,11 @@
 import { VOUCHER_CATALOG } from "@/lib/alternatives/vouchers"
-import type { LanguageCode, LocalizedString } from "@/types"
+import { LanguageCode, type LocalizedString } from "@/types"
 import type { AcceptedPaymentVoucher, Alternative, LabeledContact } from "@/types/alternatives"
+
+/** Resolves a plain string or `i18n()` object for the active locale. */
+export function pickLocalized(value: string | LocalizedString, lang: LanguageCode): string {
+    return typeof value === "string" ? value : value[lang]
+}
 
 export function localized(text: LocalizedString, lang: LanguageCode): string {
     return text[lang]
@@ -12,12 +17,14 @@ export function alternativeName(alt: Alternative, lang: LanguageCode): string {
 
 export function primaryPhone(contacts: LabeledContact[]): string | null {
     const phone = contacts.find((c) => c.kind === "phone")
-    return phone?.value ?? null
+    if (!phone) return null
+    return pickLocalized(phone.value, LanguageCode.EN)
 }
 
 export function primaryWebsite(contacts: LabeledContact[]): string | null {
     const url = contacts.find((c) => c.kind === "url")
-    return url?.value ?? null
+    if (!url) return null
+    return pickLocalized(url.value, LanguageCode.EN)
 }
 
 export function telHref(phone: string): string {
