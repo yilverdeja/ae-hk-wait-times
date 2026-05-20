@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:alternatives": "npx tsx --test lib/alternatives/resolve.test.ts"
+    "test:alternatives": "npx tsx --test lib/alternatives/resolve.test.ts",
+    "alternatives:export-pilots": "npx tsx scripts/alternatives/export-curated-pilots.ts",
+    "alternatives:generate-entry": "npx tsx scripts/alternatives/migrate-legacy-to-entry.ts",
+    "alternatives:generate-gopc": "npx tsx scripts/alternatives/generate-gopc-entries.ts",
+    "alternatives:generate-registry": "npx tsx scripts/alternatives/generate-registry.ts"
   },
   "dependencies": {
     "@mapbox/mapbox-gl-language": "^1.0.1",

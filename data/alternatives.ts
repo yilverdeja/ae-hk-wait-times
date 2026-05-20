@@ -1,13 +1,12 @@
 /**
- * Public data API for alternatives. Implementation lives in alternatives2.
- * Legacy type names re-exported for gradual migration of imports.
+ * Public data API for alternatives.
  */
 export {
     alternatives,
     alternatives24Hour,
     alternativesBySlug,
     getAlternativeSlugs as getSlugs,
-} from "@/data/alternatives2"
+} from "@/data/alternatives/index"
 
 export {
     ALTERNATIVE_CATEGORIES,
