@@ -5,6 +5,7 @@ export const REVIEWED_SLUGS = new Set([
     "baptist-hospital",
     "canossa-hospital",
     "cuhk-medical-centre",
+    "hk-sanatorium",
     "precious-blood-hospital",
     "gopc-central",
     "drgo-telehealth",

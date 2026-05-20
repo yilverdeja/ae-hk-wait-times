@@ -32,6 +32,18 @@ export function telHref(phone: string): string {
     return `tel:${digits.split(/\s/)[0] ?? digits}`
 }
 
+/** Build https://wa.me/ number; assumes HK local 8-digit if no country code. */
+export function whatsappHref(raw: string): string {
+    const digits = raw.replace(/\D/g, "")
+    if (digits.startsWith("852")) {
+        return `https://wa.me/${digits}`
+    }
+    if (digits.length === 8) {
+        return `https://wa.me/852${digits}`
+    }
+    return `https://wa.me/${digits}`
+}
+
 export function voucherLabel(voucher: AcceptedPaymentVoucher, lang: LanguageCode): string {
     const catalog = VOUCHER_CATALOG[voucher.id]
     return voucher.summary?.[lang] ?? catalog.summary[lang]

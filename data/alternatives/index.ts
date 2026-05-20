@@ -10,6 +10,7 @@ import { cuhkMedicalCentre } from "./entries/cuhk-medical-centre"
 import { drgoTelehealth } from "./entries/drgo-telehealth"
 import { gleneaglesHospitalHk } from "./entries/gleneagles-hospital-hk"
 import { gopcCentral } from "./entries/gopc-central"
+import { hkSanatorium } from "./entries/hk-sanatorium"
 import { preciousBloodHospital } from "./entries/precious-blood-hospital"
 
 // --- Auto-generated (needs review) ---
@@ -36,7 +37,6 @@ import { gopcTkoJockeyClub } from "./entries/gopc-tko-jockey-club"
 import { gopcTkoPoNingRoad } from "./entries/gopc-tko-po-ning-road"
 import { gopcWanTsuiEstate } from "./entries/gopc-wan-tsui-estate"
 import { haGoTelehealth } from "./entries/ha-go-telehealth"
-import { hkSanatorium } from "./entries/hk-sanatorium"
 import { hkahTelehealth } from "./entries/hkah-telehealth"
 import { hkshTelehealth } from "./entries/hksh-telehealth"
 import { matildaHospital } from "./entries/matilda-hospital"
@@ -67,6 +67,7 @@ const reviewedAlternatives: Alternative[] = [
     drgoTelehealth,
     gleneaglesHospitalHk,
     gopcCentral,
+    hkSanatorium,
     preciousBloodHospital,
 ]
 
@@ -95,7 +96,6 @@ const generatedAlternatives: Alternative[] = [
     gopcTkoPoNingRoad,
     gopcWanTsuiEstate,
     haGoTelehealth,
-    hkSanatorium,
     hkahTelehealth,
     hkshTelehealth,
     matildaHospital,

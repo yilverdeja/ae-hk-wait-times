@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge"
 import { localizedFacilityTag } from "@/lib/alternatives/catalog"
-import { alternativeName, localized, pickLocalized, telHref, voucherLabel } from "@/lib/alternatives/display"
+import { alternativeName, localized, pickLocalized, telHref, voucherLabel, whatsappHref } from "@/lib/alternatives/display"
 import { VOUCHER_CATALOG } from "@/lib/alternatives/vouchers"
 import { isChannelOpenNow, resolveCurrentPrice } from "@/lib/alternatives/resolve"
 import { scheduleContext } from "@/lib/alternatives/time"
@@ -15,6 +15,7 @@ import {
     Clock,
     ExternalLink,
     MapPin,
+    MessageCircle,
     Phone,
     Smartphone,
     Stethoscope,
@@ -29,6 +30,7 @@ const texts = {
         back: "Alternative Care Options",
         address: "Address",
         phone: "Phone",
+        whatsapp: "WhatsApp",
         hours: "Operating Hours",
         facilities: "Facilities & Services",
         website: "Official Website",
@@ -51,6 +53,7 @@ const texts = {
         back: "替代醫療選項",
         address: "地址",
         phone: "電話",
+        whatsapp: "WhatsApp",
         hours: "服務時間",
         facilities: "設施及服務",
         website: "官方網站",
@@ -73,6 +76,7 @@ const texts = {
         back: "替代医疗选项",
         address: "地址",
         phone: "电话",
+        whatsapp: "WhatsApp",
         hours: "服务时间",
         facilities: "设施及服务",
         website: "官方网站",
@@ -270,6 +274,33 @@ export function AlternativeDetailContent({ entry }: AlternativeDetailContentProp
                                 .map((c) => (
                                     <li key={pickLocalized(c.value, LanguageCode.EN)}>
                                         <a href={telHref(pickLocalized(c.value, LanguageCode.EN))} className="hover:underline">
+                                            {pickLocalized(c.value, lang)}
+                                            {c.label && (
+                                                <span className="text-muted-foreground">
+                                                    {" "}
+                                                    ({localized(c.label, lang)})
+                                                </span>
+                                            )}
+                                        </a>
+                                    </li>
+                                ))}
+                        </ul>
+                    </InfoRow>
+                )}
+
+                {entry.contacts.some((c) => c.kind === "whatsapp") && (
+                    <InfoRow icon={<MessageCircle size={18} />} label={t.whatsapp}>
+                        <ul className="space-y-1">
+                            {entry.contacts
+                                .filter((c) => c.kind === "whatsapp")
+                                .map((c) => (
+                                    <li key={pickLocalized(c.value, LanguageCode.EN)}>
+                                        <a
+                                            href={whatsappHref(pickLocalized(c.value, LanguageCode.EN))}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="hover:underline"
+                                        >
                                             {pickLocalized(c.value, lang)}
                                             {c.label && (
                                                 <span className="text-muted-foreground">
