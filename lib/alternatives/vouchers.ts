@@ -19,7 +19,7 @@ export const VOUCHER_CATALOG: Record<PaymentVoucherId, VoucherDefinition> = {
             "Eligible elders may use Health Care Vouchers at this provider for approved services. Confirm balance and eligible services before visit.",
             "合資格長者可使用醫療券支付認可服務，請於求診前確認餘額及適用範圍。"
         ),
-        officialUrl: "https://www.healthcarevoucher.gov.hk/en/",
+        officialUrl: "https://www.hcv.gov.hk/en/index.html", // add addresses for en, zh, and cn
     },
 }
 
