@@ -13,6 +13,7 @@ import { gopcCentral } from "./entries/gopc-central"
 import { hkSanatorium } from "./entries/hk-sanatorium"
 import { matildaHospital } from "./entries/matilda-hospital"
 import { preciousBloodHospital } from "./entries/precious-blood-hospital"
+import { stPaulsHospital } from "./entries/st-pauls-hospital"
 
 // --- Auto-generated (needs review) ---
 import { bowtiegoTelehealth } from "./entries/bowtiego-telehealth"
@@ -48,7 +49,6 @@ import { otpHealthcareClearwaterBay } from "./entries/otp-healthcare-clearwater-
 import { otpHealthcareRepulseBay } from "./entries/otp-healthcare-repulse-bay"
 import { pbhTelehealth } from "./entries/pbh-telehealth"
 import { qhmsTelehealth } from "./entries/qhms-telehealth"
-import { stPaulsHospital } from "./entries/st-pauls-hospital"
 import { stTeresasHospital } from "./entries/st-teresas-hospital"
 import { townHealthTaiWai } from "./entries/town-health-tai-wai"
 import { umpTelehealth } from "./entries/ump-telehealth"
@@ -70,6 +70,7 @@ const reviewedAlternatives: Alternative[] = [
     hkSanatorium,
     matildaHospital,
     preciousBloodHospital,
+    stPaulsHospital,
 ]
 
 // --- Auto-generated (needs review) ---
@@ -107,7 +108,6 @@ const generatedAlternatives: Alternative[] = [
     otpHealthcareRepulseBay,
     pbhTelehealth,
     qhmsTelehealth,
-    stPaulsHospital,
     stTeresasHospital,
     townHealthTaiWai,
     umpTelehealth,
