@@ -9,6 +9,8 @@ export const REVIEWED_SLUGS = new Set([
     "matilda-hospital",
     "precious-blood-hospital",
     "st-pauls-hospital",
+    "st-teresas-hospital",
+    "union-hospital",
     "gopc-central",
     "drgo-telehealth",
     "bupa-telehealth",
