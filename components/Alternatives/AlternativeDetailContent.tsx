@@ -14,6 +14,7 @@ import {
     ArrowLeft,
     Clock,
     ExternalLink,
+    Mail,
     MapPin,
     MessageCircle,
     Phone,
@@ -30,6 +31,7 @@ const texts = {
         back: "Alternative Care Options",
         address: "Address",
         phone: "Phone",
+        email: "Email",
         whatsapp: "WhatsApp",
         hours: "Operating Hours",
         facilities: "Facilities & Services",
@@ -53,6 +55,7 @@ const texts = {
         back: "替代醫療選項",
         address: "地址",
         phone: "電話",
+        email: "電郵",
         whatsapp: "WhatsApp",
         hours: "服務時間",
         facilities: "設施及服務",
@@ -76,6 +79,7 @@ const texts = {
         back: "替代医疗选项",
         address: "地址",
         phone: "电话",
+        email: "电邮",
         whatsapp: "WhatsApp",
         hours: "服务时间",
         facilities: "设施及服务",
@@ -274,6 +278,31 @@ export function AlternativeDetailContent({ entry }: AlternativeDetailContentProp
                                 .map((c) => (
                                     <li key={pickLocalized(c.value, LanguageCode.EN)}>
                                         <a href={telHref(pickLocalized(c.value, LanguageCode.EN))} className="hover:underline">
+                                            {pickLocalized(c.value, lang)}
+                                            {c.label && (
+                                                <span className="text-muted-foreground">
+                                                    {" "}
+                                                    ({localized(c.label, lang)})
+                                                </span>
+                                            )}
+                                        </a>
+                                    </li>
+                                ))}
+                        </ul>
+                    </InfoRow>
+                )}
+
+                {entry.contacts.some((c) => c.kind === "email") && (
+                    <InfoRow icon={<Mail size={18} />} label={t.email}>
+                        <ul className="space-y-1">
+                            {entry.contacts
+                                .filter((c) => c.kind === "email")
+                                .map((c) => (
+                                    <li key={pickLocalized(c.value, LanguageCode.EN)}>
+                                        <a
+                                            href={`mailto:${pickLocalized(c.value, LanguageCode.EN)}`}
+                                            className="hover:underline"
+                                        >
                                             {pickLocalized(c.value, lang)}
                                             {c.label && (
                                                 <span className="text-muted-foreground">
