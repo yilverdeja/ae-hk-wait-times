@@ -7,7 +7,12 @@ import {
     waitTimeCategoryLabels,
     waitTimeNA,
 } from "@/lib/map-translations"
-import { EnrichedHospitalData, LanguageCode, ManagementStatus } from "@/types"
+import {
+    Coordinates,
+    EnrichedHospitalData,
+    LanguageCode,
+    ManagementStatus,
+} from "@/types"
 import * as turf from "@turf/turf"
 
 type Theme = "light" | "dark"
@@ -78,6 +83,49 @@ export function isUserInHongKong(
     if (!coords) return false
     const point = [coords.longitude, coords.latitude]
     return turf.booleanPointInPolygon(point, HONG_KONG_GEOFENCE)
+}
+
+/**
+ * Find the hospital closest to a reference point (straight-line distance).
+ */
+export function findClosestHospital<T extends { coordinates: Coordinates }>(
+    reference: Coordinates,
+    hospitals: T[]
+): T | null {
+    if (hospitals.length === 0) return null
+
+    const origin: [number, number] = [
+        reference.longitude,
+        reference.latitude,
+    ]
+
+    let closest = hospitals[0]
+    let minDistance = turf.distance(
+        origin,
+        [
+            closest.coordinates.longitude,
+            closest.coordinates.latitude,
+        ],
+        { units: "kilometers" }
+    )
+
+    for (let i = 1; i < hospitals.length; i++) {
+        const hospital = hospitals[i]
+        const d = turf.distance(
+            origin,
+            [
+                hospital.coordinates.longitude,
+                hospital.coordinates.latitude,
+            ],
+            { units: "kilometers" }
+        )
+        if (d < minDistance) {
+            minDistance = d
+            closest = hospital
+        }
+    }
+
+    return closest
 }
 
 // ===================================================================================
