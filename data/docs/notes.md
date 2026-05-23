@@ -12,3 +12,19 @@ The APIs are:
 ## Future improvements
 * Add a comparison page that will compare costs + waiting time in public hospital, to an alternative care option nearby (with best time to go)
   * Looks at users symptoms or issues (simple filter), and can determine level of urgency, current costs and wait time if going now, and maybe a better time to go later
+
+* Add a filter's on /alternatives page
+  * HKID holder or not
+  * Voucher (HCVS) only
+  * Sort by cost (default cheapest first)
+  * Filter by cost
+  * Filter by region
+  * Filter by allowing walk-in, or need appointment (default set to allow walk in)
+
+
+* Update /alternative cards OR show as a table
+  * Instead of "HK$X now" show the time frame in which it's active
+  * If the time frame is expiring soon (i.e. less than 30 minutes, show the next time frame cost)
+  * Instead of "Open 24 hours", say something like "Open now" or "Closed"
+
+* Show alternatives in a map
