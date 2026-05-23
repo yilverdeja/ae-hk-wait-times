@@ -15,8 +15,8 @@ import { useLanguage } from "@/hooks/useLanguage"
 import { isUserInHongKong } from "@/lib/map"
 import { getLocalizedText, mapDialogTranslations } from "@/lib/map-translations"
 import { sendGAEvent } from "@next/third-parties/google"
-import { Map } from "lucide-react"
-import { useEffect, useMemo, useState } from "react"
+import { LocateFixed, Map } from "lucide-react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useGeolocated } from "react-geolocated"
 
 export function MapDialog() {
@@ -27,36 +27,55 @@ export function MapDialog() {
         isGeolocationAvailable,
         isGeolocationEnabled,
         getPosition,
-    } = useGeolocated({ suppressLocationOnMount: true })
+    } = useGeolocated({
+        suppressLocationOnMount: true,
+        isOptimisticGeolocationEnabled: false,
+        watchLocationPermissionChange: true,
+    })
 
-    // Check if user is outside Hong Kong (Issue 8)
-    const isUserOutsideHongKong = useMemo(() => {
+    const rawCoords = useMemo(() => {
         if (isGeolocationEnabled && coords) {
-            return !isUserInHongKong({
+            return {
                 longitude: coords.longitude,
                 latitude: coords.latitude,
-            })
+            }
         }
-        return false
+        return null
     }, [isGeolocationEnabled, coords])
 
-    // Request geolocation when dialog opens
+    const isUserOutsideHongKong = useMemo(() => {
+        return rawCoords != null && !isUserInHongKong(rawCoords)
+    }, [rawCoords])
+
+    const userCoords =
+        rawCoords && !isUserOutsideHongKong ? rawCoords : null
+
+    const locationFeaturesEnabled =
+        isGeolocationEnabled && !isUserOutsideHongKong
+
+    const showLocateButton =
+        isGeolocationAvailable &&
+        !isUserOutsideHongKong &&
+        (!coords || !isGeolocationEnabled)
+
     useEffect(() => {
-        if (open && isGeolocationAvailable && !isGeolocationEnabled) {
-            // Try to get position when dialog opens
+        if (open && isGeolocationAvailable && !coords) {
             getPosition()
         }
-    }, [open, isGeolocationAvailable, isGeolocationEnabled, getPosition])
+    }, [open, isGeolocationAvailable, coords, getPosition])
 
     const handleClick = () => {
         sendGAEvent("event", "map_button_clicked")
-        // If geolocation is available but not enabled, try to get it
-        if (isGeolocationAvailable && !isGeolocationEnabled) {
+        if (isGeolocationAvailable && !coords) {
             getPosition()
         }
     }
 
-    // Show button even if geolocation is not available (map still works with default location)
+    const handleLocateMe = useCallback(() => {
+        sendGAEvent("event", "map_locate_me_clicked")
+        getPosition()
+    }, [getPosition])
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
@@ -85,16 +104,18 @@ export function MapDialog() {
                             mapDialogTranslations.description,
                             lang
                         )}
-                        {!isGeolocationEnabled && isGeolocationAvailable && (
-                            <span className="block mt-1 text-xs">
-                                {getLocalizedText(
-                                    mapDialogTranslations.noGeolocation,
-                                    lang
-                                )}
-                            </span>
-                        )}
+                        {!locationFeaturesEnabled &&
+                            isGeolocationAvailable &&
+                            !isUserOutsideHongKong && (
+                                <span className="block mt-1 text-xs">
+                                    {getLocalizedText(
+                                        mapDialogTranslations.noGeolocation,
+                                        lang
+                                    )}
+                                </span>
+                            )}
                         {isUserOutsideHongKong && (
-                            <span className="block mt-1 text-xs text-amber-600">
+                            <span className="block mt-1 text-xs text-amber-600 dark:text-amber-500">
                                 {getLocalizedText(
                                     mapDialogTranslations.outsideHongKong,
                                     lang
@@ -104,9 +125,25 @@ export function MapDialog() {
                     </DialogDescription>
                 </DialogHeader>
                 <div className="flex-1 w-full overflow-hidden px-6 pb-4">
-                    <HospitalMap />
+                    <HospitalMap userCoords={userCoords} isOpen={open} />
                 </div>
-                <DialogFooter className="px-6 pb-6">
+                <DialogFooter className="px-6 pb-6 flex-row justify-between sm:justify-between">
+                    {showLocateButton ? (
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={handleLocateMe}
+                            className="gap-2"
+                        >
+                            <LocateFixed className="h-4 w-4" />
+                            {getLocalizedText(
+                                mapDialogTranslations.locateMe,
+                                lang
+                            )}
+                        </Button>
+                    ) : (
+                        <span />
+                    )}
                     <Button onClick={() => setOpen(false)}>Close</Button>
                 </DialogFooter>
             </DialogContent>

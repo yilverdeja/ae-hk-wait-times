@@ -11,36 +11,34 @@ import {
     getWaitTimeColor,
     hasCriticalCases,
     HONG_KONG_GEOFENCE,
-    isUserInHongKong,
     MAX_ZOOM,
     MIN_ZOOM,
 } from "@/lib/map"
-import { EnrichedHospitalData } from "@/types"
+import { Coordinates, EnrichedHospitalData } from "@/types"
 import * as turf from "@turf/turf"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, User } from "lucide-react"
 import "mapbox-gl/dist/mapbox-gl.css"
 import { useTheme } from "next-themes"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { useGeolocated } from "react-geolocated"
 import Map, { MapRef, Marker, ViewState } from "react-map-gl/mapbox"
 
 interface HospitalMapProps {
     onHospitalSelect?: (hospital: EnrichedHospitalData | null) => void
+    userCoords?: Coordinates | null
+    isOpen?: boolean
 }
 
-export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
-    const { coords, isGeolocationEnabled } = useGeolocated({
-        suppressLocationOnMount: true,
-    })
+export function HospitalMap({
+    onHospitalSelect,
+    userCoords = null,
+    isOpen = true,
+}: HospitalMapProps) {
     const { data: waitTimesData } = useHospitalWaitTimes()
     const { lang } = useLanguage()
     const { theme, resolvedTheme } = useTheme()
 
-    // Determine current theme for color calculations
     const currentTheme = (resolvedTheme || theme || "light") as "light" | "dark"
 
-    // Determine map style based on theme
-    // resolvedTheme handles "system" theme by resolving to "light" or "dark"
     const mapStyle = useMemo(() => {
         const currentTheme = resolvedTheme || theme || "light"
         return currentTheme === "dark"
@@ -48,21 +46,10 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
             : "mapbox://styles/mapbox/light-v11"
     }, [theme, resolvedTheme])
 
-    // Determine user location (use geolocation if available and in Hong Kong, otherwise default)
     const userLocation = useMemo(() => {
-        if (isGeolocationEnabled && coords) {
-            const userCoords = {
-                longitude: coords.longitude,
-                latitude: coords.latitude,
-            }
-            if (isUserInHongKong(userCoords)) {
-                return userCoords
-            }
-        }
-        return DEFAULT_COORDINATES
-    }, [isGeolocationEnabled, coords])
+        return userCoords ?? DEFAULT_COORDINATES
+    }, [userCoords])
 
-    // Initial view state - computed from userLocation
     const initialViewState = useMemo(
         () => ({
             longitude: userLocation.longitude,
@@ -74,8 +61,38 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
 
     const [viewState, setViewState] = useState(initialViewState)
     const mapRef = useRef<MapRef>(null)
+    const hasCenteredOnUser = useRef(false)
 
-    // Resize map when container becomes visible (fixes dialog opening issue)
+    useEffect(() => {
+        if (!isOpen) {
+            hasCenteredOnUser.current = false
+        }
+    }, [isOpen])
+
+    const flyToUser = useCallback(() => {
+        if (!userCoords || !mapRef.current || hasCenteredOnUser.current) {
+            return false
+        }
+        hasCenteredOnUser.current = true
+        mapRef.current.flyTo({
+            center: [userCoords.longitude, userCoords.latitude],
+            zoom: 12,
+            duration: 800,
+        })
+        return true
+    }, [userCoords])
+
+    useEffect(() => {
+        if (!userCoords || hasCenteredOnUser.current) {
+            return
+        }
+        if (flyToUser()) {
+            return
+        }
+        const timer = setTimeout(flyToUser, 150)
+        return () => clearTimeout(timer)
+    }, [userCoords, flyToUser])
+
     useEffect(() => {
         const resizeMap = () => {
             if (mapRef.current) {
@@ -83,11 +100,9 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
             }
         }
 
-        // Initial resize with delay to ensure container is fully rendered
         const timer1 = setTimeout(resizeMap, 100)
-        const timer2 = setTimeout(resizeMap, 300) // Second attempt for slower renders
+        const timer2 = setTimeout(resizeMap, 300)
 
-        // Also resize when window resizes
         window.addEventListener("resize", resizeMap)
 
         return () => {
@@ -97,23 +112,18 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
         }
     }, [])
 
-    // Use enriched hospital data (already merged with wait times from the hook)
     const enrichedHospitals = useMemo(() => {
         return waitTimesData?.waitTimes ?? []
     }, [waitTimesData])
 
-    // Calculate distances using Mapbox Matrix API
     const { distances: distanceData } = useMapboxDistance(
-        isGeolocationEnabled && coords
-            ? { longitude: coords.longitude, latitude: coords.latitude }
-            : null,
+        userCoords,
         enrichedHospitals.map((h) => ({
             slug: h.slug,
             coordinates: h.coordinates,
         }))
     )
 
-    // Selected hospital - default to first hospital
     const defaultSelectedHospital = useMemo(() => {
         return enrichedHospitals.length > 0 ? enrichedHospitals[0] : null
     }, [enrichedHospitals])
@@ -121,10 +131,8 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
     const [userSelectedHospital, setUserSelectedHospital] =
         useState<EnrichedHospitalData | null>(null)
 
-    // Use user selection if available, otherwise use default
     const selectedHospital = userSelectedHospital || defaultSelectedHospital
 
-    // Handle hospital selection (click only, no hover)
     const handleHospitalClick = (hospital: EnrichedHospitalData) => {
         setUserSelectedHospital(hospital)
         if (onHospitalSelect) {
@@ -132,7 +140,6 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
         }
     }
 
-    // Handle map movement with geofence and zoom restrictions
     const onMove = useCallback((evt: { viewState: ViewState }) => {
         const newViewState = evt.viewState
         const newCenter = [newViewState.longitude, newViewState.latitude]
@@ -151,7 +158,6 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
 
     return (
         <div className="w-full h-full relative overflow-hidden">
-            {/* Map - full size */}
             <Map
                 reuseMaps
                 ref={mapRef}
@@ -161,10 +167,10 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
                 style={{ width: "100%", height: "100%" }}
                 onMove={onMove}
                 onLoad={() => {
-                    // Resize map after it loads to ensure proper fit
                     if (mapRef.current) {
                         setTimeout(() => {
                             mapRef.current?.resize()
+                            flyToUser()
                         }, 50)
                     }
                 }}
@@ -172,18 +178,38 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
                 minZoom={MIN_ZOOM}
                 maxZoom={MAX_ZOOM}
             >
-                {/* Language control - managed by useControl hook */}
                 <MapLanguageControl lang={lang} />
 
-                {/* User location marker (always shown) */}
-                {/* <Marker
-                    longitude={userLocation.longitude}
-                    latitude={userLocation.latitude}
-                    color="red"
-                    anchor="center"
-                /> */}
+                {userCoords && (
+                    <Marker
+                        longitude={userCoords.longitude}
+                        latitude={userCoords.latitude}
+                        anchor="center"
+                    >
+                        <div
+                            style={{
+                                width: "28px",
+                                height: "28px",
+                                backgroundColor: "#3b82f6",
+                                border: "2px solid white",
+                                borderRadius: "50%",
+                                boxShadow: "0 2px 4px rgba(0,0,0,0.3)",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                transform: "translate(-50%, -50%)",
+                            }}
+                        >
+                            <User
+                                className="h-4 w-4 text-white"
+                                style={{
+                                    filter: "drop-shadow(0 1px 1px rgba(0,0,0,0.5))",
+                                }}
+                            />
+                        </div>
+                    </Marker>
+                )}
 
-                {/* Hospital markers */}
                 {enrichedHospitals.map((hospital) => {
                     const waitTime = getDisplayWaitTime(hospital)
                     const color = getWaitTimeColor(waitTime, currentTheme)
@@ -236,7 +262,6 @@ export function HospitalMap({ onHospitalSelect }: HospitalMapProps) {
                 })}
             </Map>
 
-            {/* Overlay info panel - always visible, positioned above map */}
             {selectedHospital && (
                 <HospitalMapOverlay
                     hospital={selectedHospital}
