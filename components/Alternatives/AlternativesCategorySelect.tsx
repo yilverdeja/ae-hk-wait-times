@@ -13,7 +13,7 @@ import {
     type AlternativeCategory,
 } from "@/types/alternatives"
 import { LanguageCode } from "@/types"
-import { usePathname, useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 
 const categoryLabels = {
     [LanguageCode.EN]: {
@@ -41,12 +41,12 @@ export function AlternativesCategorySelect({ category }: AlternativesCategorySel
     const { lang } = useLanguage()
     const labels = categoryLabels[lang]
     const router = useRouter()
-    const pathname = usePathname()
+    const searchParams = useSearchParams()
 
     function handleCategoryChange(value: AlternativeCategory) {
-        const params = new URLSearchParams()
-        params.set("category", value)
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+        const qs = searchParams.toString()
+        const suffix = qs ? `?${qs}` : ""
+        router.replace(`/alternatives/category/${value}${suffix}`, { scroll: false })
     }
 
     return (

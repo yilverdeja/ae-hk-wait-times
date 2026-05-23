@@ -2,11 +2,8 @@
 
 import { AlternativeCard } from "@/components/Alternatives/AlternativeCard"
 import { AlternativesUserLocationProvider } from "@/components/Alternatives/AlternativesUserLocationContext"
-import { useScheduleContext } from "@/hooks/useScheduleContext"
 import { useLanguage } from "@/hooks/useLanguage"
-import { getPrimaryChannel, isChannelOpenNow } from "@/lib/alternatives/resolve"
-import type { ScheduleContext } from "@/types/alternatives"
-import type { Alternative } from "@/types/alternatives"
+import type { AlternativeCardModel } from "@/types/alternatives-card"
 import { useMemo } from "react"
 
 const OPEN_SORT_RANK: Record<string, number> = {
@@ -17,38 +14,36 @@ const OPEN_SORT_RANK: Record<string, number> = {
     closed: 4,
 }
 
-function openSortRank(entry: Alternative, ctx: ScheduleContext): number {
-    const channel = getPrimaryChannel(entry, ctx)
-    if (!channel) return 5
-    return OPEN_SORT_RANK[isChannelOpenNow(channel, ctx).kind] ?? 5
+function openSortRank(card: AlternativeCardModel): number {
+    return OPEN_SORT_RANK[card.filterMeta.openKind] ?? 5
 }
 
 interface AlternativesCardGridProps {
-    entries: Alternative[]
+    cards: AlternativeCardModel[]
     scheduleAt: string
 }
 
-function AlternativesCardGridInner({ entries, scheduleAt }: AlternativesCardGridProps) {
+function AlternativesCardGridInner({ cards }: AlternativesCardGridProps) {
     const { lang } = useLanguage()
-    const ctx = useScheduleContext(false, scheduleAt)
 
     const sorted = useMemo(() => {
-        return [...entries].sort((a, b) => openSortRank(a, ctx) - openSortRank(b, ctx))
-    }, [entries, ctx])
+        return [...cards].sort((a, b) => openSortRank(a) - openSortRank(b))
+    }, [cards])
 
     return (
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {sorted.map((entry) => (
-                <AlternativeCard key={entry.slug} entry={entry} lang={lang} scheduleAt={scheduleAt} />
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {sorted.map((card) => (
+                <AlternativeCard key={card.slug} entry={card} lang={lang} />
             ))}
         </div>
     )
 }
 
-export function AlternativesCardGrid({ entries, scheduleAt }: AlternativesCardGridProps) {
+export function AlternativesCardGrid({ cards, scheduleAt }: AlternativesCardGridProps) {
+    void scheduleAt
     return (
         <AlternativesUserLocationProvider>
-            <AlternativesCardGridInner entries={entries} scheduleAt={scheduleAt} />
+            <AlternativesCardGridInner cards={cards} scheduleAt={scheduleAt} />
         </AlternativesUserLocationProvider>
     )
 }

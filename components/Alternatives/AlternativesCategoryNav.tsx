@@ -42,7 +42,7 @@ export function AlternativesCategoryNav({
             {ALTERNATIVE_CATEGORIES.map((cat) => (
                 <Link
                     key={cat}
-                    href={`/alternatives?category=${cat}`}
+                    href={`/alternatives/category/${cat}`}
                     className={cn(
                         "rounded-md border px-3 py-1.5 text-sm transition-colors",
                         cat === category

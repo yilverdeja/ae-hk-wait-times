@@ -2,7 +2,7 @@
 
 import { useAlternativesUserLocation } from "@/components/Alternatives/AlternativesUserLocationContext"
 import { formatDistance, straightLineKm } from "@/lib/geo"
-import type { PhysicalAlternative } from "@/types/alternatives"
+import type { Coordinates } from "@/types"
 import { LanguageCode } from "@/types"
 import { useMemo } from "react"
 
@@ -13,24 +13,24 @@ const awayLabels = {
 }
 
 interface AlternativeCardDistanceProps {
-    entry: PhysicalAlternative
+    coordinates: Coordinates
     lang: LanguageCode
 }
 
 /** Renders distance when user location is available; otherwise nothing. */
-export function AlternativeCardDistance({ entry, lang }: AlternativeCardDistanceProps) {
+export function AlternativeCardDistance({ coordinates, lang }: AlternativeCardDistanceProps) {
     const userCoords = useAlternativesUserLocation()
 
     const label = useMemo(() => {
         if (!userCoords) return null
-        const km = straightLineKm(userCoords, entry.location.coordinates)
+        const km = straightLineKm(userCoords, coordinates)
         const dist = formatDistance(km)
         const away = awayLabels[lang]
         if (lang === LanguageCode.EN) {
             return `${dist} ${away}`.trim()
         }
         return `${away} ${dist}`
-    }, [userCoords, entry.location.coordinates, lang])
+    }, [userCoords, coordinates, lang])
 
     if (!label) return null
 

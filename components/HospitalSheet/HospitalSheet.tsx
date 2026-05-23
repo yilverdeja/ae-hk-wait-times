@@ -84,6 +84,7 @@ export function HospitalSheet({
                             hospitalCoordinates={hospital.coordinates}
                             waitTimeMinutes={liveWaitTime}
                             lang={lang}
+                            isOpen={isOpen}
                         />
                         <HospitalSheetInformation
                             hospital={hospital}

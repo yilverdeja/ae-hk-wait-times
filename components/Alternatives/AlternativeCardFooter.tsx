@@ -1,8 +1,8 @@
 "use client"
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { voucherLabel } from "@/lib/alternatives/display"
-import type { Alternative, ServiceChannel } from "@/types/alternatives"
+import { voucherLabelFromId } from "@/lib/alternatives/display"
+import type { AlternativeCardFooterModel } from "@/types/alternatives-card"
 import type { EligibilityAudience } from "@/types/alternatives"
 import { LanguageCode } from "@/types"
 import { IdCard, Shield, Ticket, User } from "lucide-react"
@@ -28,15 +28,12 @@ function shortEligibilityLabel(audience: EligibilityAudience, lang: LanguageCode
 }
 
 interface AlternativeCardFooterProps {
-    entry: Alternative
-    channel: ServiceChannel | null
+    footer: AlternativeCardFooterModel
     lang: LanguageCode
 }
 
-export function AlternativeCardFooter({ entry, channel, lang }: AlternativeCardFooterProps) {
-    const restricted =
-        channel?.eligibility.filter((e) => e.audience !== "open") ?? []
-    const vouchers = entry.acceptedVouchers ?? []
+export function AlternativeCardFooter({ footer, lang }: AlternativeCardFooterProps) {
+    const { eligibility: restricted, voucherIds: vouchers } = footer
 
     if (restricted.length === 0 && vouchers.length === 0) {
         return null
@@ -67,8 +64,8 @@ export function AlternativeCardFooter({ entry, channel, lang }: AlternativeCardF
                     </TooltipContent>
                 </Tooltip>
             ))}
-            {vouchers.map((voucher) => (
-                <Tooltip key={voucher.id}>
+            {vouchers.map((voucherId) => (
+                <Tooltip key={voucherId}>
                     <TooltipTrigger asChild>
                         <span
                             className="inline-flex items-center gap-0.5 rounded-md border border-blue-200 bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-800 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-200"
@@ -79,7 +76,7 @@ export function AlternativeCardFooter({ entry, channel, lang }: AlternativeCardF
                         </span>
                     </TooltipTrigger>
                     <TooltipContent side="top" className="max-w-xs">
-                        {voucherLabel(voucher, lang)}
+                        {voucherLabelFromId(voucherId, lang)}
                     </TooltipContent>
                 </Tooltip>
             ))}

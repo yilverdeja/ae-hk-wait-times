@@ -1,6 +1,6 @@
 import { VOUCHER_CATALOG } from "@/lib/alternatives/vouchers"
 import { LanguageCode, type LocalizedString } from "@/types"
-import type { AcceptedPaymentVoucher, Alternative, LabeledContact } from "@/types/alternatives"
+import type { AcceptedPaymentVoucher, Alternative, LabeledContact, PaymentVoucherId } from "@/types/alternatives"
 
 /** Resolves a plain string or `i18n()` object for the active locale. */
 export function pickLocalized(value: string | LocalizedString, lang: LanguageCode): string {
@@ -47,6 +47,10 @@ export function whatsappHref(raw: string): string {
 export function voucherLabel(voucher: AcceptedPaymentVoucher, lang: LanguageCode): string {
     const catalog = VOUCHER_CATALOG[voucher.id]
     return voucher.summary?.[lang] ?? catalog.summary[lang]
+}
+
+export function voucherLabelFromId(id: PaymentVoucherId, lang: LanguageCode): string {
+    return VOUCHER_CATALOG[id].summary[lang]
 }
 
 export function alternativeVoucherLabels(alt: Alternative, lang: LanguageCode): string[] {
