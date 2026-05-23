@@ -1,7 +1,6 @@
 "use client"
 
 import { AlternativeCardFooter } from "@/components/Alternatives/AlternativeCardFooter"
-import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import {
     enrichOpenStatusWithTransition,
@@ -17,6 +16,7 @@ import {
 } from "@/lib/alternatives/resolve"
 import { scheduleContext } from "@/lib/alternatives/time"
 import { formatDistance } from "@/lib/map"
+import { cn } from "@/lib/utils"
 import type { Alternative } from "@/types/alternatives"
 import { isPhysicalAlternative } from "@/types/alternatives"
 import type { Coordinates } from "@/types"
@@ -71,6 +71,13 @@ const texts = {
     },
 }
 
+type StatusTone = "open" | "warning" | "muted" | "neutral"
+
+interface StatusDisplay {
+    label: string
+    tone: StatusTone
+}
+
 interface AlternativeCardProps {
     entry: Alternative
     lang: LanguageCode
@@ -83,6 +90,85 @@ function formatDistanceWithAway(km: number, lang: LanguageCode, t: (typeof texts
         return `${dist} ${t.away}`.trim()
     }
     return `${t.away} ${dist}`
+}
+
+function MetaDot({ tone }: { tone: StatusTone }) {
+    return (
+        <span
+            className={cn(
+                "size-1.5 shrink-0 rounded-full",
+                tone === "open" && "bg-emerald-500",
+                tone === "warning" && "bg-amber-500",
+                tone === "muted" && "bg-muted-foreground/35",
+                tone === "neutral" && "bg-muted-foreground/35"
+            )}
+            aria-hidden
+        />
+    )
+}
+
+function StatusLine({ label, tone }: StatusDisplay) {
+    return (
+        <span
+            className={cn(
+                "inline-flex items-center gap-1 font-normal",
+                tone === "open" && "text-emerald-700/90 dark:text-emerald-400/90",
+                tone === "warning" && "text-amber-700/90 dark:text-amber-400/90",
+                tone === "muted" && "text-muted-foreground",
+                tone === "neutral" && "text-muted-foreground"
+            )}
+        >
+            <MetaDot tone={tone} />
+            {label}
+        </span>
+    )
+}
+
+function MetaSeparator() {
+    return (
+        <span className="text-muted-foreground/40 select-none" aria-hidden>
+            ·
+        </span>
+    )
+}
+
+function resolveStatusDisplay(
+    openStatus: ReturnType<typeof isChannelOpenNow> | null,
+    scheduleTransition: ReturnType<typeof resolveScheduleTransition>,
+    t: (typeof texts)[LanguageCode.EN],
+    lang: LanguageCode
+): StatusDisplay | null {
+    if (!openStatus) return null
+
+    const transition = scheduleTransition
+    const withinHour = transition && transition.minutesUntil <= 60
+
+    if (openStatus.kind === "always_open") {
+        return { label: t.open24h, tone: "open" }
+    }
+
+    if (openStatus.kind === "open") {
+        if (withinHour && transition?.kind === "closes") {
+            return { label: t.closesIn(transition.minutesUntil), tone: "warning" }
+        }
+        return { label: t.openNow, tone: "open" }
+    }
+
+    if (openStatus.kind === "closed") {
+        if (withinHour && transition?.kind === "opens") {
+            return { label: t.opensIn(transition.minutesUntil), tone: "muted" }
+        }
+        if (transition?.kind === "opens") {
+            return { label: t.closedUntil(transition.atLabel[lang]), tone: "muted" }
+        }
+        return { label: t.closed, tone: "muted" }
+    }
+
+    if (openStatus.kind === "appointment_only") {
+        return { label: t.appointmentOnly, tone: "neutral" }
+    }
+
+    return null
 }
 
 export function AlternativeCard({ entry, lang, userCoords = null }: AlternativeCardProps) {
@@ -101,6 +187,11 @@ export function AlternativeCard({ entry, lang, userCoords = null }: AlternativeC
         if (!channel) return null
         return resolveScheduleTransition(channel.schedule, ctx)
     }, [channel, ctx])
+
+    const statusDisplay = useMemo(
+        () => resolveStatusDisplay(openStatus, scheduleTransition, t, lang),
+        [openStatus, scheduleTransition, t, lang]
+    )
 
     const price = channel ? resolveCurrentPrice(channel, ctx) : null
 
@@ -123,133 +214,66 @@ export function AlternativeCard({ entry, lang, userCoords = null }: AlternativeC
 
     const typeLabel = isPhysicalAlternative(entry) ? entry.providerType : t.telehealth
 
-    const statusBadge = (() => {
-        if (!openStatus) return null
-
-        const transition = scheduleTransition
-        const withinHour = transition && transition.minutesUntil <= 60
-
-        if (openStatus.kind === "always_open") {
-            return (
-                <Badge className="text-[10px] px-1.5 py-0 bg-emerald-600 hover:bg-emerald-600">
-                    {t.open24h}
-                </Badge>
-            )
-        }
-
-        if (openStatus.kind === "open") {
-            if (withinHour && transition?.kind === "closes") {
-                return (
-                    <Badge className="text-[10px] px-1.5 py-0 bg-emerald-600 hover:bg-emerald-600">
-                        {t.closesIn(transition.minutesUntil)}
-                    </Badge>
-                )
-            }
-            return (
-                <Badge className="text-[10px] px-1.5 py-0 bg-emerald-600 hover:bg-emerald-600">
-                    {t.openNow}
-                </Badge>
-            )
-        }
-
-        if (openStatus.kind === "closed") {
-            if (withinHour && transition?.kind === "opens") {
-                return (
-                    <Badge
-                        variant="outline"
-                        className="text-[10px] px-1.5 py-0 text-muted-foreground border-dashed"
-                    >
-                        {t.opensIn(transition.minutesUntil)}
-                    </Badge>
-                )
-            }
-            if (transition?.kind === "opens") {
-                return (
-                    <Badge
-                        variant="outline"
-                        className="text-[10px] px-1.5 py-0 text-muted-foreground border-dashed"
-                    >
-                        {t.closedUntil(transition.atLabel[lang])}
-                    </Badge>
-                )
-            }
-            return (
-                <Badge variant="secondary" className="text-[10px] px-1.5 py-0 text-muted-foreground">
-                    {t.closed}
-                </Badge>
-            )
-        }
-
-        if (openStatus.kind === "appointment_only") {
-            return (
-                <Badge variant="outline" className="text-[10px] px-1.5 py-0">
-                    {t.appointmentOnly}
-                </Badge>
-            )
-        }
-
-        return null
-    })()
-
     const primaryPrice = price ? formatCardPrice(price, lang) : t.seeFee
     const upcomingPriceLine =
         upcomingPrice && price
             ? t.priceIn(formatCardPrice(upcomingPrice.price, lang), upcomingPrice.minutesUntil)
             : null
 
+    const locationPrimary = isPhysicalAlternative(entry)
+        ? entry.location.district
+        : entry.providerType
+
     return (
         <Link href={`/alternatives/${entry.slug}`} className="block h-full">
             <Card className="h-full gap-0 py-0 transition-colors hover:bg-muted/50 cursor-pointer">
-                <div className="flex flex-col gap-2 p-4">
-                    <h3 className="text-sm font-semibold leading-snug">
+                <div className="flex flex-col gap-1.5 p-4">
+                    {(typeLabel || statusDisplay) && (
+                        <p className="flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11px] leading-snug text-muted-foreground">
+                            {typeLabel && <span>{typeLabel}</span>}
+                            {typeLabel && statusDisplay && <MetaSeparator />}
+                            {statusDisplay && <StatusLine {...statusDisplay} />}
+                        </p>
+                    )}
+
+                    <h3 className="text-sm font-semibold leading-snug tracking-tight">
                         {alternativeName(entry, lang)}
                     </h3>
 
-                    <div className="flex items-start justify-between gap-3">
-                        {/* Location first: stable when distance is unavailable */}
-                        <div className="min-w-0 flex flex-col gap-0.5">
-                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                {isPhysicalAlternative(entry) ? (
-                                    <>
-                                        <MapPin size={12} className="shrink-0" aria-hidden />
-                                        <span className="truncate">{entry.location.district}</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Smartphone size={12} className="shrink-0" aria-hidden />
-                                        <span className="truncate">{entry.providerType}</span>
-                                    </>
-                                )}
-                            </div>
-                            {distanceKm != null && (
-                                <span className="text-[11px] text-muted-foreground/80 tabular-nums pl-[18px]">
+                    <p className="flex min-w-0 items-center gap-1 text-xs text-muted-foreground">
+                        {isPhysicalAlternative(entry) ? (
+                            <MapPin size={12} className="shrink-0 opacity-70" aria-hidden />
+                        ) : (
+                            <Smartphone size={12} className="shrink-0 opacity-70" aria-hidden />
+                        )}
+                        <span className="truncate">{locationPrimary}</span>
+                        {distanceKm != null && (
+                            <>
+                                <MetaSeparator />
+                                <span className="shrink-0 tabular-nums">
                                     {formatDistanceWithAway(distanceKm, lang, t)}
                                 </span>
-                            )}
-                        </div>
+                            </>
+                        )}
+                    </p>
 
-                        {/* Status + type: decision-oriented, right-aligned */}
-                        <div className="flex shrink-0 flex-col items-end gap-1">
-                            {statusBadge}
-                            <span className="text-[11px] text-muted-foreground leading-none">
-                                {typeLabel}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="flex items-baseline justify-between gap-2 border-t pt-2">
+                    <div className="mt-1.5 flex items-baseline justify-between gap-3 border-t border-border/60 pt-2.5">
                         <span className="text-xs text-muted-foreground">{t.estCost}</span>
                         <div className="text-right min-w-0">
-                            <p className="text-sm font-semibold tabular-nums">{primaryPrice}</p>
+                            <p className="text-sm font-semibold tabular-nums tracking-tight">
+                                {primaryPrice}
+                            </p>
                             {upcomingPriceLine && (
-                                <p className="text-xs text-muted-foreground">{upcomingPriceLine}</p>
+                                <p className="text-[11px] text-muted-foreground mt-0.5">
+                                    {upcomingPriceLine}
+                                </p>
                             )}
                         </div>
                     </div>
 
                     {channel && openStatus?.kind === "unknown" && (
                         <p className="flex items-center gap-1 text-xs text-muted-foreground line-clamp-2">
-                            <Clock size={11} className="shrink-0" aria-hidden />
+                            <Clock size={11} className="shrink-0 opacity-70" aria-hidden />
                             {openStatus.label[lang]}
                         </p>
                     )}
