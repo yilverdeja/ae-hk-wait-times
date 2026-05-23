@@ -168,7 +168,7 @@ function formatMoneyLabel(consultation: ConsultationPrice, tierLabel: LocalizedS
 
     return {
         kind: "exact",
-        label: enZh(`HK$${consultation.amount} now`, `現時 HK$${consultation.amount}`),
+        label: enZh(`HK$${consultation.amount}`, `HK$${consultation.amount}`),
         amount: consultation.amount,
         currency: consultation.currency,
     }

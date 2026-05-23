@@ -1,8 +1,14 @@
 import assert from "node:assert/strict"
 import { describe, it } from "node:test"
+import {
+    formatCardPrice,
+    resolveScheduleTransition,
+    resolveUpcomingPriceChange,
+} from "@/lib/alternatives/card-preview"
 import { getPrimaryChannel, isChannelOpenNow, resolveCurrentPrice } from "@/lib/alternatives/resolve"
 import { scheduleContext } from "@/lib/alternatives/time"
 import { alternatives } from "@/data/alternatives"
+import { LanguageCode } from "@/types"
 
 function hkDate(iso: string): Date {
     return new Date(iso)
@@ -99,5 +105,63 @@ describe("getPrimaryChannel", () => {
         const canossa = alternatives.find((a) => a.slug === "canossa-hospital")!
         const ch = getPrimaryChannel(canossa, scheduleContext())
         assert.equal(ch?.id, "24h_opd")
+    })
+})
+
+describe("resolveUpcomingPriceChange", () => {
+    it("Canossa weekday day to evening within 30 min", () => {
+        const canossa = alternatives.find((a) => a.slug === "canossa-hospital")!
+        const ctx = scheduleContext(hkDate("2026-05-20T17:30:00+08:00"))
+        const current = resolveCurrentPrice(canossa.channels[0], ctx)
+        assert.equal(current?.amount, 388)
+
+        const upcoming = resolveUpcomingPriceChange(canossa.channels[0].pricing, ctx)
+        assert.ok(upcoming)
+        assert.equal(upcoming.price.amount, 500)
+        assert.equal(upcoming.minutesUntil, 30)
+    })
+
+    it("Gleneagles weekday day to evening within 30 min", () => {
+        const gleneagles = alternatives.find((a) => a.slug === "gleneagles-hospital-hk")!
+        const ctx = scheduleContext(hkDate("2026-05-20T19:30:00+08:00"))
+        const current = resolveCurrentPrice(gleneagles.channels[0], ctx)
+        assert.equal(current?.amount, 420)
+
+        const upcoming = resolveUpcomingPriceChange(gleneagles.channels[0].pricing, ctx)
+        assert.ok(upcoming)
+        assert.equal(upcoming.price.amount, 600)
+        assert.equal(upcoming.minutesUntil, 30)
+    })
+})
+
+describe("formatCardPrice", () => {
+    it("formats exact price with plus suffix", () => {
+        const gleneagles = alternatives.find((a) => a.slug === "gleneagles-hospital-hk")!
+        const price = resolveCurrentPrice(
+            gleneagles.channels[0],
+            scheduleContext(hkDate("2026-05-20T10:00:00+08:00"))
+        )!
+        assert.equal(formatCardPrice(price, LanguageCode.EN), "HK$420+")
+    })
+})
+
+describe("resolveScheduleTransition", () => {
+    it("Precious Blood closes within 60 min before 22:00", () => {
+        const pb = alternatives.find((a) => a.slug === "precious-blood-hospital")!
+        const ch = pb.channels.find((c) => c.id === "general_opd")!
+        const ctx = scheduleContext(hkDate("2026-05-20T21:30:00+08:00"))
+        const transition = resolveScheduleTransition(ch.schedule, ctx)
+        assert.ok(transition)
+        assert.equal(transition.kind, "closes")
+        assert.equal(transition.minutesUntil, 30)
+    })
+
+    it("DrGo telehealth closes within 60 min before 20:00", () => {
+        const drgo = alternatives.find((a) => a.slug === "drgo-telehealth")!
+        const ctx = scheduleContext(hkDate("2026-05-20T19:30:00+08:00"))
+        const transition = resolveScheduleTransition(drgo.channels[0].schedule, ctx)
+        assert.ok(transition)
+        assert.equal(transition.kind, "closes")
+        assert.equal(transition.minutesUntil, 30)
     })
 })

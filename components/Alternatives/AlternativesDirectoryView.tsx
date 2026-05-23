@@ -1,6 +1,7 @@
 "use client"
 
 import { AlternativeCard } from "@/components/Alternatives/AlternativeCard"
+import { Button } from "@/components/ui/button"
 import {
     Select,
     SelectContent,
@@ -8,6 +9,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { useUserLocationInHongKong } from "@/hooks/useUserLocationInHongKong"
+import { useLanguage } from "@/hooks/useLanguage"
 import { getPrimaryChannel, isChannelOpenNow } from "@/lib/alternatives/resolve"
 import { scheduleContext } from "@/lib/alternatives/time"
 import {
@@ -15,8 +18,8 @@ import {
     type AlternativeCategory,
 } from "@/types/alternatives"
 import type { Alternative } from "@/types/alternatives"
-import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
+import { Loader2, LocateFixed } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import { useMemo } from "react"
 
@@ -35,6 +38,21 @@ const categoryLabels = {
         "24hour": "24小时设施",
         non24hour: "普通科门诊",
         telehealth: "远程医疗",
+    },
+}
+
+const locationBannerTexts = {
+    [LanguageCode.EN]: {
+        prompt: "Show distances from you",
+        locating: "Getting your location…",
+    },
+    [LanguageCode.ZH]: {
+        prompt: "顯示與您的距離",
+        locating: "正在取得位置…",
+    },
+    [LanguageCode.CN]: {
+        prompt: "显示与您的距离",
+        locating: "正在取得位置…",
     },
 }
 
@@ -64,8 +82,24 @@ export function AlternativesDirectoryView({
 }: AlternativesDirectoryViewProps) {
     const { lang } = useLanguage()
     const labels = categoryLabels[lang]
+    const locationTexts = locationBannerTexts[lang]
     const router = useRouter()
     const pathname = usePathname()
+
+    const {
+        userCoords,
+        isGeolocationAvailable,
+        isDenied,
+        isLocating,
+        permissionState,
+        requestLocation,
+    } = useUserLocationInHongKong()
+
+    const showLocationBanner =
+        isGeolocationAvailable &&
+        !userCoords &&
+        !isDenied &&
+        permissionState !== "granted"
 
     const filtered = useMemo(() => {
         return alternatives
@@ -94,9 +128,36 @@ export function AlternativesDirectoryView({
                 </SelectContent>
             </Select>
 
+            {(showLocationBanner || isLocating) && (
+                <div className="mt-4">
+                    {isLocating ? (
+                        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <Loader2 size={14} className="animate-spin" aria-hidden />
+                            {locationTexts.locating}
+                        </p>
+                    ) : (
+                        <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            className="w-full sm:w-auto"
+                            onClick={requestLocation}
+                        >
+                            <LocateFixed size={14} className="mr-1.5" aria-hidden />
+                            {locationTexts.prompt}
+                        </Button>
+                    )}
+                </div>
+            )}
+
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {filtered.map((entry) => (
-                    <AlternativeCard key={entry.slug} entry={entry} lang={lang} />
+                    <AlternativeCard
+                        key={entry.slug}
+                        entry={entry}
+                        lang={lang}
+                        userCoords={userCoords}
+                    />
                 ))}
             </div>
         </>

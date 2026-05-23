@@ -72,7 +72,7 @@ const stPaulsOpdTiers: FeeTier[] = [
         280,
         MON_SAT,
         "08:00",
-        "20:00",
+        "19:00",
         [{ type: "not_public_holiday" }]
     ),
     outpatientTier(
@@ -81,7 +81,7 @@ const stPaulsOpdTiers: FeeTier[] = [
         "周一至六晚上",
         430,
         MON_SAT,
-        "20:00",
+        "19:00",
         "24:00",
         [{ type: "not_public_holiday" }]
     ),
