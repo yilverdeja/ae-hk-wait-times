@@ -7,6 +7,7 @@ import { useLanguage } from "@/hooks/useLanguage"
 import { useMapboxDistance } from "@/hooks/useMapboxDistance"
 import {
     DEFAULT_COORDINATES,
+    findClosestHospital,
     getDisplayWaitTime,
     getWaitTimeColor,
     hasCriticalCases,
@@ -125,8 +126,8 @@ export function HospitalMap({
     )
 
     const defaultSelectedHospital = useMemo(() => {
-        return enrichedHospitals.length > 0 ? enrichedHospitals[0] : null
-    }, [enrichedHospitals])
+        return findClosestHospital(userLocation, enrichedHospitals)
+    }, [userLocation, enrichedHospitals])
 
     const [userSelectedHospital, setUserSelectedHospital] =
         useState<EnrichedHospitalData | null>(null)
