@@ -12,6 +12,10 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { useLanguage } from "@/hooks/useLanguage"
+import {
+    isGeolocationPermissionDenied,
+    useGeolocationPermissionState,
+} from "@/hooks/useGeolocationPermissionState"
 import { isUserInHongKong } from "@/lib/map"
 import { getLocalizedText, mapDialogTranslations } from "@/lib/map-translations"
 import { sendGAEvent } from "@next/third-parties/google"
@@ -26,12 +30,22 @@ export function MapDialog() {
         coords,
         isGeolocationAvailable,
         isGeolocationEnabled,
+        positionError,
         getPosition,
     } = useGeolocated({
         suppressLocationOnMount: true,
         isOptimisticGeolocationEnabled: false,
         watchLocationPermissionChange: true,
     })
+
+    const permissionState = useGeolocationPermissionState(
+        isGeolocationAvailable && open
+    )
+
+    const isLocationDenied = isGeolocationPermissionDenied(
+        positionError,
+        permissionState
+    )
 
     const rawCoords = useMemo(() => {
         if (isGeolocationEnabled && coords) {
@@ -104,9 +118,24 @@ export function MapDialog() {
                             mapDialogTranslations.description,
                             lang
                         )}
-                        {!locationFeaturesEnabled &&
+                        {isLocationDenied &&
                             isGeolocationAvailable &&
                             !isUserOutsideHongKong && (
+                                <span
+                                    className="block mt-1 text-xs text-amber-600 dark:text-amber-500"
+                                    role="status"
+                                    aria-live="polite"
+                                >
+                                    {getLocalizedText(
+                                        mapDialogTranslations.locationDenied,
+                                        lang
+                                    )}
+                                </span>
+                            )}
+                        {!locationFeaturesEnabled &&
+                            isGeolocationAvailable &&
+                            !isUserOutsideHongKong &&
+                            !isLocationDenied && (
                                 <span className="block mt-1 text-xs">
                                     {getLocalizedText(
                                         mapDialogTranslations.noGeolocation,
