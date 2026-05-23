@@ -55,7 +55,7 @@ export function HospitalMap({
         () => ({
             longitude: userLocation.longitude,
             latitude: userLocation.latitude,
-            zoom: 11,
+            zoom: 10,
         }),
         [userLocation.longitude, userLocation.latitude]
     )
@@ -77,7 +77,7 @@ export function HospitalMap({
         hasCenteredOnUser.current = true
         mapRef.current.flyTo({
             center: [userCoords.longitude, userCoords.latitude],
-            zoom: 12,
+            zoom: 10,
             duration: 400,
         })
         return true
