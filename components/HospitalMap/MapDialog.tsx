@@ -19,7 +19,7 @@ import {
 import { isUserInHongKong } from "@/lib/map"
 import { getLocalizedText, mapDialogTranslations } from "@/lib/map-translations"
 import { sendGAEvent } from "@next/third-parties/google"
-import { LocateFixed, Map } from "lucide-react"
+import { Loader2, LocateFixed, Map } from "lucide-react"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useGeolocated } from "react-geolocated"
 
@@ -36,11 +36,14 @@ export function MapDialog() {
         suppressLocationOnMount: true,
         isOptimisticGeolocationEnabled: false,
         watchLocationPermissionChange: true,
+        positionOptions: {
+            enableHighAccuracy: false,
+            maximumAge: 300_000,
+            timeout: 15_000,
+        },
     })
 
-    const permissionState = useGeolocationPermissionState(
-        isGeolocationAvailable && open
-    )
+    const permissionState = useGeolocationPermissionState(isGeolocationAvailable)
 
     const isLocationDenied = isGeolocationPermissionDenied(
         positionError,
@@ -67,28 +70,47 @@ export function MapDialog() {
     const locationFeaturesEnabled =
         isGeolocationEnabled && !isUserOutsideHongKong
 
+    const isLocating =
+        isGeolocationAvailable &&
+        !userCoords &&
+        !isLocationDenied &&
+        (permissionState === "granted" || open)
+
+    useEffect(() => {
+        if (
+            permissionState === "granted" &&
+            !coords &&
+            !isLocationDenied
+        ) {
+            getPosition()
+        }
+    }, [permissionState, coords, isLocationDenied, getPosition])
+
+    useEffect(() => {
+        if (open && isGeolocationAvailable && !coords && !isLocationDenied) {
+            getPosition()
+        }
+    }, [open, isGeolocationAvailable, coords, isLocationDenied, getPosition])
+
     const showLocateButton =
         isGeolocationAvailable &&
         !isUserOutsideHongKong &&
-        (!coords || !isGeolocationEnabled)
-
-    useEffect(() => {
-        if (open && isGeolocationAvailable && !coords) {
-            getPosition()
-        }
-    }, [open, isGeolocationAvailable, coords, getPosition])
+        !isLocationDenied &&
+        (isLocating || !userCoords)
 
     const handleClick = () => {
         sendGAEvent("event", "map_button_clicked")
-        if (isGeolocationAvailable && !coords) {
+        if (isGeolocationAvailable && !coords && !isLocationDenied) {
             getPosition()
         }
     }
 
     const handleLocateMe = useCallback(() => {
         sendGAEvent("event", "map_locate_me_clicked")
-        getPosition()
-    }, [getPosition])
+        if (!isLocationDenied) {
+            getPosition()
+        }
+    }, [getPosition, isLocationDenied])
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -162,11 +184,19 @@ export function MapDialog() {
                             variant="outline"
                             size="sm"
                             onClick={handleLocateMe}
+                            disabled={isLocating}
                             className="gap-2"
+                            aria-busy={isLocating}
                         >
-                            <LocateFixed className="h-4 w-4" />
+                            {isLocating ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                                <LocateFixed className="h-4 w-4" />
+                            )}
                             {getLocalizedText(
-                                mapDialogTranslations.locateMe,
+                                isLocating
+                                    ? mapDialogTranslations.locating
+                                    : mapDialogTranslations.locateMe,
                                 lang
                             )}
                         </Button>
