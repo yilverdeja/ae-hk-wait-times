@@ -1,35 +1,44 @@
-/** AUTO-GENERATED — needs manual review. Source: gopc factory + archive/Non24HourFacilities.json */
+/** AUTO-GENERATED — needs manual review. Source: HA opendata facility-fmc.json + shared FMC fees */
 import type { PhysicalAlternative } from "@/types/alternatives"
 
 export const gopcMonaFong: PhysicalAlternative = {
     "slug": "gopc-mona-fong",
     "category": "non24hour",
     "name": {
-        "en": "Mona Fong GOPC (HA)",
-        "zh": "方逸華普通科門診",
-        "cn": "方逸華普通科門診"
+        "en": "Sai Kung Mona Fong FMC (HA)",
+        "zh": "西貢方逸華家庭醫學診所",
+        "cn": "西贡方逸华家庭医学诊所"
     },
     "providerType": "Public Clinic",
+    "description": {
+        "en": "Hospital Authority Family Medicine Clinic (Kowloon East Cluster). Appointment required.",
+        "zh": "醫管局家庭醫學診所（九龍東醫院聯網）。須預約。",
+        "cn": "医管局家庭医学诊所（九龙东医院联网）。须预约。"
+    },
     "location": {
-        "district": "Tseung Kwan O",
+        "district": "Sai Kung",
         "address": {
-            "en": "Mona Fong General Outpatient Clinic, Tseung Kwan O, New Territories",
-            "zh": "新界將軍澳方逸華普通科門診",
-            "cn": "新界將軍澳方逸華普通科門診"
+            "en": "G/F, 23 Man Nin Street, Sai Kung",
+            "zh": "西貢萬年街23號地下",
+            "cn": "西贡万年街23号地下"
         },
         "coordinates": {
-            "latitude": 22.31,
-            "longitude": 114.259
+            "latitude": 22.381755,
+            "longitude": 114.27225
         }
     },
     "contacts": [
         {
             "kind": "url",
-            "value": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+            "value": {
+                "en": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+                "zh": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=CHIB5",
+                "cn": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=CHIGB"
+            },
             "label": {
-                "en": "HA clinic page",
-                "zh": "醫管局網頁",
-                "cn": "醫管局網頁"
+                "en": "HA clinic directory",
+                "zh": "醫管局診所名錄",
+                "cn": "医管局诊所名录"
             }
         }
     ],
@@ -37,18 +46,18 @@ export const gopcMonaFong: PhysicalAlternative = {
         {
             "id": "general_opd",
             "name": {
-                "en": "General outpatient (GOPC)",
-                "zh": "普通科門診",
-                "cn": "普通科門診"
+                "en": "Family medicine clinic",
+                "zh": "家庭醫學診所",
+                "cn": "家庭医学诊所"
             },
             "channelType": "in_person",
             "primary": true,
             "schedule": {
                 "kind": "appointment_only",
                 "notes": {
-                    "en": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Appointment required.",
-                    "zh": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Appointment required.",
-                    "cn": "Standard HA GOPC hours. Mon-Fri: 09:00-13:00, 14:00-17:30. Appointment required."
+                    "en": "Hours vary by clinic — confirm registration and consultation times on the HA site. Appointment required; walk-in not accepted.",
+                    "zh": "各診所時間不同，請於醫管局網站確認掛號及診症時間。須預約，不接受即到。",
+                    "cn": "各诊所时间不同，请于医管局网站确认挂号及诊症时间。须预约，不接受即到。"
                 }
             },
             "eligibility": [
@@ -60,9 +69,9 @@ export const gopcMonaFong: PhysicalAlternative = {
                         "cn": "合資格香港居民（香港身份證）"
                     },
                     "details": {
-                        "en": "HK$50 per visit for eligible persons. Fee reform may raise this to HK$150 from 2026.",
-                        "zh": "合資格人士每次診症HK$50。2026年起費用改革可能調整至HK$150。",
-                        "cn": "合資格人士每次診症HK$50。2026年起費用改革可能調整至HK$150。"
+                        "en": "HK$150 per attendance. HK$5 per drug item dispensed.",
+                        "zh": "每次診症HK$150。每種配發藥物HK$5。",
+                        "cn": "每次诊症HK$150。每种配发药物HK$5。"
                     }
                 },
                 {
@@ -73,9 +82,9 @@ export const gopcMonaFong: PhysicalAlternative = {
                         "cn": "非合資格人士"
                     },
                     "details": {
-                        "en": "HK$445 per visit for non-eligible persons.",
-                        "zh": "非合資格人士每次診症HK$445。",
-                        "cn": "非合資格人士每次診症HK$445。"
+                        "en": "HK$500 per attendance. HK$40 per drug item dispensed.",
+                        "zh": "每次診症HK$500。每種配發藥物HK$40。",
+                        "cn": "每次诊症HK$500。每种配发药物HK$40。"
                     }
                 }
             ],
@@ -83,9 +92,9 @@ export const gopcMonaFong: PhysicalAlternative = {
                 "appointmentRequired": true,
                 "walkIn": false,
                 "methods": {
-                    "en": "HA GOPC telephone booking or HA Go app",
-                    "zh": "醫管局門診電話預約或HA Go",
-                    "cn": "醫管局門診電話預約或HA Go"
+                    "en": "HA telephone booking or HA Go app",
+                    "zh": "醫管局電話預約或HA Go",
+                    "cn": "医管局电话预约或HA Go"
                 }
             },
             "pricing": {
@@ -93,13 +102,13 @@ export const gopcMonaFong: PhysicalAlternative = {
                     {
                         "id": "eligible",
                         "label": {
-                            "en": "General consultation (eligible)",
-                            "zh": "普通科診症（合資格）",
-                            "cn": "普通科診症（合資格）"
+                            "en": "Consultation (eligible)",
+                            "zh": "診症（合資格）",
+                            "cn": "診症（合資格）"
                         },
                         "consultation": {
                             "currency": "HKD",
-                            "amount": 50
+                            "amount": 150
                         },
                         "appliesWhen": [
                             {
@@ -115,23 +124,40 @@ export const gopcMonaFong: PhysicalAlternative = {
                                     "cn": "合資格香港居民（香港身份證）"
                                 },
                                 "details": {
-                                    "en": "HK$50 per visit for eligible persons. Fee reform may raise this to HK$150 from 2026.",
-                                    "zh": "合資格人士每次診症HK$50。2026年起費用改革可能調整至HK$150。",
-                                    "cn": "合資格人士每次診症HK$50。2026年起費用改革可能調整至HK$150。"
+                                    "en": "HK$150 per attendance. HK$5 per drug item dispensed.",
+                                    "zh": "每次診症HK$150。每種配發藥物HK$5。",
+                                    "cn": "每次诊症HK$150。每种配发药物HK$5。"
                                 }
+                            }
+                        ],
+                        "excludes": [
+                            {
+                                "en": "Drugs (charged per item separately)",
+                                "zh": "藥物（按件另計）",
+                                "cn": "藥物（按件另計）"
+                            },
+                            {
+                                "en": "Laboratory tests",
+                                "zh": "化驗",
+                                "cn": "化驗"
+                            },
+                            {
+                                "en": "Other clinical services",
+                                "zh": "其他醫療服務",
+                                "cn": "其他醫療服務"
                             }
                         ]
                     },
                     {
                         "id": "non_eligible",
                         "label": {
-                            "en": "General consultation (non-eligible)",
-                            "zh": "普通科診症（非合資格）",
-                            "cn": "普通科診症（非合資格）"
+                            "en": "Consultation (non-eligible)",
+                            "zh": "診症（非合資格）",
+                            "cn": "診症（非合資格）"
                         },
                         "consultation": {
                             "currency": "HKD",
-                            "amount": 445
+                            "amount": 500
                         },
                         "appliesWhen": [
                             {
@@ -147,14 +173,36 @@ export const gopcMonaFong: PhysicalAlternative = {
                                     "cn": "非合資格人士"
                                 },
                                 "details": {
-                                    "en": "HK$445 per visit for non-eligible persons.",
-                                    "zh": "非合資格人士每次診症HK$445。",
-                                    "cn": "非合資格人士每次診症HK$445。"
+                                    "en": "HK$500 per attendance. HK$40 per drug item dispensed.",
+                                    "zh": "每次診症HK$500。每種配發藥物HK$40。",
+                                    "cn": "每次诊症HK$500。每种配发药物HK$40。"
                                 }
+                            }
+                        ],
+                        "excludes": [
+                            {
+                                "en": "Drugs (charged per item separately)",
+                                "zh": "藥物（按件另計）",
+                                "cn": "藥物（按件另計）"
+                            },
+                            {
+                                "en": "Laboratory tests",
+                                "zh": "化驗",
+                                "cn": "化驗"
+                            },
+                            {
+                                "en": "Other clinical services",
+                                "zh": "其他醫療服務",
+                                "cn": "其他醫療服務"
                             }
                         ]
                     }
-                ]
+                ],
+                "displayNotes": {
+                    "en": "Eligible persons: HK$5 per drug item dispensed. Non-eligible: HK$40 per drug item. Excludes other services.",
+                    "zh": "合資格人士：每種配發藥物HK$5。非合資格人士：每種HK$40。不包括其他服務。",
+                    "cn": "合资格人士：每种配发药物HK$5。非合资格人士：每种HK$40。不包括其他服务。"
+                }
             }
         }
     ],
@@ -178,20 +226,36 @@ export const gopcMonaFong: PhysicalAlternative = {
     "scope": {
         "urgencyLevel": "primary_care",
         "summary": {
-            "en": "For non-urgent conditions. Appointment required; not for emergencies.",
-            "zh": "適用於非緊急情況，須預約，不適用於急症。",
-            "cn": "適用於非緊急情況，須預約，不適用於急症。"
+            "en": "Non-urgent primary care. Appointment required — not for emergencies.",
+            "zh": "非緊急基層醫療，須預約，不適用於急症。",
+            "cn": "非緊急基層醫療，須預約，不適用於急症。"
         }
-    },
-    "additionalInfo": {
-        "en": "Part of Kowloon East Cluster (Sai Kung District). Improvement works and facility enhancement completed in 2013.",
-        "zh": "Part of Kowloon East Cluster (Sai Kung District). Improvement works and facility enhancement completed in 2013.",
-        "cn": "Part of Kowloon East Cluster (Sai Kung District). Improvement works and facility enhancement completed in 2013."
     },
     "sourceUrls": [
         {
-            "url": "https://www.info.gov.hk/gia/general/202402/28/P2024022800458.htm"
+            "url": {
+                "en": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
+                "zh": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=CHIB5",
+                "cn": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=CHIGB"
+            },
+            "label": {
+                "en": "HA Family Medicine Clinics",
+                "zh": "醫管局家庭醫學診所",
+                "cn": "醫管局家庭醫學診所"
+            }
+        },
+        {
+            "url": {
+                "en": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=10045&Lang=ENG",
+                "zh": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=10045&Lang=CHIB5",
+                "cn": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=10045&Lang=CHIGB"
+            },
+            "label": {
+                "en": "Official HA charges",
+                "zh": "醫管局官方收費",
+                "cn": "醫管局官方收費"
+            }
         }
     ],
-    "lastUpdated": "2026-05-01"
+    "lastUpdated": "2026-05-21"
 } as PhysicalAlternative

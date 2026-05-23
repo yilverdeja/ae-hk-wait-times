@@ -1,7 +1,16 @@
 import { facility } from "@/lib/alternatives/catalog"
 import { i18n } from "@/lib/i18n"
 import type { PhysicalAlternative } from "@/types/alternatives"
-import { ELIGIBLE_GOPC, gopcFeeTiers, NON_ELIGIBLE_GOPC, OPEN_PUBLIC } from "./shared"
+import {
+    districtFromAddress,
+    fmcDisplayNameEn,
+    fmcInstitutionToSlug,
+    HA_FMC_CHARGES,
+    HA_FMC_DIRECTORY_PAGE,
+    HA_FMC_OPENDATA_URL,
+    type HaFmcFacilityRow,
+} from "@/data/ha"
+import { ELIGIBLE_GOPC, FMC_PRICING_DISPLAY_NOTES, fmcFeeTiers, NON_ELIGIBLE_GOPC } from "./shared"
 
 export interface GopcLegacyRow {
     slug: string
@@ -16,56 +25,80 @@ export interface GopcLegacyRow {
     additionalInfo?: string | null
 }
 
-const DEFAULT_HOURS_EN =
-    "Mon–Fri 09:00–13:00, 14:00–17:30 (Sat varies). Appointment required via HA GOPC booking (08:00) or HA Go. Closed Sun and most public holidays."
+export interface CreateFmcEntryOptions {
+    /** Override auto-derived slug (e.g. preserve legacy `gopc-*`). */
+    slug?: string
+    phone?: string | null
+    scheduleNotes?: string
+    additionalInfo?: string
+    lastUpdated?: string
+}
 
-/** Build a GOPC clinic entry from archive row data (shared structure, per-clinic overrides). */
-export function createGopcEntry(row: GopcLegacyRow): PhysicalAlternative {
-    const hoursText =
-        row.operationHours?.general_outpatient ?? row.operationHours?.general ?? DEFAULT_HOURS_EN
+const DEFAULT_SCHEDULE_NOTES = i18n(
+    "Hours vary by clinic — confirm registration and consultation times on the HA site. Appointment required; walk-in not accepted.",
+    "各診所時間不同，請於醫管局網站確認掛號及診症時間。須預約，不接受即到。",
+    "各诊所时间不同，请于医管局网站确认挂号及诊症时间。须预约，不接受即到。"
+)
+
+/** Build an HA Family Medicine Clinic entry from opendata row. */
+export function createFmcEntry(
+    row: HaFmcFacilityRow,
+    options: CreateFmcEntryOptions = {}
+): PhysicalAlternative {
+    const slug = options.slug ?? fmcInstitutionToSlug(row.institution_eng)
+    const scheduleNotes = options.scheduleNotes
+        ? i18n(options.scheduleNotes, options.scheduleNotes)
+        : DEFAULT_SCHEDULE_NOTES
 
     return {
-        slug: row.slug,
+        slug,
         category: "non24hour",
-        name: i18n(row.name.en, row.name.zh ?? row.name.en),
+        name: i18n(fmcDisplayNameEn(row.institution_eng), row.institution_tc, row.institution_sc),
         providerType: "Public Clinic",
+        description: i18n(
+            `Hospital Authority Family Medicine Clinic (${row.cluster_eng}). Appointment required.`,
+            `醫管局家庭醫學診所（${row.cluster_tc}）。須預約。`,
+            `医管局家庭医学诊所（${row.cluster_sc}）。须预约。`
+        ),
         location: {
-            district: row.district,
-            address: i18n(row.address.en, row.address.zh ?? row.address.en),
-            coordinates: row.coordinates,
+            district: districtFromAddress(row.address_eng),
+            address: i18n(row.address_eng, row.address_tc, row.address_sc),
+            coordinates: { latitude: row.latitude, longitude: row.longitude },
         },
         contacts: [
-            ...(row.phone ? [{ kind: "phone" as const, value: row.phone }] : []),
-            ...(row.url
-                ? [
-                      {
-                          kind: "url" as const,
-                          value: row.url,
-                          label: i18n("HA clinic page", "醫管局網頁"),
-                      },
-                  ]
+            ...(options.phone
+                ? [{ kind: "phone" as const, value: options.phone, label: i18n("Clinic", "診所", "诊所") }]
                 : []),
+            {
+                kind: "url",
+                value: HA_FMC_DIRECTORY_PAGE,
+                label: i18n("HA clinic directory", "醫管局診所名錄", "医管局诊所名录"),
+            },
         ],
         channels: [
             {
                 id: "general_opd",
-                name: i18n("General outpatient (GOPC)", "普通科門診"),
+                name: i18n("Family medicine clinic", "家庭醫學診所", "家庭医学诊所"),
                 channelType: "in_person",
                 primary: true,
                 schedule: {
                     kind: "appointment_only",
-                    notes: i18n(hoursText, hoursText),
+                    notes: scheduleNotes,
                 },
                 eligibility: [ELIGIBLE_GOPC, NON_ELIGIBLE_GOPC],
                 booking: {
                     appointmentRequired: true,
                     walkIn: false,
                     methods: i18n(
-                        "HA GOPC telephone booking or HA Go app",
-                        "醫管局門診電話預約或HA Go"
+                        "HA telephone booking or HA Go app",
+                        "醫管局電話預約或HA Go",
+                        "医管局电话预约或HA Go"
                     ),
                 },
-                pricing: { tiers: gopcFeeTiers() },
+                pricing: {
+                    tiers: fmcFeeTiers(),
+                    displayNotes: FMC_PRICING_DISPLAY_NOTES,
+                },
             },
         ],
         facilities: [
@@ -78,14 +111,49 @@ export function createGopcEntry(row: GopcLegacyRow): PhysicalAlternative {
         scope: {
             urgencyLevel: "primary_care",
             summary: i18n(
-                "For non-urgent conditions. Appointment required; not for emergencies.",
-                "適用於非緊急情況，須預約，不適用於急症。"
+                "Non-urgent primary care. Appointment required — not for emergencies.",
+                "非緊急基層醫療，須預約，不適用於急症。"
             ),
         },
-        ...(row.additionalInfo
-            ? { additionalInfo: i18n(row.additionalInfo, row.additionalInfo) }
+        ...(options.additionalInfo
+            ? { additionalInfo: i18n(options.additionalInfo, options.additionalInfo) }
             : {}),
-        sourceUrls: row.referringUrls?.map((url) => ({ url })),
-        lastUpdated: "2026-05-01",
+        sourceUrls: [
+            { url: HA_FMC_DIRECTORY_PAGE, label: i18n("HA Family Medicine Clinics", "醫管局家庭醫學診所") },
+            {
+                url: HA_FMC_CHARGES.sourceUrls[0].url,
+                label: i18n("Official HA charges", "醫管局官方收費"),
+            },
+        ],
+        lastUpdated: options.lastUpdated ?? HA_FMC_CHARGES.lastUpdated,
     }
 }
+
+/** @deprecated Use `createFmcEntry` with opendata — legacy archive row adapter. */
+export function createGopcEntry(row: GopcLegacyRow): PhysicalAlternative {
+    const fmcRow: HaFmcFacilityRow = {
+        cluster_eng: "",
+        institution_eng: row.name.en.replace(/ \(HA\)$/, "").replace(/ GOPC \(HA\)$/, " Family Medicine Clinic"),
+        address_eng: row.address.en,
+        cluster_tc: "",
+        institution_tc: row.name.zh ?? row.name.en,
+        address_tc: row.address.zh ?? row.address.en,
+        cluster_sc: "",
+        institution_sc: row.name.zh ?? row.name.en,
+        address_sc: row.address.zh ?? row.address.en,
+        latitude: row.coordinates.latitude,
+        longitude: row.coordinates.longitude,
+    }
+
+    const hoursText =
+        row.operationHours?.general_outpatient ?? row.operationHours?.general ?? undefined
+
+    return createFmcEntry(fmcRow, {
+        slug: row.slug,
+        phone: row.phone,
+        scheduleNotes: hoursText,
+        additionalInfo: row.additionalInfo ?? undefined,
+    })
+}
+
+export { HA_FMC_OPENDATA_URL }

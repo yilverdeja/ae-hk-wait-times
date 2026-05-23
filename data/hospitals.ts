@@ -1,5 +1,12 @@
+import { HA_PUBLIC_AE_CHARGES } from "@/data/ha/public-charges"
 import { i18n } from "@/lib/i18n"
-import { Cluster, HospitalData, Region } from "@/types"
+import { Cluster, HospitalData, PublicAeCharges, Region } from "@/types"
+
+/** Same at every public hospital A&E — see HA official charges page. */
+export const publicHospitalAeCharges: PublicAeCharges = {
+    eligibleAttendanceHkd: HA_PUBLIC_AE_CHARGES.eligibleAttendanceHkd,
+    nonEligibleAttendanceHkd: HA_PUBLIC_AE_CHARGES.nonEligibleAttendanceHkd,
+}
 
 export const hospitals: HospitalData = {
     AHMLNH: {

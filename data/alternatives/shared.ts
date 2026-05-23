@@ -1,3 +1,4 @@
+import { HA_FMC_CHARGES, HA_FMC_DRUG_FEE_NOTE } from "@/data/ha/public-charges"
 import { i18n } from "@/lib/i18n"
 import { OPEN_PUBLIC } from "@/lib/alternatives/resolve"
 import type { LocalizedString } from "@/types"
@@ -16,6 +17,13 @@ export const EXCLUDES_CONSULTATION_STANDARD: LocalizedString[] = [
     i18n("Other clinical services", "其他醫療服務"),
 ]
 
+/** HA Family Medicine Clinic — consultation fee only (drugs charged per item separately). */
+export const EXCLUDES_FMC_CONSULTATION: LocalizedString[] = [
+    i18n("Drugs (charged per item separately)", "藥物（按件另計）"),
+    i18n("Laboratory tests", "化驗"),
+    i18n("Other clinical services", "其他醫療服務"),
+]
+
 export const CONSULTATION_FEE_DISCLAIMER = i18n(
     "Outpatient consultation fee only. Excludes medication, laboratory tests, minor procedures, and other services. Critical-case fees may apply separately.",
     "只包括門診診金，不包括藥物、化驗、小型手術及其他服務。危殆個案或另收急症診金。"
@@ -25,15 +33,20 @@ export const ELIGIBLE_GOPC: EligibilityRule = {
     audience: "hk_resident_eligible",
     summary: i18n("Eligible HK residents (HKID)", "合資格香港居民（香港身份證）"),
     details: i18n(
-        "HK$50 per visit for eligible persons. Fee reform may raise this to HK$150 from 2026.",
-        "合資格人士每次診症HK$50。2026年起費用改革可能調整至HK$150。"
+        `HK$${HA_FMC_CHARGES.eligibleAttendanceHkd} per attendance. HK$${HA_FMC_CHARGES.eligibleDrugPerItemHkd} per drug item dispensed.`,
+        `每次診症HK$${HA_FMC_CHARGES.eligibleAttendanceHkd}。每種配發藥物HK$${HA_FMC_CHARGES.eligibleDrugPerItemHkd}。`,
+        `每次诊症HK$${HA_FMC_CHARGES.eligibleAttendanceHkd}。每种配发药物HK$${HA_FMC_CHARGES.eligibleDrugPerItemHkd}。`
     ),
 }
 
 export const NON_ELIGIBLE_GOPC: EligibilityRule = {
     audience: "hk_resident_non_eligible",
     summary: i18n("Non-eligible persons", "非合資格人士"),
-    details: i18n("HK$445 per visit for non-eligible persons.", "非合資格人士每次診症HK$445。"),
+    details: i18n(
+        `HK$${HA_FMC_CHARGES.nonEligibleAttendanceHkd} per attendance. HK$${HA_FMC_CHARGES.nonEligibleDrugPerItemHkd} per drug item dispensed.`,
+        `每次診症HK$${HA_FMC_CHARGES.nonEligibleAttendanceHkd}。每種配發藥物HK$${HA_FMC_CHARGES.nonEligibleDrugPerItemHkd}。`,
+        `每次诊症HK$${HA_FMC_CHARGES.nonEligibleAttendanceHkd}。每种配发药物HK$${HA_FMC_CHARGES.nonEligibleDrugPerItemHkd}。`
+    ),
 }
 
 export const BUPA_MEMBER: EligibilityRule = {
@@ -58,21 +71,30 @@ export const AXA_EB_MEMBER: EligibilityRule = {
 
 export { OPEN_PUBLIC }
 
+/** @deprecated Use `fmcFeeTiers()` — HA Family Medicine Clinic (formerly GOPC) fees. */
 export function gopcFeeTiers(): FeeTier[] {
+    return fmcFeeTiers()
+}
+
+export function fmcFeeTiers(): FeeTier[] {
     return [
         {
             id: "eligible",
-            label: i18n("General consultation (eligible)", "普通科診症（合資格）"),
-            consultation: { currency: "HKD", amount: 50 },
+            label: i18n("Consultation (eligible)", "診症（合資格）"),
+            consultation: { currency: "HKD", amount: HA_FMC_CHARGES.eligibleAttendanceHkd },
             appliesWhen: [{ type: "default" }],
             eligibility: [ELIGIBLE_GOPC],
+            excludes: EXCLUDES_FMC_CONSULTATION,
         },
         {
             id: "non_eligible",
-            label: i18n("General consultation (non-eligible)", "普通科診症（非合資格）"),
-            consultation: { currency: "HKD", amount: 445 },
+            label: i18n("Consultation (non-eligible)", "診症（非合資格）"),
+            consultation: { currency: "HKD", amount: HA_FMC_CHARGES.nonEligibleAttendanceHkd },
             appliesWhen: [{ type: "default" }],
             eligibility: [NON_ELIGIBLE_GOPC],
+            excludes: EXCLUDES_FMC_CONSULTATION,
         },
     ]
 }
+
+export const FMC_PRICING_DISPLAY_NOTES = HA_FMC_DRUG_FEE_NOTE

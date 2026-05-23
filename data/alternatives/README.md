@@ -7,8 +7,9 @@ Live alternative care options (24-hour facilities, outpatient clinics, telehealt
 | Path | Purpose |
 |------|---------|
 | [`index.ts`](index.ts) | Registry — imports all entries, exports `alternatives`, `alternativesBySlug`, `alternatives24Hour` |
-| [`shared.ts`](shared.ts) | Shared constants (GOPC fees, exclusions, eligibility helpers) |
-| [`gopc.ts`](gopc.ts) | `createGopcEntry()` factory for HA GOPC clinics (used by generator scripts) |
+| [`shared.ts`](shared.ts) | Shared constants (FMC/GOPC fees, exclusions, eligibility helpers) |
+| [`gopc.ts`](gopc.ts) | `createFmcEntry()` factory for HA Family Medicine Clinics (used by generator scripts) |
+| [`../ha/`](../ha/) | HA official charges, FMC opendata JSON, localized visitor URLs |
 | [`entries/{slug}.ts`](entries/) | One file per facility — **source of truth** for the app |
 
 ## Review workflow
@@ -27,7 +28,8 @@ These read **archive JSON** and write entry stubs. They are not used at runtime.
 ```bash
 npm run alternatives:export-pilots      # one-time: pilots.ts → entries (already done)
 npm run alternatives:generate-entry    # stubs from archive JSON (non-GOPC, non-reviewed)
-npm run alternatives:generate-gopc       # GOPC stubs via createGopcEntry()
+npm run alternatives:generate-fmc        # FMC stubs from data/ha/facility-fmc.json
+npm run alternatives:generate-gopc       # legacy: archive JSON via createGopcEntry()
 npm run alternatives:generate-registry # rebuild index.ts import lists
 ```
 

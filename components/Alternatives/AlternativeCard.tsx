@@ -14,7 +14,7 @@ import {
     isChannelOpenNow,
     resolveCurrentPrice,
 } from "@/lib/alternatives/resolve"
-import { scheduleContext } from "@/lib/alternatives/time"
+import { useScheduleContext } from "@/hooks/useScheduleContext"
 import { formatDistance } from "@/lib/map"
 import { cn } from "@/lib/utils"
 import type { Alternative } from "@/types/alternatives"
@@ -173,20 +173,26 @@ function resolveStatusDisplay(
 
 export function AlternativeCard({ entry, lang, userCoords = null }: AlternativeCardProps) {
     const t = texts[lang]
-    const ctx = useMemo(() => scheduleContext(), [])
+    const ctx = useScheduleContext()
 
     const channel = useMemo(() => getPrimaryChannel(entry, ctx), [entry, ctx])
 
+    /** Walk-in hours follow the primary channel schedule (not a secondary open service). */
+    const statusChannel = useMemo(
+        () => entry.channels.find((c) => c.primary) ?? entry.channels[0] ?? null,
+        [entry]
+    )
+
     const openStatus = useMemo(() => {
-        if (!channel) return null
-        const status = isChannelOpenNow(channel, ctx)
-        return enrichOpenStatusWithTransition(channel.schedule, status, ctx)
-    }, [channel, ctx])
+        if (!statusChannel) return null
+        const status = isChannelOpenNow(statusChannel, ctx)
+        return enrichOpenStatusWithTransition(statusChannel.schedule, status, ctx)
+    }, [statusChannel, ctx])
 
     const scheduleTransition = useMemo(() => {
-        if (!channel) return null
-        return resolveScheduleTransition(channel.schedule, ctx)
-    }, [channel, ctx])
+        if (!statusChannel) return null
+        return resolveScheduleTransition(statusChannel.schedule, ctx)
+    }, [statusChannel, ctx])
 
     const statusDisplay = useMemo(
         () => resolveStatusDisplay(openStatus, scheduleTransition, t, lang),

@@ -55,7 +55,7 @@ describe("resolveCurrentPrice", () => {
             scheduleContext(hkDate("2026-05-20T10:00:00+08:00")),
             "hk_resident_eligible"
         )
-        assert.equal(price?.amount, 50)
+        assert.equal(price?.amount, 150)
     })
 
     it("resolves GOPC non-eligible tier", () => {
@@ -65,7 +65,7 @@ describe("resolveCurrentPrice", () => {
             scheduleContext(hkDate("2026-05-20T10:00:00+08:00")),
             "hk_resident_non_eligible"
         )
-        assert.equal(price?.amount, 445)
+        assert.equal(price?.amount, 500)
     })
 
     it("resolves DrGo from price", () => {
@@ -145,15 +145,42 @@ describe("formatCardPrice", () => {
     })
 })
 
-describe("resolveScheduleTransition", () => {
-    it("Precious Blood closes within 60 min before 22:00", () => {
+describe("precious blood general OPD hours", () => {
+    it("is closed outside 08:00–22:00", () => {
+        const pb = alternatives.find((a) => a.slug === "precious-blood-hospital")!
+        const ch = getPrimaryChannel(pb, scheduleContext(hkDate("2026-05-23T23:00:00+08:00")))!
+        assert.equal(ch.id, "general_opd")
+        const status = isChannelOpenNow(ch, scheduleContext(hkDate("2026-05-23T23:00:00+08:00")))
+        assert.equal(status.kind, "closed")
+    })
+
+    it("shows closes soon before 19:10 on Mon–Sat", () => {
+        const pb = alternatives.find((a) => a.slug === "precious-blood-hospital")!
+        const ctx = scheduleContext(hkDate("2026-05-23T18:50:00+08:00")) // Saturday
+        const ch = pb.channels.find((c) => c.id === "general_opd")!
+        assert.equal(isChannelOpenNow(ch, ctx).kind, "open")
+        const transition = resolveScheduleTransition(ch.schedule, ctx)
+        assert.equal(transition?.kind, "closes")
+        assert.equal(transition?.minutesUntil, 20)
+    })
+
+    it("is closed after Mon–Sat evening slot (19:30)", () => {
         const pb = alternatives.find((a) => a.slug === "precious-blood-hospital")!
         const ch = pb.channels.find((c) => c.id === "general_opd")!
-        const ctx = scheduleContext(hkDate("2026-05-20T21:30:00+08:00"))
+        const ctx = scheduleContext(hkDate("2026-05-23T19:30:00+08:00")) // Saturday
+        assert.equal(isChannelOpenNow(ch, ctx).kind, "closed")
+    })
+})
+
+describe("resolveScheduleTransition", () => {
+    it("Precious Blood closes within 60 min before 19:10 on Mon–Sat", () => {
+        const pb = alternatives.find((a) => a.slug === "precious-blood-hospital")!
+        const ch = pb.channels.find((c) => c.id === "general_opd")!
+        const ctx = scheduleContext(hkDate("2026-05-23T18:50:00+08:00"))
         const transition = resolveScheduleTransition(ch.schedule, ctx)
         assert.ok(transition)
         assert.equal(transition.kind, "closes")
-        assert.equal(transition.minutesUntil, 30)
+        assert.equal(transition.minutesUntil, 20)
     })
 
     it("DrGo telehealth closes within 60 min before 20:00", () => {

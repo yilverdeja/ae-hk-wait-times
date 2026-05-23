@@ -36,6 +36,12 @@ export interface Coordinates {
  * Region and Cluster are stored as enums for robust filtering and sorting.
  * Their display names are retrieved from a separate translation map.
  */
+/** Standard HA public-hospital A&E attendance fees (same at all A&E hospitals). */
+export interface PublicAeCharges {
+    eligibleAttendanceHkd: number
+    nonEligibleAttendanceHkd: number
+}
+
 export interface Hospital {
     name: LocalizedString
     region: Region

@@ -9,10 +9,11 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { useScheduleContext } from "@/hooks/useScheduleContext"
 import { useUserLocationInHongKong } from "@/hooks/useUserLocationInHongKong"
 import { useLanguage } from "@/hooks/useLanguage"
 import { getPrimaryChannel, isChannelOpenNow } from "@/lib/alternatives/resolve"
-import { scheduleContext } from "@/lib/alternatives/time"
+import type { ScheduleContext } from "@/types/alternatives"
 import {
     ALTERNATIVE_CATEGORIES,
     type AlternativeCategory,
@@ -64,8 +65,7 @@ const OPEN_SORT_RANK: Record<string, number> = {
     closed: 4,
 }
 
-function openSortRank(entry: Alternative): number {
-    const ctx = scheduleContext()
+function openSortRank(entry: Alternative, ctx: ScheduleContext): number {
     const channel = getPrimaryChannel(entry, ctx)
     if (!channel) return 5
     return OPEN_SORT_RANK[isChannelOpenNow(channel, ctx).kind] ?? 5
@@ -85,6 +85,7 @@ export function AlternativesDirectoryView({
     const locationTexts = locationBannerTexts[lang]
     const router = useRouter()
     const pathname = usePathname()
+    const ctx = useScheduleContext()
 
     const {
         userCoords,
@@ -104,8 +105,8 @@ export function AlternativesDirectoryView({
     const filtered = useMemo(() => {
         return alternatives
             .filter((e) => e.category === category)
-            .sort((a, b) => openSortRank(a) - openSortRank(b))
-    }, [alternatives, category])
+            .sort((a, b) => openSortRank(a, ctx) - openSortRank(b, ctx))
+    }, [alternatives, category, ctx])
 
     function handleCategoryChange(value: AlternativeCategory) {
         const params = new URLSearchParams()

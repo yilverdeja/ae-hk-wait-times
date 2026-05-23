@@ -5,9 +5,19 @@ The APIs are:
 * [For waiting status indicators](https://api-hkshpatser-a8bsf4a5gzcyhqhu.z01.azurefd.net/api/static/WaitingStatus)
 * [For actual waiting times](https://api-hkshpatser-a8bsf4a5gzcyhqhu.z01.azurefd.net/api/static/FmcWaitingTime?requestBody=Return_FMC_Waiting_Time_2024)
 
+## HA public charges (2026 fee reform)
+
+| Service | Eligible (HKID) | Non-eligible |
+|---------|-----------------|--------------|
+| Family Medicine Clinic (FMC) attendance | HK$150 | HK$500 |
+| FMC drug (per item dispensed) | HK$5 | HK$40 |
+| Public hospital A&E attendance | HK$400 | HK$2,100 |
+
+Sources: `data/ha/public-charges.ts`, `data/ha/urls.ts` (HA visitor charges page). FMC list: `data/ha/facility-fmc.json` (from HA opendata).
+
 ## Updates for the app
 * Need to add more vouchers, and find all alternative options that take this vouchers
-* Need to get a list of all public hospitals so we can connect it to the app for alternative care times
+* FMC entries: per-clinic phones/hours to be added when PDF details are available
 
 ## Future improvements
 * Add a comparison page that will compare costs + waiting time in public hospital, to an alternative care option nearby (with best time to go)

@@ -11,6 +11,7 @@
     "alternatives:export-pilots": "npx tsx scripts/alternatives/export-curated-pilots.ts",
     "alternatives:generate-entry": "npx tsx scripts/alternatives/migrate-legacy-to-entry.ts",
     "alternatives:generate-gopc": "npx tsx scripts/alternatives/generate-gopc-entries.ts",
+    "alternatives:generate-fmc": "npx tsx scripts/alternatives/generate-fmc-entries.ts",
     "alternatives:generate-registry": "npx tsx scripts/alternatives/generate-registry.ts"
   },
   "dependencies": {
