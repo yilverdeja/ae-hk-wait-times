@@ -20,6 +20,7 @@ import { sendGAEvent } from "@next/third-parties/google"
 import {
     AlertCircle,
     ExternalLink,
+    Loader2,
     MapPin,
     Minus,
     TrendingDown,
@@ -35,6 +36,8 @@ interface HospitalMapOverlayProps {
         distance: number
         duration: number
     }
+    isDistanceLoading?: boolean
+    showDistance?: boolean
     lastUpdated?: string
 }
 
@@ -42,6 +45,8 @@ export function HospitalMapOverlay({
     hospital,
     lang,
     distance,
+    isDistanceLoading = false,
+    showDistance = false,
     lastUpdated,
 }: HospitalMapOverlayProps) {
     const { theme, resolvedTheme } = useTheme()
@@ -49,11 +54,9 @@ export function HospitalMapOverlay({
     const waitTime = getDisplayWaitTime(hospital)
     const color = getWaitTimeColor(waitTime, currentTheme)
 
-    // Get trend data
     const { getAverageForDateTime, isLoading: isTrendLoading } =
         useHospitalTrends(hospital.slug)
 
-    // Calculate trend icon
     let trendIcon = null
     if (
         !isTrendLoading &&
@@ -61,7 +64,6 @@ export function HospitalMapOverlay({
         lastUpdated &&
         getAverageForDateTime
     ) {
-        // Try multiple date formats to handle different API response formats
         let lastUpdatedDate = dayjs(lastUpdated, "DD/MM/YYYY hh:mm A").toDate()
         if (isNaN(lastUpdatedDate.getTime())) {
             lastUpdatedDate = dayjs(lastUpdated, "D/M/YYYY h:mmA").toDate()
@@ -70,7 +72,7 @@ export function HospitalMapOverlay({
             const trendAverage = getAverageForDateTime(lastUpdatedDate)
             if (trendAverage !== null) {
                 const difference = waitTime - trendAverage
-                const threshold = 0.5 * 60 // 30 minutes
+                const threshold = 0.5 * 60
 
                 if (Math.abs(difference) < threshold) {
                     trendIcon = <Minus className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -88,6 +90,8 @@ export function HospitalMapOverlay({
     }
 
     const hasCritical = hasCriticalCases(hospital)
+    const showDistanceColumn =
+        showDistance && (isDistanceLoading || distance)
 
     return (
         <div
@@ -98,7 +102,6 @@ export function HospitalMapOverlay({
                 className="bg-background/95 backdrop-blur-sm rounded-lg border shadow-lg p-3 sm:p-4 pointer-events-auto relative"
                 style={{ maxWidth: "600px" }}
             >
-                {/* Google Maps icon in top-right */}
                 <Link
                     href={hospital.googleMapsLink}
                     target="_blank"
@@ -115,9 +118,7 @@ export function HospitalMapOverlay({
                     <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
 
-                {/* Mobile: Vertical layout */}
-                <div className="flex flex-col sm:flex-row sm:items-end sm:gap-4 space-y-2 sm:space-y-0 pr-6 sm:pr-8">
-                    {/* Left section: Hospital info and wait times */}
+                <div className="flex flex-col space-y-2 pr-6 sm:pr-8">
                     <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-sm sm:text-base leading-tight mb-1 pr-6 sm:pr-0">
                             {hospital.name[lang]}
@@ -126,9 +127,7 @@ export function HospitalMapOverlay({
                             {hospital.address[lang]}
                         </p>
 
-                        {/* Wait times - vertical on mobile, horizontal on larger screens */}
                         <div className="flex flex-col sm:flex-row sm:items-end sm:gap-4 space-y-1.5 sm:space-y-0">
-                            {/* Primary wait time */}
                             <div className="flex items-center gap-2">
                                 <div
                                     className="w-3 h-3 rounded-full flex-shrink-0"
@@ -159,7 +158,6 @@ export function HospitalMapOverlay({
                                 </div>
                             </div>
 
-                            {/* Secondary wait times - horizontal on larger screens, aligned at bottom */}
                             <div className="flex flex-col sm:flex-row sm:items-end sm:gap-3 pl-5 sm:pl-0 space-y-1 sm:space-y-0 text-xs text-muted-foreground">
                                 {hospital.waitTimes.urgentP95Minutes !==
                                     null && (
@@ -203,10 +201,34 @@ export function HospitalMapOverlay({
                                         )}
                                     </div>
                                 )}
+                                {showDistanceColumn && (
+                                    <div className="sm:border-l sm:pl-3 sm:pb-0.5 whitespace-nowrap flex items-center min-h-[1.25rem]">
+                                        {isDistanceLoading ? (
+                                            <Loader2 className="h-3 w-3 animate-spin" />
+                                        ) : distance ? (
+                                            <span className="inline-flex items-center gap-0.5">
+                                                <MapPin className="h-3 w-3 flex-shrink-0" />
+                                                <span>
+                                                    {formatDistance(
+                                                        distance.distance
+                                                    )}{" "}
+                                                    ·{" "}
+                                                    {formatDuration(
+                                                        distance.duration,
+                                                        lang
+                                                    )}{" "}
+                                                    {getLocalizedText(
+                                                        waitTimeCategoryLabels.drive,
+                                                        lang
+                                                    )}
+                                                </span>
+                                            </span>
+                                        ) : null}
+                                    </div>
+                                )}
                             </div>
                         </div>
 
-                        {/* Critical case status */}
                         {hasCritical && (
                             <div className="flex items-center gap-1 text-xs text-red-600 font-medium pt-1.5 sm:pt-2">
                                 <AlertCircle className="h-3 w-3" />
@@ -230,25 +252,6 @@ export function HospitalMapOverlay({
                             </div>
                         )}
                     </div>
-
-                    {/* Right section: Distance (if available) */}
-                    {distance && (
-                        <div className="text-xs sm:text-sm text-muted-foreground border-t sm:border-t-0 sm:border-l pt-2 sm:pt-0 sm:pl-4 sm:ml-0 flex-shrink-0 sm:pb-0.5">
-                            <div className="flex items-center gap-1 mb-1">
-                                <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
-                                <span className="font-medium">
-                                    {formatDistance(distance.distance)}
-                                </span>
-                            </div>
-                            <div className="text-xs">
-                                {formatDuration(distance.duration, lang)}{" "}
-                                {getLocalizedText(
-                                    waitTimeCategoryLabels.drive,
-                                    lang
-                                )}
-                            </div>
-                        </div>
-                    )}
                 </div>
             </div>
         </div>

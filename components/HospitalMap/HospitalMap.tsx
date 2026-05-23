@@ -78,7 +78,7 @@ export function HospitalMap({
         mapRef.current.flyTo({
             center: [userCoords.longitude, userCoords.latitude],
             zoom: 12,
-            duration: 800,
+            duration: 400,
         })
         return true
     }, [userCoords])
@@ -117,14 +117,6 @@ export function HospitalMap({
         return waitTimesData?.waitTimes ?? []
     }, [waitTimesData])
 
-    const { distances: distanceData } = useMapboxDistance(
-        userCoords,
-        enrichedHospitals.map((h) => ({
-            slug: h.slug,
-            coordinates: h.coordinates,
-        }))
-    )
-
     const defaultSelectedHospital = useMemo(() => {
         return findClosestHospital(userLocation, enrichedHospitals)
     }, [userLocation, enrichedHospitals])
@@ -133,6 +125,19 @@ export function HospitalMap({
         useState<EnrichedHospitalData | null>(null)
 
     const selectedHospital = userSelectedHospital || defaultSelectedHospital
+
+    const distanceHospitals = useMemo(() => {
+        if (!selectedHospital) return []
+        return [
+            {
+                slug: selectedHospital.slug,
+                coordinates: selectedHospital.coordinates,
+            },
+        ]
+    }, [selectedHospital])
+
+    const { distances: distanceData, isLoading: isDistanceLoading } =
+        useMapboxDistance(userCoords, distanceHospitals)
 
     const handleHospitalClick = (hospital: EnrichedHospitalData) => {
         setUserSelectedHospital(hospital)
@@ -268,6 +273,8 @@ export function HospitalMap({
                     hospital={selectedHospital}
                     lang={lang}
                     distance={distanceData[selectedHospital.slug]}
+                    isDistanceLoading={isDistanceLoading && !!userCoords}
+                    showDistance={!!userCoords}
                     lastUpdated={waitTimesData?.lastUpdated}
                 />
             )}

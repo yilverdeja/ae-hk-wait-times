@@ -48,6 +48,7 @@ export const mapDialogTranslations = {
         "您似乎不在香港。定位功能已停用。"
     ),
     locateMe: i18n("My location", "我的位置", "我的位置"),
+    locating: i18n("Locating…", "定位中…", "定位中…"),
 } as const
 
 // Management status texts (used in map overlay and table)
