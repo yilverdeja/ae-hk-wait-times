@@ -14,14 +14,12 @@ import {
     isChannelOpenNow,
     resolveCurrentPrice,
 } from "@/lib/alternatives/resolve"
+import { AlternativeCardDistance } from "@/components/Alternatives/AlternativeCardDistance"
 import { useScheduleContext } from "@/hooks/useScheduleContext"
-import { formatDistance } from "@/lib/map"
 import { cn } from "@/lib/utils"
 import type { Alternative } from "@/types/alternatives"
 import { isPhysicalAlternative } from "@/types/alternatives"
-import type { Coordinates } from "@/types"
 import { LanguageCode } from "@/types"
-import { distance } from "@turf/turf"
 import { Clock, MapPin, Smartphone } from "lucide-react"
 import Link from "next/link"
 import { useMemo } from "react"
@@ -39,7 +37,6 @@ const texts = {
         opensIn: (m: number) => `Opens in ${m} min`,
         closedUntil: (time: string) => `Closed until ${time}`,
         priceIn: (price: string, m: number) => `${price} in ${m} min`,
-        away: "away",
     },
     [LanguageCode.ZH]: {
         telehealth: "遠程醫療",
@@ -53,7 +50,6 @@ const texts = {
         opensIn: (m: number) => `${m}分鐘後開放`,
         closedUntil: (time: string) => `${time} 開放`,
         priceIn: (price: string, m: number) => `${m}分鐘後 ${price}`,
-        away: "距離",
     },
     [LanguageCode.CN]: {
         telehealth: "远程医疗",
@@ -67,7 +63,6 @@ const texts = {
         opensIn: (m: number) => `${m}分钟后开放`,
         closedUntil: (time: string) => `${time} 开放`,
         priceIn: (price: string, m: number) => `${m}分钟后 ${price}`,
-        away: "距离",
     },
 }
 
@@ -81,15 +76,7 @@ interface StatusDisplay {
 interface AlternativeCardProps {
     entry: Alternative
     lang: LanguageCode
-    userCoords?: Coordinates | null
-}
-
-function formatDistanceWithAway(km: number, lang: LanguageCode, t: (typeof texts)[LanguageCode.EN]): string {
-    const dist = formatDistance(km)
-    if (lang === LanguageCode.EN) {
-        return `${dist} ${t.away}`.trim()
-    }
-    return `${t.away} ${dist}`
+    scheduleAt: string
 }
 
 function MetaDot({ tone }: { tone: StatusTone }) {
@@ -171,9 +158,9 @@ function resolveStatusDisplay(
     return null
 }
 
-export function AlternativeCard({ entry, lang, userCoords = null }: AlternativeCardProps) {
+export function AlternativeCard({ entry, lang, scheduleAt }: AlternativeCardProps) {
     const t = texts[lang]
-    const ctx = useScheduleContext()
+    const ctx = useScheduleContext(false, scheduleAt)
 
     const channel = useMemo(() => getPrimaryChannel(entry, ctx), [entry, ctx])
 
@@ -205,18 +192,6 @@ export function AlternativeCard({ entry, lang, userCoords = null }: AlternativeC
         if (!channel) return null
         return resolveUpcomingPriceChange(channel.pricing, ctx)
     }, [channel, ctx])
-
-    const distanceKm = useMemo(() => {
-        if (!userCoords || !isPhysicalAlternative(entry)) return null
-        return distance(
-            [userCoords.longitude, userCoords.latitude],
-            [
-                entry.location.coordinates.longitude,
-                entry.location.coordinates.latitude,
-            ],
-            { units: "kilometers" }
-        )
-    }, [userCoords, entry])
 
     const typeLabel = isPhysicalAlternative(entry) ? entry.providerType : t.telehealth
 
@@ -253,13 +228,8 @@ export function AlternativeCard({ entry, lang, userCoords = null }: AlternativeC
                             <Smartphone size={12} className="shrink-0 opacity-70" aria-hidden />
                         )}
                         <span className="truncate">{locationPrimary}</span>
-                        {distanceKm != null && (
-                            <>
-                                <MetaSeparator />
-                                <span className="shrink-0 tabular-nums">
-                                    {formatDistanceWithAway(distanceKm, lang, t)}
-                                </span>
-                            </>
+                        {isPhysicalAlternative(entry) && (
+                            <AlternativeCardDistance entry={entry} lang={lang} />
                         )}
                     </p>
 

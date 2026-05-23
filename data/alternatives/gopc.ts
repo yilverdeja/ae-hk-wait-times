@@ -1,13 +1,16 @@
 import { facility } from "@/lib/alternatives/catalog"
 import { i18n } from "@/lib/i18n"
-import type { PhysicalAlternative } from "@/types/alternatives"
+import type { LabeledContact, PhysicalAlternative } from "@/types/alternatives"
 import {
     districtFromAddress,
     fmcDisplayNameEn,
     fmcInstitutionToSlug,
+    formatFmcBookingMethods,
+    formatFmcScheduleNotes,
     HA_FMC_CHARGES,
     HA_FMC_DIRECTORY_PAGE,
     HA_FMC_OPENDATA_URL,
+    type FmcScrapedDetail,
     type HaFmcFacilityRow,
 } from "@/data/ha"
 import { ELIGIBLE_GOPC, FMC_PRICING_DISPLAY_NOTES, fmcFeeTiers, NON_ELIGIBLE_GOPC } from "./shared"
@@ -28,6 +31,8 @@ export interface GopcLegacyRow {
 export interface CreateFmcEntryOptions {
     /** Override auto-derived slug (e.g. preserve legacy `gopc-*`). */
     slug?: string
+    /** Scraped clinic phones and hours (English from HA pages). */
+    scraped?: FmcScrapedDetail
     phone?: string | null
     scheduleNotes?: string
     additionalInfo?: string
@@ -40,15 +45,64 @@ const DEFAULT_SCHEDULE_NOTES = i18n(
     "各诊所时间不同，请于医管局网站确认挂号及诊症时间。须预约，不接受即到。"
 )
 
+function buildContacts(
+    row: HaFmcFacilityRow,
+    options: CreateFmcEntryOptions
+): LabeledContact[] {
+    const contacts: LabeledContact[] = []
+
+    if (options.scraped) {
+        for (const value of options.scraped.contacts.clinic) {
+            contacts.push({
+                kind: "phone",
+                value,
+                label: i18n("Clinic", "診所", "诊所"),
+            })
+        }
+        for (const value of options.scraped.contacts.booking) {
+            contacts.push({
+                kind: "phone",
+                value,
+                label: i18n("Appointment booking", "預約掛號", "预约挂号"),
+            })
+        }
+    } else if (options.phone) {
+        contacts.push({
+            kind: "phone",
+            value: options.phone,
+            label: i18n("Clinic", "診所", "诊所"),
+        })
+    }
+
+    contacts.push({
+        kind: "url",
+        value: HA_FMC_DIRECTORY_PAGE,
+        label: i18n("HA clinic directory", "醫管局診所名錄", "医管局诊所名录"),
+    })
+
+    return contacts
+}
+
 /** Build an HA Family Medicine Clinic entry from opendata row. */
 export function createFmcEntry(
     row: HaFmcFacilityRow,
     options: CreateFmcEntryOptions = {}
 ): PhysicalAlternative {
     const slug = options.slug ?? fmcInstitutionToSlug(row.institution_eng)
-    const scheduleNotes = options.scheduleNotes
-        ? i18n(options.scheduleNotes, options.scheduleNotes)
-        : DEFAULT_SCHEDULE_NOTES
+
+    const scheduleNotes = options.scraped
+        ? formatFmcScheduleNotes(options.scraped)
+        : options.scheduleNotes
+          ? i18n(options.scheduleNotes, options.scheduleNotes)
+          : DEFAULT_SCHEDULE_NOTES
+
+    const bookingMethods = options.scraped
+        ? formatFmcBookingMethods(options.scraped)
+        : i18n(
+              "HA telephone booking or HA Go app",
+              "醫管局電話預約或HA Go",
+              "医管局电话预约或HA Go"
+          )
 
     return {
         slug,
@@ -65,16 +119,7 @@ export function createFmcEntry(
             address: i18n(row.address_eng, row.address_tc, row.address_sc),
             coordinates: { latitude: row.latitude, longitude: row.longitude },
         },
-        contacts: [
-            ...(options.phone
-                ? [{ kind: "phone" as const, value: options.phone, label: i18n("Clinic", "診所", "诊所") }]
-                : []),
-            {
-                kind: "url",
-                value: HA_FMC_DIRECTORY_PAGE,
-                label: i18n("HA clinic directory", "醫管局診所名錄", "医管局诊所名录"),
-            },
-        ],
+        contacts: buildContacts(row, options),
         channels: [
             {
                 id: "general_opd",
@@ -89,11 +134,7 @@ export function createFmcEntry(
                 booking: {
                     appointmentRequired: true,
                     walkIn: false,
-                    methods: i18n(
-                        "HA telephone booking or HA Go app",
-                        "醫管局電話預約或HA Go",
-                        "医管局电话预约或HA Go"
-                    ),
+                    methods: bookingMethods,
                 },
                 pricing: {
                     tiers: fmcFeeTiers(),
@@ -125,7 +166,7 @@ export function createFmcEntry(
                 label: i18n("Official HA charges", "醫管局官方收費"),
             },
         ],
-        lastUpdated: options.lastUpdated ?? HA_FMC_CHARGES.lastUpdated,
+        lastUpdated: options.lastUpdated ?? "2026-05-21",
     }
 }
 

@@ -1,4 +1,4 @@
-/** AUTO-GENERATED — needs manual review. Source: HA opendata facility-fmc.json + shared FMC fees */
+/** AUTO-GENERATED — needs manual review. Source: HA opendata + fmc-scraped-details.json */
 import type { PhysicalAlternative } from "@/types/alternatives"
 
 export const gopcTaKwuLing: PhysicalAlternative = {
@@ -29,6 +29,24 @@ export const gopcTaKwuLing: PhysicalAlternative = {
     },
     "contacts": [
         {
+            "kind": "phone",
+            "value": "2674 4283",
+            "label": {
+                "en": "Clinic",
+                "zh": "診所",
+                "cn": "诊所"
+            }
+        },
+        {
+            "kind": "phone",
+            "value": "3165 1072",
+            "label": {
+                "en": "Appointment booking",
+                "zh": "預約掛號",
+                "cn": "预约挂号"
+            }
+        },
+        {
             "kind": "url",
             "value": {
                 "en": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=200250&Lang=ENG",
@@ -55,9 +73,9 @@ export const gopcTaKwuLing: PhysicalAlternative = {
             "schedule": {
                 "kind": "appointment_only",
                 "notes": {
-                    "en": "Hours vary by clinic — confirm registration and consultation times on the HA site. Appointment required; walk-in not accepted.",
-                    "zh": "各診所時間不同，請於醫管局網站確認掛號及診症時間。須預約，不接受即到。",
-                    "cn": "各诊所时间不同，请于医管局网站确认挂号及诊症时间。须预约，不接受即到。"
+                    "en": "Registration hours\nTuesday\n2:30pm - 4:30pm\nThursday\n9:00am - 12:00noon\n1st & 3rd Thursday of each month\n9:00am - 11:00am\n\nConsultation hours\nTuesday\n2:30pm - 5:00pm\nThursday\n9:00am - 12:30pm\n1st & 3rd Thursday of each month\n9:00am - 11:20am\n\nAppointment required. Walk-in not accepted. Book via HA telephone booking or HA Go.",
+                    "zh": "掛號及診症時間（英文，摘自醫管局網頁）。須預約，不接受即到。可透過醫管局電話預約或HA Go。\n\nRegistration hours\nTuesday\n2:30pm - 4:30pm\nThursday\n9:00am - 12:00noon\n1st & 3rd Thursday of each month\n9:00am - 11:00am\n\nConsultation hours\nTuesday\n2:30pm - 5:00pm\nThursday\n9:00am - 12:30pm\n1st & 3rd Thursday of each month\n9:00am - 11:20am\n\nAppointment required. Walk-in not accepted. Book via HA telephone booking or HA Go.",
+                    "cn": "挂号及诊症时间（英文，摘自医管局网页）。须预约，不接受即到。可通过医管局电话预约或HA Go。\n\nRegistration hours\nTuesday\n2:30pm - 4:30pm\nThursday\n9:00am - 12:00noon\n1st & 3rd Thursday of each month\n9:00am - 11:00am\n\nConsultation hours\nTuesday\n2:30pm - 5:00pm\nThursday\n9:00am - 12:30pm\n1st & 3rd Thursday of each month\n9:00am - 11:20am\n\nAppointment required. Walk-in not accepted. Book via HA telephone booking or HA Go."
                 }
             },
             "eligibility": [
@@ -92,9 +110,9 @@ export const gopcTaKwuLing: PhysicalAlternative = {
                 "appointmentRequired": true,
                 "walkIn": false,
                 "methods": {
-                    "en": "HA telephone booking or HA Go app",
-                    "zh": "醫管局電話預約或HA Go",
-                    "cn": "医管局电话预约或HA Go"
+                    "en": "HA telephone booking (3165 1072) or HA Go app",
+                    "zh": "醫管局電話預約（3165 1072）或HA Go",
+                    "cn": "医管局电话预约（3165 1072）或HA Go"
                 }
             },
             "pricing": {

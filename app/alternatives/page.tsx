@@ -1,7 +1,10 @@
-import { AlternativesDirectoryView } from "@/components/Alternatives/AlternativesDirectoryView"
+import { AlternativesCategoryNav } from "@/components/Alternatives/AlternativesCategoryNav"
+import { AlternativesCategorySelect } from "@/components/Alternatives/AlternativesCategorySelect"
+import { AlternativesCardGrid } from "@/components/Alternatives/AlternativesCardGrid"
 import { alternatives, parseAlternativeCategory } from "@/data/alternatives"
 import { LanguageCode } from "@/types"
 import type { Metadata } from "next"
+import Script from "next/script"
 
 interface PageProps {
     searchParams: Promise<{ category?: string }>
@@ -36,6 +39,8 @@ export const metadata: Metadata = {
 export default async function AlternativesPage({ searchParams }: PageProps) {
     const { category: rawCategory } = await searchParams
     const category = parseAlternativeCategory(rawCategory)
+    const scheduleAt = new Date().toISOString()
+    const entries = alternatives.filter((e) => e.category === category)
     const pageUrl = "https://ae.wait.hk/alternatives"
 
     const itemListSchema = {
@@ -65,12 +70,16 @@ export default async function AlternativesPage({ searchParams }: PageProps) {
 
     return (
         <>
-            <script
+            <Script
+                id="alternatives-item-list-ld"
                 type="application/ld+json"
+                strategy="afterInteractive"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
             />
-            <script
+            <Script
+                id="alternatives-breadcrumb-ld"
                 type="application/ld+json"
+                strategy="afterInteractive"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
             <div className="mx-auto px-4 py-8">
@@ -84,7 +93,11 @@ export default async function AlternativesPage({ searchParams }: PageProps) {
                         Hong Kong.
                     </p>
                 </div>
-                <AlternativesDirectoryView alternatives={alternatives} category={category} />
+                <AlternativesCategoryNav category={category} />
+                <div className="mb-4 hidden sm:block">
+                    <AlternativesCategorySelect category={category} />
+                </div>
+                <AlternativesCardGrid entries={entries} scheduleAt={scheduleAt} />
             </div>
         </>
     )

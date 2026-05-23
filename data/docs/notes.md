@@ -17,7 +17,7 @@ Sources: `data/ha/public-charges.ts`, `data/ha/urls.ts` (HA visitor charges page
 
 ## Updates for the app
 * Need to add more vouchers, and find all alternative options that take this vouchers
-* FMC entries: per-clinic phones/hours to be added when PDF details are available
+* FMC entries: phones/hours from `data/ha/fmc-scraped-details.json` (English prose in schedule notes; zh/cn point to English block)
 
 ## Future improvements
 * Add a comparison page that will compare costs + waiting time in public hospital, to an alternative care option nearby (with best time to go)

@@ -1,0 +1,2148 @@
+[
+  {
+    "name": "Aberdeen Jockey Club Family Medicine Clinic",
+    "address": "10 Aberdeen Reservoir Road, Aberdeen",
+    "contacts": {
+      "clinic": [
+        "2555 0381",
+        "2555 0382"
+      ],
+      "booking": [
+        "3543 5011"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Ap Lei Chau Family Medicine Clinic",
+    "address": "161 Ap Lei Chau Main Street, Ap Lei Chau",
+    "contacts": {
+      "clinic": [
+        "2518 5610"
+      ],
+      "booking": [
+        "3543 5022"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Caritas Medical Centre Family Medicine Clinic ( )",
+    "address": "G/F, Wai Ming Block, Caritas Medical Centre, 111 Wing Hong Street, Sham Shui Po",
+    "contacts": {
+      "clinic": [
+        "3408 7001"
+      ],
+      "booking": [
+        "3157 0123"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Central District Family Medicine Clinic",
+    "address": "1 Kau U Fong, Central",
+    "contacts": {
+      "clinic": [
+        "2545 1485"
+      ],
+      "booking": [
+        "3543 5033"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Central Kowloon Family Medicine Clinic",
+    "address": "147A Argyle Street, Mongkok",
+    "contacts": {
+      "clinic": [
+        "2762 1456"
+      ],
+      "booking": [
+        "3157 0810"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Chai Wan Family Medicine Clinic",
+    "address": "G/F, 1 Hong Man Street, Chai Wan",
+    "contacts": {
+      "clinic": [
+        "2556 0261"
+      ],
+      "booking": [
+        "3157 0088"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Cheung Sha Wan Jockey Club Family Medicine Clinic",
+    "address": "2 Kwong Lee Road, Cheung Sha Wan",
+    "contacts": {
+      "clinic": [
+        "2387 8211"
+      ],
+      "booking": [
+        "3157 0122"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "East Kowloon Family Medicine Clinic",
+    "address": "160 Hammer Hill Road, Diamond Hill",
+    "contacts": {
+      "clinic": [
+        "2320 4240"
+      ],
+      "booking": [
+        "3157 0117"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Fanling Family Medicine Clinic",
+    "address": "1/F, Fanling Health Centre, 2 Pik Fung Road, Fanling",
+    "contacts": {
+      "clinic": [
+        "2639 4601"
+      ],
+      "booking": [
+        "3157 0937"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Ha Kwai Chung Family Medicine Clinic",
+    "address": "77 Lai Cho Road, Kwai Chung",
+    "contacts": {
+      "clinic": [
+        "3651 5411"
+      ],
+      "booking": [
+        "3157 0100"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm."
+      ]
+    }
+  },
+  {
+    "name": "Hong Kong Buddhist Hospital Family Medicine Clinic ( )",
+    "address": "LG, Block A, Hong Kong Buddhist Hospital, 10 Heng Lam Street, Lok Fu",
+    "contacts": {
+      "clinic": [
+        "2339 6117"
+      ],
+      "booking": [
+        "3157 0800"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Hung Hom Family Medicine Clinic",
+    "address": "22 Station Lane, Hung Hom",
+    "contacts": {
+      "clinic": [
+        "2353 3811"
+      ],
+      "booking": [
+        "3157 0816"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Kam Tin Family Medicine Clinic",
+    "address": "200 Kam Tin Road, Shek Kong",
+    "contacts": {
+      "clinic": [
+        "2488 1437"
+      ],
+      "booking": [
+        "3543 5008"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:00noon"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 12:30pm"
+      ]
+    }
+  },
+  {
+    "name": "Kennedy Town Jockey Club Family Medicine Clinic",
+    "address": "45 Victoria Road, Kennedy Town",
+    "contacts": {
+      "clinic": [
+        "2817 3215"
+      ],
+      "booking": [
+        "3543 5088"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Kowloon Bay Family Medicine Clinic",
+    "address": "1/F, 9 Kai Yan Street, Kowloon Bay",
+    "contacts": {
+      "clinic": [
+        "2116 2812"
+      ],
+      "booking": [
+        "3157 0678"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Kowloon City Lee Kee Memorial Family Medicine Clinic",
+    "address": "99 Carpenter Road, Kowloon City",
+    "contacts": {
+      "clinic": [
+        "2382 1096"
+      ],
+      "booking": [
+        "3157 0868"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Kwai Chung Mrs Wu York Yu Family Medicine Clinic",
+    "address": "310 Wo Yi Hop Road, Lei Muk Shue, Kwai Chung",
+    "contacts": {
+      "clinic": [
+        "2401 0124"
+      ],
+      "booking": [
+        "3157 0108"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Kwong Wah Hospital Family Medicine Clinic ( )",
+    "address": "1/F, TWGHs Tsui Tsin Tong Outpatient Building, Kwong Wah Hospital, 25 Waterloo Road, Yau Ma Tei",
+    "contacts": {
+      "clinic": [
+        "3517 2981"
+      ],
+      "booking": [
+        "3157 0125"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:30am - 12:30pm",
+        "1:30pm - 4:30pm",
+        "Evening 5:30pm - 9:30pm",
+        "Saturday",
+        "8:30am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Kwun Tong Family Medicine Integrated Centre",
+    "address": "UG, 60 Hip Wo Street, Kwun Tong",
+    "contacts": {
+      "clinic": [
+        "2389 0331"
+      ],
+      "booking": [
+        "3157 0687"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 6:00pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Lam Tin Family Medicine Clinic",
+    "address": "99 Kai Tin Road, Lam Tin",
+    "contacts": {
+      "clinic": [
+        "2346 2853"
+      ],
+      "booking": [
+        "3157 0679"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Lek Yuen Family Medicine Clinic",
+    "address": "G/F, 9 Lek Yuen Street, Shatin",
+    "contacts": {
+      "clinic": [
+        "2692 8730"
+      ],
+      "booking": [
+        "3157 0972"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Ma On Shan Family Medicine Clinic",
+    "address": "G/F, 609 Sai Sha Road, Ma On Shan",
+    "contacts": {
+      "clinic": [
+        "2644 5521"
+      ],
+      "booking": [
+        "3157 0982"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Mong Kok Li Po Chun Family Medicine Clinic",
+    "address": "22 Arran Street, Mongkok",
+    "contacts": {
+      "clinic": [
+        "2393 8161"
+      ],
+      "booking": [
+        "3157 0112"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Mui Wo Family Medicine Clinic",
+    "address": "G/F, & 1/F, Mui Wo Government Offices, 2 Ngan Kwong Wan Road, Mui Wo, Lantau Island",
+    "contacts": {
+      "clinic": [
+        "2984 2080"
+      ],
+      "booking": [
+        "3165 1078"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Nam Cheong Family Medicine Clinic",
+    "address": "G/F, Treasury Building, 3 Tonkin Street West, Cheung Sha Wan",
+    "contacts": {
+      "clinic": [
+        "3742 3876"
+      ],
+      "booking": [
+        "3543 5795"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Nam Shan Family Medicine Clinic",
+    "address": "G/F, Nam Yiu House, Nam Shan Estate, Sham Shui Po",
+    "contacts": {
+      "clinic": [
+        "2779 5688"
+      ],
+      "booking": [
+        "3157 0120"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Ngau Tau Kok Jockey Club Family Medicine Clinic",
+    "address": "G/F, 60 Ting On Street, Ngau Tau Kok",
+    "contacts": {
+      "clinic": [
+        "3518 7710"
+      ],
+      "booking": [
+        "3157 0680"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "North District Family Medicine Integrated Centre",
+    "address": "3/F, North District Community Health Centre Building, No.3 Wai Wo Street, Sheung Shui",
+    "contacts": {
+      "clinic": [
+        "2957 5186"
+      ],
+      "booking": [
+        "3157 0965"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "North Kwai Chung Family Medicine Clinic",
+    "address": "125 Tai Pak Tin Street, Kwai Chung",
+    "contacts": {
+      "clinic": [
+        "2418 8501"
+      ],
+      "booking": [
+        "3157 0101"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "(Every Wednesday and Thursday)",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "(Every Wednesday and Thursday)",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "North Lamma Family Medicine Clinic",
+    "address": "G/F, 100 Main Street, Yung Shue Wan, Lamma Island",
+    "contacts": {
+      "clinic": [
+        "2982 0213"
+      ],
+      "booking": [
+        "3165 1038"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "North Lantau Family Medicine Integrated Centre ( )",
+    "address": "3/F, North Lantau Hospital, No.8, Chung Yan Road, Tung Chung, Lantau Island",
+    "contacts": {
+      "clinic": [
+        "3467 7374"
+      ],
+      "booking": [
+        "3157 0106"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "North Point Anne Black Family Medicine Clinic",
+    "address": "1/F, 140 Tsat Tse Mui Road, North Point",
+    "contacts": {
+      "clinic": [
+        "2561 6161"
+      ],
+      "booking": [
+        "3157 0055"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Our Lady of Maryknoll Hospital Family Medicine Clinic ( )",
+    "address": "G/F, Out-patient Block, Our Lady of Maryknoll Hospital,118 Shatin Pass Road, Wong Tai Sin",
+    "contacts": {
+      "clinic": [
+        "2354 2267"
+      ],
+      "booking": [
+        "3157 0118"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Peng Chau Family Medicine Clinic",
+    "address": "G/F, 1A Shing Ka Road, Peng Chau",
+    "contacts": {
+      "clinic": [
+        "2983 1110"
+      ],
+      "booking": [
+        "3165 1058"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "9:15am - 12:30pm",
+        "1:45pm - 4:45pm",
+        "Saturday",
+        "9:15am - 12:45pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:15am - 1:00pm",
+        "2:00pm - 5:15pm",
+        "Saturday",
+        "9:15am - 1:15pm"
+      ]
+    }
+  },
+  {
+    "name": "Sai Kung Mona Fong Family Medicine Clinic",
+    "address": "G/F, 23 Man Nin Street, Sai Kung",
+    "contacts": {
+      "clinic": [
+        "2792 2601"
+      ],
+      "booking": [
+        "3157 0652"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Sai Wan Ho Family Medicine Clinic",
+    "address": "1/F, 28 Tai Hong Street, Sai Wan Ho",
+    "contacts": {
+      "clinic": [
+        "3620 3314"
+      ],
+      "booking": [
+        "3157 0066"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Sai Ying Pun Jockey Club Family Medicine Clinic",
+    "address": "134 Queen's Road West, Sai Ying Pun",
+    "contacts": {
+      "clinic": [
+        "2859 8203"
+      ],
+      "booking": [
+        "3543 5000"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am – 1:00pm",
+        "2:00pm – 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday",
+        "9:00am – 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "San Po Kong Robert Black Family Medicine Clinic",
+    "address": "600 Prince Edward Road East, San Po Kong",
+    "contacts": {
+      "clinic": [
+        "2383 3311"
+      ],
+      "booking": [
+        "3157 0113"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Sha Tau Kok Family Medicine Clinic",
+    "address": "G/F, 58 Sha Tau Kok Road (Shek Chung Au), Sha Tau Kok",
+    "contacts": {
+      "clinic": [
+        "2674 0231"
+      ],
+      "booking": [
+        "3165 1070"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday & Thursday",
+        "2:30pm - 4:30pm",
+        "Tuesday",
+        "9:00am – 12:00noon",
+        "Saturday",
+        "9:00am – 12:30pm"
+      ],
+      "consultation": [
+        "Monday & Thursday",
+        "2:30pm - 5:00pm",
+        "Tuesday",
+        "9:00am - 12:30pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Shatin (Tai Wai) Family Medicine Clinic",
+    "address": "G/F, 2 Man Lai Road, Tai Wai",
+    "contacts": {
+      "clinic": [
+        "2691 1618"
+      ],
+      "booking": [
+        "3157 0992"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Shau Kei Wan Jockey Club Family Medicine Clinic",
+    "address": "1/F, 8 Chai Wan Road, Shau Kei Wan",
+    "contacts": {
+      "clinic": [
+        "2560 0211"
+      ],
+      "booking": [
+        "3157 0077"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am – 1:00pm",
+        "2:00pm – 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am – 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Shek Kip Mei Family Medicine Clinic",
+    "address": "201B, 2/F, Mei Hei House, Shek Kip Mei Estate, Sham Shui Po",
+    "contacts": {
+      "clinic": [
+        "2788 3023"
+      ],
+      "booking": [
+        "3157 0119"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Shun Lee Family Medicine Clinic",
+    "address": "G/F, Lee Foo House, Shun Lee Estate, Kwun Tong",
+    "contacts": {
+      "clinic": [
+        "2343 0247"
+      ],
+      "booking": [
+        "3157 0682"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Sok Kwu Wan Family Medicine Clinic",
+    "address": "G/F, 1 Second Street, Sok Kwu Wan, Lamma Island",
+    "contacts": {
+      "clinic": [
+        "2982 8350"
+      ],
+      "booking": [
+        "3165 1062"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday and Friday",
+        "9:15am - 12:30pm",
+        "2:00pm - 4:45pm"
+      ],
+      "consultation": [
+        "Monday and Friday",
+        "9:15am - 1:00pm",
+        "2:00pm - 5:15pm"
+      ]
+    }
+  },
+  {
+    "name": "South Kwai Chung Jockey Club Family Medicine Clinic",
+    "address": "310 Kwai Shing Circuit, Kwai Chung",
+    "contacts": {
+      "clinic": [
+        "2615 7333"
+      ],
+      "booking": [
+        "3157 0102"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am – 1:00pm",
+        "2:00pm – 5:00pm",
+        "Saturday",
+        "9:00am – 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "St. John Hospital Family Medicine Clinic",
+    "address": "1/F, Out-patient Department Block, St. John Hospital, Cheung Chau Hospital Road, Tung Wan, Cheung Chau",
+    "contacts": {
+      "clinic": [
+        "2986 2100"
+      ],
+      "booking": [
+        "3165 1090"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:15pm",
+        "Saturday",
+        "8:45am - 12:00noon"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Stanley Family Medicine Clinic",
+    "address": "G/F, 14 Wong Ma Kok Road, Stanley",
+    "contacts": {
+      "clinic": [
+        "2813 6741"
+      ],
+      "booking": [
+        "3157 0011"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "9:00am - 12:30pm",
+        "(injection and dressing only)",
+        "1:45pm - 4:30pm",
+        "(consultation, injection and dressing)",
+        "Saturday",
+        "9:00am - 12:30pm",
+        "(injection and dressing only)"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "2:00pm - 5:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Ta Kwu Ling Family Medicine Clinic",
+    "address": "G/F, Ta Kwu Ling Rural Centre Government Building, 136 Ping Che Road, Ta Kwu Ling",
+    "contacts": {
+      "clinic": [
+        "2674 4283"
+      ],
+      "booking": [
+        "3165 1072"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Tuesday",
+        "2:30pm - 4:30pm",
+        "Thursday",
+        "9:00am - 12:00noon",
+        "1st & 3rd Thursday of each month",
+        "9:00am - 11:00am"
+      ],
+      "consultation": [
+        "Tuesday",
+        "2:30pm - 5:00pm",
+        "Thursday",
+        "9:00am - 12:30pm",
+        "1st & 3rd Thursday of each month",
+        "9:00am - 11:20am"
+      ]
+    }
+  },
+  {
+    "name": "Tai O Jockey Club Family Medicine Clinic",
+    "address": "G/F, 103 Shek Tsai Po Street, Tai O, Lantau Island",
+    "contacts": {
+      "clinic": [
+        "2985 7236"
+      ],
+      "booking": [
+        "3165 1067"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tai Po Jockey Club Family Medicine Clinic",
+    "address": "G/F, 37 Ting Kok Road, Tai Po",
+    "contacts": {
+      "clinic": [
+        "2664 2039"
+      ],
+      "booking": [
+        "3157 0906"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tai Po Wong Siu Ching Family Medicine Clinic",
+    "address": "G/F, 1 Po Wu Lane, Tai Po",
+    "contacts": {
+      "clinic": [
+        "2658 9182"
+      ],
+      "booking": [
+        "3157 0926"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tin Shui Wai (Tin Shui Road) Family Medicine Clinic",
+    "address": "3 Tin Shui Road, Tin Shui Wai",
+    "contacts": {
+      "clinic": [
+        "2448 5511"
+      ],
+      "booking": [
+        "3543 5006"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tin Shui Wai (Tin Yip Road) Family Medicine Integrated Centre",
+    "address": "3, Tin Yip Road, Tin Shui Wai (Opposite Hong Kong Wetland Park and Vianni Cove of Tin Kwai Road)",
+    "contacts": {
+      "clinic": [
+        "3124 2200"
+      ],
+      "booking": [
+        "2469 9222"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "To Kwa Wan Shun Tak Fraternal Association Leung Kau Kui Family Medicine Clinic",
+    "address": "2/F, Tokwawan Market & Government Offices Building, 165 Ma Tau Wai Road, Kowloon City",
+    "contacts": {
+      "clinic": [
+        "2715 9538"
+      ],
+      "booking": [
+        "3157 0850"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tseung Kwan O (Po Ning Road) Family Medicine Clinic",
+    "address": "G/F, 28 Po Ning Road, Tseung Kwan O",
+    "contacts": {
+      "clinic": [
+        "2191 1083"
+      ],
+      "booking": [
+        "3157 0660"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tseung Kwan O Jockey Club Family Medicine Clinic",
+    "address": "99 Po Lam Road North, G/F, Tseung Kwan O",
+    "contacts": {
+      "clinic": [
+        "2701 9922"
+      ],
+      "booking": [
+        "3157 0662"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tseung Kwan O South Family Medicine Clinic",
+    "address": "1/F, Tseung Kwan O Government Offices, North Tower, 30 Tong Yin Street, Tseung Kwan O",
+    "contacts": {
+      "clinic": [
+        "2970 0200"
+      ],
+      "booking": [
+        "3542 5741"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tsing Yi Cheung Hong Family Medicine Clinic",
+    "address": "3/F, Tsing Yi Cheung Hong Commercial Centre No.1, Cheung Hong Estate, Tsing Yi",
+    "contacts": {
+      "clinic": [
+        "2719 8130"
+      ],
+      "booking": [
+        "3157 0103"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tsing Yi Town Family Medicine Clinic",
+    "address": "21 Tsing Luk Street, Tsing Yi",
+    "contacts": {
+      "clinic": [
+        "2434 6205"
+      ],
+      "booking": [
+        "3157 0105"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tsuen Wan Lady Trench Family Medicine Clinic",
+    "address": "213 Sha Tsui Road, Tsuen Wan",
+    "contacts": {
+      "clinic": [
+        "2614 4789"
+      ],
+      "booking": [
+        "3157 0107"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tsz Wan Shan Wu York Yu Family Medicine Clinic",
+    "address": "55 Sheung Fung Street, Tsz Wan Shan",
+    "contacts": {
+      "clinic": [
+        "2325 5221"
+      ],
+      "booking": [
+        "3157 0116"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tuen Mun Family Medicine Clinic",
+    "address": "11 Tsing Yin Street, San Hui, Tuen Mun",
+    "contacts": {
+      "clinic": [
+        "2452 9111"
+      ],
+      "booking": [
+        "3543 0886"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tuen Mun Wu Hong Family Medicine Clinic",
+    "address": "2 Wu Hong Street, Tuen Mun",
+    "contacts": {
+      "clinic": [
+        "2458 3788"
+      ],
+      "booking": [
+        "3543 0887"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tuen Mun Yan Oi Family Medicine Clinic",
+    "address": "G/F, 6 Tuen Lee Street, Tuen Mun",
+    "contacts": {
+      "clinic": [
+        "2404 3700"
+      ],
+      "booking": [
+        "3543 0888"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am – 1:00pm",
+        "2:00pm – 5:00pm",
+        "Saturday",
+        "9:00am – 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tung Wah Eastern Hospital Family Medicine Clinic",
+    "address": "G/F, Main Block, Tung Wah Eastern Hospital, 19 Eastern Hospital Road, Causeway Bay",
+    "contacts": {
+      "clinic": [
+        "2162 6022",
+        "2162 6023"
+      ],
+      "booking": [
+        "2162 6880"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "9:00am - 12:30pm",
+        "2:00pm - 4:30pm",
+        "Saturday",
+        "9:00am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Tung Wah Hospital Family Medicine Clinic",
+    "address": "G/F, Hawkins Wing, Tung Wah Hospital, 12 Po Yan Street, Sheung Wan",
+    "contacts": {
+      "clinic": [
+        "2589 8518"
+      ],
+      "booking": [
+        "3543 5958"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Wan Chai Violet Peel Family Medicine Clinic",
+    "address": "LG, Tang Shiu Kin Hospital, Community Ambulatory Care Centre, 282 Queen’s Road East, Wanchai",
+    "contacts": {
+      "clinic": [
+        "3553 3116"
+      ],
+      "booking": [
+        "3157 0000"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Wan Tsui Family Medicine Clinic",
+    "address": "G/F, Lee Tsui House, Wan Tsui Estate, Chai Wan",
+    "contacts": {
+      "clinic": [
+        "2897 5527"
+      ],
+      "booking": [
+        "3157 0099"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Wang Tau Hom Jockey Club Family Medicine Clinic",
+    "address": "200 Junction Road, Wang Tau Hom",
+    "contacts": {
+      "clinic": [
+        "3143 7100"
+      ],
+      "booking": [
+        "3157 0115"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "West Kowloon Family Medicine Clinic",
+    "address": "G/F, Cheung Sha Wan Government Offices, 303 Cheung Sha Wan Road, Sham Shui Po",
+    "contacts": {
+      "clinic": [
+        "2150 7200"
+      ],
+      "booking": [
+        "3157 0121"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Yan Chai Hospital Family Medicine Clinic ( )",
+    "address": "3/F, Block C, Yan Chai Hospital, 7-11 Yan Chai Street, Tsuen Wan",
+    "contacts": {
+      "clinic": [
+        "2417 8825"
+      ],
+      "booking": [
+        "3157 0109"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday - Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Yau Ma Tei Jockey Club Family Medicine Clinic",
+    "address": "1/F, 145 Battery Street, Yau Ma Tei",
+    "contacts": {
+      "clinic": [
+        "2272 2400"
+      ],
+      "booking": [
+        "3157 0880"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Yuen Chau Kok Family Medicine Clinic",
+    "address": "G/F, 29 Chap Wai Kon Street, Shatin",
+    "contacts": {
+      "clinic": [
+        "2647 3383"
+      ],
+      "booking": [
+        "3157 0995"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am – 1:00pm",
+        "2:00pm – 5:00pm",
+        "Saturday",
+        "9:00am – 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Yuen Long Jockey Club Family Medicine Clinic",
+    "address": "269 Castle Peak Road (Yuen Long), Yuen Long",
+    "contacts": {
+      "clinic": [
+        "2443 8511"
+      ],
+      "booking": [
+        "3543 5007"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Evening 5:45pm - 9:30pm",
+        "Saturday and Sunday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Evening 6:00pm - 10:00pm",
+        "Saturday and Sunday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  },
+  {
+    "name": "Yuen Long Madam Yung Fung Shee Family Medicine Clinic",
+    "address": "26 Sai Ching Street, Yuen Long",
+    "contacts": {
+      "clinic": [
+        "2443 8400"
+      ],
+      "booking": [
+        "3543 5009"
+      ]
+    },
+    "hours": {
+      "registration": [
+        "Monday to Friday",
+        "8:45am - 12:30pm",
+        "1:45pm - 4:30pm",
+        "Saturday",
+        "8:45am - 12:30pm"
+      ],
+      "consultation": [
+        "Monday to Friday",
+        "9:00am - 1:00pm",
+        "2:00pm - 5:00pm",
+        "Saturday",
+        "9:00am - 1:00pm"
+      ]
+    }
+  }
+]
