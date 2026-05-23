@@ -37,6 +37,11 @@ export const mapDialogTranslations = {
         "啟用定位服務以查看與您位置的距離。",
         "启用定位服务以查看与您位置的距离。"
     ),
+    locationDenied: i18n(
+        "Location is blocked for this site. Allow it in your browser's site settings (lock icon in the address bar), then tap My location again.",
+        "此網站的定位已遭封鎖。請在瀏覽器網站設定（網址列鎖頭圖示）中允許定位，然後再按「我的位置」。",
+        "此网站的定位已被阻止。请在浏览器网站设置（地址栏锁头图标）中允许定位，然后再按「我的位置」。"
+    ),
     outsideHongKong: i18n(
         "You appear to be outside Hong Kong. Location features are disabled.",
         "您似乎不在香港。定位功能已停用。",
