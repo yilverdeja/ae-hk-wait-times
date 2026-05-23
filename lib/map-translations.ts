@@ -38,10 +38,11 @@ export const mapDialogTranslations = {
         "启用定位服务以查看与您位置的距离。"
     ),
     outsideHongKong: i18n(
-        "You appear to be outside Hong Kong. Showing default location.",
-        "您似乎不在香港。顯示預設位置。",
-        "您似乎不在香港。显示预设位置。"
+        "You appear to be outside Hong Kong. Location features are disabled.",
+        "您似乎不在香港。定位功能已停用。",
+        "您似乎不在香港。定位功能已停用。"
     ),
+    locateMe: i18n("My location", "我的位置", "我的位置"),
 } as const
 
 // Management status texts (used in map overlay and table)
