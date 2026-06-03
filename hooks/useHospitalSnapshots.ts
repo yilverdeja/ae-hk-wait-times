@@ -9,12 +9,12 @@ function getHktDate(): string {
     })
 }
 
-function getHktHour(isoString: string): number {
+function toHktDate(isoString: string): Date {
     return new Date(
         new Date(isoString).toLocaleString("en-US", {
             timeZone: "Asia/Hong_Kong",
         })
-    ).getHours()
+    )
 }
 
 export const useHospitalSnapshots = (hospitalSlug?: string | null) => {
@@ -29,7 +29,7 @@ export const useHospitalSnapshots = (hospitalSlug?: string | null) => {
             }
             return response.json()
         },
-        staleTime: 15 * 60 * 1000, // 15 minutes
+        staleTime: 15 * 60 * 1000,
     })
 
     useEffect(() => {
@@ -44,28 +44,34 @@ export const useHospitalSnapshots = (hospitalSlug?: string | null) => {
         }
     }, [queryResult.isError, queryResult.error])
 
-    const getHourlyWait = useMemo(() => {
-        return (slug: string, hour: number): number | null => {
+    // Returns a Map<"HH:MM", t45p95> for all readings of a given hospital slug.
+    // Minutes are rounded to the nearest 15-min slot.
+    const getReadingsMap = useMemo(() => {
+        return (slug: string): Map<string, number> => {
             const snapshots = queryResult.data?.hospitals[slug]
-            if (!snapshots) return null
+            if (!snapshots) return new Map()
 
-            const values = snapshots
-                .filter(
-                    (pt) =>
-                        pt.snapshot_at &&
-                        getHktHour(pt.snapshot_at) === hour &&
-                        pt.t45p95 != null
-                )
-                .map((pt) => pt.t45p95 as number)
-
-            if (values.length === 0) return null
-            return Math.max(...values)
+            const map = new Map<string, number>()
+            for (const pt of snapshots) {
+                if (!pt.snapshot_at || pt.t45p95 == null) continue
+                const d = toHktDate(pt.snapshot_at)
+                let hour = d.getHours()
+                let minute = Math.round(d.getMinutes() / 15) * 15
+                if (minute >= 60) {
+                    minute = 0
+                    hour += 1
+                }
+                if (hour >= 24) continue
+                const key = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`
+                if (!map.has(key)) map.set(key, pt.t45p95)
+            }
+            return map
         }
     }, [queryResult.data])
 
     return {
         ...queryResult,
-        getHourlyWait,
+        getReadingsMap,
         hktDate,
     }
 }
