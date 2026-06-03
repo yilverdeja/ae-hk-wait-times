@@ -2,6 +2,13 @@ import { Storage } from "@google-cloud/storage";
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
+export function isGcsConfigured(): boolean {
+  return !!(
+    process.env.GCP_SERVICE_ACCOUNT_KEY_BASE64 ||
+    process.env.GCP_SERVICE_ACCOUNT_KEY
+  )
+}
+
 export function isValidSnapshotDate(date: string): boolean {
   if (!DATE_RE.test(date)) return false;
   const parsed = new Date(`${date}T00:00:00Z`);

@@ -27,7 +27,11 @@ export const useHospitalSnapshots = (hospitalSlug?: string | null) => {
             if (!response.ok) {
                 throw new Error(`Failed to fetch snapshots: ${response.status}`)
             }
-            return response.json()
+            const data = await response.json()
+            if (!data || typeof data.hospitals !== "object") {
+                throw new Error("Unexpected snapshots response shape")
+            }
+            return data as SnapshotStore
         },
         staleTime: 15 * 60 * 1000,
     })

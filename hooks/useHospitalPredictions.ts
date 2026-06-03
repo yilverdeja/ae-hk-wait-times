@@ -11,7 +11,11 @@ export const useHospitalPredictions = () => {
             if (!response.ok) {
                 throw new Error(`Failed to fetch predictions: ${response.status}`)
             }
-            return response.json()
+            const data = await response.json()
+            if (!data || typeof data.hospitals !== "object") {
+                throw new Error("Unexpected predictions response shape")
+            }
+            return data as PredictionsDocument
         },
         staleTime: 60 * 1000, // 60 seconds
     })
