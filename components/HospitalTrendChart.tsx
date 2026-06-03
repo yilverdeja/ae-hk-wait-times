@@ -6,6 +6,8 @@ import {
     ChartLegend,
     ChartLegendContent,
 } from "@/components/ui/chart"
+import { useHospitalPredictions } from "@/hooks/useHospitalPredictions"
+import { useHospitalSnapshots } from "@/hooks/useHospitalSnapshots"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
@@ -15,7 +17,16 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { DayOfWeekSelector } from "./DayOfWeekSelector"
 
-// Chart configuration with labels for the legend and light/dark mode colors.
+const DAY_ORDER: DayOfWeek[] = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+]
+
 const getChartConfig = (lang: LanguageCode) =>
     ({
         averageWait: {
@@ -26,8 +37,16 @@ const getChartConfig = (lang: LanguageCode) =>
                       ? "平均等候時間"
                       : "平均等候时间",
             theme: {
-                light: "hsl(221.2 83.2% 53.3%)", // blue-600
-                dark: "hsl(217.2 91.2% 59.8%)", // blue-500
+                light: "hsl(221.2 83.2% 53.3%)",
+                dark: "hsl(217.2 91.2% 59.8%)",
+            },
+        },
+        // historicalWait is excluded from the legend via legendType="none" on the Bar
+        historicalWait: {
+            label: "",
+            theme: {
+                light: "hsl(322.5 81.3% 35%)",
+                dark: "hsl(314.3 89.5% 40%)",
             },
         },
         liveWait: {
@@ -38,11 +57,47 @@ const getChartConfig = (lang: LanguageCode) =>
                       ? "目前等候時間"
                       : "目前等候时间",
             theme: {
-                light: "hsl(322.5 81.3% 56.5%)", // pink-600
-                dark: "hsl(314.3 89.5% 65.1%)", // pink-500
+                light: "hsl(322.5 81.3% 56.5%)",
+                dark: "hsl(314.3 89.5% 65.1%)",
+            },
+        },
+        predWait: {
+            label:
+                lang === LanguageCode.EN
+                    ? "Predicted Wait"
+                    : lang === LanguageCode.ZH
+                      ? "預測等候時間"
+                      : "预测等候时间",
+            theme: {
+                light: "hsl(322.5 81.3% 56.5%)",
+                dark: "hsl(314.3 89.5% 65.1%)",
             },
         },
     }) satisfies ChartConfig
+
+function OutlineBar(props: {
+    x?: number
+    y?: number
+    width?: number
+    height?: number
+    fill?: string
+}) {
+    const { x = 0, y = 0, width = 0, height = 0, fill } = props
+    if (!height || height <= 0) return null
+    return (
+        <rect
+            x={x}
+            y={y}
+            width={width}
+            height={height}
+            fill="transparent"
+            stroke={fill}
+            strokeWidth={2}
+            rx={4}
+            ry={4}
+        />
+    )
+}
 
 const loadingText = {
     en: "Loading chart...",
@@ -71,19 +126,27 @@ export function HospitalTrendChart({
         isLoading,
         isError,
     } = useHospitalTrends(hospitalSlug)
+    const { getHourlyWait } = useHospitalSnapshots(hospitalSlug)
+    const { getPredictions } = useHospitalPredictions()
+
     const chartConfig = getChartConfig(lang)
     const today = useMemo(
         () =>
             new Date().toLocaleDateString("en-US", {
                 weekday: "long",
+                timeZone: "Asia/Hong_Kong",
             }) as DayOfWeek,
         []
     )
+    const tomorrow = useMemo(() => {
+        const idx = DAY_ORDER.indexOf(today)
+        return DAY_ORDER[(idx + 1) % 7]
+    }, [today])
+
     const [selectedDay, setSelectedDay] = useState<DayOfWeek>(today)
     const previousDayRef = useRef<DayOfWeek>(today)
     const isInitialMount = useRef(true)
 
-    // Track day change events (skip initial mount)
     useEffect(() => {
         if (isInitialMount.current) {
             isInitialMount.current = false
@@ -106,37 +169,81 @@ export function HospitalTrendChart({
         const dataForSelectedDay = trendData.byHourOfDay[selectedDay]
         if (!dataForSelectedDay) return []
 
-        const now = new Date()
+        const now = new Date(
+            new Date().toLocaleString("en-US", { timeZone: "Asia/Hong_Kong" })
+        )
         const currentHour = now.getHours()
         const isTodaySelected = selectedDay === today
+        const isTomorrowSelected = selectedDay === tomorrow
+
+        const predictions = getPredictions(hospitalSlug)
 
         return Array.from({ length: 24 }).map((_, hour) => {
             const dataPoint: {
                 hour: string
                 averageWait: number | null
+                historicalWait?: number | null
                 liveWait?: number
+                predWait?: number | null
             } = {
                 hour: `${hour}`,
-                averageWait: dataForSelectedDay[hour] ?? null, // Use null for missing data
+                averageWait: dataForSelectedDay[hour] ?? null,
             }
 
-            if (isTodaySelected && hour === currentHour) {
-                // The liveWait bar will render on top of the averageWait bar
-                dataPoint.liveWait = liveWaitTimeInMinutes
+            if (isTodaySelected) {
+                if (hour < currentHour) {
+                    dataPoint.historicalWait = getHourlyWait(hospitalSlug, hour)
+                } else if (hour === currentHour) {
+                    dataPoint.liveWait = liveWaitTimeInMinutes
+                } else {
+                    const offset = hour - currentHour
+                    if (offset === 1) dataPoint.predWait = predictions?.pred1h ?? null
+                    else if (offset === 2) dataPoint.predWait = predictions?.pred2h ?? null
+                    else if (offset === 3) dataPoint.predWait = predictions?.pred3h ?? null
+                }
+            }
+
+            if (isTomorrowSelected && predictions) {
+                // Show predictions that crossed midnight into tomorrow
+                for (const offset of [1, 2, 3] as const) {
+                    const targetHour = currentHour + offset
+                    if (targetHour >= 24 && targetHour - 24 === hour) {
+                        const predValue =
+                            offset === 1
+                                ? predictions.pred1h
+                                : offset === 2
+                                  ? predictions.pred2h
+                                  : predictions.pred3h
+                        dataPoint.predWait = predValue ?? null
+                    }
+                }
             }
 
             return dataPoint
         })
-    }, [trendData, selectedDay, liveWaitTimeInMinutes, today])
+    }, [
+        trendData,
+        selectedDay,
+        liveWaitTimeInMinutes,
+        today,
+        tomorrow,
+        hospitalSlug,
+        getHourlyWait,
+        getPredictions,
+    ])
 
-    // --- NEW: Memoized calculation for the dynamic Y-axis domain ---
     const yAxisDomain = useMemo((): [number, "auto"] => {
         if (!chartData || chartData.length === 0) {
             return [0, "auto"]
         }
 
         const allWaitTimes = chartData
-            .flatMap((d) => [d.averageWait, d.liveWait])
+            .flatMap((d) => [
+                d.averageWait,
+                d.historicalWait,
+                d.liveWait,
+                d.predWait,
+            ])
             .filter((v): v is number => v !== null && v !== undefined)
 
         if (allWaitTimes.length === 0) {
@@ -145,10 +252,9 @@ export function HospitalTrendChart({
 
         const minWait = Math.min(...allWaitTimes)
 
-        // Determine the floor of the Y-axis based on the minimum wait time.
-        if (minWait > 240) return [240, "auto"] // 4 hours
-        if (minWait > 120) return [120, "auto"] // 2 hours
-        if (minWait > 60) return [60, "auto"] // 1 hour
+        if (minWait > 240) return [240, "auto"]
+        if (minWait > 120) return [120, "auto"]
+        if (minWait > 60) return [60, "auto"]
 
         return [0, "auto"]
     }, [chartData])
@@ -197,6 +303,20 @@ export function HospitalTrendChart({
                         xAxisId={1}
                         hide
                     />
+                    <XAxis
+                        dataKey="hour"
+                        type="number"
+                        domain={[-1, 24]}
+                        xAxisId={2}
+                        hide
+                    />
+                    <XAxis
+                        dataKey="hour"
+                        type="number"
+                        domain={[-1, 24]}
+                        xAxisId={3}
+                        hide
+                    />
                     <YAxis
                         tickLine={false}
                         axisLine={false}
@@ -224,11 +344,26 @@ export function HospitalTrendChart({
                         radius={[4, 4, 0, 0]}
                     />
                     <Bar
-                        dataKey="liveWait"
-                        fill="var(--color-liveWait)"
+                        dataKey="historicalWait"
+                        fill="var(--color-historicalWait)"
                         xAxisId={1}
                         barSize={8}
                         radius={[4, 4, 0, 0]}
+                        legendType="none"
+                    />
+                    <Bar
+                        dataKey="liveWait"
+                        fill="var(--color-liveWait)"
+                        xAxisId={2}
+                        barSize={8}
+                        radius={[4, 4, 0, 0]}
+                    />
+                    <Bar
+                        dataKey="predWait"
+                        fill="var(--color-predWait)"
+                        xAxisId={3}
+                        barSize={8}
+                        shape={<OutlineBar />}
                     />
                 </BarChart>
             </ChartContainer>
