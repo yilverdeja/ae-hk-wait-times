@@ -216,9 +216,19 @@ export function HospitalTrendChart({
                     { offset: 8, value: predictions.pred2h },
                     { offset: 12, value: predictions.pred3h },
                 ]
+                let midnightTailPlaced = false
                 for (const { offset, value } of slots) {
+                    if (value == null) continue
+                    const safeValue = Math.max(0, value)
                     const idx = currentIndex + offset
-                    if (idx < 96 && value != null) points[idx].predicted = value
+                    if (idx < 96) {
+                        points[idx].predicted = safeValue
+                    } else if (!midnightTailPlaced) {
+                        // All predictions are past midnight — clamp the first one to 23:45
+                        // so the dashed line has a visible tail extending to the edge of today
+                        points[95].predicted = safeValue
+                        midnightTailPlaced = true
+                    }
                 }
             }
         }
@@ -232,10 +242,12 @@ export function HospitalTrendChart({
                     { offset: 12, value: predictions.pred3h },
                 ]
                 for (const { offset, value } of slots) {
+                    if (value == null) continue
+                    const safeValue = Math.max(0, value)
                     const absIdx = currentIndex + offset
-                    if (absIdx >= 96 && value != null) {
+                    if (absIdx >= 96) {
                         const tomorrowIdx = absIdx - 96
-                        if (tomorrowIdx < 96) points[tomorrowIdx].predicted = value
+                        if (tomorrowIdx < 96) points[tomorrowIdx].predicted = safeValue
                     }
                 }
             }
@@ -253,17 +265,20 @@ export function HospitalTrendChart({
         getPredictions,
     ])
 
-    const yAxisDomain = useMemo((): [number, "auto"] => {
-        if (!chartData.length) return [0, "auto"]
+    const yAxisDomain = useMemo((): [number, number] => {
+        const fallback: [number, number] = [0, 180]
+        if (!chartData.length) return fallback
         const allValues = chartData
             .flatMap((d) => [d.average, d.actual, d.predicted])
-            .filter((v): v is number => v != null)
-        if (!allValues.length) return [0, "auto"]
+            .filter((v): v is number => v != null && v >= 0)
+        if (!allValues.length) return fallback
         const min = Math.min(...allValues)
-        if (min > 240) return [240, "auto"]
-        if (min > 120) return [120, "auto"]
-        if (min > 60) return [60, "auto"]
-        return [0, "auto"]
+        const max = Math.max(...allValues)
+        // Explicit upper bound (15% headroom, rounded to next hour) so recharts
+        // has no discretion over the scale — prevents phantom space below 0h
+        const domainMax = Math.max(60, Math.ceil((max * 1.15) / 60) * 60)
+        const domainMin = min > 240 ? 240 : min > 120 ? 120 : min > 60 ? 60 : 0
+        return [domainMin, domainMax]
     }, [chartData])
 
     if (isLoading) return <div className="h-[298px]">{loadingText[lang]}</div>
@@ -297,6 +312,7 @@ export function HospitalTrendChart({
                         tickLine={false}
                         axisLine={false}
                         tickMargin={8}
+                        padding={{ top: 5, bottom: 0 }}
                         tickFormatter={(value) => {
                             const hours = Math.round(Number(value) / 60)
                             if (lang === LanguageCode.EN) return `${hours}h`
