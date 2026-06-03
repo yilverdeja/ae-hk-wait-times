@@ -4,7 +4,6 @@ import {
     ChartConfig,
     ChartContainer,
     ChartLegend,
-    ChartLegendContent,
 } from "@/components/ui/chart"
 import { useHospitalPredictions } from "@/hooks/useHospitalPredictions"
 import { useHospitalSnapshots } from "@/hooks/useHospitalSnapshots"
@@ -307,7 +306,31 @@ export function HospitalTrendChart({
                         domain={yAxisDomain}
                         width={30}
                     />
-                    <ChartLegend content={<ChartLegendContent />} />
+                    <ChartLegend
+                        content={() => (
+                            <div className="flex flex-wrap gap-x-4 gap-y-1 justify-center pt-1 text-[0.75rem] text-muted-foreground">
+                                <div className="flex items-center gap-1.5">
+                                    <svg width="24" height="12" viewBox="0 0 24 12">
+                                        <rect x="0" y="6" width="24" height="6" fill="var(--color-average)" opacity="0.3" />
+                                        <line x1="0" y1="6" x2="24" y2="6" stroke="var(--color-average)" strokeWidth="2" />
+                                    </svg>
+                                    {chartConfig.average.label}
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                    <svg width="24" height="12" viewBox="0 0 24 12">
+                                        <line x1="0" y1="6" x2="24" y2="6" stroke="var(--color-actual)" strokeWidth="3" />
+                                    </svg>
+                                    {chartConfig.actual.label}
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                    <svg width="24" height="12" viewBox="0 0 24 12">
+                                        <line x1="0" y1="6" x2="24" y2="6" stroke="var(--color-predicted)" strokeWidth="3" strokeDasharray="6 4" />
+                                    </svg>
+                                    {chartConfig.predicted.label}
+                                </div>
+                            </div>
+                        )}
+                    />
 
                     <Area
                         dataKey="average"
