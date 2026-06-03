@@ -20,12 +20,13 @@ Here are the unique features offered by ae.wait.hk:
 *   **Critical Case Management Filter:** Option to filter out hospitals that are not currently managing any critical cases.
 *   **Advanced Sorting:** Hospitals can be sorted by name, region, and various waiting time metrics.
 *   **Multi-Locale Support:** The site is available in English, Traditional Chinese, and Simplified Chinese.
+*   **Wait Time Predictions:** A machine learning model trained on approximately 8 months of historical data provides predicted wait times at +1h, +2h, and +3h intervals on the trend chart. Predictions are automatically raised to the current wait when times exceed 6.5 hours, and hidden entirely beyond 8 hours. Predictions are for reference only and do not constitute medical advice.
 
 ## How to Access Detailed Hospital Information
 
 To get comprehensive details about a specific hospital, users can click on any hospital record in the main table. This action opens a side panel with the following information:
 *   **Live vs. Average Wait Time:** A comparison of the current waiting time against the average trend for the current day and hour.
-*   **Hourly Trend Graph:** A graph illustrating the waiting time trends hour-by-hour for the current day. Users can also select different days (Monday to Sunday) to view historical waiting time trends for all 24 hours of those days.
+*   **Hourly Trend Graph:** A graph illustrating the waiting time trends in 15-minute intervals for the current day, including predicted wait times at +1h, +2h, and +3h. Users can also select different days (Monday to Sunday) to view historical waiting time trends for all 24 hours of those days.
 *   **Hospital Contact and Location:** Includes the hospital's Google Maps location, phone number, fax, email, official website (if available), and its profile on the Hospital Authority website.
 
 ## Individual Hospital Pages
