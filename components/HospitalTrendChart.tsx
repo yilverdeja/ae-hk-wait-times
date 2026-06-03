@@ -8,6 +8,7 @@ import {
 import { useHospitalPredictions } from "@/hooks/useHospitalPredictions"
 import { useHospitalSnapshots } from "@/hooks/useHospitalSnapshots"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
+import { PREDICTION_CAP_MINS, PREDICTION_SUPPRESS_MINS } from "@/lib/constants"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
 import { DayOfWeek } from "@/types/trends"
@@ -163,8 +164,8 @@ export function HospitalTrendChart({
         }
     }, [selectedDay, hospitalSlug])
 
-    const { chartData, currentTimeStr, isTodaySelected } = useMemo(() => {
-        const empty = { chartData: [], currentTimeStr: "", isTodaySelected: false }
+    const { chartData, currentTimeStr, isTodaySelected, suppressPredictions } = useMemo(() => {
+        const empty = { chartData: [], currentTimeStr: "", isTodaySelected: false, suppressPredictions: false }
         if (!trendData) return empty
         const dataForSelectedDay = trendData.byHourOfDay[selectedDay]
         if (!dataForSelectedDay) return empty
@@ -179,6 +180,13 @@ export function HospitalTrendChart({
 
         const isToday = selectedDay === today
         const isTomorrow = selectedDay === tomorrow
+
+        const suppressPredictions = liveWaitTimeInMinutes >= PREDICTION_SUPPRESS_MINS
+        const capPredictions = !suppressPredictions && liveWaitTimeInMinutes >= PREDICTION_CAP_MINS
+        const toSafeValue = (raw: number): number => {
+            const floored = Math.max(0, raw)
+            return capPredictions ? Math.max(floored, liveWaitTimeInMinutes) : floored
+        }
 
         type ChartPoint = {
             time: string
@@ -206,34 +214,37 @@ export function HospitalTrendChart({
             }
             // Current live wait at current slot
             points[currentIndex].actual = liveWaitTimeInMinutes
-            // Anchor dashed prediction line at current point
-            points[currentIndex].predicted = liveWaitTimeInMinutes
 
-            const predictions = getPredictions(hospitalSlug)
-            if (predictions) {
-                const slots = [
-                    { offset: 4, value: predictions.pred1h },
-                    { offset: 8, value: predictions.pred2h },
-                    { offset: 12, value: predictions.pred3h },
-                ]
-                let midnightTailPlaced = false
-                for (const { offset, value } of slots) {
-                    if (value == null) continue
-                    const safeValue = Math.max(0, value)
-                    const idx = currentIndex + offset
-                    if (idx < 96) {
-                        points[idx].predicted = safeValue
-                    } else if (!midnightTailPlaced) {
-                        // All predictions are past midnight — clamp the first one to 23:45
-                        // so the dashed line has a visible tail extending to the edge of today
-                        points[95].predicted = safeValue
-                        midnightTailPlaced = true
+            if (!suppressPredictions) {
+                // Anchor dashed prediction line at current point
+                points[currentIndex].predicted = liveWaitTimeInMinutes
+
+                const predictions = getPredictions(hospitalSlug)
+                if (predictions) {
+                    const slots = [
+                        { offset: 4, value: predictions.pred1h },
+                        { offset: 8, value: predictions.pred2h },
+                        { offset: 12, value: predictions.pred3h },
+                    ]
+                    let midnightTailPlaced = false
+                    for (const { offset, value } of slots) {
+                        if (value == null) continue
+                        const safeValue = toSafeValue(value)
+                        const idx = currentIndex + offset
+                        if (idx < 96) {
+                            points[idx].predicted = safeValue
+                        } else if (!midnightTailPlaced) {
+                            // All predictions are past midnight — clamp the first one to 23:45
+                            // so the dashed line has a visible tail extending to the edge of today
+                            points[95].predicted = safeValue
+                            midnightTailPlaced = true
+                        }
                     }
                 }
             }
         }
 
-        if (isTomorrow) {
+        if (isTomorrow && !suppressPredictions) {
             const predictions = getPredictions(hospitalSlug)
             if (predictions) {
                 const slots = [
@@ -243,7 +254,7 @@ export function HospitalTrendChart({
                 ]
                 for (const { offset, value } of slots) {
                     if (value == null) continue
-                    const safeValue = Math.max(0, value)
+                    const safeValue = toSafeValue(value)
                     const absIdx = currentIndex + offset
                     if (absIdx >= 96) {
                         const tomorrowIdx = absIdx - 96
@@ -253,7 +264,7 @@ export function HospitalTrendChart({
             }
         }
 
-        return { chartData: points, currentTimeStr: timeStr, isTodaySelected: isToday }
+        return { chartData: points, currentTimeStr: timeStr, isTodaySelected: isToday, suppressPredictions }
     }, [
         trendData,
         selectedDay,
@@ -338,12 +349,14 @@ export function HospitalTrendChart({
                                     </svg>
                                     {chartConfig.actual.label}
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                    <svg width="24" height="12" viewBox="0 0 24 12">
-                                        <line x1="0" y1="6" x2="24" y2="6" stroke="var(--color-predicted)" strokeWidth="3" strokeDasharray="6 4" />
-                                    </svg>
-                                    {chartConfig.predicted.label}
-                                </div>
+                                {!suppressPredictions && (
+                                    <div className="flex items-center gap-1.5">
+                                        <svg width="24" height="12" viewBox="0 0 24 12">
+                                            <line x1="0" y1="6" x2="24" y2="6" stroke="var(--color-predicted)" strokeWidth="3" strokeDasharray="6 4" />
+                                        </svg>
+                                        {chartConfig.predicted.label}
+                                    </div>
+                                )}
                             </div>
                         )}
                     />
