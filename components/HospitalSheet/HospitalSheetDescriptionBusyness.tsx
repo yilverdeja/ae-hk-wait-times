@@ -62,6 +62,24 @@ const busynessTexts = {
     },
 }
 
+const predictionTexts = {
+    [LanguageCode.EN]: {
+        higher: "Expected to get busier.",
+        same: "Expected to stay about the same.",
+        lower: "Expected to get less busy.",
+    },
+    [LanguageCode.ZH]: {
+        higher: "預計將變得更繁忙。",
+        same: "預計等候時間將保持穩定。",
+        lower: "預計將變得較清閒。",
+    },
+    [LanguageCode.CN]: {
+        higher: "预计将变得更繁忙。",
+        same: "预计等候时间将保持稳定。",
+        lower: "预计将变得较清闲。",
+    },
+}
+
 // Define the type for the comparison object from the hook
 interface TrendComparison {
     difference: number
@@ -74,6 +92,7 @@ interface Props {
     isError: boolean
     liveWaitTimeInMinutes: number
     comparison: TrendComparison | null
+    predictionDirection?: "higher" | "lower" | "same" | null
 }
 
 export function HospitalSheetDescriptionBusyness({
@@ -81,6 +100,7 @@ export function HospitalSheetDescriptionBusyness({
     isError,
     liveWaitTimeInMinutes,
     comparison,
+    predictionDirection,
 }: Props) {
     const { lang } = useLanguage()
     const texts = busynessTexts[lang]
@@ -186,5 +206,15 @@ export function HospitalSheetDescriptionBusyness({
         }
     }, [isLoading, isError, comparison, liveWaitTimeInMinutes, texts, lang])
 
-    return <>{content}</>
+    return (
+        <>
+            {content}
+            {predictionDirection && (
+                <span className="text-muted-foreground">
+                    {" "}
+                    {predictionTexts[lang][predictionDirection]}
+                </span>
+            )}
+        </>
+    )
 }

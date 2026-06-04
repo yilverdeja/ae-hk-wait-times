@@ -3,8 +3,10 @@
 import { HospitalSheetDescriptionBusyness } from "@/components/HospitalSheet/HospitalSheetDescriptionBusyness"
 import { HospitalSheetInformation } from "@/components/HospitalSheet/HospitalSheetInformation"
 import { HospitalTrendChart } from "@/components/HospitalTrendChart"
+import { useHospitalPredictions } from "@/hooks/useHospitalPredictions"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
 import { useLanguage } from "@/hooks/useLanguage"
+import { PREDICTION_CAP_MINS, PREDICTION_SUPPRESS_MINS } from "@/lib/constants"
 import {
     managementStatusTranslations,
     waitTimeCategoryLabels,
@@ -113,8 +115,21 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
     const { isLoading, isError, compareWithLiveTime } = useHospitalTrends(
         hospital.slug
     )
+    const { getPredictions } = useHospitalPredictions()
     const liveWaitTime = hospital.waitTimes.semiUrgentNonUrgentP95Minutes ?? 0
     const comparison = compareWithLiveTime(liveWaitTime)
+
+    const predictionDirection = (() => {
+        if (liveWaitTime >= PREDICTION_SUPPRESS_MINS) return null
+        const preds = getPredictions(hospital.slug)
+        if (!preds || preds.pred1h == null) return null
+        const effective = liveWaitTime >= PREDICTION_CAP_MINS
+            ? Math.max(Math.max(0, preds.pred1h), liveWaitTime)
+            : Math.max(0, preds.pred1h)
+        const diff = effective - liveWaitTime
+        if (Math.abs(diff) < 15) return "same" as const
+        return diff > 0 ? "higher" as const : "lower" as const
+    })()
     const texts = pageTexts[lang]
     const { waitTimes } = hospital
 
@@ -138,6 +153,7 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
                         isError={isError}
                         liveWaitTimeInMinutes={liveWaitTime}
                         comparison={comparison}
+                        predictionDirection={predictionDirection}
                     />
                 </p>
             </div>

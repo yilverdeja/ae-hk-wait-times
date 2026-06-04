@@ -11,7 +11,9 @@ import {
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet"
+import { useHospitalPredictions } from "@/hooks/useHospitalPredictions"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
+import { PREDICTION_CAP_MINS, PREDICTION_SUPPRESS_MINS } from "@/lib/constants"
 import { EnrichedHospitalData, LanguageCode } from "@/types"
 import { sendGAEvent } from "@next/third-parties/google"
 
@@ -31,6 +33,7 @@ export function HospitalSheet({
     const { isLoading, isError, compareWithLiveTime } = useHospitalTrends(
         hospital?.slug ?? null
     )
+    const { getPredictions } = useHospitalPredictions()
     const handleOpenChange = (open: boolean) => {
         if (!open) {
             // Track sheet closed event
@@ -53,6 +56,18 @@ export function HospitalSheet({
     // Get the comparison data from the hook
     const comparison = compareWithLiveTime(liveWaitTime)
 
+    const predictionDirection = (() => {
+        if (liveWaitTime >= PREDICTION_SUPPRESS_MINS) return null
+        const preds = getPredictions(hospital.slug)
+        if (!preds || preds.pred1h == null) return null
+        const effective = liveWaitTime >= PREDICTION_CAP_MINS
+            ? Math.max(Math.max(0, preds.pred1h), liveWaitTime)
+            : Math.max(0, preds.pred1h)
+        const diff = effective - liveWaitTime
+        if (Math.abs(diff) < 15) return "same" as const
+        return diff > 0 ? "higher" as const : "lower" as const
+    })()
+
     return (
         <Sheet open={isOpen} onOpenChange={handleOpenChange}>
             <SheetContent className="w-[90%] sm:max-w-2xl flex flex-col p-0">
@@ -66,6 +81,7 @@ export function HospitalSheet({
                             isError={isError}
                             liveWaitTimeInMinutes={liveWaitTime}
                             comparison={comparison}
+                            predictionDirection={predictionDirection}
                         />
                     </SheetDescription>
                 </SheetHeader>
