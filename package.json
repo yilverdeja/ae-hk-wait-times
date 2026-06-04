@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google-cloud/storage": "^7.19.0",
     "@mapbox/mapbox-gl-language": "^1.0.1",
     "@microsoft/clarity": "^1.0.0",
     "@next/third-parties": "^16.0.1",

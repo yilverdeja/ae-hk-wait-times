@@ -11,6 +11,8 @@ import {
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet"
+import { useHospitalPredictionDisplay } from "@/hooks/useHospitalPredictionDisplay"
+import { useHospitalPredictions } from "@/hooks/useHospitalPredictions"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
 import { EnrichedHospitalData, LanguageCode } from "@/types"
 import { sendGAEvent } from "@next/third-parties/google"
@@ -31,6 +33,15 @@ export function HospitalSheet({
     const { isLoading, isError, compareWithLiveTime } = useHospitalTrends(
         hospital?.slug ?? null
     )
+    const { getPredictions } = useHospitalPredictions()
+    const liveWaitTime =
+        hospital?.waitTimes.semiUrgentNonUrgentP95Minutes ?? 0
+    const comparison = compareWithLiveTime(liveWaitTime)
+    const { direction: predictionDirection } = useHospitalPredictionDisplay(
+        hospital?.slug,
+        liveWaitTime,
+        getPredictions
+    )
     const handleOpenChange = (open: boolean) => {
         if (!open) {
             // Track sheet closed event
@@ -47,12 +58,6 @@ export function HospitalSheet({
         return null
     }
 
-    // Get the live wait time, ensuring it's a number (default to 0)
-    const liveWaitTime = hospital.waitTimes.semiUrgentNonUrgentP95Minutes ?? 0
-
-    // Get the comparison data from the hook
-    const comparison = compareWithLiveTime(liveWaitTime)
-
     return (
         <Sheet open={isOpen} onOpenChange={handleOpenChange}>
             <SheetContent className="w-[90%] sm:max-w-2xl flex flex-col p-0">
@@ -66,6 +71,7 @@ export function HospitalSheet({
                             isError={isError}
                             liveWaitTimeInMinutes={liveWaitTime}
                             comparison={comparison}
+                            predictionDirection={predictionDirection}
                         />
                     </SheetDescription>
                 </SheetHeader>
@@ -74,14 +80,12 @@ export function HospitalSheet({
                     <div className="px-6 py-4 space-y-8">
                         <HospitalTrendChart
                             hospitalSlug={hospital.slug}
-                            liveWaitTimeInMinutes={
-                                hospital.waitTimes
-                                    .semiUrgentNonUrgentP95Minutes ?? 0
-                            }
+                            liveWaitTimeInMinutes={liveWaitTime}
                         />
                         <HospitalSheetInformation
                             hospital={hospital}
                             lang={lang}
+                            showHospitalLink
                         />
                     </div>
                     <ScrollBar orientation="vertical" />
