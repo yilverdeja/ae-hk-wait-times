@@ -4,8 +4,6 @@ import { sendGAEvent } from "@next/third-parties/google"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useMemo } from "react"
 
-export type { HospitalPredictionValues }
-
 export const useHospitalPredictions = () => {
     const queryResult = useQuery({
         queryKey: ["hospital-predictions"],
