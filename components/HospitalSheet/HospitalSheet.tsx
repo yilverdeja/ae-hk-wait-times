@@ -82,6 +82,7 @@ export function HospitalSheet({
                         <HospitalSheetInformation
                             hospital={hospital}
                             lang={lang}
+                            showHospitalLink
                         />
                     </div>
                     <ScrollBar orientation="vertical" />
