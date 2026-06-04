@@ -1,7 +1,10 @@
+import type { HospitalPredictionValues } from "@/lib/predictions"
 import type { PredictionsDocument } from "@/types/gcs"
 import { sendGAEvent } from "@next/third-parties/google"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect, useMemo } from "react"
+
+export type { HospitalPredictionValues }
 
 export const useHospitalPredictions = () => {
     const queryResult = useQuery({
@@ -33,13 +36,7 @@ export const useHospitalPredictions = () => {
     }, [queryResult.isError, queryResult.error])
 
     const getPredictions = useMemo(() => {
-        return (
-            slug: string
-        ): {
-            pred1h: number | null
-            pred2h: number | null
-            pred3h: number | null
-        } | null => {
+        return (slug: string): HospitalPredictionValues | null => {
             const hospital = queryResult.data?.hospitals[slug]
             if (!hospital) return null
             return {

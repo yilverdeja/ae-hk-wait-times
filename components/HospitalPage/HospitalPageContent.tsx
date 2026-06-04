@@ -3,10 +3,10 @@
 import { HospitalSheetDescriptionBusyness } from "@/components/HospitalSheet/HospitalSheetDescriptionBusyness"
 import { HospitalSheetInformation } from "@/components/HospitalSheet/HospitalSheetInformation"
 import { HospitalTrendChart } from "@/components/HospitalTrendChart"
+import { useHospitalPredictionDisplay } from "@/hooks/useHospitalPredictionDisplay"
 import { useHospitalPredictions } from "@/hooks/useHospitalPredictions"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
 import { useLanguage } from "@/hooks/useLanguage"
-import { PREDICTION_CAP_MINS, PREDICTION_SUPPRESS_MINS } from "@/lib/constants"
 import {
     managementStatusTranslations,
     waitTimeCategoryLabels,
@@ -153,61 +153,15 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
     const { getPredictions } = useHospitalPredictions()
     const liveWaitTime = hospital.waitTimes.semiUrgentNonUrgentP95Minutes ?? 0
     const comparison = compareWithLiveTime(liveWaitTime)
-
-    const suppressPredictions = liveWaitTime >= PREDICTION_SUPPRESS_MINS
-    const capPredictions = !suppressPredictions && liveWaitTime >= PREDICTION_CAP_MINS
-
-    const predictionDirection = (() => {
-        if (suppressPredictions) return null
-        const preds = getPredictions(hospital.slug)
-        if (!preds || preds.pred1h == null) return null
-        const effective = capPredictions
-            ? Math.max(Math.max(0, preds.pred1h), liveWaitTime)
-            : Math.max(0, preds.pred1h)
-        const diff = effective - liveWaitTime
-        if (Math.abs(diff) < 15) return "same" as const
-        return diff > 0 ? "higher" as const : "lower" as const
-    })()
-
-    const predictionValues = (() => {
-        if (suppressPredictions) return null
-        const preds = getPredictions(hospital.slug)
-        if (!preds) return null
-        const safe = (v: number | null) => {
-            if (v == null) return null
-            const floored = Math.max(0, v)
-            return capPredictions ? Math.max(floored, liveWaitTime) : floored
-        }
-        return {
-            pred1h: safe(preds.pred1h),
-            pred2h: safe(preds.pred2h),
-            pred3h: safe(preds.pred3h),
-        }
-    })()
-
-    // Compute HKT times floored to the nearest 15-min interval, then offset by +1h/+2h/+3h.
-    // HKT is always UTC+8 (no DST).
-    const predictionTimes = (() => {
-        const now = new Date()
-        const hktTotalMinutes = Math.floor(now.getTime() / 60000) + 8 * 60
-        const floorMs =
-            now.getTime() -
-            (hktTotalMinutes % 15) * 60000 -
-            now.getSeconds() * 1000 -
-            now.getMilliseconds()
-        const fmt = (d: Date) =>
-            d.toLocaleTimeString("en-US", {
-                timeZone: "Asia/Hong_Kong",
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-            })
-        return {
-            plus1h: fmt(new Date(floorMs + 60 * 60000)),
-            plus2h: fmt(new Date(floorMs + 120 * 60000)),
-            plus3h: fmt(new Date(floorMs + 180 * 60000)),
-        }
-    })()
+    const {
+        values: predictionValues,
+        direction: predictionDirection,
+        times: predictionTimes,
+    } = useHospitalPredictionDisplay(
+        hospital.slug,
+        liveWaitTime,
+        getPredictions
+    )
 
     const texts = pageTexts[lang]
     const { waitTimes } = hospital

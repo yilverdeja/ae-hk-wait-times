@@ -8,7 +8,12 @@ import {
 import { useHospitalPredictions } from "@/hooks/useHospitalPredictions"
 import { useHospitalSnapshots } from "@/hooks/useHospitalSnapshots"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
-import { PREDICTION_CAP_MINS, PREDICTION_SUPPRESS_MINS } from "@/lib/constants"
+import {
+    applyPredictionValue,
+    getPredictionPolicy,
+    PREDICTION_CHART_SLOT_OFFSETS,
+    type HospitalPredictionValues,
+} from "@/lib/predictions"
 import { useLanguage } from "@/hooks/useLanguage"
 import { LanguageCode } from "@/types"
 import { DayOfWeek } from "@/types/trends"
@@ -181,12 +186,20 @@ export function HospitalTrendChart({
         const isToday = selectedDay === today
         const isTomorrow = selectedDay === tomorrow
 
-        const suppressPredictions = liveWaitTimeInMinutes >= PREDICTION_SUPPRESS_MINS
-        const capPredictions = !suppressPredictions && liveWaitTimeInMinutes >= PREDICTION_CAP_MINS
-        const toSafeValue = (raw: number): number => {
-            const floored = Math.max(0, raw)
-            return capPredictions ? Math.max(floored, liveWaitTimeInMinutes) : floored
-        }
+        const policy = getPredictionPolicy(liveWaitTimeInMinutes)
+        const suppressPredictions = policy.suppress
+        const toSafeValue = (raw: number): number =>
+            applyPredictionValue(raw, liveWaitTimeInMinutes, policy)
+
+        const predictionSlots = (
+            predictions: HospitalPredictionValues
+        ): { offset: number; value: number | null }[] =>
+            PREDICTION_CHART_SLOT_OFFSETS.map((offset, i) => ({
+                offset,
+                value: [predictions.pred1h, predictions.pred2h, predictions.pred3h][
+                    i
+                ],
+            }))
 
         type ChartPoint = {
             time: string
@@ -221,11 +234,7 @@ export function HospitalTrendChart({
 
                 const predictions = getPredictions(hospitalSlug)
                 if (predictions) {
-                    const slots = [
-                        { offset: 4, value: predictions.pred1h },
-                        { offset: 8, value: predictions.pred2h },
-                        { offset: 12, value: predictions.pred3h },
-                    ]
+                    const slots = predictionSlots(predictions)
                     let midnightTailPlaced = false
                     for (const { offset, value } of slots) {
                         if (value == null) continue
@@ -247,11 +256,7 @@ export function HospitalTrendChart({
         if (isTomorrow && !suppressPredictions) {
             const predictions = getPredictions(hospitalSlug)
             if (predictions) {
-                const slots = [
-                    { offset: 4, value: predictions.pred1h },
-                    { offset: 8, value: predictions.pred2h },
-                    { offset: 12, value: predictions.pred3h },
-                ]
+                const slots = predictionSlots(predictions)
                 for (const { offset, value } of slots) {
                     if (value == null) continue
                     const safeValue = toSafeValue(value)

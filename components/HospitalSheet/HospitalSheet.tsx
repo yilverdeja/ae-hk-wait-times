@@ -11,9 +11,9 @@ import {
     SheetHeader,
     SheetTitle,
 } from "@/components/ui/sheet"
+import { useHospitalPredictionDisplay } from "@/hooks/useHospitalPredictionDisplay"
 import { useHospitalPredictions } from "@/hooks/useHospitalPredictions"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
-import { PREDICTION_CAP_MINS, PREDICTION_SUPPRESS_MINS } from "@/lib/constants"
 import { EnrichedHospitalData, LanguageCode } from "@/types"
 import { sendGAEvent } from "@next/third-parties/google"
 
@@ -34,6 +34,14 @@ export function HospitalSheet({
         hospital?.slug ?? null
     )
     const { getPredictions } = useHospitalPredictions()
+    const liveWaitTime =
+        hospital?.waitTimes.semiUrgentNonUrgentP95Minutes ?? 0
+    const comparison = compareWithLiveTime(liveWaitTime)
+    const { direction: predictionDirection } = useHospitalPredictionDisplay(
+        hospital?.slug,
+        liveWaitTime,
+        getPredictions
+    )
     const handleOpenChange = (open: boolean) => {
         if (!open) {
             // Track sheet closed event
@@ -49,24 +57,6 @@ export function HospitalSheet({
     if (!hospital) {
         return null
     }
-
-    // Get the live wait time, ensuring it's a number (default to 0)
-    const liveWaitTime = hospital.waitTimes.semiUrgentNonUrgentP95Minutes ?? 0
-
-    // Get the comparison data from the hook
-    const comparison = compareWithLiveTime(liveWaitTime)
-
-    const predictionDirection = (() => {
-        if (liveWaitTime >= PREDICTION_SUPPRESS_MINS) return null
-        const preds = getPredictions(hospital.slug)
-        if (!preds || preds.pred1h == null) return null
-        const effective = liveWaitTime >= PREDICTION_CAP_MINS
-            ? Math.max(Math.max(0, preds.pred1h), liveWaitTime)
-            : Math.max(0, preds.pred1h)
-        const diff = effective - liveWaitTime
-        if (Math.abs(diff) < 15) return "same" as const
-        return diff > 0 ? "higher" as const : "lower" as const
-    })()
 
     return (
         <Sheet open={isOpen} onOpenChange={handleOpenChange}>
@@ -90,10 +80,7 @@ export function HospitalSheet({
                     <div className="px-6 py-4 space-y-8">
                         <HospitalTrendChart
                             hospitalSlug={hospital.slug}
-                            liveWaitTimeInMinutes={
-                                hospital.waitTimes
-                                    .semiUrgentNonUrgentP95Minutes ?? 0
-                            }
+                            liveWaitTimeInMinutes={liveWaitTime}
                         />
                         <HospitalSheetInformation
                             hospital={hospital}

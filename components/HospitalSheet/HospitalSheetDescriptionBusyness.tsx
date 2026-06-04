@@ -1,4 +1,5 @@
 import { useLanguage } from "@/hooks/useLanguage"
+import type { PredictionDirection } from "@/lib/predictions"
 import { LanguageCode } from "@/types"
 import { useMemo } from "react"
 
@@ -92,7 +93,7 @@ interface Props {
     isError: boolean
     liveWaitTimeInMinutes: number
     comparison: TrendComparison | null
-    predictionDirection?: "higher" | "lower" | "same" | null
+    predictionDirection?: PredictionDirection | null
 }
 
 export function HospitalSheetDescriptionBusyness({
