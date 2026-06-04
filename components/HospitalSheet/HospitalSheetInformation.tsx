@@ -83,7 +83,7 @@ export function HospitalSheetInformation({
     const texts = informationTexts[lang]
 
     return (
-        <div className="my-6">
+        <div className="">
             <h3 className="mb-4 text-lg font-semibold tracking-tight">
                 {texts.title}
             </h3>

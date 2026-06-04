@@ -26,25 +26,46 @@ const pageTexts = {
         waitTimes: "Wait Times",
         expectedWait: "Expected wait",
         typicalWait: "Typical",
+        predictedWaitTitle: "Predicted Wait",
+        predictedWaitSubtitle: "Semi-urgent & Non-urgent",
+        oneHour: "+1 hour",
+        twoHours: "+2 hours",
+        threeHours: "+3 hours",
+        predictionDisclaimer:
+            "Predictions are estimates based on recent trends and are for reference only. Actual wait times may vary.",
     },
     [LanguageCode.ZH]: {
         back: "返回",
         waitTimes: "等候時間",
         expectedWait: "預計等候",
         typicalWait: "一般等候",
+        predictedWaitTitle: "預測等候時間",
+        predictedWaitSubtitle: "次緊急及非緊急",
+        oneHour: "+1小時",
+        twoHours: "+2小時",
+        threeHours: "+3小時",
+        predictionDisclaimer:
+            "預測數據基於近期趨勢估算，僅供參考，實際等候時間可能有所不同。",
     },
     [LanguageCode.CN]: {
         back: "返回",
         waitTimes: "等候时间",
         expectedWait: "预计等候",
         typicalWait: "一般等候",
+        predictedWaitTitle: "预测等候时间",
+        predictedWaitSubtitle: "次紧急及非紧急",
+        oneHour: "+1小时",
+        twoHours: "+2小时",
+        threeHours: "+3小时",
+        predictionDisclaimer:
+            "预测数据基于近期趋势估算，仅供参考，实际等候时间可能有所不同。",
     },
 }
 
 function formatMinutes(minutes: number | null, lang: LanguageCode): string {
     if (minutes === null) return waitTimeNA[lang]
     const h = Math.floor(minutes / 60)
-    const m = minutes % 60
+    const m = Math.floor(minutes % 60)
     const hourChar =
         lang === LanguageCode.EN ? "h" : lang === LanguageCode.ZH ? "小時" : "小时"
     const minChar =
@@ -110,6 +131,29 @@ function WaitTimeCard({
     )
 }
 
+function PredictionCard({
+    label,
+    minutes,
+    lang,
+}: {
+    label: string
+    minutes: number | null
+    lang: LanguageCode
+}) {
+    return (
+        <div className="rounded-lg border bg-card p-3 sm:p-4 space-y-1.5 min-w-0">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider truncate">
+                {label}
+            </p>
+            <p
+                className={`text-2xl font-bold ${minutes === null ? "text-muted-foreground" : ""}`}
+            >
+                {formatMinutes(minutes, lang)}
+            </p>
+        </div>
+    )
+}
+
 export default function HospitalPageContent({ hospital }: HospitalPageContentProps) {
     const { lang } = useLanguage()
     const { isLoading, isError, compareWithLiveTime } = useHospitalTrends(
@@ -119,16 +163,35 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
     const liveWaitTime = hospital.waitTimes.semiUrgentNonUrgentP95Minutes ?? 0
     const comparison = compareWithLiveTime(liveWaitTime)
 
+    const suppressPredictions = liveWaitTime >= PREDICTION_SUPPRESS_MINS
+    const capPredictions = !suppressPredictions && liveWaitTime >= PREDICTION_CAP_MINS
+
     const predictionDirection = (() => {
-        if (liveWaitTime >= PREDICTION_SUPPRESS_MINS) return null
+        if (suppressPredictions) return null
         const preds = getPredictions(hospital.slug)
         if (!preds || preds.pred1h == null) return null
-        const effective = liveWaitTime >= PREDICTION_CAP_MINS
+        const effective = capPredictions
             ? Math.max(Math.max(0, preds.pred1h), liveWaitTime)
             : Math.max(0, preds.pred1h)
         const diff = effective - liveWaitTime
         if (Math.abs(diff) < 15) return "same" as const
         return diff > 0 ? "higher" as const : "lower" as const
+    })()
+
+    const predictionValues = (() => {
+        if (suppressPredictions) return null
+        const preds = getPredictions(hospital.slug)
+        if (!preds) return null
+        const safe = (v: number | null) => {
+            if (v == null) return null
+            const floored = Math.max(0, v)
+            return capPredictions ? Math.max(floored, liveWaitTime) : floored
+        }
+        return {
+            pred1h: safe(preds.pred1h),
+            pred2h: safe(preds.pred2h),
+            pred3h: safe(preds.pred3h),
+        }
     })()
     const texts = pageTexts[lang]
     const { waitTimes } = hospital
@@ -206,16 +269,50 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
                     </div>
                 </div>
 
-                {/* Trend chart — col 2, rows 1–2 on desktop; after wait times on mobile */}
-                <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2">
+                {/* Trend chart — col 2, rows 1–3 on desktop; after wait times on mobile */}
+                <div className="lg:col-start-2 lg:row-start-1 lg:row-span-3">
                     <HospitalTrendChart
                         hospitalSlug={hospital.slug}
                         liveWaitTimeInMinutes={liveWaitTime}
                     />
                 </div>
 
-                {/* Info — col 1, row 2 on desktop; after chart on mobile */}
-                <div className="lg:col-start-1 lg:row-start-2">
+                {/* Predictions — col 1, row 2 on desktop; after chart on mobile */}
+                {predictionValues && (
+                    <div className="lg:col-start-1 lg:row-start-2 space-y-3">
+                        <div>
+                            <h2 className="text-lg font-semibold tracking-tight">
+                                {texts.predictedWaitTitle}
+                            </h2>
+                            <p className="text-xs text-muted-foreground mt-0.5">
+                                {texts.predictedWaitSubtitle}
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-3 gap-3">
+                            <PredictionCard
+                                label={texts.oneHour}
+                                minutes={predictionValues.pred1h}
+                                lang={lang}
+                            />
+                            <PredictionCard
+                                label={texts.twoHours}
+                                minutes={predictionValues.pred2h}
+                                lang={lang}
+                            />
+                            <PredictionCard
+                                label={texts.threeHours}
+                                minutes={predictionValues.pred3h}
+                                lang={lang}
+                            />
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                            {texts.predictionDisclaimer}
+                        </p>
+                    </div>
+                )}
+
+                {/* Info — col 1, row 3 on desktop; after predictions on mobile */}
+                <div className="lg:col-start-1 lg:row-start-3">
                     <HospitalSheetInformation
                         hospital={hospital}
                         lang={lang}
