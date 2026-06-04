@@ -28,9 +28,6 @@ const pageTexts = {
         typicalWait: "Typical",
         predictedWaitTitle: "Predicted Wait",
         predictedWaitSubtitle: "Semi-urgent & Non-urgent",
-        oneHour: "+1 hour",
-        twoHours: "+2 hours",
-        threeHours: "+3 hours",
         predictionDisclaimer:
             "Predictions are estimates based on recent trends and are for reference only. Actual wait times may vary.",
     },
@@ -41,9 +38,6 @@ const pageTexts = {
         typicalWait: "一般等候",
         predictedWaitTitle: "預測等候時間",
         predictedWaitSubtitle: "次緊急及非緊急",
-        oneHour: "+1小時",
-        twoHours: "+2小時",
-        threeHours: "+3小時",
         predictionDisclaimer:
             "預測數據基於近期趨勢估算，僅供參考，實際等候時間可能有所不同。",
     },
@@ -54,9 +48,6 @@ const pageTexts = {
         typicalWait: "一般等候",
         predictedWaitTitle: "预测等候时间",
         predictedWaitSubtitle: "次紧急及非紧急",
-        oneHour: "+1小时",
-        twoHours: "+2小时",
-        threeHours: "+3小时",
         predictionDisclaimer:
             "预测数据基于近期趋势估算，仅供参考，实际等候时间可能有所不同。",
     },
@@ -146,7 +137,7 @@ function PredictionCard({
                 {label}
             </p>
             <p
-                className={`text-2xl font-bold ${minutes === null ? "text-muted-foreground" : ""}`}
+                className={`text-lg sm:text-2xl font-bold ${minutes === null ? "text-muted-foreground" : ""}`}
             >
                 {formatMinutes(minutes, lang)}
             </p>
@@ -193,6 +184,31 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
             pred3h: safe(preds.pred3h),
         }
     })()
+
+    // Compute HKT times floored to the nearest 15-min interval, then offset by +1h/+2h/+3h.
+    // HKT is always UTC+8 (no DST).
+    const predictionTimes = (() => {
+        const now = new Date()
+        const hktTotalMinutes = Math.floor(now.getTime() / 60000) + 8 * 60
+        const floorMs =
+            now.getTime() -
+            (hktTotalMinutes % 15) * 60000 -
+            now.getSeconds() * 1000 -
+            now.getMilliseconds()
+        const fmt = (d: Date) =>
+            d.toLocaleTimeString("en-US", {
+                timeZone: "Asia/Hong_Kong",
+                hour: "numeric",
+                minute: "2-digit",
+                hour12: true,
+            })
+        return {
+            plus1h: fmt(new Date(floorMs + 60 * 60000)),
+            plus2h: fmt(new Date(floorMs + 120 * 60000)),
+            plus3h: fmt(new Date(floorMs + 180 * 60000)),
+        }
+    })()
+
     const texts = pageTexts[lang]
     const { waitTimes } = hospital
 
@@ -290,17 +306,17 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
                         </div>
                         <div className="grid grid-cols-3 gap-3">
                             <PredictionCard
-                                label={texts.oneHour}
+                                label={predictionTimes.plus1h}
                                 minutes={predictionValues.pred1h}
                                 lang={lang}
                             />
                             <PredictionCard
-                                label={texts.twoHours}
+                                label={predictionTimes.plus2h}
                                 minutes={predictionValues.pred2h}
                                 lang={lang}
                             />
                             <PredictionCard
-                                label={texts.threeHours}
+                                label={predictionTimes.plus3h}
                                 minutes={predictionValues.pred3h}
                                 lang={lang}
                             />
