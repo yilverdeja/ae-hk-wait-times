@@ -163,7 +163,7 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
     const { waitTimes } = hospital
 
     return (
-        <div className="container mx-auto xl:max-w-none py-4 space-y-6">
+        <div className="container mx-auto xl:max-w-none py-4 space-y-6 min-h-screen">
             {/* Breadcrumb + Header */}
             <div>
                 <PageBreadcrumb

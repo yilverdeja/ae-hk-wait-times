@@ -52,7 +52,7 @@ export default function HospitalsDirectoryContent({
     const texts = pageTexts[lang]
 
     return (
-        <main className="container mx-auto xl:max-w-none py-4 space-y-8">
+        <main className="container mx-auto xl:max-w-none py-4 space-y-8 min-h-screen">
             <PageBreadcrumb
                 items={[
                     { label: breadcrumbLabels.home[lang], href: "/" },
