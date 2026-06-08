@@ -22,7 +22,7 @@ export const siteConfig: SiteConfig = {
         "香港急症室等候時間",
         "香港急诊室等候时间"
     ),
-    title: i18n("A&E Wait Times", "急症室等候時間", "急诊室等候时间"),
+    title: i18n("ae.wait.hk", "ae.wait.hk", "ae.wait.hk"),
     url: "https://ae.wait.hk",
     description: i18n(
         "Estimated reference of Hong Kong's Hospital Authority Accident and Emergency waiting times capped at 8 hours",

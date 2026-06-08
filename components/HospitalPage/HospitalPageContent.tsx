@@ -12,11 +12,13 @@ import {
     waitTimeCategoryLabels,
     waitTimeNA,
 } from "@/lib/map-translations"
+import HospitalWaitSummary from "@/components/HospitalPage/HospitalWaitSummary"
 import PageBreadcrumb, { breadcrumbLabels } from "@/components/PageBreadcrumb"
 import { EnrichedHospitalData, LanguageCode, ManagementStatus } from "@/types"
 
 interface HospitalPageContentProps {
     hospital: EnrichedHospitalData
+    lastUpdated?: string | null
 }
 
 const pageTexts = {
@@ -141,7 +143,10 @@ function PredictionCard({
     )
 }
 
-export default function HospitalPageContent({ hospital }: HospitalPageContentProps) {
+export default function HospitalPageContent({
+    hospital,
+    lastUpdated = null,
+}: HospitalPageContentProps) {
     const { lang } = useLanguage()
     const { isLoading, isError, compareWithLiveTime } = useHospitalTrends(
         hospital.slug
@@ -182,6 +187,13 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
                 <h1 className="text-3xl font-bold tracking-tight">
                     {hospital.name[lang]}
                 </h1>
+                {lastUpdated && (
+                    <HospitalWaitSummary
+                        hospital={hospital}
+                        lastUpdated={lastUpdated}
+                        lang={lang}
+                    />
+                )}
                 <p className="mt-1 text-sm text-muted-foreground">
                     <HospitalSheetDescriptionBusyness
                         isLoading={isLoading}

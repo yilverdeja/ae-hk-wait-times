@@ -1,110 +1,110 @@
 {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Where to Go for Minor Illnesses",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Priority will be accorded to patients triaged as critical and emergency. Semi-urgent and non-urgent patients may experience longer waiting time. Please be patient while waiting for consultation. Patients with minor illnesses can consider seeking alternative medical services from private clinics (as listed in Primary Care Directory or Hong Kong Doctors Homepage)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Triage System & Priority of Care",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "A&E departments use a triage system to prioritize patients based on the severity of their condition, ensuring those in most urgent need receive immediate care. Patients are assessed and sorted into five categories: Category I (Critical): Life-threatening, requires immediate treatment. Category II (Emergency): Condition may deteriorate rapidly. Category III (Urgent): Serious, but vital signs are stable. Category IV (Semi-urgent): Acute but stable condition. Category V (Non-urgent): Minor condition, no serious complications expected."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "About the Wait Time Data",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The wait times shown are a historical reference from the last few hours and are specifically for Triage Categories IV (Semi-urgent) and V (Non-urgent) only. The displayed time represents the 95th percentile, presented in 0.5-hour increments. This data is for reference only and may not accurately reflect the current, dynamic wait times in the department."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Impact of Sudden Emergencies",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "A&E departments must prioritize sudden and severe cases (e.g., accidents, heart attacks). This can significantly affect available resources and increase wait times for less urgent patients. The icons for 'Managing Case' or 'Managing Multiple Cases' indicate that the hospital is actively treating one or more Critical (Category I) or Emergency (Category II) patients. We appreciate your patience during these critical times."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Where does the trend data come from?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Our trend data is derived from extensive historical waiting time records provided by the Hospital Authority (HA) government, dating back to 2018. We've analyzed this comprehensive dataset to calculate average waiting times, offering a reliable long-term perspective on A&E department trends."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What's the best time of the day to visit an A&E department?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Based on historical trends across all hospitals, the period between 12 PM and 1 PM typically shows the lowest waiting times. We generally advise avoiding early mornings and late nights, as these hours tend to be the busiest for A&E departments."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How often is the waiting time data updated?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The waiting time information displayed on ae.wait.hk is updated approximately every 15 minutes, directly reflecting the latest data from the Hospital Authority's official API to ensure you have the most current estimates."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Why does ae.wait.hk focus on Semi-urgent and Non-urgent categories?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "ae.wait.hk focuses on Semi-urgent (Category IV) and Non-urgent (Category V) categories because individuals in these groups typically have the capacity to review data and make informed decisions about their care. Patients in more urgent categories (Critical, Emergency, Urgent) should prioritize immediate medical attention rather than checking wait times. Generally, hospitals with higher waiting times for Semi-urgent and Non-urgent categories are more likely to have longer waiting times for Critical and Emergency categories."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What do 'Critical Management Status' and 'Emergency Management Status' indicate?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "These statuses indicate whether a hospital is actively managing Critical (Category I) or Emergency (Category II) cases. When a hospital is managing such high-priority cases, it means their resources are heavily engaged, which can lead to significantly longer waiting times for less urgent categories. This information helps you gauge potential delays."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How can I see the trend data for a hospital?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "To view a hospital's trend data, simply click on its record. This action will open a side panel displaying the hospital's current busyness, a trend chart for the current day and all days, and additional information about the hospital."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How can I determine my level of triage?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Your level of triage cannot be determined prior to your visit. The Hospital Authority does not disclose this information beforehand. You will be triaged by an experienced nurse after registering and attending your visit, who will assess your condition and assign you to the appropriate category."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How much does it cost to attend an A&E department in Hong Kong?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "For eligible persons (holders of a valid HKID), the cost for Accident & Emergency services in public hospitals is HK$180 per attendance. For non-eligible persons, the fee is HK$1,230 per attendance. Please note that these fees are subject to change by the Hospital Authority. (Information as of November 2025)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How are wait times predicted?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Predicted wait times are generated by a machine learning model trained on approximately 8 months of historical data. Predictions appear on the trend chart at +1h, +2h, and +3h intervals from the current time. The model is not perfect — it tends to underpredict at higher wait times. Forecasts are automatically raised to at least the current wait when times exceed 6.5 hours, and predictions are hidden entirely beyond 8 hours. Predictions are for reference only and do not constitute medical advice. Actual conditions can change rapidly. We are continuously reviewing and improving the model."
-        }
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Where should I go for minor illnesses in Hong Kong?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Public A&E departments prioritise critical and emergency cases. Semi-urgent and non-urgent patients may wait longer. If your condition is minor, consider private clinics or primary care services instead of A&E."
       }
-    ]
-  }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the A&E triage system work in Hong Kong?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hospital Authority A&E departments triage patients into five categories (I–V) by clinical urgency. Category I (critical) and II (emergency) are seen first; Category IV (semi-urgent) and V (non-urgent) typically wait longest."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is A&E wait time data calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Displayed wait times are a historical reference from the last few hours for Triage Categories IV (semi-urgent) and V (non-urgent) only. The figure shown is the 95th percentile in 0.5-hour increments, for reference only."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do sudden emergencies affect A&E wait times?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sudden severe cases (accidents, heart attacks, etc.) divert A&E resources and can lengthen waits for less urgent patients. Icons showing a hospital is managing critical or emergency cases indicate heavy demand."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where does the trend data come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Trend charts use historical waiting time records from the Hospital Authority open data programme, dating back to 2018. We analyse this dataset to show average waits by day and hour across Hong Kong public A&E departments."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best time of day to visit an A&E department?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Based on historical trends across all hospitals, 12 PM to 1 PM often shows the lowest waits. Early mornings and late nights tend to be busiest. Check live waits on ae.wait.hk before you travel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often is waiting time data updated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ae.wait.hk refreshes approximately every 15 minutes from the Hospital Authority official API on data.gov.hk, so you see the same underlying source as the HA wait-time page with enhanced filtering and trends."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does ae.wait.hk focus on semi-urgent and non-urgent categories?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Patients in Category IV and V often have time to compare hospitals before travelling. Those in critical, emergency, or urgent categories should seek care immediately rather than comparing waits. Higher Cat IV/V waits often correlate with busier departments overall."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do critical and emergency management status icons mean?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "These icons show whether a hospital is actively managing Category I (critical) or Category II (emergency) cases. When resources are focused on high-priority patients, waits for semi-urgent and non-urgent categories may increase significantly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I see trend data for a hospital?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "On the home page, click a hospital row to open a panel with live busyness, hourly trends, and contact details. Or visit a hospital page at /hospital/{slug} for the full trend chart and wait times by triage category."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I determine my triage category before visiting A&E?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You cannot know your triage category before arrival. The Hospital Authority does not disclose this in advance. An experienced nurse assesses you after registration and assigns Category I–V based on clinical need."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does it cost to attend an A&E department in Hong Kong?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "From 1 January 2026, eligible persons (valid HKID) pay HK$400 per public hospital A&E visit. Patients triaged as Category I (critical) or II (emergency) are fee-exempt. Non-eligible persons pay HK$2,100 with no exemptions. Fees are set by the Hospital Authority."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How are wait times predicted?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Predictions use a machine learning model trained on about 8 months of HA historical data, shown at +1h, +2h, and +3h on trend charts. Forecasts are capped below 8 hours and are for reference only — not medical advice."
+      }
+    }
+  ]
+}

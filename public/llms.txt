@@ -2,7 +2,8 @@
 
 > This website provides real-time estimated waiting times for Accident & Emergency departments across Hong Kong hospitals. It specializes in displaying wait times for semi-urgent (Category IV) and non-urgent (Category V) cases, which often have longer waiting periods. The site enhances the official data with advanced filtering, sorting, and detailed hospital insights to help users make informed decisions.
 
-FAQs: /faq.jsonld
+FAQs: /faq
+FAQ schema: /faq.jsonld
 Press: /press.jsonld
 
 ## About This Service

@@ -22,6 +22,11 @@ export const breadcrumbLabels = {
         [LanguageCode.ZH]: "所有醫院",
         [LanguageCode.CN]: "所有医院",
     },
+    faq: {
+        [LanguageCode.EN]: "FAQ",
+        [LanguageCode.ZH]: "常見問題",
+        [LanguageCode.CN]: "常见问题",
+    },
 } as const
 
 export type BreadcrumbItem = {

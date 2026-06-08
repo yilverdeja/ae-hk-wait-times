@@ -27,9 +27,9 @@ export default function Header() {
         <header className="flex h-16 items-center border-b bg-background px-4 md:px-6">
             {/* Left side of the header */}
             <Link href="/">
-                <h1 className="text-xl sm:text-2xl md:text-3xl">
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold">
                     {siteConfig.title[lang]}
-                </h1>
+                </p>
             </Link>
 
             {/* Right side of the header */}

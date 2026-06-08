@@ -1,6 +1,6 @@
 "use client"
 
-import { informationContent } from "@/components/InformationContent"
+import { faqPageMeta, informationContent } from "@/data/faq"
 import {
     Accordion,
     AccordionContent,
@@ -94,7 +94,16 @@ export default function InformationDrawer() {
                     </Accordion>
                 </div>
 
-                <DrawerFooter className="pt-8 text-left">
+                <DrawerFooter className="pt-8 text-left space-y-3">
+                    <Link
+                        href="/faq"
+                        className="inline-block text-sm font-medium underline underline-offset-2"
+                        onClick={() =>
+                            sendGAEvent("event", "information_drawer_faq_link")
+                        }
+                    >
+                        {faqPageMeta.viewAllLink[lang]} →
+                    </Link>
                     <div className="text-sm text-muted-foreground">
                         {informationContent.footer.text[lang]}{" "}
                         <Link
