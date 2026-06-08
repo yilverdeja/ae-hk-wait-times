@@ -23,7 +23,7 @@
         "name": "About the Wait Time Data",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The wait times shown are a historical reference from the last few hours and are specifically for Triage Categories IV (Semi-urgent) and V (Non-urgent). The displayed time represents the 50th percentile, presented in 0.5-hour increments. Please note that this data is for reference only and may not always reflect the current, dynamic wait times in the department."
+          "text": "The wait times shown are a historical reference from the last few hours and are specifically for Triage Categories IV (Semi-urgent) and V (Non-urgent) only. The displayed time represents the 95th percentile, presented in 0.5-hour increments. This data is for reference only and may not accurately reflect the current, dynamic wait times in the department."
         }
       },
       {

@@ -12,9 +12,8 @@ import {
     waitTimeCategoryLabels,
     waitTimeNA,
 } from "@/lib/map-translations"
+import PageBreadcrumb, { breadcrumbLabels } from "@/components/PageBreadcrumb"
 import { EnrichedHospitalData, LanguageCode, ManagementStatus } from "@/types"
-import { ArrowLeft } from "lucide-react"
-import Link from "next/link"
 
 interface HospitalPageContentProps {
     hospital: EnrichedHospitalData
@@ -22,7 +21,6 @@ interface HospitalPageContentProps {
 
 const pageTexts = {
     [LanguageCode.EN]: {
-        back: "Back",
         waitTimes: "Wait Times",
         expectedWait: "Expected wait",
         typicalWait: "Typical",
@@ -32,7 +30,6 @@ const pageTexts = {
             "Predictions are estimates based on recent trends and are for reference only. Actual wait times may vary.",
     },
     [LanguageCode.ZH]: {
-        back: "返回",
         waitTimes: "等候時間",
         expectedWait: "預計等候",
         typicalWait: "一般等候",
@@ -42,7 +39,6 @@ const pageTexts = {
             "預測數據基於近期趨勢估算，僅供參考，實際等候時間可能有所不同。",
     },
     [LanguageCode.CN]: {
-        back: "返回",
         waitTimes: "等候时间",
         expectedWait: "预计等候",
         typicalWait: "一般等候",
@@ -167,16 +163,22 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
     const { waitTimes } = hospital
 
     return (
-        <div className="py-4 space-y-6">
-            {/* Back + Header */}
+        <div className="container mx-auto xl:max-w-none py-4 space-y-6">
+            {/* Breadcrumb + Header */}
             <div>
-                <Link
-                    href="/"
-                    className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
-                >
-                    <ArrowLeft size={16} />
-                    {texts.back}
-                </Link>
+                <PageBreadcrumb
+                    items={[
+                        {
+                            label: breadcrumbLabels.home[lang],
+                            href: "/",
+                        },
+                        {
+                            label: breadcrumbLabels.allHospitals[lang],
+                            href: "/hospitals",
+                        },
+                        { label: hospital.slug },
+                    ]}
+                />
                 <h1 className="text-3xl font-bold tracking-tight">
                     {hospital.name[lang]}
                 </h1>

@@ -10,6 +10,7 @@ Press: /press.jsonld
 This service, ae.wait.hk, is an independent improvement upon the original Hospital Authority (HA) waiting time display. It aims to offer a more user-friendly and informative experience for individuals seeking Accident & Emergency waiting times in Hong Kong.
 The data is retrieved from the official open data platform data.gov.hk  via the Hospital Authority's API.
 The waiting time information is updated approximately every 15 minutes.
+Displayed wait times for Category IV (Semi-Urgent) and Category V (Non-Urgent) represent the **95th percentile**, shown in 0.5-hour increments, and are for reference only.
 
 ## Key Features and Differences
 
@@ -32,6 +33,8 @@ To get comprehensive details about a specific hospital, users can click on any h
 ## Individual Hospital Pages
 
 Each hospital has a dedicated page at /hospital/<slug> with real-time A&E wait times by triage category (Critical, Emergency, Urgent, Semi-Urgent/Non-Urgent), a wait time trend chart for the current and historical days, and hospital contact details (address, telephone, fax, email, website, Google Maps link).
+
+Browse all hospitals at /hospitals — a directory page grouped by region (Hong Kong Island, Kowloon, New Territories) with links to every hospital page.
 
 | Slug | English Name | Region |
 |------|-------------|--------|

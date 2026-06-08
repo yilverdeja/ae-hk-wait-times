@@ -19,9 +19,17 @@ export const metadata = {
     application: "A&E Wait Times",
     referrer: "origin-when-cross-origin",
     keywords: ["Accident", "Emergency", "A&E", "Hong Kong", "Wait", "Times"],
-    canonical: "https://ae.wait.hk",
     authors: [{ name: "Yil Verdeja", url: "https://yilverdeja.com" }],
     creator: "Yil Verdeja",
+    icons: {
+        icon: [
+            { url: "/favicon.ico", sizes: "any" },
+            { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+            { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+            { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+        ],
+        apple: "/apple-touch-icon.png",
+    },
     openGraph: {
         title: "Hong Kong A&E Wait Times",
         description:
@@ -41,12 +49,12 @@ export const metadata = {
         authors: ["Yil Verdeja"],
     },
     twitter: {
-        card: "Hong Kong A&E Wait Times",
+        card: "summary_large_image",
         title: "Hong Kong A&E Wait Times",
         description:
             "Check real-time accident and emergency department wait times across Hong Kong hospitals. Updated every 15 minutes to help you find the quickest service.",
         creator: "@yilverdeja",
-        images: "https://ae.wait.hk/og-image.png",
+        images: ["https://ae.wait.hk/og-image.png"],
     },
     robots: {
         index: true,

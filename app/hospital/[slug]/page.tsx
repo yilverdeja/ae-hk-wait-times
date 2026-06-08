@@ -125,7 +125,13 @@ export default async function HospitalPage({ params }: PageProps) {
         "@type": "BreadcrumbList",
         itemListElement: [
             { "@type": "ListItem", position: 1, name: "Home", item: "https://ae.wait.hk" },
-            { "@type": "ListItem", position: 2, name: hospital.name.en, item: pageUrl },
+            {
+                "@type": "ListItem",
+                position: 2,
+                name: "All Hospitals",
+                item: "https://ae.wait.hk/hospitals",
+            },
+            { "@type": "ListItem", position: 3, name: hospital.name.en, item: pageUrl },
         ],
     }
 

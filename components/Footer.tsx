@@ -9,16 +9,19 @@ import Link from "next/link"
 
 const footerLinks = {
     [LanguageCode.EN]: {
+        allHospitals: "All Hospitals",
         originalSite: "Original Site",
         openData: "Open Data",
         github: "Github",
     },
     [LanguageCode.ZH]: {
+        allHospitals: "所有醫院",
         originalSite: "原始網站",
         openData: "開放數據",
         github: "Github",
     },
     [LanguageCode.CN]: {
+        allHospitals: "所有医院",
         originalSite: "原始网站",
         openData: "开放数据",
         github: "Github",
@@ -40,7 +43,19 @@ export default function Footer() {
                     </a>
                 </span>
                 {/* Links */}
-                <ul className="flex flex-row gap-4">
+                <ul className="flex flex-row flex-wrap gap-4 justify-center">
+                    <li className="text-sm underline underline-offset-2">
+                        <Link
+                            href="/hospitals"
+                            onClick={() =>
+                                sendGAEvent("event", "footer_link_clicked", {
+                                    linkType: "hospitals_directory",
+                                })
+                            }
+                        >
+                            {links.allHospitals}
+                        </Link>
+                    </li>
                     <li className="text-sm underline underline-offset-2">
                         <Link
                             href={siteConfig.originalLink(lang)}
