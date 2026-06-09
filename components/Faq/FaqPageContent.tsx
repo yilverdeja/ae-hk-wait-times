@@ -1,7 +1,7 @@
 "use client"
 
 import FaqGroupSection from "@/components/Faq/FaqGroupSection"
-import FaqSidebar, { useFaqScrollSpy } from "@/components/Faq/FaqSidebar"
+import FaqSidebar, { useFaqGroupNav } from "@/components/Faq/FaqSidebar"
 import PageBreadcrumb, { breadcrumbLabels } from "@/components/PageBreadcrumb"
 import {
     faqGroups,
@@ -18,8 +18,8 @@ export default function FaqPageContent() {
     const groupedFaq = useMemo(() => resolveFaqGroups(), [])
     const groupIds = useMemo(() => faqGroups.map((g) => g.id), [])
 
-    const { activeGroupId, scrollToGroup, setActiveGroupId } =
-        useFaqScrollSpy(groupIds)
+    const { activeGroupId, selectGroup, selectGroupAndScrollTo } =
+        useFaqGroupNav(groupIds)
 
     const [openEntryId, setOpenEntryId] = useState("")
 
@@ -36,24 +36,22 @@ export default function FaqPageContent() {
             if (!group) return
 
             setOpenEntryId(hash)
-            setActiveGroupId(group.id)
 
             requestAnimationFrame(() => {
-                const el = document.getElementById(hash)
-                if (el) {
-                    el.scrollIntoView({ behavior: "smooth", block: "start" })
-                } else {
-                    document
-                        .getElementById(group.id)
-                        ?.scrollIntoView({ behavior: "smooth", block: "start" })
+                const entryEl = document.getElementById(hash)
+                if (entryEl) {
+                    selectGroupAndScrollTo(group.id, hash)
+                    return
                 }
+
+                selectGroup(group.id)
             })
         }
 
         applyHash()
         window.addEventListener("hashchange", applyHash)
         return () => window.removeEventListener("hashchange", applyHash)
-    }, [setActiveGroupId])
+    }, [selectGroup, selectGroupAndScrollTo])
 
     return (
         <main className="container mx-auto xl:max-w-none py-4 space-y-8">
@@ -76,7 +74,7 @@ export default function FaqPageContent() {
             <div className="lg:grid lg:grid-cols-[240px_1fr] lg:gap-10 lg:items-start">
                 <FaqSidebar
                     activeGroupId={activeGroupId}
-                    onGroupClick={scrollToGroup}
+                    onGroupClick={selectGroup}
                 />
 
                 <div className="space-y-6 min-w-0">
@@ -86,6 +84,7 @@ export default function FaqPageContent() {
                             group={group}
                             entries={entries}
                             openEntryId={openEntryId}
+                            isActive={activeGroupId === group.id}
                             onOpenEntryChange={handleOpenEntryChange}
                         />
                     ))}

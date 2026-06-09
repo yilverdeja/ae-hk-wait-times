@@ -3,7 +3,11 @@
 import { faqGroups, faqPageMeta } from "@/data/faq"
 import { useLanguage } from "@/hooks/useLanguage"
 import { cn } from "@/lib/utils"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
+
+const SCROLL_SPY_OFFSET = 96 // matches scroll-mt-24 / sticky top-24
+const PROGRAMMATIC_SCROLL_FALLBACK_MS = 1500
+const POST_PROGRAMMATIC_GRACE_MS = 150
 
 interface FaqSidebarProps {
     activeGroupId: string
@@ -56,41 +60,134 @@ export default function FaqSidebar({
     )
 }
 
-export function useFaqScrollSpy(groupIds: string[]) {
+export function useFaqGroupNav(groupIds: string[]) {
     const [activeGroupId, setActiveGroupId] = useState(groupIds[0] ?? "")
 
-    useEffect(() => {
-        const sections = groupIds
-            .map((id) => document.querySelector(`[data-faq-group="${id}"]`))
-            .filter(Boolean) as Element[]
+    const isProgrammaticScrollRef = useRef(false)
+    const spyLockedRef = useRef(false)
+    const lastScrollYRef = useRef(0)
+    const ignoreScrollUntilRef = useRef(0)
+    const programmaticScrollTimerRef = useRef<ReturnType<
+        typeof setTimeout
+    > | null>(null)
 
-        if (sections.length === 0) return
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visible = entries
-                    .filter((e) => e.isIntersecting)
-                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-
-                if (visible[0]?.target instanceof HTMLElement) {
-                    const id = visible[0].target.dataset.faqGroup
-                    if (id) setActiveGroupId(id)
-                }
-            },
-            { rootMargin: "-20% 0px -60% 0px", threshold: [0, 0.25, 0.5, 1] }
-        )
-
-        sections.forEach((section) => observer.observe(section))
-        return () => observer.disconnect()
+    const getVisibleGroupFromScroll = useCallback(() => {
+        let active = groupIds[0] ?? ""
+        for (const id of groupIds) {
+            const el = document.getElementById(id)
+            if (!el) continue
+            if (el.getBoundingClientRect().top <= SCROLL_SPY_OFFSET) {
+                active = id
+            } else {
+                break
+            }
+        }
+        return active
     }, [groupIds])
 
-    const scrollToGroup = (groupId: string) => {
-        const el = document.getElementById(groupId)
-        if (el) {
-            el.scrollIntoView({ behavior: "smooth", block: "start" })
-            setActiveGroupId(groupId)
+    const clearProgrammaticScrollTimer = useCallback(() => {
+        if (programmaticScrollTimerRef.current) {
+            clearTimeout(programmaticScrollTimerRef.current)
+            programmaticScrollTimerRef.current = null
         }
-    }
+    }, [])
 
-    return { activeGroupId, scrollToGroup, setActiveGroupId }
+    const endProgrammaticScroll = useCallback(() => {
+        isProgrammaticScrollRef.current = false
+        lastScrollYRef.current = window.scrollY
+        ignoreScrollUntilRef.current = Date.now() + POST_PROGRAMMATIC_GRACE_MS
+        clearProgrammaticScrollTimer()
+    }, [clearProgrammaticScrollTimer])
+
+    const startProgrammaticScroll = useCallback(() => {
+        isProgrammaticScrollRef.current = true
+        clearProgrammaticScrollTimer()
+        programmaticScrollTimerRef.current = setTimeout(
+            endProgrammaticScroll,
+            PROGRAMMATIC_SCROLL_FALLBACK_MS
+        )
+    }, [clearProgrammaticScrollTimer, endProgrammaticScroll])
+
+    const scrollToElement = useCallback(
+        (elementId: string) => {
+            const el = document.getElementById(elementId)
+            if (!el) return
+
+            startProgrammaticScroll()
+            const top = Math.max(
+                0,
+                el.getBoundingClientRect().top +
+                    window.scrollY -
+                    SCROLL_SPY_OFFSET
+            )
+            window.scrollTo({ top, behavior: "smooth" })
+        },
+        [startProgrammaticScroll]
+    )
+
+    const selectGroup = useCallback(
+        (groupId: string) => {
+            spyLockedRef.current = true
+            setActiveGroupId(groupId)
+            scrollToElement(groupId)
+        },
+        [scrollToElement]
+    )
+
+    const selectGroupAndScrollTo = useCallback(
+        (groupId: string, elementId: string) => {
+            spyLockedRef.current = true
+            setActiveGroupId(groupId)
+            scrollToElement(elementId)
+        },
+        [scrollToElement]
+    )
+
+    useEffect(() => {
+        let rafId = 0
+
+        lastScrollYRef.current = window.scrollY
+        setActiveGroupId(getVisibleGroupFromScroll())
+
+        const handleScroll = () => {
+            if (isProgrammaticScrollRef.current) return
+            if (Date.now() < ignoreScrollUntilRef.current) return
+
+            const scrollY = window.scrollY
+            if (scrollY === lastScrollYRef.current) return
+            lastScrollYRef.current = scrollY
+
+            cancelAnimationFrame(rafId)
+            rafId = requestAnimationFrame(() => {
+                spyLockedRef.current = false
+                setActiveGroupId(getVisibleGroupFromScroll())
+            })
+        }
+
+        const handleScrollEnd = () => {
+            if (!isProgrammaticScrollRef.current) return
+            endProgrammaticScroll()
+        }
+
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        window.addEventListener("scrollend", handleScrollEnd)
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll)
+            window.removeEventListener("scrollend", handleScrollEnd)
+            cancelAnimationFrame(rafId)
+            clearProgrammaticScrollTimer()
+            isProgrammaticScrollRef.current = false
+        }
+    }, [
+        getVisibleGroupFromScroll,
+        endProgrammaticScroll,
+        clearProgrammaticScrollTimer,
+    ])
+
+    return {
+        activeGroupId,
+        selectGroup,
+        selectGroupAndScrollTo,
+    }
 }
