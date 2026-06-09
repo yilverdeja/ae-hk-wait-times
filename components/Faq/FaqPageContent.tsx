@@ -90,21 +90,6 @@ export default function FaqPageContent() {
                     ))}
                 </div>
             </div>
-
-            <div className="flex flex-wrap gap-4 pt-4 border-t max-w-3xl">
-                <Link
-                    href="/"
-                    className="text-sm underline underline-offset-2 hover:text-foreground"
-                >
-                    {faqPageMeta.viewLiveWaitTimes[lang]}
-                </Link>
-                <Link
-                    href="/hospitals"
-                    className="text-sm underline underline-offset-2 hover:text-foreground"
-                >
-                    {faqPageMeta.browseHospitals[lang]}
-                </Link>
-            </div>
         </main>
     )
 }
