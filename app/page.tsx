@@ -1,10 +1,8 @@
 import { getWaitTimes } from "@/app/actions/waits"
 import HomeClient from "@/components/Home/HomeClient"
 import HomeIntro from "@/components/Home/HomeIntro"
-import { getServerLang } from "@/lib/get-server-lang"
 
 export default async function Home() {
-    const lang = await getServerLang()
     let lastUpdated: string | null = null
 
     try {
@@ -16,7 +14,7 @@ export default async function Home() {
 
     return (
         <div className="container mx-auto xl:max-w-none my-4">
-            <HomeIntro lang={lang} lastUpdated={lastUpdated} />
+            <HomeIntro lastUpdated={lastUpdated} />
             <HomeClient />
         </div>
     )
