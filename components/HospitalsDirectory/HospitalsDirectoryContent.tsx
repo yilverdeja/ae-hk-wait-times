@@ -62,12 +62,6 @@ export default function HospitalsDirectoryContent({
             <div className="space-y-3">
                 <h1 className="text-3xl font-bold tracking-tight">{texts.title}</h1>
                 <p className="text-muted-foreground leading-relaxed">{texts.intro}</p>
-                <Link
-                    href="/"
-                    className="inline-block text-sm underline underline-offset-2 hover:text-foreground"
-                >
-                    {texts.homeLink}
-                </Link>
             </div>
 
             {regionOrder.map((region) => {
