@@ -20,10 +20,10 @@
     },
     {
       "@type": "Question",
-      "name": "How is A&E wait time data calculated?",
+      "name": "What do the wait times mean?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Displayed wait times are a historical reference from the last few hours for Triage Categories IV (semi-urgent) and V (non-urgent) only. The figure shown is the 95th percentile in 0.5-hour increments, for reference only."
+        "text": "The main wait-time table shows the 95th percentile wait for semi-urgent (Category IV) and non-urgent (Category V) patients, based on the past few hours. This means most patients in those categories waited less than the time shown. It is a reference only, not a guarantee. On the map view and individual hospital pages, you can also view wait times for other triage categories (urgent, emergency, critical)."
       }
     },
     {
@@ -31,7 +31,7 @@
       "name": "How do sudden emergencies affect A&E wait times?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sudden severe cases (accidents, heart attacks, etc.) divert A&E resources and can lengthen waits for less urgent patients. Icons showing a hospital is managing critical or emergency cases indicate heavy demand."
+        "text": "When a hospital receives sudden severe cases — such as major accidents or heart attacks — staff and resources are directed to those patients first. Waits for semi-urgent and non-urgent patients can increase quickly, and the spike may not show up in historical wait figures right away."
       }
     },
     {
@@ -47,7 +47,7 @@
       "name": "What is the best time of day to visit an A&E department?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Based on historical trends across all hospitals, 12 PM to 1 PM often shows the lowest waits. Early mornings and late nights tend to be busiest. Check live waits on ae.wait.hk before you travel."
+        "text": "Based on historical trends across all hospitals, 12 PM to 1 PM often shows the lowest waits. Early mornings and late nights tend to be busiest. Check live waits on our site before you travel."
       }
     },
     {
@@ -55,7 +55,7 @@
       "name": "How often is waiting time data updated?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "ae.wait.hk refreshes approximately every 15 minutes from the Hospital Authority official API on data.gov.hk, so you see the same underlying source as the HA wait-time page with enhanced filtering and trends."
+        "text": "Our site refreshes wait time data approximately every 15 minutes from official Hospital Authority sources. We source data from the Hospital Authority official API on data.gov.hk, the same underlying source as the HA wait-time page, with enhanced filtering and trends."
       }
     },
     {
@@ -71,7 +71,7 @@
       "name": "What do critical and emergency management status icons mean?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "These icons show whether a hospital is actively managing Category I (critical) or Category II (emergency) cases. When resources are focused on high-priority patients, waits for semi-urgent and non-urgent categories may increase significantly."
+        "text": "On the wait-time table, icons next to a hospital name show when the Hospital Authority reports the department is managing critical or emergency cases. These often appear during busy periods and can mean longer waits for semi-urgent and non-urgent patients. A yellow warning triangle means the hospital is managing at least one critical or emergency case. A red siren means multiple critical cases."
       }
     },
     {
@@ -79,7 +79,7 @@
       "name": "How can I see trend data for a hospital?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "On the home page, click a hospital row to open a panel with live busyness, hourly trends, and contact details. Or visit a hospital page at /hospital/{slug} for the full trend chart and wait times by triage category."
+        "text": "On the home page, click a hospital row to open a panel with live busyness, hourly trends, and contact details. To see the full trend chart and wait times by triage category, go to All Hospitals and select a hospital."
       }
     },
     {
@@ -92,10 +92,18 @@
     },
     {
       "@type": "Question",
+      "name": "I have more questions about the Hospital Authority — where should I look?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This site is not affiliated with or endorsed by the Hospital Authority. For official information about A&E services, triage, and how public hospitals prioritise patients, please visit the HA Service Guide."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "How much does it cost to attend an A&E department in Hong Kong?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "From 1 January 2026, eligible persons (valid HKID) pay HK$400 per public hospital A&E visit. Patients triaged as Category I (critical) or II (emergency) are fee-exempt. Non-eligible persons pay HK$2,100 with no exemptions. Fees are set by the Hospital Authority."
+        "text": "From 1 January 2026, eligible persons (valid HKID) pay HK$400 per public hospital A&E visit. Patients triaged as Category I (critical) or II (emergency) are fee-exempt. Non-eligible persons pay HK$2,100 with no exemptions. Fees are set by the Hospital Authority. For the latest fee details, see the official Hospital Authority fees page."
       }
     },
     {
@@ -103,7 +111,7 @@
       "name": "How are wait times predicted?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Predictions use a machine learning model trained on about 8 months of HA historical data, shown at +1h, +2h, and +3h on trend charts. Forecasts are capped below 8 hours and are for reference only — not medical advice."
+        "text": "Trend charts show estimated waits for the next 1, 2, and 3 hours. These forecasts use a machine learning model trained on recent Hospital Authority historical data. They are for reference only and are not medical advice. When waits are very high (above 8 hours), predictions may be hidden or adjusted upward so they are not unrealistically low."
       }
     }
   ]

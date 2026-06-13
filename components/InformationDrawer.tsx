@@ -19,6 +19,7 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer"
 import { useLanguage } from "@/hooks/useLanguage"
+import { haServiceGuideLink } from "@/lib/utils"
 import { sendGAEvent } from "@next/third-parties/google"
 import { InfoIcon, X } from "lucide-react"
 import Link from "next/link"
@@ -108,7 +109,7 @@ export default function InformationDrawer() {
                         {informationContent.footer.text[lang]}{" "}
                         <Link
                             className="underline underline-offset-2"
-                            href="https://www.ha.org.hk/visitor/ha_serviceguide_details.asp?Content_ID=10051"
+                            href={haServiceGuideLink(lang)}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() =>

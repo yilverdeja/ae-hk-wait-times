@@ -7,7 +7,7 @@ const baseUrl = "https://ae.wait.hk"
 export const metadata: Metadata = {
     title: "Hong Kong A&E FAQ | Wait Times, Triage & Fees (HK$400)",
     description:
-        "Frequently asked questions about Hong Kong public hospital A&E wait times, triage categories, 95th percentile data, HK$400 fees (2026), and how ae.wait.hk uses Hospital Authority open data. 香港急症室常見問題",
+        "Frequently asked questions about Hong Kong public hospital A&E wait times, triage categories, 95th percentile data, HK$400 fees (2026), and how this site uses Hospital Authority open data. 香港急症室常見問題",
     keywords: [
         "A&E FAQ",
         "Hong Kong emergency wait time",

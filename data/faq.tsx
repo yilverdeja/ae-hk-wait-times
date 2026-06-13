@@ -1,14 +1,16 @@
-import { PREDICTION_CAP_MINS, PREDICTION_SUPPRESS_MINS } from "@/lib/constants"
+import { siteConfig } from "@/configs/site"
 import { i18n } from "@/lib/i18n"
-import { aeFeesLink } from "@/lib/utils"
+import { aeFeesLink, haServiceGuideLink } from "@/lib/utils"
 import { LanguageCode, LocalizedString } from "@/types"
 import {
+    AlertTriangle,
     BarChart3,
     BookOpen,
     CircleDollarSign,
     Clock,
     LucideIcon,
     Monitor,
+    Siren,
 } from "lucide-react"
 import Link from "next/link"
 import React from "react"
@@ -31,9 +33,9 @@ export const faqPageMeta = {
         "常见问题"
     ),
     intro: i18n(
-        "Answers to common questions about Hong Kong public hospital A&E wait times, triage, fees, and how ae.wait.hk uses official Hospital Authority data. Information is for reference only and is not medical advice.",
-        "有關香港公立醫院急症室等候時間、分流、收費及 ae.wait.hk 如何使用醫管局官方數據的常見問題解答。資訊僅供參考，不構成醫療建議。",
-        "有关香港公立医院急诊室等候时间、分流、收费及 ae.wait.hk 如何使用医管局官方数据的常见问题解答。信息仅供参考，不构成医疗建议。"
+        "Answers to common questions about Hong Kong public hospital A&E wait times, triage, fees, and how our site uses official Hospital Authority data. Information is for reference only and is not medical advice.",
+        "有關香港公立醫院急症室等候時間、分流、收費及本網站如何使用醫管局官方數據的常見問題解答。資訊僅供參考，不構成醫療建議。",
+        "有关香港公立医院急诊室等候时间、分流、收费及本网站如何使用医管局官方数据的常见问题解答。信息仅供参考，不构成医疗建议。"
     ),
     viewAllLink: i18n(
         "View all questions",
@@ -85,22 +87,24 @@ export const informationDrawerMeta = {
 }
 
 function FeesBody({ lang }: { lang: LanguageCode }) {
+    const prefix = {
+        [LanguageCode.EN]: "For the latest fee details, see the ",
+        [LanguageCode.ZH]: "有關最新收費詳情，請參閱",
+        [LanguageCode.CN]: "有关最新收费详情，请参阅",
+    }
     const linkLabel = {
         [LanguageCode.EN]: "official Hospital Authority fees page",
         [LanguageCode.ZH]: "醫院管理局官方收費頁面",
         [LanguageCode.CN]: "医院管理局官方收费页面",
     }
-    const note = {
-        [LanguageCode.EN]:
-            "Triage category and fee exemption are determined at your visit by clinical staff, not in advance. Information as of January 2026.",
-        [LanguageCode.ZH]:
-            "分流類別及費用豁免由醫護人員於求診時決定，無法事先得知。資訊截至2026年1月。",
-        [LanguageCode.CN]:
-            "分流类别及费用豁免由医护人员于求诊时决定，无法事先得知。信息截至2026年1月。",
+    const suffix = {
+        [LanguageCode.EN]: ".",
+        [LanguageCode.ZH]: "。",
+        [LanguageCode.CN]: "。",
     }
     return (
         <p className="text-muted-foreground">
-            {note[lang]}{" "}
+            {prefix[lang]}
             <Link
                 href={aeFeesLink(lang)}
                 className="underline underline-offset-2 hover:text-foreground"
@@ -109,8 +113,104 @@ function FeesBody({ lang }: { lang: LanguageCode }) {
             >
                 {linkLabel[lang]}
             </Link>
-            .
+            {suffix[lang]}
         </p>
+    )
+}
+
+function UpdateFrequencyBody({ lang }: { lang: LanguageCode }) {
+    const prefix = {
+        [LanguageCode.EN]:
+            "We source data from the ",
+        [LanguageCode.ZH]: "數據來自",
+        [LanguageCode.CN]: "数据来自",
+    }
+    const linkLabel = {
+        [LanguageCode.EN]: "Hospital Authority official API on data.gov.hk",
+        [LanguageCode.ZH]: "data.gov.hk 上的醫管局官方 API",
+        [LanguageCode.CN]: "data.gov.hk 上的医管局官方 API",
+    }
+    const suffix = {
+        [LanguageCode.EN]:
+            ", the same underlying source as the HA wait-time page, with enhanced filtering and trends.",
+        [LanguageCode.ZH]:
+            "，與醫管局等候時間頁面使用相同數據來源，並提供進階篩選及趨勢功能。",
+        [LanguageCode.CN]:
+            "，与医管局等候时间页面使用相同数据来源，并提供进阶筛选及趋势功能。",
+    }
+    return (
+        <p className="text-muted-foreground">
+            {prefix[lang]}
+            <Link
+                href={siteConfig.openDataLink}
+                className="underline underline-offset-2 hover:text-foreground"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                {linkLabel[lang]}
+            </Link>
+            {suffix[lang]}
+        </p>
+    )
+}
+
+function HaOfficialInfoBody({ lang }: { lang: LanguageCode }) {
+    const prefix = {
+        [LanguageCode.EN]:
+            "For official information about A&E services, triage, and how public hospitals prioritise patients, please visit the ",
+        [LanguageCode.ZH]:
+            "有關急症室服務、分流及公立醫院如何安排病人優先次序的官方資訊，請瀏覽",
+        [LanguageCode.CN]:
+            "有关急诊室服务、分流及公立医院如何安排病人优先次序的官方信息，请浏览",
+    }
+    const suffix = {
+        [LanguageCode.EN]: ".",
+        [LanguageCode.ZH]: "。",
+        [LanguageCode.CN]: "。",
+    }
+    return (
+        <p className="text-muted-foreground">
+            {prefix[lang]}
+            <Link
+                href={haServiceGuideLink(lang)}
+                className="underline underline-offset-2 hover:text-foreground"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                {informationDrawerMeta.footer.haServiceGuide[lang]}
+            </Link>
+            {suffix[lang]}
+        </p>
+    )
+}
+
+function ManagementStatusIconLegend({ lang }: { lang: LanguageCode }) {
+    const labels = {
+        [LanguageCode.EN]: {
+            managing:
+                "Managing at least one critical or emergency case",
+            multiple: "Managing multiple critical cases",
+        },
+        [LanguageCode.ZH]: {
+            managing: "正在處理至少一宗危殆或危急個案",
+            multiple: "正在處理多宗危殆個案",
+        },
+        [LanguageCode.CN]: {
+            managing: "正在处理至少一宗危殆或危急个案",
+            multiple: "正在处理多宗危殆个案",
+        },
+    }
+    return (
+        <div className="flex flex-col gap-2 text-muted-foreground">
+            <div className="flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 shrink-0 text-yellow-500" />
+                <span>{labels[lang].managing}</span>
+            </div>
+            <div className="flex items-center gap-2">
+                <Siren className="h-5 w-5 shrink-0 text-red-600" />
+                <span>{labels[lang].multiple}</span>
+            </div>
+        </div>
     )
 }
 
@@ -279,15 +379,55 @@ export const faqEntries: FaqEntry[] = [
         id: "wait-time-data",
         showInDrawer: true,
         question: i18n(
-            "How is A&E wait time data calculated?",
-            "急症室等候時間數據如何計算？",
-            "急诊室等候时间数据如何计算？"
+            "What do the wait times mean?",
+            "等候時間代表什麼？",
+            "等候时间代表什么？"
         ),
         answerLead: i18n(
-            "Displayed wait times are a historical reference from the last few hours for Triage Categories IV (semi-urgent) and V (non-urgent) only. The figure shown is the 95th percentile in 0.5-hour increments, for reference only.",
-            "顯示的等候時間為過去數小時的歷史參考，僅適用於第四類（次緊急）及第五類（非緊急）病人。數字為第95百分位數，以0.5小時為單位，僅供參考。",
-            "显示的等候时间为过去数小时的历史参考，仅适用于第四类（次紧急）及第五类（非紧急）病人。数字为第95百分位数，以0.5小时为单位，仅供参考。"
+            "The main wait-time table shows the 95th percentile wait for semi-urgent (Category IV) and non-urgent (Category V) patients, based on the past few hours. This means most patients in those categories waited less than the time shown. It is a reference only, not a guarantee.",
+            "主頁等候時間表顯示第四類（次緊急）及第五類（非緊急）病人過去數小時的第95百分位數等候時間。這表示大多數該類別病人等候時間少於所示數字。僅供參考，並非保證。",
+            "主页等候时间表显示第四类（次紧急）及第五类（非紧急）病人过去数小时的第95百分位数等候时间。这表示大多数该类别病人等候时间少于所示数字。仅供参考，并非保证。"
         ),
+        answerBody: {
+            [LanguageCode.EN]: (
+                <p className="text-muted-foreground">
+                    On the map view and individual hospital pages, you can also
+                    view wait times for other triage categories (urgent,
+                    emergency, critical).{" "}
+                    <Link
+                        href="/hospitals"
+                        className="underline underline-offset-2 hover:text-foreground"
+                    >
+                        Browse all hospitals
+                    </Link>
+                    .
+                </p>
+            ),
+            [LanguageCode.ZH]: (
+                <p className="text-muted-foreground">
+                    在地圖檢視及個別醫院頁面，您亦可查看其他分流類別（緊急、危急、危殆）的等候時間。{" "}
+                    <Link
+                        href="/hospitals"
+                        className="underline underline-offset-2 hover:text-foreground"
+                    >
+                        瀏覽所有醫院
+                    </Link>
+                    。
+                </p>
+            ),
+            [LanguageCode.CN]: (
+                <p className="text-muted-foreground">
+                    在地图视图及个别医院页面，您亦可查看其他分流类别（紧急、危急、危殆）的等候时间。{" "}
+                    <Link
+                        href="/hospitals"
+                        className="underline underline-offset-2 hover:text-foreground"
+                    >
+                        浏览所有医院
+                    </Link>
+                    。
+                </p>
+            ),
+        },
     },
     {
         id: "sudden-emergencies",
@@ -298,9 +438,9 @@ export const faqEntries: FaqEntry[] = [
             "突发紧急事件如何影响急诊室等候时间？"
         ),
         answerLead: i18n(
-            "Sudden severe cases (accidents, heart attacks, etc.) divert A&E resources and can lengthen waits for less urgent patients. Icons showing a hospital is managing critical or emergency cases indicate heavy demand.",
-            "突發嚴重個案（如意外、心臟病發等）會調動急症室資源，可能令較不緊急病人等候更久。若顯示醫院正在處理危殆或危急個案，代表需求繁忙。",
-            "突发严重个案（如意外、心脏病发等）会调动急诊室资源，可能令较不紧急病人等候更久。若显示医院正在处理危殆或危急个案，代表需求繁忙。"
+            "When a hospital receives sudden severe cases — such as major accidents or heart attacks — staff and resources are directed to those patients first. Waits for semi-urgent and non-urgent patients can increase quickly, and the spike may not show up in historical wait figures right away.",
+            "當醫院接收突發嚴重個案（如大型意外或心臟病發）時，醫護人員及資源會優先處理這些病人。次緊急及非緊急病人的等候時間可能迅速增加，而升幅未必即時反映於歷史等候數據。",
+            "当医院接收突发严重个案（如大型意外或心脏病发）时，医护人员及资源会优先处理这些病人。次紧急及非紧急病人的等候时间可能迅速增加，而升幅未必即时反映于历史等候数据。"
         ),
     },
     {
@@ -324,9 +464,9 @@ export const faqEntries: FaqEntry[] = [
             "一天中什么时间去急诊室最好？"
         ),
         answerLead: i18n(
-            "Based on historical trends across all hospitals, 12 PM to 1 PM often shows the lowest waits. Early mornings and late nights tend to be busiest. Check live waits on ae.wait.hk before you travel.",
-            "根據所有醫院的歷史趨勢，中午12時至1時的等候時間通常較短。清晨及深夜往往較繁忙。出發前請於 ae.wait.hk 查看即時等候時間。",
-            "根据所有医院的历史趋势，中午12时至1时的等候时间通常较短。清晨及深夜往往较繁忙。出发前请于 ae.wait.hk 查看即时等候时间。"
+            "Based on historical trends across all hospitals, 12 PM to 1 PM often shows the lowest waits. Early mornings and late nights tend to be busiest. Check live waits on our site before you travel.",
+            "根據所有醫院的歷史趨勢，中午12時至1時的等候時間通常較短。清晨及深夜往往較繁忙。出發前請於本網站查看即時等候時間。",
+            "根据所有医院的历史趋势，中午12时至1时的等候时间通常较短。清晨及深夜往往较繁忙。出发前请于本网站查看即时等候时间。"
         ),
     },
     {
@@ -337,10 +477,21 @@ export const faqEntries: FaqEntry[] = [
             "等候时间数据多久更新一次？"
         ),
         answerLead: i18n(
-            "ae.wait.hk refreshes approximately every 15 minutes from the Hospital Authority official API on data.gov.hk, so you see the same underlying source as the HA wait-time page with enhanced filtering and trends.",
-            "ae.wait.hk 約每15分鐘從 data.gov.hk 上的醫管局官方 API 更新，與醫管局等候時間頁面使用相同數據來源，並提供進階篩選及趨勢功能。",
-            "ae.wait.hk 约每15分钟从 data.gov.hk 上的医管局官方 API 更新，与医管局等候时间页面使用相同数据来源，并提供进阶筛选及趋势功能。"
+            "Our site refreshes wait time data approximately every 15 minutes from official Hospital Authority sources.",
+            "本網站約每15分鐘從醫管局官方來源更新等候時間數據。",
+            "本网站约每15分钟从医管局官方来源更新等候时间数据。"
         ),
+        answerBody: {
+            [LanguageCode.EN]: (
+                <UpdateFrequencyBody lang={LanguageCode.EN} />
+            ),
+            [LanguageCode.ZH]: (
+                <UpdateFrequencyBody lang={LanguageCode.ZH} />
+            ),
+            [LanguageCode.CN]: (
+                <UpdateFrequencyBody lang={LanguageCode.CN} />
+            ),
+        },
     },
     {
         id: "why-focus-cat-iv-v",
@@ -363,10 +514,21 @@ export const faqEntries: FaqEntry[] = [
             "危殆及危急处理状态图标代表什么？"
         ),
         answerLead: i18n(
-            "These icons show whether a hospital is actively managing Category I (critical) or Category II (emergency) cases. When resources are focused on high-priority patients, waits for semi-urgent and non-urgent categories may increase significantly.",
-            "這些圖標顯示醫院是否正在處理第一類（危殆）或第二類（危急）病人。當資源集中於高優先個案時，次緊急及非緊急類別的等候時間可能大幅增加。",
-            "这些图标显示医院是否正在处理第一类（危殆）或第二类（危急）病人。当资源集中于高优先个案时，次紧急及非紧急类别的等候时间可能大幅增加。"
+            "On the wait-time table, icons next to a hospital name show when the Hospital Authority reports the department is managing critical or emergency cases. These often appear during busy periods and can mean longer waits for semi-urgent and non-urgent patients:",
+            "在等候時間表上，醫院名稱旁的圖標表示醫管局報告該部門正在處理危殆或危急個案。這通常出現於繁忙時段，並可能意味次緊急及非緊急病人需等候更久：",
+            "在等候时间表上，医院名称旁的图标表示医管局报告该部门正在处理危殆或危急个案。这通常出现于繁忙时段，并可能意味次紧急及非紧急病人需等候更久："
         ),
+        answerBody: {
+            [LanguageCode.EN]: (
+                <ManagementStatusIconLegend lang={LanguageCode.EN} />
+            ),
+            [LanguageCode.ZH]: (
+                <ManagementStatusIconLegend lang={LanguageCode.ZH} />
+            ),
+            [LanguageCode.CN]: (
+                <ManagementStatusIconLegend lang={LanguageCode.CN} />
+            ),
+        },
     },
     {
         id: "trend-chart",
@@ -376,19 +538,15 @@ export const faqEntries: FaqEntry[] = [
             "如何查看医院的趋势数据？"
         ),
         answerLead: i18n(
-            "On the home page, click a hospital row to open a panel with live busyness, hourly trends, and contact details. Or visit a hospital page at /hospital/{slug} for the full trend chart and wait times by triage category.",
-            "在主頁點擊醫院記錄可開啟面板，查看即時繁忙程度、每小時趨勢及聯絡資料。亦可瀏覽 /hospital/{slug} 醫院頁面，查看完整趨勢圖及各分流類別的等候時間。",
-            "在主页点击医院记录可开启面板，查看即时繁忙程度、每小时趋势及联络资料。亦可浏览 /hospital/{slug} 医院页面，查看完整趋势图及各分流类别的等候时间。"
+            "On the home page, click a hospital row to open a panel with live busyness, hourly trends, and contact details. To see the full trend chart and wait times by triage category, go to All Hospitals and select a hospital.",
+            "在主頁點擊醫院記錄可開啟面板，查看即時繁忙程度、每小時趨勢及聯絡資料。要查看完整趨勢圖及各分流類別的等候時間，請前往「所有醫院」並選擇一間醫院。",
+            "在主页点击医院记录可开启面板，查看即时繁忙程度、每小时趋势及联络资料。要查看完整趋势图及各分流类别的等候时间，请前往「所有医院」并选择一间医院。"
         ),
         answerBody: {
             [LanguageCode.EN]: (
                 <p>
                     <Link href="/hospitals" className="underline underline-offset-2">
                         Browse all hospitals
-                    </Link>{" "}
-                    or return to the{" "}
-                    <Link href="/" className="underline underline-offset-2">
-                        live wait-time table
                     </Link>
                     .
                 </p>
@@ -398,10 +556,6 @@ export const faqEntries: FaqEntry[] = [
                     <Link href="/hospitals" className="underline underline-offset-2">
                         瀏覽所有醫院
                     </Link>
-                    或返回{" "}
-                    <Link href="/" className="underline underline-offset-2">
-                        即時等候時間表
-                    </Link>
                     。
                 </p>
             ),
@@ -409,10 +563,6 @@ export const faqEntries: FaqEntry[] = [
                 <p>
                     <Link href="/hospitals" className="underline underline-offset-2">
                         浏览所有医院
-                    </Link>
-                    或返回{" "}
-                    <Link href="/" className="underline underline-offset-2">
-                        即时等候时间表
                     </Link>
                     。
                 </p>
@@ -431,6 +581,30 @@ export const faqEntries: FaqEntry[] = [
             "您無法在到達前得知分流類別。醫院管理局不會事先公布。登記後由經驗豐富的護士評估病情，並按臨床需要分配第一至第五類。",
             "您无法在到达前得知分流类别。医院管理局不会事先公布。登记后由经验丰富的护士评估病情，并按临床需要分配第一至第五类。"
         ),
+    },
+    {
+        id: "ha-official-info",
+        question: i18n(
+            "I have more questions about the Hospital Authority — where should I look?",
+            "我對醫院管理局還有更多疑問——應往哪裡查詢？",
+            "我对医院管理局还有更多疑问——应往哪里查询？"
+        ),
+        answerLead: i18n(
+            "This site is not affiliated with or endorsed by the Hospital Authority.",
+            "本網站並非醫院管理局的附屬或認可網站。",
+            "本网站并非医院管理局的附属或认可网站。"
+        ),
+        answerBody: {
+            [LanguageCode.EN]: (
+                <HaOfficialInfoBody lang={LanguageCode.EN} />
+            ),
+            [LanguageCode.ZH]: (
+                <HaOfficialInfoBody lang={LanguageCode.ZH} />
+            ),
+            [LanguageCode.CN]: (
+                <HaOfficialInfoBody lang={LanguageCode.CN} />
+            ),
+        },
     },
     {
         id: "ae-fees",
@@ -459,28 +633,27 @@ export const faqEntries: FaqEntry[] = [
             "等候时间如何预测？"
         ),
         answerLead: i18n(
-            `Predictions use a machine learning model trained on about 8 months of HA historical data, shown at +1h, +2h, and +3h on trend charts. Forecasts are capped below ${PREDICTION_SUPPRESS_MINS / 60} hours and are for reference only — not medical advice.`,
-            `預測使用約8個月醫管局歷史數據訓練的機器學習模型，於趨勢圖顯示+1、+2及+3小時。預測在${PREDICTION_SUPPRESS_MINS / 60}小時以下顯示，僅供參考，不構成醫療建議。`,
-            `预测使用约8个月医管局历史数据训练的机器学习模型，于趋势图显示+1、+2及+3小时。预测在${PREDICTION_SUPPRESS_MINS / 60}小时以下显示，仅供参考，不构成医疗建议。`
+            "Trend charts show estimated waits for the next 1, 2, and 3 hours. These forecasts use a machine learning model trained on recent Hospital Authority historical data.",
+            "趨勢圖顯示未來1、2及3小時的預估等候時間。預測使用以近期醫管局歷史數據訓練的機器學習模型。",
+            "趋势图显示未来1、2及3小时的预估等候时间。预测使用以近期医管局历史数据训练的机器学习模型。"
         ),
         answerBody: {
             [LanguageCode.EN]: (
                 <p className="text-muted-foreground">
-                    The model may underpredict at high waits; forecasts are raised
-                    to at least the current wait above {PREDICTION_CAP_MINS / 60}{" "}
-                    hours. We continuously review and improve the model.
+                    They are for reference only and are not medical advice. When
+                    waits are very high (above 8 hours), predictions may be
+                    hidden or adjusted upward so they are not unrealistically
+                    low.
                 </p>
             ),
             [LanguageCode.ZH]: (
                 <p className="text-muted-foreground">
-                    等候時間較長時模型可能低估；超過 {PREDICTION_CAP_MINS / 60}{" "}
-                    小時時，預測值會調高至不低於當前等候時間。我們持續檢討及改善模型。
+                    僅供參考，不構成醫療建議。當等候時間非常高（超過8小時）時，預測可能被隱藏或向上調整，以免顯示不切實際的偏低數字。
                 </p>
             ),
             [LanguageCode.CN]: (
                 <p className="text-muted-foreground">
-                    等候时间较长时模型可能低估；超过 {PREDICTION_CAP_MINS / 60}{" "}
-                    小时时，预测值会调高至不低于当前等候时间。我们持续检讨及改善模型。
+                    仅供参考，不构成医疗建议。当等候时间非常高（超过8小时）时，预测可能被隐藏或向上调整，以免显示不切实际的偏低数字。
                 </p>
             ),
         },
@@ -499,7 +672,7 @@ export const faqGroups: FaqGroup[] = [
         id: "getting-started",
         title: i18n("Getting Started", "入門指南", "入门指南"),
         icon: BookOpen,
-        entryIds: ["minor-illnesses", "triage-priority", "triage-determination"],
+        entryIds: ["minor-illnesses", "triage-priority", "triage-determination", "ha-official-info"],
     },
     {
         id: "wait-times",

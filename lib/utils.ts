@@ -73,6 +73,10 @@ export const buildHaVisitorLink = (
 export const aeFeesLink = (lang: LanguageCode = LanguageCode.EN): string =>
     buildHaVisitorLink("10045", lang)
 
+/** HA Service Guide (A&E services and triage). Content_ID=10051 */
+export const haServiceGuideLink = (lang: LanguageCode = LanguageCode.EN): string =>
+    buildHaVisitorLink("10051", lang)
+
 /**
  * Constructs the specific URL for a hospital's page on the HA website.
  */
