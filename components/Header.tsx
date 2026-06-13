@@ -63,6 +63,8 @@ export default function Header() {
                         </Link>
                     )
                 })}
+                {/* Spacer in between nav links and toggles */}
+                <div className="w-[2px] h-8 bg-muted" />
                 <DynamicLanguageSwitcher />
                 <ThemeSwitcher />
             </nav>

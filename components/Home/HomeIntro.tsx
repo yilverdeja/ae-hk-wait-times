@@ -22,26 +22,16 @@ const introCopy = {
     },
 }
 
-interface HomeIntroProps {
-    lastUpdated: string | null
-}
-
-export default function HomeIntro({ lastUpdated }: HomeIntroProps) {
+export default function HomeIntro() {
     const { lang } = useLanguage()
     const copy = introCopy[lang]
 
     return (
-        <div className="space-y-2 mb-4">
+        <div className="space-y-2 mb-4 max-w-3xl">
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
                 {siteConfig.name[lang]}
             </h1>
-            <p className="text-muted-foreground leading-relaxed max-w-3xl">{copy.body}</p>
-            {/* {lastUpdated && (
-                <p className="text-sm text-muted-foreground">
-                    {copy.lastUpdated}{" "}
-                    <time dateTime={lastUpdated}>{lastUpdated}</time>
-                </p>
-            )} */}
+            <p className="text-muted-foreground leading-relaxed">{copy.body}</p>
         </div>
     )
 }

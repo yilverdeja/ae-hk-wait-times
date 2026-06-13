@@ -59,7 +59,7 @@ export default function HospitalsDirectoryContent({
                     { label: breadcrumbLabels.allHospitals[lang] },
                 ]}
             />
-            <div className="space-y-3">
+            <div className="space-y-3 max-w-3xl">
                 <h1 className="text-3xl font-bold tracking-tight">{texts.title}</h1>
                 <p className="text-muted-foreground leading-relaxed">{texts.intro}</p>
             </div>

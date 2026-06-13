@@ -16,12 +16,14 @@ import {
 import { navLinks, navUiLabels } from "@/configs/nav"
 import { useLanguage } from "@/hooks/useLanguage"
 import { sendGAEvent } from "@next/third-parties/google"
-import { HelpCircle, Menu } from "lucide-react"
+import { HelpCircle, HomeIcon, HospitalIcon, LucideIcon, Menu } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
 
-const navLinkIcons: Record<string, typeof HelpCircle> = {
+const navLinkIcons: Record<string, LucideIcon> = {
     faq: HelpCircle,
+    'all-hospitals': HospitalIcon,
+    'home': HomeIcon,
 }
 
 export default function MobileNav() {

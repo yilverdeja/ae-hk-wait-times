@@ -26,9 +26,9 @@ export type FaqEntry = {
 
 export const faqPageMeta = {
     title: i18n(
-        "Hong Kong A&E Wait Times — FAQ",
-        "香港急症室等候時間 — 常見問題",
-        "香港急诊室等候时间 — 常见问题"
+        "Frequently Asked Questions",
+        "常見問題",
+        "常见问题"
     ),
     intro: i18n(
         "Answers to common questions about Hong Kong public hospital A&E wait times, triage, fees, and how ae.wait.hk uses official Hospital Authority data. Information is for reference only and is not medical advice.",
