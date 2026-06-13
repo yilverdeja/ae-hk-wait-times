@@ -17,9 +17,9 @@ export type FooterGroup = {
 }
 
 export const footerTagline = i18n(
-    "Real-time A&E wait times for Hong Kong public hospitals.",
-    "香港公立醫院急症室即時等候時間。",
-    "香港公立医院急诊室即时等候时间。"
+    "Real-time A&E wait times for all 18 Hong Kong public hospitals, updated every 15 minutes. Explore trends, predicted wait times, and nearby options on the map.",
+    "香港全部18間公立醫院急症室即時等候時間，每15分鐘更新。探索趨勢、預測等候時間，以及地圖上的附近選擇。",
+    "香港全部18间公立医院急诊室即时等候时间，每15分钟更新。探索趋势、预测等候时间，以及地图上的附近选择。"
 )
 
 export const footerGroups: FooterGroup[] = [
@@ -27,6 +27,12 @@ export const footerGroups: FooterGroup[] = [
         id: "site",
         heading: i18n("Site", "網站", "网站"),
         links: [
+            {
+                id: "wait-times",
+                label: i18n("Wait Times", "所有等候時間", "所有等候时间"),
+                href: "/",
+                linkType: "wait_times",
+            },
             {
                 id: "all-hospitals",
                 label: i18n("All Hospitals", "所有醫院", "所有医院"),

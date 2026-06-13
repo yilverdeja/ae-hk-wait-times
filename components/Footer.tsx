@@ -157,7 +157,7 @@ export default function Footer() {
     return (
         <footer className="mt-8 border-t border-border pt-8 pb-4">
             <div
-                className="hidden gap-10 lg:grid"
+                className="hidden gap-10 md:grid"
                 style={{
                     gridTemplateColumns: `minmax(0, 1.4fr) repeat(${footerGroups.length}, minmax(0, 1fr))`,
                 }}
@@ -168,14 +168,14 @@ export default function Footer() {
                 ))}
             </div>
 
-            <div className="lg:hidden">
+            <div className="md:hidden">
                 <FooterBrand lang={lang} centered />
                 <div className="mt-6">
                     <FooterMobileAccordion lang={lang} />
                 </div>
             </div>
 
-            <div className="mt-8 pt-4 text-center text-sm text-muted-foreground lg:text-left">
+            <div className="mt-8 pt-4 text-center text-sm text-muted-foreground md:text-left">
                 © {dayjs().year()}{" "}
                 <a
                     href={siteConfig.url}
