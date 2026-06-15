@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer"
 import Header from "@/components/Header"
+import { siteConfig } from "@/configs/site"
 import { cn } from "@/lib/utils"
 import Providers from "@/providers/Providers"
 import { LanguageCode } from "@/types"
@@ -12,22 +13,42 @@ const dm_sans = DM_Sans({ weight: ["400", "500", "700"], subsets: ["latin"] })
 
 export const metadata = {
     metadataBase: new URL("https://ae.wait.hk"),
-    title: "Hong Kong A&E Wait Times",
+    title: {
+        default: "Hong Kong A&E Wait Times | 香港急症室等候時間",
+        template: "%s | A&E Wait Times",
+    },
     description:
-        "Check real-time accident and emergency department wait times across Hong Kong hospitals. Updated every 15 minutes to help you find the quickest service.",
+        "Check real-time accident and emergency department wait times across Hong Kong hospitals. Updated every 15 minutes. 香港公立醫院急症室即時等候時間。",
     generator: "A&E Wait Times",
     application: "A&E Wait Times",
     referrer: "origin-when-cross-origin",
-    keywords: ["Accident", "Emergency", "A&E", "Hong Kong", "Wait", "Times"],
-    canonical: "https://ae.wait.hk",
+    keywords: [
+        "Accident",
+        "Emergency",
+        "A&E",
+        "Hong Kong",
+        "Wait",
+        "Times",
+        "急症室",
+        "等候時間",
+        "急诊室",
+    ],
     authors: [{ name: "Yil Verdeja", url: "https://yilverdeja.com" }],
     creator: "Yil Verdeja",
+    icons: {
+        icon: [
+            { url: "/favicon.ico", sizes: "any" },
+            { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+            { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+            { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+        ],
+        apple: "/apple-touch-icon.png",
+    },
     openGraph: {
-        title: "Hong Kong A&E Wait Times",
-        description:
-            "Check real-time accident and emergency department wait times across Hong Kong hospitals. Updated every 15 minutes to help you find the quickest service.",
+        title: "Hong Kong A&E Wait Times | 香港急症室等候時間",
+        description: siteConfig.description.en,
         url: "https://ae.wait.hk",
-        siteName: "A&E Wait Times",
+        siteName: siteConfig.name.en,
         images: [
             {
                 url: "https://ae.wait.hk/og-image.png",
@@ -41,12 +62,12 @@ export const metadata = {
         authors: ["Yil Verdeja"],
     },
     twitter: {
-        card: "Hong Kong A&E Wait Times",
+        card: "summary_large_image",
         title: "Hong Kong A&E Wait Times",
         description:
             "Check real-time accident and emergency department wait times across Hong Kong hospitals. Updated every 15 minutes to help you find the quickest service.",
         creator: "@yilverdeja",
-        images: "https://ae.wait.hk/og-image.png",
+        images: ["https://ae.wait.hk/og-image.png"],
     },
     robots: {
         index: true,

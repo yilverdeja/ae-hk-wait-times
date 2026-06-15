@@ -1,6 +1,6 @@
 "use client"
 
-import { informationContent } from "@/components/InformationContent"
+import { faqPageMeta, informationContent } from "@/data/faq"
 import {
     Accordion,
     AccordionContent,
@@ -19,6 +19,7 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer"
 import { useLanguage } from "@/hooks/useLanguage"
+import { haServiceGuideLink } from "@/lib/utils"
 import { sendGAEvent } from "@next/third-parties/google"
 import { InfoIcon, X } from "lucide-react"
 import Link from "next/link"
@@ -94,12 +95,21 @@ export default function InformationDrawer() {
                     </Accordion>
                 </div>
 
-                <DrawerFooter className="pt-8 text-left">
+                <DrawerFooter className="pt-8 text-left space-y-3">
+                    <Link
+                        href="/faq"
+                        className="inline-block text-sm font-medium underline underline-offset-2"
+                        onClick={() =>
+                            sendGAEvent("event", "information_drawer_faq_link")
+                        }
+                    >
+                        {faqPageMeta.viewAllLink[lang]} →
+                    </Link>
                     <div className="text-sm text-muted-foreground">
                         {informationContent.footer.text[lang]}{" "}
                         <Link
                             className="underline underline-offset-2"
-                            href="https://www.ha.org.hk/visitor/ha_serviceguide_details.asp?Content_ID=10051"
+                            href={haServiceGuideLink(lang)}
                             target="_blank"
                             rel="noopener noreferrer"
                             onClick={() =>

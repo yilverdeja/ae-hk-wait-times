@@ -1,6 +1,11 @@
 import { getWaitTimes } from "@/app/actions/waits"
 import HospitalPageContent from "@/components/HospitalPage/HospitalPageContent"
 import { hospitals } from "@/data/hospitals"
+import {
+    hospitalPageDescription,
+    hospitalPageTitle,
+    hospitalPageUrl,
+} from "@/lib/seo-metadata"
 import { EnrichedHospitalData, ManagementStatus } from "@/types"
 import { notFound } from "next/navigation"
 
@@ -17,10 +22,10 @@ export async function generateMetadata({ params }: PageProps) {
     const slug = rawSlug.toUpperCase()
     const hospital = hospitals[slug]
     if (!hospital) return {}
-    const pageUrl = `https://ae.wait.hk/hospital/${slug}`
-    const description = `Real-time A&E wait times for ${hospital.name.en} in ${hospital.region}, Hong Kong. Updated every 15 minutes with hourly trend data for all triage categories.`
+    const pageUrl = hospitalPageUrl(slug)
+    const description = hospitalPageDescription(hospital, slug)
     return {
-        title: `${hospital.name.en} A&E Wait Times | Hong Kong`,
+        title: { absolute: hospitalPageTitle(hospital) },
         description,
         keywords: [
             hospital.name.en,
@@ -37,7 +42,7 @@ export async function generateMetadata({ params }: PageProps) {
         ],
         alternates: { canonical: pageUrl },
         openGraph: {
-            title: `${hospital.name.en} A&E Wait Times | Hong Kong`,
+            title: { absolute: hospitalPageTitle(hospital) },
             description,
             url: pageUrl,
             images: [
@@ -79,8 +84,11 @@ export default async function HospitalPage({ params }: PageProps) {
         waitTimes: nullWaitTimes,
     }
 
+    let lastUpdated: string | null = null
+
     try {
-        const { waitTimes } = await getWaitTimes()
+        const { waitTimes, lastUpdated: updated } = await getWaitTimes()
+        lastUpdated = updated
         const liveData = waitTimes.find((h) => h.hospitalSlug === slug)
         if (liveData) {
             enrichedHospital = {
@@ -95,7 +103,7 @@ export default async function HospitalPage({ params }: PageProps) {
         // Render with null wait times if API is unavailable
     }
 
-    const pageUrl = `https://ae.wait.hk/hospital/${slug}`
+    const pageUrl = hospitalPageUrl(slug)
     const haProfileUrl = `https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=${hospital.linkId}`
 
     const hospitalSchema = {
@@ -125,7 +133,13 @@ export default async function HospitalPage({ params }: PageProps) {
         "@type": "BreadcrumbList",
         itemListElement: [
             { "@type": "ListItem", position: 1, name: "Home", item: "https://ae.wait.hk" },
-            { "@type": "ListItem", position: 2, name: hospital.name.en, item: pageUrl },
+            {
+                "@type": "ListItem",
+                position: 2,
+                name: "All Hospitals",
+                item: "https://ae.wait.hk/hospitals",
+            },
+            { "@type": "ListItem", position: 3, name: hospital.name.en, item: pageUrl },
         ],
     }
 
@@ -139,7 +153,10 @@ export default async function HospitalPage({ params }: PageProps) {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
-            <HospitalPageContent hospital={enrichedHospital} />
+            <HospitalPageContent
+                hospital={enrichedHospital}
+                lastUpdated={lastUpdated}
+            />
         </>
     )
 }

@@ -6,23 +6,27 @@ import { HospitalTrendChart } from "@/components/HospitalTrendChart"
 import { useHospitalPredictionDisplay } from "@/hooks/useHospitalPredictionDisplay"
 import { useHospitalPredictions } from "@/hooks/useHospitalPredictions"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
+import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
 import { useLanguage } from "@/hooks/useLanguage"
+import {
+    formatLastUpdated,
+    lastUpdatedLabel,
+} from "@/lib/format-last-updated"
 import {
     managementStatusTranslations,
     waitTimeCategoryLabels,
     waitTimeNA,
 } from "@/lib/map-translations"
+import PageBreadcrumb, { breadcrumbLabels } from "@/components/PageBreadcrumb"
 import { EnrichedHospitalData, LanguageCode, ManagementStatus } from "@/types"
-import { ArrowLeft } from "lucide-react"
-import Link from "next/link"
 
 interface HospitalPageContentProps {
     hospital: EnrichedHospitalData
+    lastUpdated: string | null
 }
 
 const pageTexts = {
     [LanguageCode.EN]: {
-        back: "Back",
         waitTimes: "Wait Times",
         expectedWait: "Expected wait",
         typicalWait: "Typical",
@@ -32,7 +36,6 @@ const pageTexts = {
             "Predictions are estimates based on recent trends and are for reference only. Actual wait times may vary.",
     },
     [LanguageCode.ZH]: {
-        back: "返回",
         waitTimes: "等候時間",
         expectedWait: "預計等候",
         typicalWait: "一般等候",
@@ -42,7 +45,6 @@ const pageTexts = {
             "預測數據基於近期趨勢估算，僅供參考，實際等候時間可能有所不同。",
     },
     [LanguageCode.CN]: {
-        back: "返回",
         waitTimes: "等候时间",
         expectedWait: "预计等候",
         typicalWait: "一般等候",
@@ -145,8 +147,13 @@ function PredictionCard({
     )
 }
 
-export default function HospitalPageContent({ hospital }: HospitalPageContentProps) {
+export default function HospitalPageContent({
+    hospital,
+    lastUpdated: serverLastUpdated,
+}: HospitalPageContentProps) {
     const { lang } = useLanguage()
+    const { data } = useHospitalWaitTimes()
+    const lastUpdated = data?.lastUpdated ?? serverLastUpdated
     const { isLoading, isError, compareWithLiveTime } = useHospitalTrends(
         hospital.slug
     )
@@ -167,28 +174,33 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
     const { waitTimes } = hospital
 
     return (
-        <div className="py-4 space-y-6">
-            {/* Back + Header */}
+        <div className="container mx-auto xl:max-w-none py-4 space-y-6 min-h-screen">
+            {/* Breadcrumb + Header */}
             <div>
-                <Link
-                    href="/"
-                    className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
-                >
-                    <ArrowLeft size={16} />
-                    {texts.back}
-                </Link>
-                <h1 className="text-3xl font-bold tracking-tight">
-                    {hospital.name[lang]}
-                </h1>
-                <p className="mt-1 text-sm text-muted-foreground">
-                    <HospitalSheetDescriptionBusyness
-                        isLoading={isLoading}
-                        isError={isError}
-                        liveWaitTimeInMinutes={liveWaitTime}
-                        comparison={comparison}
-                        predictionDirection={predictionDirection}
-                    />
-                </p>
+                <PageBreadcrumb
+                    items={[
+                        {
+                            label: breadcrumbLabels.home[lang],
+                            href: "/",
+                        },
+                        {
+                            label: breadcrumbLabels.allHospitals[lang],
+                            href: "/hospitals",
+                        },
+                        { label: hospital.slug },
+                    ]}
+                />
+                <div className="max-w-3xl space-y-2 mb-4">
+                    <h1 className="text-3xl font-bold tracking-tight">
+                        {hospital.name[lang]}
+                    </h1>
+                    {lastUpdated && (
+                        <p className="mt-1 text-sm text-muted-foreground">
+                            {lastUpdatedLabel[lang]}{" "}
+                            {formatLastUpdated(lastUpdated, lang)}
+                        </p>
+                    )}
+                </div>
             </div>
 
             {/*
@@ -240,7 +252,16 @@ export default function HospitalPageContent({ hospital }: HospitalPageContentPro
                 </div>
 
                 {/* Trend chart — col 2, rows 1–3 on desktop; after wait times on mobile */}
-                <div className="lg:col-start-2 lg:row-start-1 lg:row-span-3">
+                <div className="lg:col-start-2 lg:row-start-1 lg:row-span-3 space-y-4">
+                    <p className="text-sm text-muted-foreground">
+                        <HospitalSheetDescriptionBusyness
+                            isLoading={isLoading}
+                            isError={isError}
+                            liveWaitTimeInMinutes={liveWaitTime}
+                            comparison={comparison}
+                            predictionDirection={predictionDirection}
+                        />
+                    </p>
                     <HospitalTrendChart
                         hospitalSlug={hospital.slug}
                         liveWaitTimeInMinutes={liveWaitTime}
