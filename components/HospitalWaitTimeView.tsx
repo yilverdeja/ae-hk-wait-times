@@ -8,7 +8,6 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
 import { useLanguage } from "@/hooks/useLanguage"
 import { BREAKPOINTS } from "@/lib/constants"
-import dayjs, { zhCN, zhHK } from "@/lib/dayjs"
 import { EnrichedHospitalData, LanguageCode } from "@/types"
 import { sendGAEvent } from "@next/third-parties/google"
 import { AlertCircle } from "lucide-react"
@@ -28,12 +27,6 @@ const errorTexts = {
         title: "错误",
         message: "载入医院等候时间失败。",
     },
-}
-
-const lastUpdatedText = {
-    [LanguageCode.EN]: "Last Updated:",
-    [LanguageCode.ZH]: "最後更新：",
-    [LanguageCode.CN]: "最后更新：",
 }
 
 function HospitalWaitTimeView() {
@@ -108,7 +101,6 @@ function HospitalWaitTimeView() {
     if (isLoading || !isFetched) {
         return (
             <>
-                <Skeleton className="h-8 w-1/4" />
                 <div className="space-y-2">
                     <Skeleton className="h-12 w-full" />
                     <Skeleton className="h-12 w-full" />
@@ -118,28 +110,8 @@ function HospitalWaitTimeView() {
         )
     }
 
-    // Set dayjs locale based on language
-    const formatDate = (dateString: string) => {
-        let formattedDate = dayjs(dateString, "DD/MM/YYYY hh:mm A")
-        if (lang === LanguageCode.ZH) {
-            formattedDate = formattedDate.locale(zhHK)
-            return formattedDate.format("YYYY年M月D日, h:mm A")
-        } else if (lang === LanguageCode.CN) {
-            formattedDate = formattedDate.locale(zhCN)
-            return formattedDate.format("YYYY年M月D日, h:mm A")
-        } else {
-            return formattedDate.format("MMM Do YYYY, h:mm A")
-        }
-    }
-
     return (
         <>
-            <div className="flex items-center justify-center sm:justify-start">
-                <p className="text-sm text-muted-foreground">
-                    {lastUpdatedText[lang]}{" "}
-                    {data ? formatDate(data.lastUpdated) : ""}
-                </p>
-            </div>
             <DataTable
                 columns={columns}
                 data={data?.waitTimes || []}

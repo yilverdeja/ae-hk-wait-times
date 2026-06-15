@@ -83,6 +83,7 @@ export default async function HospitalPage({ params }: PageProps) {
         emergencyManagementStatus: ManagementStatus.NotManaging,
         waitTimes: nullWaitTimes,
     }
+
     let lastUpdated: string | null = null
 
     try {

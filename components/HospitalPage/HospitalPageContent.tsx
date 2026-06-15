@@ -6,7 +6,12 @@ import { HospitalTrendChart } from "@/components/HospitalTrendChart"
 import { useHospitalPredictionDisplay } from "@/hooks/useHospitalPredictionDisplay"
 import { useHospitalPredictions } from "@/hooks/useHospitalPredictions"
 import { useHospitalTrends } from "@/hooks/useHospitalTrends"
+import { useHospitalWaitTimes } from "@/hooks/useHospitalWaitTimes"
 import { useLanguage } from "@/hooks/useLanguage"
+import {
+    formatLastUpdated,
+    lastUpdatedLabel,
+} from "@/lib/format-last-updated"
 import {
     managementStatusTranslations,
     waitTimeCategoryLabels,
@@ -17,6 +22,7 @@ import { EnrichedHospitalData, LanguageCode, ManagementStatus } from "@/types"
 
 interface HospitalPageContentProps {
     hospital: EnrichedHospitalData
+    lastUpdated: string | null
 }
 
 const pageTexts = {
@@ -142,9 +148,12 @@ function PredictionCard({
 }
 
 export default function HospitalPageContent({
-    hospital
+    hospital,
+    lastUpdated: serverLastUpdated,
 }: HospitalPageContentProps) {
     const { lang } = useLanguage()
+    const { data } = useHospitalWaitTimes()
+    const lastUpdated = data?.lastUpdated ?? serverLastUpdated
     const { isLoading, isError, compareWithLiveTime } = useHospitalTrends(
         hospital.slug
     )
@@ -181,18 +190,17 @@ export default function HospitalPageContent({
                         { label: hospital.slug },
                     ]}
                 />
-                <h1 className="text-3xl font-bold tracking-tight">
-                    {hospital.name[lang]}
-                </h1>
-                <p className="mt-1 text-sm text-muted-foreground">
-                    <HospitalSheetDescriptionBusyness
-                        isLoading={isLoading}
-                        isError={isError}
-                        liveWaitTimeInMinutes={liveWaitTime}
-                        comparison={comparison}
-                        predictionDirection={predictionDirection}
-                    />
-                </p>
+                <div className="max-w-3xl space-y-2 mb-4">
+                    <h1 className="text-3xl font-bold tracking-tight">
+                        {hospital.name[lang]}
+                    </h1>
+                    {lastUpdated && (
+                        <p className="mt-1 text-sm text-muted-foreground">
+                            {lastUpdatedLabel[lang]}{" "}
+                            {formatLastUpdated(lastUpdated, lang)}
+                        </p>
+                    )}
+                </div>
             </div>
 
             {/*
@@ -244,7 +252,16 @@ export default function HospitalPageContent({
                 </div>
 
                 {/* Trend chart — col 2, rows 1–3 on desktop; after wait times on mobile */}
-                <div className="lg:col-start-2 lg:row-start-1 lg:row-span-3">
+                <div className="lg:col-start-2 lg:row-start-1 lg:row-span-3 space-y-4">
+                    <p className="text-sm text-muted-foreground">
+                        <HospitalSheetDescriptionBusyness
+                            isLoading={isLoading}
+                            isError={isError}
+                            liveWaitTimeInMinutes={liveWaitTime}
+                            comparison={comparison}
+                            predictionDirection={predictionDirection}
+                        />
+                    </p>
                     <HospitalTrendChart
                         hospitalSlug={hospital.slug}
                         liveWaitTimeInMinutes={liveWaitTime}
